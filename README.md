@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# smpds
+# SMPDS: Modern Pollen Data for climate reconstructionS
 
 <!-- badges: start -->
 
@@ -18,7 +18,7 @@ The goal of smpds is to …
 
 ## Installation
 
-You can install the released version of smpds from
+You can install the released version of SMPDS from
 [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
@@ -43,7 +43,7 @@ library(smpds)
 
 ## Code of Conduct
 
-Please note that the smpds project is released with a [Contributor Code
+Please note that the SMPDS project is released with a [Contributor Code
 of
 Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.

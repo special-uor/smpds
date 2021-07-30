@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# smpds
+# SMPDS: Modern Pollen Data for climate reconstructionS
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
@@ -26,7 +26,7 @@ The goal of smpds is to ...
 
 ## Installation
 
-You can install the released version of smpds from [CRAN](https://CRAN.R-project.org) with:
+You can install the released version of SMPDS from [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
 install.packages("smpds")
@@ -49,4 +49,4 @@ library(smpds)
 
 ## Code of Conduct
   
-  Please note that the smpds project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
+  Please note that the SMPDS project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
