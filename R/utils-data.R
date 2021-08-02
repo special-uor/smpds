@@ -28,18 +28,3 @@ process_apd <- function(path, ext = "ascii", delim = ";", comment = "#", ...) {
                         stringr::str_remove_all(".$"))
     })
 }
-# output <- process_apd("~/Downloads/SMPDSv2/APD/",
-#                       col_names = c("Taxon Name [APD]",
-#                                     "Taxon Name [Author]",
-#                                     "Depth [m]",
-#                                     "Radiocarbon Chronology [yrs.BP.]",
-#                                     "Calendar Chronology [yrs.BP.]",
-#                                     "Count"),
-#                       col_types = c(readr::col_character(),
-#                                     readr::col_character(),
-#                                     readr::col_double(),
-#                                     readr::col_double(),
-#                                     readr::col_double(),
-#                                     readr::col_double()))
-# output_df <- output %>%
-#   purrr::map_df(~.x)
