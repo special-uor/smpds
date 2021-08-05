@@ -25,6 +25,9 @@ idx <- duplicated(SMPDSv1$entity_name)
 SMPDSv1_dup <- SMPDSv1 %>%
   dplyr::filter(entity_name %in% SMPDSv1$entity_name[idx])
 
+SMPDSv1 <- SMPDSv1 %>%
+  dplyr::filter(!(ID_SMPDSv1 %in% SMPDSv1_dup$ID_SMPDSv1))
+
 SMPDSv1_long <- SMPDSv1 %>%
   tidyr::pivot_longer(cols = -c(1:12), names_to = "taxon_name") %>%
   dplyr::filter(!is.na(value))
