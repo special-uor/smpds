@@ -99,13 +99,13 @@ tmp <- empdv2_counts_dup %>%
   })
 
 # Create wide version of the unique counts
-empdv2_counts_unique_wide <- empdv2_counts_unique %>%
+empdv2_counts_wide <- empdv2_counts %>%
   tidyr::pivot_wider(id_cols = entity_name, names_from = taxon_name, values_from = count) %>%
   dplyr::select(1, order(colnames(.)[-1]) + 1) # Sort the taxon_names alphabetically
 
 # Attach counts to metadata
 EMPDv2 <- EMPD %>%
-  dplyr::full_join(empdv2_counts_unique_wide,
+  dplyr::full_join(empdv2_counts_wide,
                    by = "entity_name")
 
 # Find any matches in the SMPDSv1
@@ -114,6 +114,38 @@ EMPDv2 <- EMPD %>%
 empdv2_counts_subset <- empdv2_counts %>%
   dplyr::filter(entity_name %in% SMPDSv1_long$entity_name,
                 taxon_name %in% SMPDSv1_long$taxon_name)
+EMPDv2_SMPDSv1 <- EMPDv2 %>%
+  dplyr::filter(entity_name %in% SMPDSv1$entity_name) %>%
+  purrr:::map_dfc(function(col) { # Delete columns with all NA
+    if (all(is.na(col)))
+      return(NULL)
+    col
+  })
+
+SMPDSv1_EMPDv2 <- SMPDSv1 %>%
+  dplyr::filter(entity_name %in% EMPDv2$entity_name) %>%
+  purrr:::map_dfc(function(col) { # Delete columns with all NA
+    if (all(is.na(col)))
+      return(NULL)
+    col
+  })
+
+# Compare the values in each subset: SMPDSv1 and EMPD
+# aux <- SMPDSv1_EMPDv2$entity_name %>%
+#   purrr::map(function(ent) {
+#     cols <- intersect(colnames(EMPDv2_SMPDSv1), colnames(SMPDSv1_EMPDv2))
+#     waldo::compare(EMPDv2_SMPDSv1 %>%
+#                      dplyr::filter(entity_name == ent) %>%
+#                      dplyr::select(!!cols),
+#                    SMPDSv1_EMPDv2 %>%
+#                      dplyr::filter(entity_name == ent) %>%
+#                      dplyr::select(!!cols),
+#                    x_arg = "EMPDv2",
+#                    y_arg = "SMPDSv1",
+#                    max_diffs = Inf)
+#   })
+
+
 # aux <- empdv2_counts %>%
 #   dplyr::filter(stringr::str_extract(entity_name, "[a-zA-Z]*") %in% SMPDSv1_long$short_entity_name,
 #                 taxon_name %in% SMPDSv1_long$taxon_name)
