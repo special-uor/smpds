@@ -7,7 +7,8 @@ Herzschuh_file1 <- readr::read_csv("~/Downloads/SMPDSv2/SourceData_China_Herschu
   dplyr::rename(ID_HERZSCHUH = ID,
                 entity_name = Site.name,
                 longitude = Long,
-                latitude = Lat)
+                latitude = Lat,
+                elevation = Elev)
 Herzschuh_file2 <- readr::read_csv("~/Downloads/SMPDSv2/SourceData_China_Herschuh/SourceDataFile2.csv") %>%
   dplyr::rename(ID_HERZSCHUH = ID,
                 country = Country,
