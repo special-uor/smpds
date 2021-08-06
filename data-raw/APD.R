@@ -14,6 +14,8 @@ output <- smpds::process_apd("~/Downloads/SMPDSv2/APD/",
                                            readr::col_double(),
                                            readr::col_double()))
 APD <- output %>%
-  purrr::map_df(~.x)
+  purrr::map_df(~.x) %>%
+  dplyr::rename(taxon_name = `Taxon Name [APD]`,
+                entity_name = name)
 
 usethis::use_data(APD, overwrite = TRUE)
