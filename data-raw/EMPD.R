@@ -1,5 +1,11 @@
 ## code to prepare `EMPD` dataset goes here
 # The Eurasian Modern Pollen Database
+# Source:
+# Davis, B.A., Chevalier, M., Sommer, P., Carter, V.A., Finsinger, W., Mauri, A.,
+# Phelps, L.N., Zanon, M., Abegglen, R., Åkesson, C.M. and Alba-Sánchez, F., 2020.
+# The Eurasian Modern Pollen Database (EMPD), version 2. Earth system science data,
+# 12(4), pp.2423-2445.
+# https://doi.org/10.5194/essd-12-2423-2020
 # https://doi.pangaea.de/10.1594/PANGAEA.909130?format=html#download
 # https://essd.copernicus.org/articles/12/2423/2020/
 sheets <- c("metadata", "climate", "ecosystems", "counts", "p_vars", "sampleContexts", "sampleTypes", "sampleMethods", "workerRoles", "countries", "ageUncertainties", "locationReliabilities", "groupID")

@@ -1,7 +1,9 @@
 ## code to prepare `Herzschuh` dataset goes here
 # Source:
-# Herzschuh, U., Cao, X., Laepple, T. et al. Position and orientation of the westerly jet
-# determined Holocene rainfall patterns in China. Nat Commun 10, 2376 (2019).
+# Herzschuh, U., Cao, X., Laepple, T., Dallmeyer, A., Telford, R.J., Ni, J.,
+# Chen, F., Kong, Z., Liu, G., Liu, K.B. and Liu, X., 2019. Position and
+# orientation of the westerly jet determined Holocene rainfall patterns in China.
+# Nature communications, 10(1), pp.1-8.
 # https://doi.org/10.1038/s41467-019-09866-8
 Herzschuh_file1 <- readr::read_csv("~/Downloads/SMPDSv2/SourceData_China_Herschuh/SourceDataFile1.csv") %>%
   dplyr::rename(ID_HERZSCHUH = ID,
