@@ -20,7 +20,9 @@ SMPDSv1 <- readxl::read_xlsx("~/Downloads/SMPDSv2/Sandy_s MPDS_20_October_expand
   dplyr::mutate(ID_SMPDSv1 = seq_along(entity_name), .before = 1) %>%
   dplyr::mutate(short_entity_name = entity_name %>%
                   stringr::str_extract("[a-zA-Z]*"),
-                .after = entity_name)
+                .after = entity_name)# %>%
+  # dplyr::mutate(age_BP = as.double(age_BP))
+
 # Find duplicated entity_name
 idx <- duplicated(SMPDSv1$entity_name)
 SMPDSv1_dup <- SMPDSv1 %>%
