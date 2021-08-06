@@ -2,6 +2,7 @@
 # SMPDSv1 <- readr::read_csv("~/Downloads/SMPDSv2/SMPDS_Feb2019.csv")
 # SMPDSv1_long <- SMPDSv1 %>%
 #   tidyr::pivot_longer(6:252, names_to = "taxon_name")
+`%>%` <- magrittr::`%>%`
 SMPDSv1 <- readxl::read_xlsx("~/Downloads/SMPDSv2/Sandy_s MPDS_20_October_expanded.xlsx",
                              sheet = 1,
                              col_types = c(rep("guess", 10),
@@ -33,7 +34,7 @@ SMPDSv1_long <- SMPDSv1 %>%
   dplyr::filter(!is.na(value))
 
 SMPDSv1_wide <- SMPDSv1_long %>%
-  tidyr::pivot_wider(1:3, names_from = "taxon_name")
+  tidyr::pivot_wider(1:12, names_from = "taxon_name")
 # duplicated_taxa <- SMPDSv1 %>%
 #   dplyr::select(dplyr::contains("..."))
 # idx <- rowSums(is.na(duplicated_taxa[, 4:6])) != 3
