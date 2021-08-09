@@ -54,14 +54,23 @@
 #' Finsinger, W., Heiri, O., Valsecchi, V., Tinner, W. and Lotter, A.F., 2007. Modern pollen assemblages as climate indicators in southern Europe. Global Ecology and Biogeography, 16(5), pp.567-582. https://doi.org/10.1111/j.1466-8238.2007.00313.x
 "IMPD"
 
+#' \code{PNV} dataset
+#'
+#' Sandy's Modern Pollen Data for climate reconstructionS, version 1.
+#'
+#' @format A data frame (\code{tibble} object) with `r nrow(smpds::PNV)` rows and `r ncol(smpds::PNV)` variables:
+#' \describe{
+#'   \item{...}{int ...}
+#' }
+#' @source
+#' Hengl, Tomislav (2018): Global Maps of Potential Natural Vegetation at 1 km resolution, version 4. Harvard Dataverse. Dataset. https://doi.org/10.7910/DVN/QQHCIK
+"PNV"
+
 #' \code{SMPDSv1} dataset
 #'
 #' Sandy's Modern Pollen Data for climate reconstructionS, version 1.
 #'
-#' @format A data frame (\code{tibble} object) with `r nrow(smpds::SMPDSv1)` rows and `r ncol(smpds::SMPDSv1)` variables:
-#' \describe{
-#'   \item{...}{int ...}
-#' }
+#' @format A data frame (\code{RasterBrick} object) with `r nrow(smpds::SMPDSv1)` rows and `r ncol(smpds::SMPDSv1)` columns.
 #' @source
 #' Harrison, Sandy  (2019): Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset. http://dx.doi.org/10.17864/1947.194
 "SMPDSv1"
