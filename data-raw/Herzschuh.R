@@ -29,6 +29,34 @@ c(colnames(Herzschuh_file1)[-c(1:6)],
   unique() %>%
   sort()
 
-Herzschuh <- Herzschuh_file1 %>%
-  dplyr::select(-Pann)
+## Filter taxon_names
+Herzschuh_clean_taxon_names <- readxl::read_xlsx("~/Downloads/SMPDSv2/smpdsv2-APD-Herzschuh-taxon-names-2021-08-05_SPH.xlsx",
+                                                 sheet = 1) %>%
+  dplyr::distinct()
+
+Herzschuh_file1_long <- Herzschuh_file1 %>%
+  dplyr::select(-Pann) %>%
+  tidyr::pivot_longer(-c(1:5), names_to = "taxon_name") %>%
+  dplyr::left_join(Herzschuh_clean_taxon_names,
+                   by = "taxon_name") %>%
+  dplyr::filter(clean_name != "to delete") %>%
+  dplyr::rename(taxon_name_original = taxon_name,
+                taxon_name = clean_name) # %>%
+  # dplyr::select(-taxon_name_original)
+
+tmp30 <- Herzschuh_file1_long %>%
+  dplyr::group_by(entity_name, taxon_name) %>%
+  dplyr::mutate(n = length(taxon_name),
+                unique_count = length(unique(value))) %>%
+  dplyr::ungroup() %>%
+  dplyr::arrange(entity_name, taxon_name) %>%
+  dplyr::filter(n != 1)
+tmp31 <- tmp30 %>%
+  dplyr::filter(unique_count > 1)
+tmp31 %>%
+  dplyr::select(1:6, 8, 7) %>%
+  readr::write_excel_csv("~/Downloads/SMPDSv2/Herzschuh-multiple-records-same-taxon-entity.csv", na = "")
+
+Herzschuh <- Herzschuh_file1_2 %>%
+  tidyr::pivot_wider(id_cols = 1:5, names_from = "taxon_name")
 usethis::use_data(Herzschuh, overwrite = TRUE)
