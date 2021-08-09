@@ -56,12 +56,10 @@
 
 #' \code{PNV} dataset
 #'
-#' Sandy's Modern Pollen Data for climate reconstructionS, version 1.
+#' Global Maps of Potential Natural Vegetation at 1 km resolution, version 4.
 #'
-#' @format A data frame (\code{tibble} object) with `r nrow(smpds::PNV)` rows and `r ncol(smpds::PNV)` variables:
-#' \describe{
-#'   \item{...}{int ...}
-#' }
+#' @format A data frame (\code{RasterBrick} object) with `r dim(smpds::PNV)[1]` rows and `r dim(smpds::PNV)[2]` columns.
+#'
 #' @source
 #' Hengl, Tomislav (2018): Global Maps of Potential Natural Vegetation at 1 km resolution, version 4. Harvard Dataverse. Dataset. https://doi.org/10.7910/DVN/QQHCIK
 "PNV"
@@ -70,7 +68,11 @@
 #'
 #' Sandy's Modern Pollen Data for climate reconstructionS, version 1.
 #'
-#' @format A data frame (\code{RasterBrick} object) with `r nrow(smpds::SMPDSv1)` rows and `r ncol(smpds::SMPDSv1)` columns.
+#' @format A data frame (\code{tibble} object) with `r nrow(smpds::SMPDSv1)` rows and `r ncol(smpds::SMPDSv1)` variables:
+#' \describe{
+#'   \item{...}{int ...}
+#' }
+#'
 #' @source
 #' Harrison, Sandy  (2019): Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset. http://dx.doi.org/10.17864/1947.194
 "SMPDSv1"
