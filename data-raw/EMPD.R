@@ -88,6 +88,18 @@ empdv2_counts <- empdv2_workbook$counts %>%
                  taxon_name) %>%
   dplyr::mutate(ID_COUNT = seq_along(entity_name), .before = 1)
 
+## Filter taxon_names
+empdv2_clean_taxon_names <- readxl::read_xlsx("~/Downloads/SMPDSv2/smpdsv2-taxon-names-2021-08-05_SPH.xlsx",
+                                              sheet = 1) %>%
+  dplyr::distinct()
+
+empdv2_counts2 <- empdv2_counts %>%
+  dplyr::left_join(empdv2_clean_taxon_names,
+                   by = "taxon_name") %>%
+  dplyr::filter(clean_name != "delete this") %>%
+  dplyr::rename(taxon_name_original = taxon_name,
+                taxon_name = clean_name)
+
 ## Search duplicated counts
 empdv2_counts_unique <- empdv2_counts %>%
   dplyr::distinct(entity_name, taxon_name, .keep_all = TRUE)
@@ -105,7 +117,8 @@ tmp <- empdv2_counts_dup %>%
   })
 
 # Create wide version of the unique counts
-empdv2_counts_wide <- empdv2_counts %>%
+empdv2_counts_wide <- empdv2_counts2 %>%
+  dplyr::distinct(entity_name, taxon_name, count, .keep_all = TRUE) %>%
   tidyr::pivot_wider(id_cols = entity_name, names_from = taxon_name, values_from = count) %>%
   dplyr::select(1, order(colnames(.)[-1]) + 1) # Sort the taxon_names alphabetically
 
