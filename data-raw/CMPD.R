@@ -1,6 +1,6 @@
 ## code to prepare `CMPD` dataset goes here
 # The Chinese Modern Pollen Data by Ni Jian
-china_modern_pollen_data <- readxl::read_xlsx("~/Downloads/SMPDSv2/Re_modern_pollen_data_China_NIJIAN/China modern pollen - data.xlsx",
+china_modern_pollen_data <- readxl::read_xlsx("inst/extdata/cmpd_counts.xlsx",
                                               sheet = 2,
                                               skip = 1) %>%
   dplyr::rename(entity_name = `Site name`,
@@ -10,7 +10,7 @@ china_modern_pollen_data <- readxl::read_xlsx("~/Downloads/SMPDSv2/Re_modern_pol
   dplyr::mutate(entity_name = entity_name %>%
                   stringr::str_squish()) %>%
   dplyr::slice(-c(1:2))
-china_modern_pollen_info <- readxl::read_xlsx("~/Downloads/SMPDSv2/Re_modern_pollen_data_China_NIJIAN/China modern pollen - info.xlsx",
+china_modern_pollen_info <- readxl::read_xlsx("inst/extdata/cmpd_metadata.xlsx",
                                               sheet = 2,
                                               skip = 1)  %>%
   dplyr::rename(site_name = `Site`,
@@ -18,9 +18,9 @@ china_modern_pollen_info <- readxl::read_xlsx("~/Downloads/SMPDSv2/Re_modern_pol
                 longitude = `Longitude (°E)`,
                 latitude = `Latitude(°N)`,
                 elevation = `Elevation (m)`,
-                site_type = `Sample type`,
+                entity_type = `Sample type`,
                 data_source = `Data source`,
-                entity_type = `Data type`,
+                data_type = `Data type`,
                 publication = 21) %>% # 参考文献 (References)
   dplyr::mutate(ID_CMPD = seq_along(entity_name),
                 entity_name = entity_name %>%
@@ -43,15 +43,10 @@ china_modern_pollen_info <- readxl::read_xlsx("~/Downloads/SMPDSv2/Re_modern_pol
                       stringr::str_squish()
 
                   }),
-                # site_name2 = iconv(site_name, "latin1", "ASCII", sub = "") %>%
-                #   stringr::str_squish(),
-                # site_name3 = entity_name,
                 basin_size = NA,
                 age_BP = NA,
                 DOI = NA,
                 source = "CMPD")
-names(china_modern_pollen_data)
-names(china_modern_pollen_info)
 
 # Find duplicated records
 idx <- duplicated(china_modern_pollen_data$entity_name)
@@ -61,17 +56,100 @@ china_modern_pollen_data_dup <- china_modern_pollen_data %>%
 # ------------------------------------------------------------------------------
 # |                                 Clean data                                 |
 # ------------------------------------------------------------------------------
-# Clean taxon names
-cmpd_clean_taxon_names <- readxl::read_xlsx("~/Downloads/SMPDSv2/smpdsv2-taxon-names-2021-08-05_SPH.xlsx",
-                                            sheet = 2,
-                                            n_max = 713)
+## Load table with taxons
+cmpd_taxons <- readr::read_csv("inst/extdata/cmpd_taxon.csv")
+### Clean taxon names
+cmpd_clean_taxon_names <- cmpd_taxons %>%
+  dplyr::filter(action == "update")
 
-## Nonsense. categories, to check numbers before deciding whether to delete
-cmpd_clean_taxon_names_nonsense <- readxl::read_xlsx("~/Downloads/SMPDSv2/smpdsv2-taxon-names-2021-08-05_SPH.xlsx",
-                                                     sheet = 2,
-                                                     col_names = c("taxon_name", "clean_name"),
-                                                     skip = 716,
-                                                     n_max = 30)
+### Nonsense. categories, to check numbers before deciding whether to delete
+cmpd_clean_taxon_names_nonsense <- cmpd_taxons %>%
+  dplyr::filter(action == "inspect")
+
+### Irrelevant taxon (to be deleted)
+cmpd_clean_taxon_names_delete <- cmpd_taxons %>%
+  dplyr::filter(action == "delete")
+
+## Create long version of the count data
+china_modern_pollen_data_long <- china_modern_pollen_data %>%
+  tidyr::pivot_longer(cols = -c(1:6), names_to = "taxon_name") %>%
+  dplyr::filter(!is.na(value))
+
+## Find entities with >1% of the total assemblage in the
+## `cmpd_clean_taxon_names_nonsense` list
+aux <- china_modern_pollen_data_long %>%
+  dplyr::filter(value > 0) %>% # Filter taxon with count = 0
+  dplyr::group_by(entity_name) %>% # Group by entity_name
+  dplyr::mutate(nonsense = ifelse(taxon_name %in%
+                                    cmpd_clean_taxon_names_nonsense$taxon_name,
+                                  value, 0) %>%
+                  as.double() %>%
+                  sum(na.rm = TRUE), # Find % of nonsense taxon
+                total = sum(as.double(value), na.rm = TRUE)) %>%
+  dplyr::filter(nonsense > 0) %>% # Filter entities without nonsense taxon
+  dplyr::distinct(entity_name, .keep_all = TRUE) %>%
+  dplyr::select(-taxon_name, -value)
+
+entities_with_high_perc_of_nonsense_taxon <- aux %>%
+  dplyr::filter(nonsense > 1)
+
+entities_with_low_perc_of_nonsense_taxon <- aux %>%
+  dplyr::filter(nonsense <= 1)
+
+china_modern_pollen_data_long2 <- china_modern_pollen_data_long %>%
+  # Filter entities with >1% of the total assemblage of nonsense taxon
+  dplyr::filter(!(entity_name %in%
+                    entities_with_high_perc_of_nonsense_taxon$entity_name)) %>%
+  # Filter counts with <1% of the total assemblage of nonsense taxon
+  dplyr::filter(#!(entity_name %in%
+                #    entities_with_low_perc_of_nonsense_taxon$entity_name) &
+                !(taxon_name %in%
+                    cmpd_clean_taxon_names_nonsense$taxon_name)) %>%
+  # Filter irrelevant taxon
+  dplyr::filter(!(taxon_name %in%
+                    cmpd_clean_taxon_names_delete$taxon_name)) %>%
+  # Update taxon names
+  dplyr::left_join(cmpd_clean_taxon_names,
+                   by = "taxon_name") %>%
+  dplyr::rename(taxon_name_original = taxon_name,
+                taxon_name = clean_name) %>%
+  # Aggregate multiple records of entity_name - taxon_name pairs
+  dplyr::group_by(entity_name, taxon_name) %>%
+  dplyr::mutate(value = sum(as.double(value), na.rm = TRUE)) %>%
+  dplyr::ungroup() %>%
+  dplyr::mutate(taxon_name = ifelse(is.na(taxon_name),
+                                    taxon_name_original,
+                                    taxon_name)) %>%
+  dplyr::distinct(entity_name, taxon_name, .keep_all = TRUE)
+
+
+china_modern_pollen_data_wide <- china_modern_pollen_data_long2 %>%
+  dplyr::select(-taxon_name_original) %>%
+  tidyr::pivot_wider(1:6, names_from = "taxon_name")
+
+CMPD <- china_modern_pollen_info %>%
+  dplyr::select(ID_CMPD,
+                source,
+                site_name,
+                entity_name,
+                latitude,
+                longitude,
+                elevation,
+                basin_size,
+                entity_type,
+                age_BP,
+                publication,
+                DOI
+  ) %>%
+  dplyr::right_join(china_modern_pollen_data_wide %>%
+                      dplyr::select(-c(1:2, 4:6)),
+                    by = "entity_name")
+
+usethis::use_data(CMPD, overwrite = TRUE)
+
+# ------------------------------------------------------------------------------
+# |                   Export nonsense records for inspection                   |
+# ------------------------------------------------------------------------------
 china_modern_pollen_data_nonsense <- china_modern_pollen_data %>%
   dplyr::select(1:6, !!cmpd_clean_taxon_names_nonsense$taxon_name) %>%
   dplyr::rowwise() %>%
@@ -90,28 +168,16 @@ china_modern_pollen_data_nonsense2 <- china_modern_pollen_info %>%
                 elevation
   ) %>%
   dplyr::right_join(china_modern_pollen_data_nonsense %>%
-                     dplyr::select(-c(1:2, 4:6))) # %>%
-  # purrr::map_dfr(~suppressWarnings(sum(as.numeric(.x), na.rm = TRUE)))
+                     dplyr::select(-c(1:2, 4:6)))
 china_modern_pollen_data_nonsense2 %>%
   readr::write_excel_csv("~/Downloads/SMPDSv2/CMPD-taxons-for-inspection_2021-08-09.csv", na = "")
 
-# To be deleted
-## Nonsense. categories, to check numbers before deciding whether to delete
-cmpd_clean_taxon_names_delete <- readxl::read_xlsx("~/Downloads/SMPDSv2/smpdsv2-taxon-names-2021-08-05_SPH.xlsx",
-                                                   sheet = 2,
-                                                   col_names = c("taxon_name", "clean_name"),
-                                                   skip = 747)
 
-china_modern_pollen_data_long <- china_modern_pollen_data %>%
-  tidyr::pivot_longer(cols = -c(1:6), names_to = "taxon_name") %>%
-  dplyr::filter(!is.na(value))  %>%
-  dplyr::filter(!(taxon_name %in% cmpd_clean_taxon_names_nonsense$taxon_name),
-                !(taxon_name %in% cmpd_clean_taxon_names_delete$taxon_name)) %>%
-  dplyr::left_join(cmpd_clean_taxon_names,
-                   by = "taxon_name") %>%
-  dplyr::rename(taxon_name_original = taxon_name,
-                taxon_name = clean_name)
-tmp20 <- china_modern_pollen_data_long %>%
+# ------------------------------------------------------------------------------
+# |          Export duplicated record: entity_name - taxon_name pairs          |
+# ------------------------------------------------------------------------------
+# Find duplicate entity_name - taxon_name pairs
+tmp20 <- china_modern_pollen_data_long2 %>%
   dplyr::group_by(entity_name, taxon_name) %>%
   dplyr::mutate(n = length(taxon_name),
                 unique_count = length(unique(value))) %>%
@@ -124,9 +190,16 @@ tmp21 %>%
   dplyr::select(1:7, 9, 8) %>%
   readr::write_excel_csv("~/Downloads/SMPDSv2/CMPD-multiple-records-same-taxon-entity.csv", na = "")
 
-china_modern_pollen_data_wide <- china_modern_pollen_data_long %>%
-  dplyr::select(-taxon_name_original) %>%
-  tidyr::pivot_wider(1:6, names_from = "taxon_name")
+
+china_modern_pollen_data_long <- china_modern_pollen_data %>%
+  tidyr::pivot_longer(cols = -c(1:6), names_to = "taxon_name") %>%
+  dplyr::filter(!is.na(value))  %>%
+  dplyr::filter(!(taxon_name %in% cmpd_clean_taxon_names_nonsense$taxon_name),
+                !(taxon_name %in% cmpd_clean_taxon_names_delete$taxon_name)) %>%
+  dplyr::left_join(cmpd_clean_taxon_names,
+                   by = "taxon_name") %>%
+  dplyr::rename(taxon_name_original = taxon_name,
+                taxon_name = clean_name)
 
 china_modern_pollen_data2 <- china_modern_pollen_data %>%
   dplyr::select(-!!cmpd_clean_taxon_names_nonsense$taxon_name,
@@ -136,22 +209,3 @@ china_modern_pollen_data2 <- china_modern_pollen_data %>%
                           dplyr::left_join(cmpd_clean_taxon_names,
                                            by = "taxon_name") %>%
                           .$clean_name))
-CMPD <- china_modern_pollen_info %>%
-  dplyr::select(ID_CMPD,
-                source,
-                site_name,
-                entity_name,
-                latitude,
-                longitude,
-                elevation,
-                basin_size,
-                site_type,
-                entity_type,
-                age_BP,
-                publication,
-                DOI
-              ) %>%
-  dplyr::full_join(china_modern_pollen_data2 %>%
-                     dplyr::select(-c(1:2, 4:6)))
-
-usethis::use_data(CMPD, overwrite = TRUE)
