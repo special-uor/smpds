@@ -1,4 +1,5 @@
 ﻿taxon_name,clean_name,action
+A. tubuliflorae,Asteroideae,update
 Abies,Abies,update
 ABIES,Abies,update
 Abies alba,Abies alba,update
@@ -18,14 +19,12 @@ Acer,Acer,update
 ACER,Acer,update
 Acer campestre,Acer campestre,update
 Acer campestre type,Acer campestre type,update
-Acer campestre type,Acer campestre type,update
 Acer pseudoplatanus,Acer pseudoplatanus,update
 Acer turkestanica,Acer turkestanica,update
 Acer type,Acer type,update
 Achillea,Achillea,update
 Achillea /Eupatorium tp.,Achillea/Eupatorium type,update
 Achillea T,Achillea type,update
-Achillea type,Achillea type,update
 Achillea type,Achillea type,update
 Achillea/Aster,Achillea/Aster,update
 Achillea/Aster type,Achillea/Aster type,update
@@ -77,9 +76,7 @@ Alkanna type,Alkanna type,update
 Alliaceae,Amaryllidaceae,update
 Allium,Allium,update
 Allium type,Allium type,update
-Allium type,Allium type,update
 Allium ursinum T,Allium ursinum type,update
-Allium ursinum type,Allium ursinum type,update
 Allium ursinum type,Allium ursinum type,update
 Alnaster,Alnus,update
 "Alnaster (Alnus shrub type: Alnaster fruticosus, Alnus fruticosa, Alnus maximowiczii)",Alnus alnobetula/Alnus maximowiczii,update
@@ -119,7 +116,6 @@ Ambrosia,Ambrosia,update
 Ambrosia artemisiifolia type,Ambrosia artemisiifolia type,update
 Ambrosia t.,Ambrosia type,update
 Ambrosia type,Ambrosia type,update
-Ambrosia type,Ambrosia type,update
 AMBROSIA type,Ambrosia type,update
 Ambrosia type: Xanthium,Xanthium,update
 Ammi type,Ammi type,update
@@ -127,7 +123,6 @@ Amorpha fruticosa,Amorpha fruticosa,update
 Anacardiaceae,Anacardiaceae,update
 Anagallis,Anagallis,update
 Anagallis arvensis,Anagallis arvensis,update
-Anagallis arvensis type,Anagallis arvensis type,update
 Anagallis arvensis type,Anagallis arvensis type,update
 Anagallis tenella,Anagallis tenella,update
 Anagallis tenella type,Anagallis tenella type,update
@@ -150,7 +145,6 @@ Anemone nemorosa type/Hepatica nobilis,Anemone nemorosa type/Hepatica nobilis,up
 Anemone nemorosa/ranunculoides,Anemone nemorosa/Anemone ranunculoides,update
 Anemone typ,Anemone type,update
 Anemone type,Anemone type,update
-Anemone type,Anemone type,update
 Anemone/Clematis type,Anemone/Clematis type,update
 Anemone/Pulsatilla type,Anemone/Pulsatilla type,update
 Anethum,Anethum,update
@@ -168,7 +162,6 @@ Anthemideae,Asteroideae,update
 Anthemis,Anthemis,update
 Anthemis  type,Anthemis type,update
 Anthemis typ,Anthemis type,update
-Anthemis type,Anthemis type,update
 Anthemis type,Anthemis type,update
 Anthemis/Achillea type,Achillea/Anthemis type,update
 Anthericum,Anthericum,update
@@ -197,11 +190,9 @@ Apiaceae undifferentiated,Apiaceae,update
 "Apiaceae, Pimpinella",Pimpinella,update
 "Apiaceae, Torilis type",Torilis type,update
 Apium inundatum type,Apium inundatum type,update
-Apium inundatum type,Apium inundatum type,update
 Apium type,Apium type,update
 Apium/Berula,Apium/Berula,update
 Aquilegia,Aquilegia,update
-Aquilegia type,Aquilegia type,update
 Aquilegia type,Aquilegia type,update
 Arabidopsis,Arabidopsis,update
 Araceae,Araceae,update
@@ -238,7 +229,6 @@ Artemisia genipii/A. mutellina,Artemisia genipii/Artemisia mutellina,update
 Artemisia herba-alba type,Artemisia herba-alba type,update
 Artemisia norvegica,Artemisia norvegica,update
 Artemisia type,Artemisia type,update
-Artemisia type,Artemisia type,update
 Artemisia undiff.,Artemisia,update
 Artemisia vulgaris type,Artemisia vulgaris type,update
 Aruncus T,Aruncus type,update
@@ -265,7 +255,6 @@ Asplenium ceterach type,Asplenium ceterach type,update
 Asplenium scolopendrium,Asplenium scolopendrium,update
 Asplenium trichomanes-ramosum,Asplenium viride,update
 Asplenium type,Asplenium type,update
-Asplenium type,Asplenium type,update
 Asplenium viride,Asplenium viride,update
 Ast. liguliflorae,Asteraceae (Liguliflorae),update
 Ast. tubulifl.,Asteroideae,update
@@ -273,7 +262,6 @@ Ast. tubuliflorae,Asteroideae,update
 Aster,Aster,update
 Aster  type,Aster type,update
 Aster bellidiastrum,Aster bellidiastrum,update
-Aster type,Aster type,update
 Aster type,Aster type,update
 Aster. liguliflorae,Asteraceae (Liguliflorae),update
 Aster. tubuliflorae,Asteroideae,update
@@ -302,7 +290,6 @@ Asteraceae ligulifl.,Asteraceae (Liguliflorae),update
 Asteraceae liguliflorae,Asteraceae (Liguliflorae),update
 Asteraceae Liguliflorae,Asteraceae (Liguliflorae),update
 Asteraceae matricaria type,Matricaria type,update
-Asteraceae saussurea type,Saussurea type,update
 Asteraceae saussurea type,Saussurea type,update
 Asteraceae senecio type,Senecio type,update
 Asteraceae subf. Asteroideae,Asteroideae,update
@@ -342,11 +329,9 @@ Astragalus alpinus,Astragalus alpinus,update
 Astragalus alpinus type,Astragalus alpinus type,update
 Astragalus T,Astragalus type,update
 Astragalus type,Astragalus type,update
-Astragalus type,Astragalus type,update
 Astragalus undiff.,Astragalus,update
 Astragalus/Oxytropis type,Astragalus/Oxytropis type,update
 Astrantia,Astrantia,update
-Astrantia type,Astrantia type,update
 Astrantia type,Astrantia type,update
 Ath._f.-f.,Athyrium filix-femina,update
 Athamanta cretensis,Athamanta cretensis,update
@@ -373,7 +358,6 @@ Bergenia crassifolia,Bergenia crassifolia,update
 Berula erecta,Berula erecta,update
 Berula erecta-group,Berula erecta type,update
 Bet._nana,Betula nana,update
-Beta type,Beta type,update
 Beta type,Beta type,update
 Betula,Betula,update
 BETULA,Betula,update
@@ -435,7 +419,6 @@ Botrychium type,Botrychium type,update
 Brass-eae,Brassicaceae,update
 Brassica,Brassica,update
 Brassica type,Brassica type,update
-Brassica type,Brassica type,update
 Brassicacaeae,Brassicaceae,update
 Brassicaceae,Brassicaceae,update
 BRASSICACEAE,Brassicaceae,update
@@ -479,7 +462,6 @@ Campanula gieseckiana,Campanula giesekiana,update
 Campanula trachelium T,Campanula trachelium type,update
 Campanula trachelium type,Campanula trachelium type,update
 Campanula type,Campanula type,update
-Campanula type,Campanula type,update
 Campanulaceae,Campanulaceae,update
 CAMPANULACEAE,Campanulaceae,update
 Campanulaceae indet.,Campanulaceae,update
@@ -500,7 +482,6 @@ Cardamine,Cardamine,update
 Cardamine parviflora,Cardamine parviflora,update
 Cardamine pratensis type,Cardamine pratensis type,update
 Cardamine type,Cardamine type,update
-Cardamine type,Cardamine type,update
 CARDAMINE TYPE,Cardamine type,update
 Carduaceae,Carduoideae,update
 Cardueae,Carduoideae,update
@@ -508,7 +489,6 @@ Cardueae/Asteroideae,Asteroideae/Carduoideae,update
 Carduoideae,Carduoideae,update
 Carduus,Carduus,update
 Carduus t.,Carduus type,update
-Carduus type,Carduus type,update
 Carduus type,Carduus type,update
 CARDUUS type,Carduus type,update
 Carex,Carex,update
@@ -532,7 +512,6 @@ Carpinus orientalis type,Carpinus orientalis type,update
 Carpinus orientalis/Ostrya,Carpinus orientalis/Ostrya,update
 Carpinus orientalis/Ostrya carpinifolia,Carpinus orientalis/Ostrya carpinifolia,update
 Carpinus orientalis/Ostrya carpinifolia type,Carpinus orientalis/Ostrya carpinifolia type,update
-Carpinus type,Carpinus type,update
 Carpinus type,Carpinus type,update
 Carpinus viminalis type,Carpinus viminea type,update
 Carpinus-Ostrya,Carpinus/Ostrya,update
@@ -585,11 +564,9 @@ Centaurea cyanus,Centaurea cyanus,update
 Centaurea cyanus  type,Centaurea cyanus type,update
 Centaurea cyanus t.,Centaurea cyanus type,update
 Centaurea cyanus type,Centaurea cyanus type,update
-Centaurea cyanus type,Centaurea cyanus type,update
 Centaurea depressa type,Centaurea depressa type,update
 Centaurea jacea,Centaurea jacea,update
 Centaurea jacea T,Centaurea jacea type,update
-Centaurea jacea type,Centaurea jacea type,update
 Centaurea jacea type,Centaurea jacea type,update
 Centaurea montana,Centaurea montana,update
 Centaurea montana t.,Centaurea montana type,update
@@ -597,7 +574,6 @@ Centaurea montana type,Centaurea montana type,update
 Centaurea nigra,Centaurea nigra,update
 Centaurea nigra  type,Centaurea nigra type,update
 Centaurea nigra t.,Centaurea nigra type,update
-Centaurea nigra type,Centaurea nigra type,update
 Centaurea nigra type,Centaurea nigra type,update
 Centaurea pro parte,Centaurea type,update
 Centaurea rhenana type,Centaurea rhenana type,update
@@ -625,7 +601,6 @@ Cerastium alpinum type,Cerastium alpinum type,update
 Cerastium arvense type,Cerastium arvense type,update
 Cerastium cerastioides type,Cerastium cerastioides type,update
 Cerastium fontanum T,Cerastium fontanum type,update
-Cerastium fontanum type,Cerastium fontanum type,update
 Cerastium fontanum type,Cerastium fontanum type,update
 Cerastium group,Cerastium type,update
 Cerastium typ,Cerastium type,update
@@ -763,7 +738,6 @@ CICHORIOIDEAE,Cichorioideae,update
 Cichorioideae undiff.,Cichorioideae,update
 Cichorium,Cichorium,update
 Cichorium intybus type,Cichorium intybus type,update
-Cichorium intybus type,Cichorium intybus type,update
 Cichorium type,Cichorium type,update
 Cichoroideae,Cichorioideae,update
 Cimicifuga,Cimicifuga,update
@@ -775,7 +749,6 @@ CIRSIUM,Cirsium,update
 Cirsium t.,Cirsium type,update
 Cirsium typ,Cirsium type,update
 Cirsium type,Cirsium type,update
-Cirsium type,Cirsium type,update
 Cirsium/Carduus,Cirsium/Carduus,update
 Cirsium/Carduus type,Cirsium/Carduus type,update
 Cirsium/Gundelia,Cirsium/Gundelia,update
@@ -785,13 +758,11 @@ Cistus,Cistus,update
 Cistus albidus type,Cistus albidus type,update
 Cistus crispus type,Cistus crispus type,update
 Cistus incanus type,Cistus incanus type,update
-Cistus incanus type,Cistus incanus type,update
 Cistus ladanifer,Cistus ladanifer,update
 Cistus ladanifer type,Cistus ladanifer type,update
 Cistus ladanifer/populifolius types,Cistus ladanifer/Cistus populifolius type,update
 Cistus monspeliensis,Cistus monspeliensis,update
 Cistus monspeliensis t.,Cistus monspeliensis type,update
-Cistus monspeliensis type,Cistus monspeliensis type,update
 Cistus monspeliensis type,Cistus monspeliensis type,update
 Cistus p.p.,Cistus type,update
 Cistus populifolius type,Cistus populifolius type,update
@@ -799,7 +770,6 @@ Cistus pro parte,Cistus type,update
 Cistus salvifolius,Cistus salviifolius,update
 Cistus salviifolius type,Cistus salviifolius type,update
 Cistus t. undiff.,Cistus type,update
-Cistus type,Cistus type,update
 Cistus type,Cistus type,update
 Cistus type undiff.,Cistus type,update
 Cistus undiff.,Cistus,update
@@ -882,7 +852,6 @@ Corylus avellana,Corylus avellana,update
 Corylus avellana type,Corylus avellana type,update
 Corylus maxima,Corylus maxima,update
 Corylus type,Corylus type,update
-Corylus type,Corylus type,update
 Corylus/Myrica,Corylus/Myrica,update
 Coryophyllaceae,Caryophyllaceae,update
 Cotinus,Cotinus,update
@@ -923,7 +892,6 @@ Cupressaceae type,Cupressaceae,update
 Cupressus,Cupressus,update
 CUPRESSUS,Cupressus,update
 Cupressus type,Cupressus type,update
-Cupressus type,Cupressus type,update
 Cuscuta,Cuscuta,update
 Cuscuta europaea T,Cuscuta europaea type,update
 Cuscuta europaea type,Cuscuta europaea type,update
@@ -953,7 +921,6 @@ Cystopteris type,Cystopteris type,update
 Cytinus hypocistis type,Cytinus hypocistis type,update
 Cytisus,Cytisus,update
 Cytisus type,Cytisus type,update
-Cytisus type,Cytisus type,update
 Cytisus/Genista type,Cytisus/Genista type,update
 Daphne,Daphne,update
 Daphne gnidium,Daphne gnidium,update
@@ -967,7 +934,6 @@ Daucus,Daucus,update
 Daucus carota,Daucus carota,update
 Daucus carota type,Daucus carota type,update
 Daucus t.,Daucus type,update
-Daucus type,Daucus type,update
 Daucus type,Daucus type,update
 Davallia,Davallia,update
 deciduous Quercus,Quercus deciduous,update
@@ -1027,10 +993,8 @@ Dryopteris f.-m.,Dryopteris filix-mas,update
 Dryopteris filix mas t.,Dryopteris filix-mas type,update
 Dryopteris filix-mas,Dryopteris filix-mas,update
 Dryopteris filix-mas type,Dryopteris filix-mas type,update
-Dryopteris filix-mas type,Dryopteris filix-mas type,update
 Dryopteris fragrans,Dryopteris fragrans,update
 Dryopteris t.,Dryopteris type,update
-Dryopteris type,Dryopteris type,update
 Dryopteris type,Dryopteris type,update
 Dryopteris undiff.,Dryopteris,update
 Dryopteris/Thelypteris,Dryopteris/Thelypteris,update
@@ -1069,7 +1033,6 @@ Ephedra alata type,Ephedra alata type,update
 Ephedra distachya,Ephedra distachya,update
 Ephedra distachya t.,Ephedra distachya type,update
 Ephedra distachya type,Ephedra distachya type,update
-Ephedra distachya type,Ephedra distachya type,update
 EPHEDRA DISTACHYA type,Ephedra distachya type,update
 Ephedra distachya-t.,Ephedra distachya type,update
 Ephedra distahia,Ephedra distachya,update
@@ -1079,7 +1042,6 @@ Ephedra fragilis  type,Ephedra fragilis type,update
 Ephedra fragilis subsp. campylopoda,Ephedra fragilis,update
 Ephedra fragilis t.,Ephedra fragilis type,update
 Ephedra fragilis type,Ephedra fragilis type,update
-Ephedra fragilis type,Ephedra fragilis type,update
 EPHEDRA FRAGILIS type,Ephedra fragilis type,update
 Ephedra fragilisse,Ephedra fragilis,update
 Ephedra major,Ephedra major,update
@@ -1087,7 +1049,6 @@ Ephedra major type,Ephedra major type,update
 Ephedra type,Ephedra type,update
 Epilobium,Epilobium,update
 EPILOBIUM angustif.,Epilobium angustifolium ,update
-Epilobium type,Epilobium type,update
 Epilobium type,Epilobium type,update
 Epilobium undiff.,Epilobium,update
 Epilobium-Ludwigia,Epilobium/Ludwigia,update
@@ -1116,8 +1077,6 @@ Erica scoparia t.,Erica scoparia type,update
 Erica scoparia type,Erica scoparia type,update
 Erica tetralix,Erica tetralix,update
 Erica tetralix type,Erica tetralix type,update
-Erica tetralix type,Erica tetralix type,update
-Erica type,Erica type,update
 Erica type,Erica type,update
 Erica umbellata,Erica umbellata,update
 Erica umbellata type,Erica umbellata type,update
@@ -1240,11 +1199,9 @@ Fraxinus exc. type,Fraxinus excelsior type,update
 Fraxinus excelsior,Fraxinus excelsior,update
 Fraxinus excelsior  type,Fraxinus excelsior type,update
 Fraxinus excelsior type,Fraxinus excelsior type,update
-Fraxinus excelsior type,Fraxinus excelsior type,update
 Fraxinus excelsior-t.,Fraxinus excelsior type,update
 Fraxinus ornus,Fraxinus ornus,update
 FRAXINUS ORNUS t.,Fraxinus ornus type,update
-Fraxinus ornus type,Fraxinus ornus type,update
 Fraxinus ornus type,Fraxinus ornus type,update
 FRAXINUS ORNUS type,Fraxinus ornus type,update
 Fraxinus sogdiana,Fraxinus sogdiana,update
@@ -1266,7 +1223,6 @@ Galium,Galium,update
 GALIUM,Galium,update
 Galium typ,Galium type,update
 Galium type,Galium type,update
-Galium type,Galium type,update
 Galium- type,Galium type,update
 Gallium,Galium,update
 Gallium type,Galium type,update
@@ -1284,7 +1240,6 @@ Gentiana lutea/G. pneumonanthe,Gentiana lutea/Gentiana pneumonanthe,update
 Gentiana nivalis type,Gentiana nivalis type,update
 Gentiana pneumonanthe,Gentiana pneumonanthe,update
 Gentiana pneumonanthe t.,Gentiana pneumonanthe type,update
-Gentiana pneumonanthe type,Gentiana pneumonanthe type,update
 Gentiana pneumonanthe type,Gentiana pneumonanthe type,update
 Gentiana purpurea,Gentiana purpurea,update
 Gentiana purpurea type,Gentiana purpurea type,update
@@ -1311,11 +1266,9 @@ Geum cf. G. rivale,Geum rivale type,update
 Geum T,Geum type,update
 Geum typ,Geum type,update
 Geum type,Geum type,update
-Geum type,Geum type,update
 Gipsofilla,Gypsophila,update
 Gladiolus,Gladiolus,update
 Glaucium,Glaucium,update
-Glaucium type,Glaucium type,update
 Glaucium type,Glaucium type,update
 Glaux,Lysimachia maritima,update
 Globularia,Globularia,update
@@ -1361,12 +1314,10 @@ Hedysarum type,Hedysarum type,update
 Hedysarum/Ebenus,Hedysarum/Ebenus,update
 Helianthemum,Helianthemum,update
 Helianthemum croceum type,Helianthemum croceum type,update
-Helianthemum croceum type,Helianthemum croceum type,update
 Helianthemum nummularium group,Helianthemum nummularium type,update
 Helianthemum nummularium type,Helianthemum nummularium type,update
 Helianthemum salicifolium type,Helianthemum salicifolium type,update
 Helianthemum t.,Helianthemum type,update
-Helianthemum type,Helianthemum type,update
 Helianthemum type,Helianthemum type,update
 Helianthemum undiff.,Helianthemum,update
 Helianthetum,Helianthemum,update
@@ -1387,7 +1338,6 @@ Heracleum,Heracleum,update
 Heracleum sphondyleum,Heracleum sphondylium,update
 Heracleum sphondylium,Heracleum sphondylium,update
 Heracleum type,Heracleum type,update
-Heracleum type,Heracleum type,update
 Herniaria,Herniaria,update
 Herniaria glabra,Herniaria glabra,update
 Herniaria type,Herniaria type,update
@@ -1406,7 +1356,6 @@ Homogyne,Homogyne,update
 Homogyne alpina,Homogyne alpina,update
 Hornungia,Hornungia,update
 Hornungia type,Hornungia type,update
-Hornungia type,Hornungia type,update
 Hupertia,Huperzia,update
 Huperzia,Huperzia,update
 Huperzia appressum,Huperzia appressa,update
@@ -1424,16 +1373,13 @@ Hypericaceae,Hypericaceae,update
 Hypericum,Hypericum,update
 Hypericum perforatum T,Hypericum perforatum type,update
 Hypericum perforatum type,Hypericum perforatum type,update
-Hypericum perforatum type,Hypericum perforatum type,update
 Hypericum perforatume type,Hypericum perforatum type,update
 Hypericum pulchrum type,Hypericum pulchrum type,update
-Hypericum type,Hypericum type,update
 Hypericum type,Hypericum type,update
 Hypericum undifferentiated,Hypericum,update
 Ilex,Ilex,update
 Ilex aquifolium,Ilex aquifolium,update
 ILEX aquifolium,Ilex aquifolium,update
-Ilex type,Ilex type,update
 Ilex type,Ilex type,update
 Illecebrum,Illecebrum,update
 Illecebrum verticillatum,Illecebrum verticillatum,update
@@ -1473,7 +1419,6 @@ Juniperus excelsa/J. oxycedrus,Juniperus excelsa/Juniperus oxycedrus,update
 Juniperus oxycedrus type,Juniperus oxycedrus type,update
 Juniperus sabina,Juniperus sabina,update
 Juniperus t.,Juniperus type,update
-Juniperus type,Juniperus type,update
 Juniperus type,Juniperus type,update
 Juniperus/Cupressaceae,Juniperus,update
 Jurinea type,Jurinea type,update
@@ -1576,7 +1521,6 @@ Limonium vulgare,Limonium vulgare,update
 Linaceae,Linaceae,update
 Linaria,Linaria,update
 Linaria type,Linaria type,update
-Linaria type,Linaria type,update
 Linnaea,Linnaea,update
 Linnaea borealis,Linnaea borealis,update
 Linum,Linum,update
@@ -1616,7 +1560,6 @@ Lotus alpinus type,Lotus alpinus type,update
 Lotus cf. L. corniculatus,Lotus corniculatus type,update
 Lotus t.,Lotus type,update
 Lotus type,Lotus type,update
-Lotus type,Lotus type,update
 Lotus uliginosus,Lotus uliginosus,update
 Luzula,Luzula,update
 LUZULA,Luzula,update
@@ -1630,7 +1573,6 @@ Lyc._inundatum,Lycopodium inundatum,update
 Lyc._selago,Lycopodium selago,update
 Lychnis,Silene,update
 Lychnis flos-cuculi,Silene flos-cuculi,update
-Lychnis type,Silene type,update
 Lychnis type,Silene type,update
 Lychnis viscaria type,Viscariia vulgaris type,update
 Lycium,Lycium,update
@@ -1675,7 +1617,6 @@ Lysimachia type,Lysimachia type,update
 Lysimachia vulgaris,Lysimachia vulgaris,update
 Lysimachia vulgaris T,Lysimachia vulgaris type,update
 Lysimachia vulgaris type,Lysimachia vulgaris type,update
-Lysimachia vulgaris type,Lysimachia vulgaris type,update
 Lythraceae,Lythraceae,update
 Lythrum,Lythrum,update
 Lythrum salicaria,Lythrum salicaria,update
@@ -1701,7 +1642,6 @@ Marsil-eae,Marsileaceae,update
 Matricaria,Matricaria,update
 Matricaria t.,Matricaria type,update
 Matricaria type,Matricaria type,update
-Matricaria type,Matricaria type,update
 Matteuccea strutiopt.,Matteuccia struthiopteris,update
 Matteuccia,Matteuccia,update
 Matteuccia struthiopteris,Matteuccia struthiopteris,update
@@ -1722,7 +1662,6 @@ Mentha,Mentha,update
 Mentha  type,Mentha type,update
 Mentha T,Mentha type,update
 Mentha t.,Mentha type,update
-Mentha type,Mentha type,update
 Mentha type,Mentha type,update
 Mentha/Salvia type,Mentha/Salvia type,update
 Mercurialis,Mercurialis,update
@@ -1781,7 +1720,6 @@ Myrica,Myrica,update
 Myrica gale,Myrica gale,update
 Myrica gale type,Myrica gale type,update
 Myrica tomentosa,Myrica gale,update
-Myrica type,Myrica type,update
 Myrica type,Myrica type,update
 Myricaceae,Myricaceae,update
 Myricaria,Myricaria,update
@@ -1859,7 +1797,6 @@ Ostrya/Carpinus,Carpinus/Ostrya,update
 Ostrya/Carpinus orientalis,Carpinus orientalis/Ostrya,update
 OSTRYA/CARPINUS ORIENTALIS,Carpinus orientalis/Ostrya,update
 Ostrya/Carpinus orientalis type,Carpinus orientalis/Ostrya type,update
-Ostrya/Carpinus orientalis type,Carpinus orientalis/Ostrya type,update
 Ostryopsis,Ostryopsis,update
 Osyris alba,Osyris alba,update
 Osyris alba type,Osyris alba type,update
@@ -1914,7 +1851,6 @@ Parnassia,Parnassia,update
 Parnassia palustris,Parnassia palustris,update
 PARNASSIA PALUSTRIS,Parnassia palustris,update
 Parnassia type,Parnassia type,update
-Parnassia type,Parnassia type,update
 Paronychia,Paronychia,update
 Paronychia t.,Paronychia type,update
 Paronychia type,Paronychia type,update
@@ -1942,7 +1878,6 @@ Peucedanum,Peucedanum,update
 Peucedanum ostruthium,Peucedanum ostruthium,update
 Peucedanum palustre T,Peucedanum palustre type,update
 Peucedanum palustre type,Peucedanum palustre type,update
-Peucedanum type,Peucedanum type,update
 Peucedanum type,Peucedanum type,update
 Phacelia,Phacelia,update
 Phacelia tanacetifolia,Phacelia tanacetifolia,update
@@ -1981,7 +1916,6 @@ Pimpinella,Pimpinella,update
 Pimpinella anisum,Pimpinella anisum,update
 Pimpinella major T,Pimpinella major type,update
 Pimpinella major type,Pimpinella major type,update
-Pimpinella major type,Pimpinella major type,update
 Pimpinella type,Pimpinella type,update
 Pin._sibirica,Pinus sibirica,update
 Pin._sylv.,Pinus sylvestris,update
@@ -2002,7 +1936,6 @@ Pinus diplost.,Pinus (Diploxylon),update
 Pinus diploxylon,Pinus (Diploxylon),update
 Pinus diploxylon type,Pinus (Diploxylon),update
 Pinus halepensis,Pinus halepensis,update
-Pinus halepensis type,Pinus halepensis type,update
 Pinus halepensis type,Pinus halepensis type,update
 Pinus halepensis/P. pinea type,Pinus halepensis/Pinus pinea type,update
 Pinus hap,Pinus (Haploxylon),update
@@ -2046,10 +1979,8 @@ Pinus sylvestris,Pinus sylvestris,update
 Pinus sylvestris T,Pinus sylvestris type,update
 Pinus sylvestris t.,Pinus sylvestris type,update
 Pinus sylvestris type,Pinus sylvestris type,update
-Pinus sylvestris type,Pinus sylvestris type,update
 Pinus sylvestris/mugo,Pinus mugo/Pinus sylvestris,update
 Pinus sylvestris/mugo type,Pinus mugo/Pinus sylvestris type,update
-Pinus sylvestris/nigra type,Pinus sylvestris/Pinus nigra type,update
 Pinus sylvestris/nigra type,Pinus sylvestris/Pinus nigra type,update
 Pinus sylvestris/nigra/uncinata t.,Pinus sylvestris/Pinus nigra/Pinus uncinata type,update
 Pinus sylvestris/P. nigra type,Pinus sylvestris/Pinus nigra type,update
@@ -2090,7 +2021,6 @@ Plantago albicans,Plantago albicans,update
 Plantago albicans type,Plantago albicans type,update
 Plantago alpina,Plantago alpina,update
 Plantago alpina type,Plantago alpina type,update
-Plantago alpina type,Plantago alpina type,update
 Plantago alpinum,Plantago alpina,update
 Plantago carinata type,Plantago subulata type,update
 Plantago cf. P. afra,Plantago afra type,update
@@ -2098,18 +2028,15 @@ Plantago cf. P. lanceolata,Plantago lanceolata type,update
 Plantago coronopus,Plantago coronopus,update
 Plantago coronopus t.,Plantago coronopus type,update
 Plantago coronopus type,Plantago coronopus type,update
-Plantago coronopus type,Plantago coronopus type,update
 Plantago cylindrica type,Plantago cylindrica type,update
 Plantago indet.,Plantago,update
 PLANTAGO indet.,Plantago,update
 Plantago l,Plantago,update
 Plantago lagopus type,Plantago lagopus type,update
-Plantago lagopus type,Plantago lagopus type,update
 Plantago lanc.,Plantago lanceolata,update
 PLANTAGO lanceol.,Plantago lanceolata,update
 Plantago lanceolata,Plantago lanceolata,update
 Plantago lanceolata t.,Plantago lanceolata type,update
-Plantago lanceolata type,Plantago lanceolata type,update
 Plantago lanceolata type,Plantago lanceolata type,update
 Plantago lanceolata type/P. major type,Plantago lanceolata/Plantago major type,update
 Plantago lusitanica,Plantago lusitanica,update
@@ -2117,7 +2044,6 @@ Plantago maior,Plantago major,update
 Plantago maior/media,Plantago media/Plantago major,update
 Plantago major,Plantago major,update
 PLANTAGO major,Plantago major,update
-Plantago major type,Plantago major type,update
 Plantago major type,Plantago major type,update
 Plantago major-media,Plantago media/Plantago major,update
 Plantago major/media,Plantago media/Plantago major,update
@@ -2129,7 +2055,6 @@ Plantago major/Plantago media,Plantago media/Plantago major,update
 Plantago major/Plantago media type,Plantago media/Plantago major type,update
 Plantago maritima,Plantago maritima,update
 PLANTAGO MARITIMA,Plantago maritima,update
-Plantago maritima type,Plantago maritima type,update
 Plantago maritima type,Plantago maritima type,update
 Plantago maritima/alpina type,Plantago alpina/Plantago maritima type,update
 Plantago med,Plantago media,update
@@ -2146,7 +2071,6 @@ Plantago psyllium type,Plantago psyllium type,update
 Plantago sp.,Plantago,update
 Plantago sp./major,Plantago major,update
 Plantago tenuiflora t.,Plantago tenuiflora type,update
-Plantago tenuiflora type,Plantago tenuiflora type,update
 Plantago tenuiflora type,Plantago tenuiflora type,update
 Plantago type,Plantago type,update
 Plantago undiff,Plantago,update
@@ -2222,13 +2146,11 @@ Polygonum aviculare,Polygonum aviculare,update
 Polygonum aviculare T,Polygonum aviculare type,update
 Polygonum aviculare t.,Polygonum aviculare type,update
 Polygonum aviculare type,Polygonum aviculare type,update
-Polygonum aviculare type,Polygonum aviculare type,update
 Polygonum aviculare-group,Polygonum aviculare type,update
 Polygonum aviculare/bistorta type,Polygonum aviculare/Polygonum bistorta type,update
 Polygonum avicularia,Polygonum aviculare,update
 Polygonum bistorta,Polygonum bistorta,update
 POLYGONUM bistorta,Polygonum bistorta,update
-Polygonum bistorta type,Polygonum bistorta type,update
 Polygonum bistorta type,Polygonum bistorta type,update
 POLYGONUM BISTORTA type,Polygonum bistorta type,update
 Polygonum bistorta/P. viviparum,Polygonum bistorta/Polygonum viviparum,update
@@ -2278,9 +2200,7 @@ Polypodium undiff.,Polypodium,update
 Polypodium virginianum,Polypodium virginianum,update
 Polypodium vulgare,Polypodium vulgare,update
 Polypodium vulgare type,Polypodium vulgare type,update
-Polypodium vulgare type,Polypodium vulgare type,update
 Polystichum,Polystichum,update
-Polystichum type,Polystichum type,update
 Polystichum type,Polystichum type,update
 Poppulus,Populus,update
 Populus,Populus,update
@@ -2297,7 +2217,6 @@ Potentilla recta,Potentilla recta,update
 Potentilla recta type,Potentilla recta type,update
 Potentilla T,Potentilla type,update
 Potentilla t.,Potentilla type,update
-Potentilla type,Potentilla type,update
 Potentilla type,Potentilla type,update
 Poterium,Poterium,update
 POTERIUM,Poterium,update
@@ -2362,7 +2281,6 @@ Pulmonaria,Pulmonaria,update
 Pulmonaria T,Pulmonaria type,update
 Pulmonaria t.,Pulmonaria type,update
 Pulmonaria type,Pulmonaria type,update
-Pulmonaria type,Pulmonaria type,update
 Pulmonaria-group,Pulmonaria type,update
 Pulsatilla,Pulsatilla,update
 Pulsatilla alpina?,Pulsatilla alpina type,update
@@ -2392,7 +2310,6 @@ Quercus cf. Q. rotundifolia,Quercus rotundifolia type,update
 Quercus cf. Q. semecarpifolia,Quercus semecarpifolia type,update
 Quercus coccifera,Quercus coccifera,update
 Quercus coccifera type,Quercus coccifera type,update
-Quercus coccifera type,Quercus coccifera type,update
 QUERCUS COCCIFERA type,Quercus coccifera type,update
 Quercus coccifera/Q. ilex,Quercus coccifera/Quercus ilex,update
 Quercus decid.,Quercus deciduous,update
@@ -2410,7 +2327,6 @@ Quercus faginea type,Quercus faginea type,update
 Quercus ilex,Quercus ilex,update
 QUERCUS ilex,Quercus ilex,update
 Quercus ilex type,Quercus ilex type,update
-Quercus ilex type,Quercus ilex type,update
 QUERCUS ILEX type,Quercus ilex type,update
 Quercus ilex/coccifera,Quercus coccifera/Quercus ilex,update
 Quercus ilex/Q. coccifera type,Quercus coccifera/Quercus ilex type,update
@@ -2419,14 +2335,12 @@ Quercus ithaburensis type,Quercus ithaburensis type,update
 Quercus petraea,Quercus petraea,update
 Quercus pro parte,Quercus,update
 Quercus pubescens type,Quercus pubescens type,update
-Quercus pubescens type,Quercus pubescens type,update
 Quercus pubescens/petraea,Quercus petraea/Quercus pubescens,update
 Quercus pubescens/Q. robur type,Quercus robur/Quercus pubescens type,update
 Quercus pyrenaica type,Quercus pyrenaica type,update
 Quercus rob.-pub. type,Quercus robur/Quercus pubescens type,update
 Quercus robur,Quercus robur,update
 Quercus robur T,Quercus robur type,update
-Quercus robur type,Quercus robur type,update
 Quercus robur type,Quercus robur type,update
 QUERCUS ROBUR type,Quercus robur type,update
 Quercus robur-group,Quercus robur type,update
@@ -2467,7 +2381,6 @@ Ranunculus acris,Ranunculus acris,update
 Ranunculus acris T,Ranunculus acris type,update
 Ranunculus acris t.,Ranunculus acris type,update
 Ranunculus acris type,Ranunculus acris type,update
-Ranunculus acris type,Ranunculus acris type,update
 Ranunculus acris type undiff.,Ranunculus acris type,update
 Ranunculus acris-group,Ranunculus acris type,update
 Ranunculus acris-t.,Ranunculus acris type,update
@@ -2492,7 +2405,6 @@ Ranunculus sp.,Ranunculus,update
 Ranunculus trichophyllus type,Ranunculus trichophyllus type,update
 Ranunculus typ,Ranunculus type,update
 Ranunculus type,Ranunculus type,update
-Ranunculus type,Ranunculus type,update
 Ranunculus undiff.,Ranunculus,update
 Ranunculus undiff. type,Ranunculus type,update
 Ranunuculaceae,Ranunculaceae,update
@@ -2510,7 +2422,6 @@ Rhamnus catharticus,Rhamnus catharticus,update
 Rhamnus cf.,Rhamnus type,update
 Rhamnus frangula,Frangula alnus,update
 Rhamnus type,Rhamnus type,update
-Rhamnus type,Rhamnus type,update
 Rhamnus/Frangula,Rhamnus/Frangula,update
 Rhamnus/Paliurus,Rhamnus/Paliurus,update
 Rheum,Rheum,update
@@ -2520,7 +2431,6 @@ Rhinanthus,Rhinanthus,update
 Rhinanthus T,Rhinanthus type,update
 Rhinanthus t.,Rhinanthus type,update
 Rhinanthus typ,Rhinanthus type,update
-Rhinanthus type,Rhinanthus type,update
 Rhinanthus type,Rhinanthus type,update
 Rhinanthus type undiff.,Rhinanthus type,update
 Rhinanthus-group,Rhinanthus type,update
@@ -2547,7 +2457,6 @@ Roemeria t.,Roemeria type,update
 Rosa,Rosa,update
 Rosa t.,Rosa type,update
 Rosa typ,Rosa type,update
-Rosa type,Rosa type,update
 Rosa type,Rosa type,update
 Rosa/Prunus,Rosa/Prunus,update
 Rosaceae,Rosaceae,update
@@ -2605,7 +2514,6 @@ Rumex acetosa,Rumex acetosa,update
 RUMEX acetosa,Rumex acetosa,update
 Rumex acetosa group,Rumex acetosa type,update
 Rumex acetosa type,Rumex acetosa type,update
-Rumex acetosa type,Rumex acetosa type,update
 Rumex acetosa type/Oxyria,Rumex acetosa/Oxyria type,update
 Rumex acetosa type/R. acetosella type,Rumex acetosa/Rumex acetosella type,update
 Rumex acetosa/R. acetosella,Rumex acetosa/Rumex acetosella,update
@@ -2615,11 +2523,9 @@ Rumex acetosa/Rumex acetosella type,Rumex acetosa/Rumex acetosella type,update
 Rumex acetosella,Rumex acetosella,update
 Rumex acetosella t.,Rumex acetosella type,update
 Rumex acetosella type,Rumex acetosella type,update
-Rumex acetosella type,Rumex acetosella type,update
 Rumex alpestris,Rumex alpestris,update
 Rumex alpinus,Rumex alpinus,update
 Rumex aquaticus,Rumex aquaticus,update
-Rumex aquaticus type,Rumex aquaticus type,update
 Rumex aquaticus type,Rumex aquaticus type,update
 Rumex aquaticus typeype,Rumex aquaticus type,update
 RUMEX cf. obtusif.,Rumex obtusifolius type,update
@@ -2634,11 +2540,9 @@ Rumex hydrolapathum,Rumex hydrolapathum,update
 RUMEX indet.,Rumex,update
 RUMEX LONGIFOLIUS,Rumex longifolius,update
 Rumex longifolius type,Rumex longifolius type,update
-Rumex longifolius type,Rumex longifolius type,update
 Rumex obtusifolius,Rumex obtusifolius,update
 Rumex obtusifolius T,Rumex obtusifolius type,update
 Rumex obtusifolius t.,Rumex obtusifolius type,update
-Rumex obtusifolius type,Rumex obtusifolius type,update
 Rumex obtusifolius type,Rumex obtusifolius type,update
 Rumex sanguineus group,Rumex sanguineus type,update
 Rumex sanguineus type,Rumex sanguineus type,update
@@ -2689,11 +2593,9 @@ Sambucus ebulus,Sambucus ebulus,update
 Sambucus nigra,Sambucus nigra,update
 Sambucus nigra typ,Sambucus nigra type,update
 Sambucus nigra type,Sambucus nigra type,update
-Sambucus nigra type,Sambucus nigra type,update
 Sambucus nigra/racemosa,Sambucus nigra/Sambucus racemosa,update
 Sambucus nigra/S. racemosa,Sambucus nigra/Sambucus racemosa,update
 Sambucus racemosa,Sambucus racemosa,update
-Sambucus racemosa type,Sambucus racemosa type,update
 Sambucus racemosa type,Sambucus racemosa type,update
 Sambucus sibirica,Sambucus sibirica,update
 Sambucus type,Sambucus type,update
@@ -2728,7 +2630,6 @@ Saussurea,Saussurea,update
 Saussurea alpina,Saussurea alpina,update
 Saussurea t.,Saussurea type,update
 Saussurea type,Saussurea type,update
-Saussurea type,Saussurea type,update
 Saxif-eae,Saxifragaceae,update
 Saxifraga,Saxifraga,update
 Saxifraga aizoides type,Saxifraga aizoides,update
@@ -2747,11 +2648,9 @@ Saxifraga nivalis type,Micranthes nivalis type,update
 Saxifraga opposite.,Saxifraga oppositifolia,update
 Saxifraga oppositifolia,Saxifraga oppositifolia,update
 Saxifraga oppositifolia type,Saxifraga oppositifolia type,update
-Saxifraga oppositifolia type,Saxifraga oppositifolia type,update
 Saxifraga paniculata type,Saxifraga paniculata type,update
 Saxifraga sp.,Saxifraga,update
 Saxifraga stellaris,Saxifraga stellaris,update
-Saxifraga stellaris type,Saxifraga stellaris type,update
 Saxifraga stellaris type,Saxifraga stellaris type,update
 Saxifraga tricuspidata,Saxifraga tricuspidata,update
 Saxifraga tricuspidata type,Saxifraga tricuspidata type,update
@@ -2768,7 +2667,6 @@ Scabiosa columbaria type,Scabiosa columbaria type,update
 Scabiosa rotata type,Scabiosa rotata type,update
 Scabiosa t.,Scabiosa type,update
 Scabiosa type,Scabiosa type,update
-Scabiosa type,Scabiosa type,update
 Scabiosa undiff.,Scabiosa,update
 Scabiosa/Succisa type,Scabiosa/Succisa type,update
 Scandix,Scandix,update
@@ -2779,7 +2677,6 @@ Schoenus,Schoenus,update
 Schoenus type,Schoenus type,update
 Schulzia,Schulzia,update
 Sciadopitys,Sciadopitys,update
-Scilla type,Scilla type,update
 Scilla type,Scilla type,update
 Scirpus,Scirpus,update
 Scirpus lacustris type,Scirpus lacustris type,update
@@ -2792,12 +2689,10 @@ Scorconera laciniata,Scorzonera laciniata,update
 Scorzonera,Scorzonera,update
 Scorzonera humilis type,Scorzonera humilis type,update
 Scorzonera type,Scorzonera type,update
-Scorzonera type,Scorzonera type,update
 Scrofulariaceae,Scrophulariaceae,update
 Scroph-eae,Scrophulariaceae,update
 Scrophularia,Scrophularia,update
 Scrophularia typ,Scrophularia type,update
-Scrophularia type,Scrophularia type,update
 Scrophularia type,Scrophularia type,update
 Scrophularia/Verbascum,Scrophularia/Verbascum,update
 Scrophularia/Verbascum type,Scrophularia/Verbascum type,update
@@ -2815,16 +2710,13 @@ Securinega tinctoria type,Flueggea tinctoria type,update
 Sedum,Sedum,update
 SEDUM,Sedum,update
 Sedum type,Sedum type,update
-Sedum type,Sedum type,update
 Sempervivum,Sempervivum,update
 Senecio,Senecio,update
 Senecio cf.,Senecio type,update
 Senecio T,Senecio type,update
 Senecio t.,Senecio type,update
 Senecio type,Senecio type,update
-Senecio type,Senecio type,update
 Serratula,Serratula,update
-Serratula type,Serratula type,update
 Serratula type,Serratula type,update
 Seseli type,Seseli type,update
 Setaria,Setaria,update
@@ -2835,7 +2727,6 @@ Silene,Silene,update
 Silene acaulis,Silene acaulis,update
 Silene acaulis type,Silene acaulis type,update
 Silene dioica,Silene dioica,update
-Silene dioica type,Silene dioica type,update
 Silene dioica type,Silene dioica type,update
 Silene pro parte,Silene,update
 Silene rupestris,Silene rupestris,update
@@ -2849,7 +2740,6 @@ Silene vulgaris type,Silene vulgaris type,update
 Sinapis,Sinapis,update
 Sinapis typ,Sinapis type,update
 Sinapis type,Sinapis type,update
-Sinapis type,Sinapis type,update
 Sium latifolium T,Sium latifolium type,update
 Sium t.,Sium type,update
 Smilax,Smilax,update
@@ -2861,12 +2751,10 @@ Solanum,Solanum,update
 Solanum dulcamara,Solanum dulcamara,update
 Solanum nigrum,Solanum nigrum,update
 Solanum nigrum type,Solanum nigrum type,update
-Solanum nigrum type,Solanum nigrum type,update
 Solanum tuberosum,Solanum tuberosum,update
 Soldanella,Soldanella,update
 Soldanella type,Soldanella type,update
 Solidago,Solidago,update
-Solidago type,Solidago type,update
 Solidago type,Solidago type,update
 Solidago virgaurea type,Solidago virgaurea type,update
 Sonchus type,Sonchus type,update
@@ -2886,8 +2774,6 @@ Spartium,Spartium,update
 Spergula,Spergula,update
 Spergula arvensis,Spergula arvensis,update
 Spergula arvensis type,Spergula arvensis type,update
-Spergula arvensis type,Spergula arvensis type,update
-Spergula type,Spergula type,update
 Spergula type,Spergula type,update
 Spergula/Spergularia,Spergula/Spergularia,update
 Spergularia,Spergularia,update
@@ -2904,9 +2790,7 @@ Spori monoleti,Polypodiales,update
 Stachys,Stachys,update
 Stachys (Galeopsis - Ballota - Gruppe),Stachys,update
 Stachys sylvatica type,Stachys sylvatica type,update
-Stachys sylvatica type,Stachys sylvatica type,update
 Stachys sylvestris,Stachys sylvestris,update
-Stachys type,Stachys type,update
 Stachys type,Stachys type,update
 Stahhys sylvatica type,Stachys sylvatica type,update
 Stellaria,Stellaria,update
@@ -2945,7 +2829,6 @@ Tamus,Tamus,update
 TAMUS,Tamus,update
 Taraxacum,Taraxacum,update
 Taraxacum type,Taraxacum type,update
-Taraxacum type,Taraxacum type,update
 Taxodiaceae,Taxodiaceae,update
 Taxodiaceae/Cupressaceae/Taxaceae,Cupressaceae/Taxaceae,update
 Taxodium,Taxodium,update
@@ -2959,8 +2842,6 @@ Thalictrum alpinum,Thalictrum alpinum,update
 THALICTRUM ALPINUM,Thalictrum alpinum,update
 Thalictrum aquilegiifolium,Thalictrum aquilegiifolium,update
 Thalictrum flavum type,Thalictrum flavum type,update
-Thalictrum flavum type,Thalictrum flavum type,update
-Thalictrum type,Thalictrum type,update
 Thalictrum type,Thalictrum type,update
 THALICTRUM type,Thalictrum type,update
 Thalictrum type N,Thalictrum type,update
@@ -3014,15 +2895,12 @@ Trifolium dubium type,Trifolium dubium type,update
 Trifolium montanum,Trifolium montanum,update
 Trifolium pratense,Trifolium pratense,update
 Trifolium pratense type,Trifolium pratense type,update
-Trifolium pratense type,Trifolium pratense type,update
 Trifolium repens,Trifolium repens,update
 Trifolium repens T,Trifolium repens type,update
-Trifolium repens type,Trifolium repens type,update
 Trifolium repens type,Trifolium repens type,update
 Trifolium spadiceum type,Trifolium spadiceum type,update
 Trifolium t.,Trifolium type,update
 Trifolium typ,Trifolium type,update
-Trifolium type,Trifolium type,update
 Trifolium type,Trifolium type,update
 Trifolium undiff.,Trifolium,update
 Trigonella,Trigonella,update
@@ -3040,14 +2918,12 @@ Tussilago farfara,Tussilago farfara,update
 Tussilago type,Tussilago type,update
 Ulex,Ulex,update
 Ulex type,Ulex type,update
-Ulex type,Ulex type,update
 Ulex/Cytisus type,Cytisus/Ulex type,update
 Ulmaceae,Ulmaceae,update
 Ulmus,Ulmus,update
 ULMUS,Ulmus,update
 Ulmus / Zelkova,Ulmus/Zelkova,update
 Ulmus glabra,Ulmus glabra,update
-Ulmus glabra type,Ulmus glabra type,update
 Ulmus glabra type,Ulmus glabra type,update
 Ulmus laevis,Ulmus laevis,update
 Ulmus minor,Ulmus minor,update
@@ -3069,7 +2945,6 @@ Urtica cf. U. dioica,Urtica dioica type,update
 Urtica cf. U. pilulifera,Urtica pilulifera type,update
 Urtica dioica,Urtica dioica,update
 Urtica dioica t.,Urtica dioica type,update
-Urtica dioica type,Urtica dioica type,update
 Urtica dioica type,Urtica dioica type,update
 Urtica dubia,Urtica membranacea,update
 Urtica membranacea,Urtica membranacea,update
@@ -3094,7 +2969,6 @@ Vaccinium myrtillus type,Vaccinium myrtillus type,update
 Vaccinium oxycoccos,Vaccinium oxycoccos,update
 Vaccinium T,Vaccinium type,update
 Vaccinium typ,Vaccinium type,update
-Vaccinium type,Vaccinium type,update
 Vaccinium type,Vaccinium type,update
 Vaccinium undiff.,Vaccinium,update
 Vaccinium vitis-idaea,Vaccinium vitis-idaea,update
@@ -3122,12 +2996,10 @@ Veratrum,Veratrum,update
 Veratrum type,Veratrum type,update
 Verbascum,Verbascum,update
 Verbascum type,Verbascum type,update
-Verbascum type,Verbascum type,update
 Verbascumcf.,Verbascum type,update
 Verbena,Verbena,update
 Verbenaceae,Verbenaceae,update
 Veronica,Veronica,update
-Veronica type,Veronica type,update
 Veronica type,Veronica type,update
 Veronica/Lamium album type,Lamium album/Veronica type,update
 Vib._op-s,Viburnum opulus,update
@@ -3144,7 +3016,6 @@ Vicea,Vicia,update
 Vicia,Vicia,update
 Vicia cracca,Vicia cracca,update
 Vicia cracca type,Vicia cracca type,update
-Vicia cracca type,Vicia cracca type,update
 Vicia faba,Vicia faba,update
 Vicia faba type,Vicia faba type,update
 Vicia lathyroides,Vicia lathyroides,update
@@ -3152,7 +3023,6 @@ Vicia sativa type,Vicia sativa type,update
 Vicia sylvatica type,Vicia sylvatica type,update
 Vicia T,Vicia type,update
 Vicia tp.,Vicia type,update
-Vicia type,Vicia type,update
 Vicia type,Vicia type,update
 Vicia/Lathyrus,Lathyrus/Vicia,update
 Vicia/Lathyrus type,Lathyrus/Vicia type,update
@@ -3166,7 +3036,6 @@ Viola odorata type,Viola odorata type,update
 Viola palustris,Viola palustris,update
 Viola palustris type,Viola palustris type,update
 Viola tricolor,Viola tricolor,update
-Viola tricolor type,Viola tricolor type,update
 Viola tricolor type,Viola tricolor type,update
 Viola-tricolor/V. arvensis,Viola tricolor/Viola arvensis,update
 Violaceae,Violaceae,update
@@ -3256,7 +3125,6 @@ Avena T,,delete
 Avena t.,,delete
 Avena Triticum group,,delete
 Avena type,,delete
-Avena type,,delete
 Avena-Triticum,,delete
 Avena-Triticum group,,delete
 Avena/Triticum,,delete
@@ -3309,15 +3177,12 @@ Callitriche,,delete
 Caltha,,delete
 Caltha palustris,,delete
 Caltha palustris type,,delete
-Caltha palustris type,,delete
 Caltha T,,delete
 Caltha typ,,delete
-Caltha type,,delete
 Caltha type,,delete
 Cannabis,,delete
 Cannabis sativa,,delete
 Cannabis t.,,delete
-Cannabis type,,delete
 Cannabis type,,delete
 Cannabis/Humulus,,delete
 Cannabis/Humulus type,,delete
@@ -3623,7 +3488,6 @@ Hordeum group,,delete
 Hordeum T,,delete
 Hordeum typ,,delete
 Hordeum type,,delete
-Hordeum type,,delete
 Hordeum-group,,delete
 Hot._pal.,,delete
 Hottonia,,delete
@@ -3633,7 +3497,6 @@ Hottonia type,,delete
 Humulus,,delete
 Humulus lupulus,,delete
 Humulus lupulus cf.,,delete
-Humulus lupulus type,,delete
 Humulus lupulus type,,delete
 Humulus lupulus/Cannabis,,delete
 Humulus typ,,delete
@@ -3797,10 +3660,8 @@ Myr-lum,,delete
 Myriophyllum,,delete
 Myriophyllum alterniflorum,,delete
 Myriophyllum alterniflorum type,,delete
-Myriophyllum alterniflorum type,,delete
 Myriophyllum spicatum,,delete
 MYRIOPHYLLUM SPICATUM,,delete
-Myriophyllum spicatum type,,delete
 Myriophyllum spicatum type,,delete
 Myriophyllum spicatum/M. verticillatum,,delete
 Myriophyllum undiff.,,delete
@@ -4021,7 +3882,6 @@ Ranunculus aquatilis type,,delete
 Ranunculus batrachium type,,delete
 Ranunculus flammula,,delete
 Ranunculus flammula type,,delete
-Ranunculus flammula type,,delete
 Ranunculus flammula-group,,delete
 Ranunculus lingua type,,delete
 Ranunculus peltatus type,,delete
@@ -4121,9 +3981,7 @@ SPARGANIUM,,delete
 Sparganium angustifolium type,,delete
 Sparganium emersum,,delete
 Sparganium emersum type,,delete
-Sparganium emersum type,,delete
 Sparganium erectum,,delete
-Sparganium erectum type,,delete
 Sparganium erectum type,,delete
 Sparganium minimum,,delete
 Sparganium T,,delete
@@ -4135,46 +3993,25 @@ Sparganium/Typha angustifolia,,delete
 Sparganium/Typha angustifolia type,,delete
 Spermatophyta,,delete
 Sphag._angustifolium,,delete
-Sphag._angustifolium,,delete
-Sphag._fuscum,,delete
 Sphag._fuscum,,delete
 Sphag._magel-m,,delete
-Sphag._magel-m,,delete
-Sphagnaceae,,delete
 Sphagnaceae,,delete
 Sphagnales,,delete
-Sphagnales,,delete
-Sphagnum,,delete
 Sphagnum,,delete
 SPHAGNUM,,delete
-SPHAGNUM,,delete
-Sphagnum type,,delete
 Sphagnum type,,delete
 SPHAGNUM type,,delete
-SPHAGNUM type,,delete
-Sphagnum: leaves,,delete
 Sphagnum: leaves,,delete
 Spherical soot particles,,delete
-Spherical soot particles,,delete
-Spheroidal carbonaceous particle,,delete
 Spheroidal carbonaceous particle,,delete
 Spheroidal Carbonaceous Particles,,delete
-Spheroidal Carbonaceous Particles,,delete
-Spicules,,delete
 Spicules,,delete
 Spike,,delete
-Spike,,delete
-Spike (counted),,delete
 Spike (counted),,delete
 Spike (grains/tablet),,delete
-Spike (grains/tablet),,delete
-Spike (mass),,delete
 Spike (mass),,delete
 Spike tablets (number),,delete
-Spike tablets (number),,delete
 Spikes/slide,,delete
-Spikes/slide,,delete
-Spikes/tablet,,delete
 Spikes/tablet,,delete
 Spiniferites,,delete
 Spiniferites (reworked),,delete
@@ -4204,7 +4041,6 @@ Sporomorphs,,delete
 Sporormiella,,delete
 Sporormiella (HdV-113),,delete
 Sporormiella sp.,,delete
-Sporormiella type,,delete
 Sporormiella type,,delete
 Steris segetalis,,delete
 Stomata,,delete
@@ -4277,7 +4113,6 @@ Triletes psilate,,delete
 Tripterospora,,delete
 Triticum,,delete
 Triticum T,,delete
-Triticum type,,delete
 Triticum type,,delete
 Triticum/Avena,,delete
 Triticum/Avena type,,delete
@@ -4373,7 +4208,6 @@ Typha (tetrad),,delete
 Typha angustata,,delete
 Typha angustifolia,,delete
 Typha angustifolia type,,delete
-Typha angustifolia type,,delete
 Typha angustifolia/Sparganium,,delete
 Typha angustifolia/Sparganium type,,delete
 TYPHA latif.,,delete
@@ -4382,7 +4216,6 @@ TYPHA LATIFOLIA,,delete
 Typha latifolia T,,delete
 Typha latifolia t.,,delete
 Typha latifolia type,,delete
-Typha latifolia type,,delete
 Typha minima,,delete
 Typha sp.,,delete
 Typha type,,delete
@@ -4390,7 +4223,6 @@ Typha-Spargan.,,delete
 Typha-Sparganium,,delete
 Typha/Sparagnum,,delete
 Typha/Sparganium,,delete
-Typha/Sparganium type,,delete
 Typha/Sparganium type,,delete
 Typhaceae,,delete
 Ullotrix/Microspora type,,delete
