@@ -120,7 +120,8 @@ cmpd_counts_long2 <- cmpd_counts_long %>%
 
 cmpd_counts_wide <- cmpd_counts_long2 %>%
   dplyr::select(-taxon_name_original) %>%
-  tidyr::pivot_wider(1:6, names_from = "taxon_name")
+  tidyr::pivot_wider(1:6, names_from = "taxon_name") %>%
+  dplyr::select(1:6, order(colnames(.)[-c(1:6)]) + 6) # Sort the taxon_names alphabetically
 
 CMPD <- cmpd_metadata %>%
   dplyr::select(ID_CMPD,
@@ -142,6 +143,16 @@ CMPD <- cmpd_metadata %>%
 
 usethis::use_data(CMPD, overwrite = TRUE, compress = "xz")
 
+
+# ------------------------------------------------------------------------------
+# |                                  Sandbox                                   |
+# ------------------------------------------------------------------------------
+CMPD %>%
+  dplyr::rowwise() %>%
+  dplyr::mutate(total_count = dplyr::c_across(Abelia:Zygophyllum) %>%
+                  sum(na.rm = TRUE), .before = Abelia) %>%
+  dplyr::arrange(total_count) %>%
+  dplyr::filter(total_count < 99)
 
 # Find duplicated records
 idx <- duplicated(cmpd_counts$entity_name)

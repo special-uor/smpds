@@ -18,10 +18,25 @@ SMPDSv1 <- readxl::read_xlsx("~/Downloads/SMPDSv2/Sandy_s MPDS_20_October_expand
                 entity_type = `Entity Type`,
                 age_BP = AgeBP) %>%
   dplyr::mutate(ID_SMPDSv1 = seq_along(entity_name), .before = 1) %>%
-  dplyr::mutate(short_entity_name = entity_name %>%
-                  stringr::str_extract("[a-zA-Z]*"),
-                .after = entity_name)# %>%
-  # dplyr::mutate(age_BP = as.double(age_BP))
+  # dplyr::mutate(short_entity_name = entity_name %>%
+  #                 stringr::str_extract("[a-zA-Z]*"),
+  #               .after = entity_name)# %>%
+  # dplyr::mutate(age_BP = as.double(age_BP)) %>%
+  dplyr::select(1:11, order(colnames(.)[-c(1:11)]) + 11) # Sort the taxon_names alphabetically
+
+usethis::use_data(SMPDSv1, overwrite = TRUE, compress = "xz")
+
+
+# ------------------------------------------------------------------------------
+# |                                  Sandbox                                   |
+# ------------------------------------------------------------------------------
+SMPDSv1 %>%
+  dplyr::rowwise() %>%
+  dplyr::mutate(total_count = dplyr::c_across(Abies:Zygophyllum) %>%
+                  sum(na.rm = TRUE), .before = Abies) #%>%
+# dplyr::arrange(total_count) %>%
+# dplyr::filter(total_count < 99)
+
 
 # Find duplicated entity_name
 idx <- duplicated(SMPDSv1$entity_name)
@@ -41,5 +56,3 @@ SMPDSv1_wide <- SMPDSv1_long %>%
 #   dplyr::select(dplyr::contains("..."))
 # idx <- rowSums(is.na(duplicated_taxa[, 4:6])) != 3
 # duplicated_taxa[idx,]
-
-usethis::use_data(SMPDSv1, overwrite = TRUE)

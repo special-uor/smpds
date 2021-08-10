@@ -120,6 +120,15 @@ EMPDv2 <- EMPD %>%
 usethis::use_data(EMPDv2, overwrite = TRUE, compress = "xz")
 
 
+# ------------------------------------------------------------------------------
+# |                                  Sandbox                                   |
+# ------------------------------------------------------------------------------
+EMPDv2 %>%
+  dplyr::rowwise() %>%
+  dplyr::mutate(total_count = dplyr::c_across(Abies:Zygophyllum) %>%
+                  sum(na.rm = TRUE), .before = Abies) #%>%
+  # dplyr::arrange(total_count) %>%
+  # dplyr::filter(total_count < 99)
 
 # Find any matches in the SMPDSv1
 # aux <- SMPDSv1_long %>%
