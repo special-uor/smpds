@@ -15,7 +15,7 @@
 # data <- tibble::tibble(entity_name = "University of Reading",
 #                         latitude = 51.4414,
 #                         longitude = 0.9418) %>%
-#   sf::st_as_sf(x = .,coords = c("longitude", "latitude"))
+#   sf::st_as_sf(x = ., coords = c("longitude", "latitude"))
 #' data %>%
 #'   extract_biome()
 extract_biome <- function(data, reference = smpds::PNV, buffer = 10000) {
