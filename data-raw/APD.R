@@ -26,21 +26,30 @@ APD <- output %>%
   dplyr::left_join(apd_clean_taxon_names,
                    by = "taxon_name") %>%
   dplyr::filter(action != "delete") %>%
-  dplyr::select(-action) %>%
+  # dplyr::select(-action) %>%
   dplyr::rename(taxon_name_original = taxon_name,
-                taxon_name = clean_name) %>%
-  dplyr::group_by(entity_name, taxon_name) %>%
-  dplyr::mutate(value = sum(as.double(value), na.rm = TRUE)) %>%
-  dplyr::ungroup() %>%
-  dplyr::mutate(taxon_name = ifelse(is.na(taxon_name),
-                                    taxon_name_original,
-                                    taxon_name)) %>%
-  dplyr::distinct(entity_name, taxon_name, .keep_all = TRUE) %>%
-  dplyr::select(-taxon_name_original)
+                taxon_name = clean_name) # %>%
+  # dplyr::group_by(entity_name, taxon_name) %>%
+  # dplyr::mutate(value = sum(as.double(value), na.rm = TRUE)) %>%
+  # dplyr::ungroup() %>%
+  # dplyr::mutate(taxon_name = ifelse(is.na(taxon_name),
+  #                                   taxon_name_original,
+  #                                   taxon_name)) %>%
+  # dplyr::distinct(entity_name, taxon_name, .keep_all = TRUE) %>%
+  # dplyr::select(-taxon_name_original)
 
 
 usethis::use_data(APD, overwrite = TRUE, compress = "xz")
 
+# ------------------------------------------------------------------------------
+# |                                APD Paradox                                 |
+# ------------------------------------------------------------------------------
+apd_paradox_files_txt <- list.files("~/Downloads/SMPDSv2/APD_Paradox",
+                                    pattern = ".txt", full.names = TRUE)
+apd_paradox_files <- apd_paradox_files_txt %>%
+  purrr::map(~.x %>% readr::read_delim(delim = ";", col_names = FALSE) # %>%
+               # magrittr::set_attr("name", basename(.x))
+             )
 # ------------------------------------------------------------------------------
 # |                                  Sandbox                                   |
 # ------------------------------------------------------------------------------
@@ -57,3 +66,8 @@ apd_taxa_names <- readxl::read_xlsx("~/Downloads/SMPDSv2/smpdsv2-APD-Herzschuh-t
   dplyr::filter(!is.na(taxon_name)) %>%
   dplyr::distinct(taxon_name, clean_name, .keep_all = TRUE)
 
+
+aux2 <- aux %>%
+  dplyr::filter(taxon_name %in%
+                  apd_clean_taxon_names$taxon_name[is.na(apd_clean_taxon_names$action)]) %>%
+  dplyr::arrange(taxon_name)

@@ -64,6 +64,7 @@ SSMPD <- ssmpd_metadata %>%
   dplyr::left_join(ssmpd_counts_wide,
                    by = "entity_name") %>%
   dplyr::mutate(ID_SSMPD = seq_along(ID_SSMPD))
+
 usethis::use_data(SSMPD, overwrite = TRUE, compress = "xz")
 
 # ------------------------------------------------------------------------------
