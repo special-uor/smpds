@@ -47,7 +47,22 @@ Herzschuh_file1_long <- Herzschuh_file1 %>%
 
 Herzschuh <- Herzschuh_file1_long %>%
   tidyr::pivot_wider(id_cols = 1:5, names_from = "taxon_name") %>%
-  dplyr::select(1:5, order(colnames(.)[-c(1:5)]) + 5) # Sort the taxon_names alphabetically
+  dplyr::select(1:5, order(colnames(.)[-c(1:5)]) + 5) %>% # Sort the taxon_names alphabetically
+  dplyr::mutate(basin_size = NA,
+                site_type = NA,
+                entity_type = NA,
+                age_BP = NA,
+                BiomeID = list(latitude, longitude) %>%
+                  purrr:::pmap_dbl(function(latitude, longitude) {
+                    tibble::tibble(latitude,
+                                   longitude) %>%
+                      sf::st_as_sf(x = ., coords = c("longitude", "latitude")) %>%
+                      smpds::extract_biome(buffer = 12000) %>%
+                      dplyr::filter(!is.na(BiomeID)) %>%
+                      dplyr::slice(1) %>%
+                      .$BiomeID
+                  }),
+                .after = elevation)
 usethis::use_data(Herzschuh, overwrite = TRUE, compress = "xz")
 
 # ------------------------------------------------------------------------------
