@@ -12,16 +12,16 @@
 #'
 #' @examples
 #' `%>%` <- magrittr::`%>%`
-# data <- tibble::tibble(entity_name = "University of Reading",
-#                         latitude = 51.4414,
-#                         longitude = 0.9418) %>%
-#   sf::st_as_sf(x = ., coords = c("longitude", "latitude"))
+#' data <- tibble::tibble(entity_name = "University of Reading",
+#'                         latitude = 51.4414,
+#'                         longitude = 0.9418) %>%
+#'   sf::st_as_sf(x = ., coords = c("longitude", "latitude"))
 #' data %>%
 #'   extract_biome()
 extract_biome <- function(data, reference = smpds::PNV, buffer = 10000) {
   if (!("sf" %in% class(data)))
     stop("The given data object does not contain a geometry column.")
-  biomes <- raster::extract(reference, data, buffer = buffer)
+  biomes <- raster::extract(reference, data, buffer = buffer, na.rm = TRUE)
   biomes %>%
     purrr::map_df(function(bio) {
       tibble::as_tibble(bio) %>%
