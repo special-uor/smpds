@@ -1,3 +1,27 @@
+#' Biome names
+#'
+#' Obtain Biome names from the Hengl et al., 2018, using the \code{BiomeID}.
+#'
+#' @param ID Numeric value linked to a Biome in provided by Hengl et al., 2018.
+#'
+#' @return Table (\code{tibble} object) with Biome metadata.
+#' @export
+#'
+#' @examples
+#' `%>%` <- magrittr::`%>%`
+#' data <- tibble::tibble(entity_name = "University of Reading",
+#'                         latitude = 51.4414,
+#'                         longitude = 0.9418) %>%
+#'   sf::st_as_sf(x = ., coords = c("longitude", "latitude"))
+#' data %>%
+#'   extract_biome() %>%
+#'   .$BiomeID %>%
+#'   biome_name()
+biome_name <- function(ID) {
+  smpds:::PNV_classes %>%
+    dplyr::filter(BiomeID %in% ID)
+}
+
 #' Extract biome
 #'
 #' Extracts biome for a point (latitude, longitude) based on the map created by
