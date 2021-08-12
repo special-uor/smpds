@@ -19,12 +19,45 @@ process_apd <- function(path, ext = "ascii", delim = ";", comment = "#", ...) {
   files %>%
     # .[1] %>%
     purrr::map(function(f) {
-      f %>%
+      header <- f %>%
+        readr::read_lines() %>%
+        stringr::str_subset("^#") %>%
+        .[-c(1, length(.) - 1, length(.))] %>%
+        stringr::str_remove_all("^#") %>%
+        stringr::str_split_fixed("=", 2) %>%
+        matrix(ncol = 2) %>%
+        magrittr::set_colnames(c("key", "value")) %>%
+        tibble::as_tibble() %>%
+        # magrittr::set_names(c("key", "value")) %>%
+        tidyr::pivot_wider(names_from = "key", values_from = "value") %>%
+        magrittr::set_names(colnames(.) %>% stringr::str_to_lower()) %>%
+        dplyr::mutate(latitude = latitude %>%
+                        sp::char2dms(chd = "°", chm = "'", chs = "\"") %>%
+                        as.double(),
+                      longitude = longitude %>%
+                        sp::char2dms(chd = "°", chm = "'", chs = "\"") %>%
+                        as.double(),
+                      altitude = altitude %>%
+                        stringr::str_extract("-*[0-9]*") %>%
+                        as.double()) %>%
+        dplyr::rename(elevation = altitude) %>%
+        dplyr::rowwise() %>%
+        dplyr::mutate(publication = dplyr::across(dplyr::starts_with("reference")) %>% #c(reference1, reference2, reference3)
+                        .[!is.na(.)] %>%
+                        unique() %>%
+                        stringr::str_c(collapse = ";\n"),
+                      publication = ifelse(publication == "", NA, publication)) %>%
+        dplyr::select(-dplyr::starts_with("reference"))
+
+      data <- f %>%
         readr::read_delim(delim = delim,
                           comment = comment,
                           ...) %>%
-        dplyr::mutate(name = basename(f) %>%
+        dplyr::mutate(sigle = basename(f) %>%
                         stringr::str_remove_all(ext) %>%
                         stringr::str_remove_all(".$"))
+      header %>%
+        dplyr::inner_join(data,
+                          by = "sigle")
     })
 }

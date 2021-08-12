@@ -42,26 +42,49 @@
 #' Herzschuh, U., Cao, X., Laepple, T., Dallmeyer, A., Telford, R.J., Ni, J., Chen, F., Kong, Z., Liu, G., Liu, K.B. and Liu, X., 2019. Position and orientation of the westerly jet determined Holocene rainfall patterns in China. Nature communications, 10(1), pp.1-8. https://doi.org/10.1038/s41467-019-09866-8
 "Herzschuh"
 
-#' \code{IMPD} dataset
+#' \code{IbMPD} dataset
 #'
-#' The Italian Modern Pollen Dataset (IMPD).
+#' The Iberian Modern Pollen Dataset (IbMPD).
 #'
-#' @format A data frame (\code{tibble} object) with `r nrow(smpds::IMPD)` rows and `r ncol(smpds::IMPD)` variables:
+#' @format A data frame (\code{tibble} object) with `r nrow(smpds::IbMPD)` rows and `r ncol(smpds::IbMPD)` variables:
+#' \describe{
+#'   \item{...}{int ...}
+#' }
+#' @source
+#' Harrison, S.P., Shen, Y. and Sweeney, L., 2021. Pollen data and charcoal data of the Iberian Peninsula. University of Reading. Dataset. http://doi.org/10.17864/1947.294
+"IbMPD"
+
+#' \code{ItMPD} dataset
+#'
+#' The Italian Modern Pollen Dataset (ItMPD).
+#'
+#' @format A data frame (\code{tibble} object) with `r nrow(smpds::ItMPD)` rows and `r ncol(smpds::ItMPD)` variables:
 #' \describe{
 #'   \item{...}{int ...}
 #' }
 #' @source
 #' Finsinger, W., Heiri, O., Valsecchi, V., Tinner, W. and Lotter, A.F., 2007. Modern pollen assemblages as climate indicators in southern Europe. Global Ecology and Biogeography, 16(5), pp.567-582. https://doi.org/10.1111/j.1466-8238.2007.00313.x
-"IMPD"
+"ItMPD"
+
+#' \code{PNV} dataset
+#'
+#' Global Maps of Potential Natural Vegetation at 1 km resolution, version 4.
+#'
+#' @format A data frame (\code{RasterBrick} object) with `r dim(smpds::PNV)[1]` rows and `r dim(smpds::PNV)[2]` columns.
+#'
+#' @source
+#' Hengl, Tomislav (2018): Global Maps of Potential Natural Vegetation at 1 km resolution, version 4. Harvard Dataverse. Dataset. https://doi.org/10.7910/DVN/QQHCIK
+"PNV"
 
 #' \code{SMPDSv1} dataset
 #'
-#' Sandy's Modern Pollen Data for climate reconstructionS, version 1.
+#' SPECIAL Modern Pollen Data for climate reconstructionS, version 1.
 #'
 #' @format A data frame (\code{tibble} object) with `r nrow(smpds::SMPDSv1)` rows and `r ncol(smpds::SMPDSv1)` variables:
 #' \describe{
 #'   \item{...}{int ...}
 #' }
+#'
 #' @source
 #' Harrison, Sandy  (2019): Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset. http://dx.doi.org/10.17864/1947.194
 "SMPDSv1"

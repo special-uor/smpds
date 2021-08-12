@@ -13,7 +13,7 @@ sheets <- c("metadata", "counts", "p_vars")
 `%>%` <- magrittr::`%>%`
 empdv2_workbook <- sheets %>%
   purrr::map(function(s) {
-    readxl::read_xlsx(path = "~/Downloads/SMPDSv2/EMPDv2/Data/Eurasian Modern Pollen Database (former European Modern Pollen Database). .xlsx",
+    readxl::read_xlsx(path = "inst/extdata/empdv2.xlsx",
                       sheet = s)
   }) %>%
   magrittr::set_names(sheets)
@@ -74,7 +74,7 @@ EMPD <- empdv2_metadata %>%
                 age_BP,
                 publication = Publication,
                 DOI) %>%
-  dplyr::mutate(basin_size = basin_size * 0.01) # hectares to km2)
+  dplyr::mutate(basin_size = basin_size * 0.01) # hectares to km2
 
 # ------------------------------------------------------------------------------
 # |                             Extract count data                             |
@@ -88,24 +88,27 @@ empdv2_counts <- empdv2_workbook$counts %>%
                  taxon_name) %>%
   dplyr::mutate(ID_COUNT = seq_along(entity_name), .before = 1)
 
-## Search duplicated counts
-empdv2_counts_unique <- empdv2_counts %>%
-  dplyr::distinct(entity_name, taxon_name, .keep_all = TRUE)
-empdv2_counts_dup <- empdv2_counts %>%
-  dplyr::filter(!(ID_COUNT %in% empdv2_counts_unique$ID_COUNT))
+## Filter taxon_names
+empdv2_clean_taxon_names <- readr::read_csv("inst/extdata/empdv2_taxon.csv")
 
-tmp <- empdv2_counts_dup %>%
-  # dplyr::slice(1:10) %>%
-  purrr::pmap_df(function(entity_name, taxon_name, ...) {
-    ent <- entity_name
-    tax <- taxon_name
-    empdv2_counts %>%
-      dplyr::filter(entity_name == ent,
-                    taxon_name == tax)
-  })
+empdv2_counts2 <- empdv2_counts %>%
+  dplyr::left_join(empdv2_clean_taxon_names,
+                   by = "taxon_name") %>%
+  dplyr::filter(action != "delete") %>%
+  dplyr::rename(taxon_name_original = taxon_name,
+                taxon_name = clean_name) %>%
+  dplyr::select(-action, -acc_varname) %>%
+  dplyr::group_by(entity_name, taxon_name) %>%
+  dplyr::mutate(count = sum(as.double(count), na.rm = TRUE)) %>%
+  dplyr::ungroup() %>%
+  dplyr::mutate(taxon_name = ifelse(is.na(taxon_name),
+                                    taxon_name_original,
+                                    taxon_name)) %>%
+  dplyr::distinct(entity_name, taxon_name, .keep_all = TRUE)
 
 # Create wide version of the unique counts
-empdv2_counts_wide <- empdv2_counts %>%
+empdv2_counts_wide <- empdv2_counts2 %>%
+  dplyr::distinct(entity_name, taxon_name, count, .keep_all = TRUE) %>%
   tidyr::pivot_wider(id_cols = entity_name, names_from = taxon_name, values_from = count) %>%
   dplyr::select(1, order(colnames(.)[-1]) + 1) # Sort the taxon_names alphabetically
 
@@ -113,6 +116,19 @@ empdv2_counts_wide <- empdv2_counts %>%
 EMPDv2 <- EMPD %>%
   dplyr::full_join(empdv2_counts_wide,
                    by = "entity_name")
+
+usethis::use_data(EMPDv2, overwrite = TRUE, compress = "xz")
+
+
+# ------------------------------------------------------------------------------
+# |                                  Sandbox                                   |
+# ------------------------------------------------------------------------------
+EMPDv2 %>%
+  dplyr::rowwise() %>%
+  dplyr::mutate(total_count = dplyr::c_across(Abies:Zygophyllum) %>%
+                  sum(na.rm = TRUE), .before = Abies) #%>%
+  # dplyr::arrange(total_count) %>%
+  # dplyr::filter(total_count < 99)
 
 # Find any matches in the SMPDSv1
 # aux <- SMPDSv1_long %>%
@@ -162,5 +178,27 @@ empdv2_counts %>%
   dplyr::distinct(entity_name, taxon_name, .keep_all = TRUE)
   tidyr::pivot_wider(id_cols = ID_COUNT, names_from = taxon_name, values_from = count)
 
+# Clean ups
+# empdv2_clean_taxon_names <- readxl::read_xlsx("~/Downloads/SMPDSv2/smpdsv2-taxon-names-2021-08-05_SPH.xlsx",
+#                                               sheet = 1) %>%
+#   dplyr::distinct() %>%
+#   dplyr::mutate(action = ifelse(stringr::str_detect(clean_name, "delete"), "delete", "update"),
+#                 clean_name = ifelse(stringr::str_detect(clean_name, "delete"), NA, clean_name)) %>%
+#   dplyr::arrange(dplyr::desc(action), taxon_name) %>%
+#   dplyr::filter(!is.na(taxon_name))
 
-usethis::use_data(EMPDv2, overwrite = TRUE)
+## Search duplicated counts
+empdv2_counts_unique <- empdv2_counts %>%
+  dplyr::distinct(entity_name, taxon_name, .keep_all = TRUE)
+empdv2_counts_dup <- empdv2_counts %>%
+  dplyr::filter(!(ID_COUNT %in% empdv2_counts_unique$ID_COUNT))
+
+tmp <- empdv2_counts_dup %>%
+  # dplyr::slice(1:10) %>%
+  purrr::pmap_df(function(entity_name, taxon_name, ...) {
+    ent <- entity_name
+    tax <- taxon_name
+    empdv2_counts %>%
+      dplyr::filter(entity_name == ent,
+                    taxon_name == tax)
+  })
