@@ -1,7 +1,5 @@
 ## code to prepare `SMPDSv1` dataset goes here
-# SMPDSv1 <- readr::read_csv("~/Downloads/SMPDSv2/SMPDS_Feb2019.csv")
-# SMPDSv1_long <- SMPDSv1 %>%
-#   tidyr::pivot_longer(6:252, names_to = "taxon_name")
+# The SPECIAL Modern Pollen Dataset
 `%>%` <- magrittr::`%>%`
 SMPDSv1 <- readxl::read_xlsx("~/Downloads/SMPDSv2/Sandy_s MPDS_20_October_expanded.xlsx",
                              sheet = 1,
@@ -18,14 +16,16 @@ SMPDSv1 <- readxl::read_xlsx("~/Downloads/SMPDSv2/Sandy_s MPDS_20_October_expand
                 entity_type = `Entity Type`,
                 age_BP = AgeBP) %>%
   dplyr::mutate(ID_SMPDSv1 = seq_along(entity_name), .before = 1) %>%
-  # dplyr::mutate(short_entity_name = entity_name %>%
-  #                 stringr::str_extract("[a-zA-Z]*"),
-  #               .after = entity_name)# %>%
   # dplyr::mutate(age_BP = as.double(age_BP)) %>%
   dplyr::select(1:11, order(colnames(.)[-c(1:11)]) + 11) # Sort the taxon_names alphabetically
 
 usethis::use_data(SMPDSv1, overwrite = TRUE, compress = "xz")
 
+
+# ------------------------------------------------------------------------------
+# |                         Find matches in the EMPDv2                         |
+# ------------------------------------------------------------------------------
+compare_latlon(EMPDv2, SMPDSv1, digits = 2)
 
 # ------------------------------------------------------------------------------
 # |                                  Sandbox                                   |
