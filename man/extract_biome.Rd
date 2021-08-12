@@ -22,6 +22,10 @@ Hengl et al., 2018.
 }
 \examples{
 `\%>\%` <- magrittr::`\%>\%`
+data <- tibble::tibble(entity_name = "University of Reading",
+                        latitude = 51.4414,
+                        longitude = 0.9418) \%>\%
+  sf::st_as_sf(x = ., coords = c("longitude", "latitude"))
 data \%>\%
   extract_biome()
 }
