@@ -10,7 +10,36 @@ Herzschuh_file1 <- readr::read_csv("~/Downloads/SMPDSv2/SourceData_China_Herschu
                 entity_name = Site.name,
                 longitude = Long,
                 latitude = Lat,
-                elevation = Elev)
+                elevation = Elev) %>%
+  dplyr::mutate(entity_name = entity_name %>%
+                  stringr::str_replace_all("s00-", "Alashan-00-") %>%
+                  stringr::str_replace_all("s01-", "Alashan-01-") %>%
+                  stringr::str_replace_all("Alashan-00-2$",
+                                           "Alashan-00-02") %>%
+                  stringr::str_replace_all("Alashan-00-4$",
+                                           "Alashan-00-04") %>%
+                  stringr::str_replace_all("Alashan-00-6$",
+                                           "Alashan-00-06") %>%
+                  stringr::str_replace_all("Alashan-00-7$",
+                                           "Alashan-00-07") %>%
+                  stringr::str_replace_all("Alashan-00-9$",
+                                           "Alashan-00-09") %>%
+                  stringr::str_replace_all("Alashan-01-3\\.97$",
+                                           "Alashan-01-03.97") %>%
+                  stringr::str_replace_all("Alashan-01-5\\.99$",
+                                           "Alashan-01-05.99") %>%
+                  stringr::str_replace_all("Alashan-01-6$",
+                                           "Alashan-01-06") %>%
+                  stringr::str_replace_all("Alashan-01-7$",
+                                           "Alashan-01-07") %>%
+                  stringr::str_replace("North-HL3",
+                                       "China North-HL03") %>%
+                  stringr::str_replace("North-JA1",
+                                       "China North-JA01") %>%
+                  stringr::str_replace("North-PH5",
+                                       "China North-PH05") %>%
+                  stringr::str_replace("North-PH7",
+                                       "China North-PH07"))
 # Herzschuh_file2 <- readr::read_csv("~/Downloads/SMPDSv2/SourceData_China_Herschuh/SourceDataFile2.csv") %>%
 #   dplyr::rename(ID_HERZSCHUH = ID,
 #                 country = Country,
@@ -63,7 +92,83 @@ Herzschuh <- Herzschuh_file1_long %>%
                       .$BiomeID
                   }),
                 .after = elevation)
+
 usethis::use_data(Herzschuh, overwrite = TRUE, compress = "xz")
+
+# ------------------------------------------------------------------------------
+# |                          Find matches in the CMPD                          |
+# ------------------------------------------------------------------------------
+## Match by entity_name
+Herzschuh_CMPD_entity_name <- Herzschuh %>%
+  dplyr::mutate(entity_name = entity_name %>%
+                  stringr::str_replace_all("s00-", "Alashan-00-") %>%
+                  stringr::str_replace_all("s01-", "Alashan-01-") %>%
+                  stringr::str_replace_all("Alashan-00-2$",
+                                           "Alashan-00-02") %>%
+                  stringr::str_replace_all("Alashan-00-4$",
+                                           "Alashan-00-04") %>%
+                  stringr::str_replace_all("Alashan-00-6$",
+                                           "Alashan-00-06") %>%
+                  stringr::str_replace_all("Alashan-00-7$",
+                                           "Alashan-00-07") %>%
+                  stringr::str_replace_all("Alashan-00-9$",
+                                           "Alashan-00-09") %>%
+                  stringr::str_replace_all("Alashan-01-3\\.97$",
+                                           "Alashan-01-03.97") %>%
+                  stringr::str_replace_all("Alashan-01-5\\.99$",
+                                           "Alashan-01-05.99") %>%
+                  stringr::str_replace_all("Alashan-01-6$",
+                                           "Alashan-01-06") %>%
+                  stringr::str_replace_all("Alashan-01-7$",
+                                           "Alashan-01-07") %>%
+                  stringr::str_replace("North-HL3",
+                                       "China North-HL03") %>%
+                  stringr::str_replace("North-JA1",
+                                       "China North-JA01") %>%
+                  stringr::str_replace("North-PH5",
+                                       "China North-PH05") %>%
+                  stringr::str_replace("North-PH7",
+                                       "China North-PH07") %>%
+                  stringr::str_replace("North-QU02",
+                                       "China North-QU02") %>%
+                  stringr::str_replace("North-QU03",
+                                       "China North-QU03") %>%
+                  stringr::str_replace("North-PO3",
+                                       "China North-PO03")) %>%
+  dplyr::filter(entity_name %in% CMPD$entity_name)
+
+compare_latlon(CMPD,
+               Herzschuh %>%
+                 dplyr::filter(!(entity_name %in%
+                                   Herzschuh_CMPD_entity_name$entity_name)) ,
+               digits = 3)
+# %>%
+#   dplyr::distinct(site_name)
+
+aux <- compare_latlon(CMPD, Herzschuh, digits = 2)
+aux2 <- aux %>%
+  dplyr::select(ID_CMPD, ID_HERZSCHUH, dplyr::starts_with("entity"))
+Herzschuh %>%
+  dplyr::filter(!(entity_name %in% unique(aux2$entity_name.y)))
+
+# ------------------------------------------------------------------------------
+# |                         Find matches in the EMPDv2                         |
+# ------------------------------------------------------------------------------
+compare_latlon(EMPDv2, Herzschuh, digits = 1) %>%
+  dplyr::distinct(site_name)
+
+aux <- compare_latlon(EMPDv2, Herzschuh, digits = 3) %>%
+  dplyr::distinct(site_name.y, .keep_all = TRUE)
+Herzschuh_subset <- Herzschuh %>%
+  dplyr::filter(!(site_name %in% aux$site_name.y))
+compare_latlon(EMPDv2, Herzschuh_subset, digits = 2)
+
+
+EMPDv2_Herzschuh <- EMPDv2 %>%
+  dplyr::filter(entity_name %>% stringr::str_starts("Herzschuh"))
+Herzschuh %>%
+  dplyr::filter(!(EMPDv2_name %in% EMPDv2_Herzschuh$site_name)) %>%
+  dplyr::select(1:10)
 
 # ------------------------------------------------------------------------------
 # |                                  Sandbox                                   |
