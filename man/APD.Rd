@@ -5,7 +5,7 @@
 \alias{APD}
 \title{\code{APD} dataset}
 \format{
-A data frame (\code{tibble} object) with 241622 rows and 7 variables:
+A data frame (\code{tibble} object) with 55293 rows and 11 variables:
 \describe{
 \item{...}{int ...}
 }

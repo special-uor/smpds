@@ -4,7 +4,7 @@
 \alias{extract_biome}
 \title{Extract biome}
 \usage{
-extract_biome(data, reference = smpds::PNV, buffer = 10000)
+extract_biome(data, reference = smpds::PNV, buffer = 12000)
 }
 \arguments{
 \item{data}{Table containing a geometry column.}
