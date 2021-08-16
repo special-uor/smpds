@@ -113,9 +113,22 @@ empdv2_counts_wide <- empdv2_counts2 %>%
   dplyr::select(1, order(colnames(.)[-1]) + 1) # Sort the taxon_names alphabetically
 
 # Attach counts to metadata
-EMPDv2 <- EMPD %>%
+EMPDv2_all <- EMPD %>%
   dplyr::full_join(empdv2_counts_wide,
                    by = "entity_name")
+
+# ------------------------------------------------------------------------------
+# |                           Extract other subsets                            |
+# ------------------------------------------------------------------------------
+EMPDv2_excluded <- EMPDv2_all %>%
+  dplyr::filter(
+    site_name %>% stringr::str_detect("Inner Mongolia") # Herzschuh
+  )
+
+EMPDv2 <- EMPDv2_all %>%
+  dplyr::filter(
+    site_name %>% stringr::str_detect("Inner Mongolia", negate = TRUE) # Herzschuh
+  )
 
 usethis::use_data(EMPDv2, overwrite = TRUE, compress = "xz")
 
