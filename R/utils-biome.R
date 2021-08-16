@@ -42,7 +42,7 @@ biome_name <- function(ID) {
 #'   sf::st_as_sf(x = ., coords = c("longitude", "latitude"))
 #' data %>%
 #'   extract_biome()
-extract_biome <- function(data, reference = smpds::PNV, buffer = 10000) {
+extract_biome <- function(data, reference = smpds::PNV, buffer = 12000) {
   if (!("sf" %in% class(data)))
     stop("The given data object does not contain a geometry column.")
   biomes <- raster::extract(reference, data, buffer = buffer, na.rm = TRUE)
