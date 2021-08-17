@@ -33,6 +33,37 @@ compare_latlon <- function(x, y, fx = tolerance, ...) {
     dplyr::select(-lat, -lon)
 }
 
+#' Remove missing taxa/columns
+#'
+#' Removes taxa/columns that are missing.
+#'
+#' @param .data Data frame.
+#' @param cols Numeric vector with the columns to be ignored (metadata columns).
+#'
+#' @return Reduced data frame with non-missing taxa/column.
+#' @export
+rm_na_taxa <- function(.data, cols = 1) {
+  .data %>%
+    tidyr::pivot_longer(-cols) %>%
+    dplyr::filter(!is.na(value)) %>%
+    tidyr::pivot_wider(cols)
+}
+
+#' Sort taxa/columns alphabetically
+#'
+#' Sorts taxa/columns alphabetically, ignoring the columns in the positions
+#' indicated by \code{col}.
+#'
+#' @param .data Data frame.
+#' @param cols Numeric vector with the columns to be ignored (metadata columns).
+#'
+#' @return Data frame with taxa/column alphabetically sorted.
+#' @export
+sort_taxa <- function(.data, cols = 1) {
+  .data %>%
+    dplyr::select(cols, order(colnames(.)[-cols]) + length(cols))
+}
+
 #' @keywords internal
 tolerance <- function(x, digits = 1) {
   # round(x, digits = digits)
