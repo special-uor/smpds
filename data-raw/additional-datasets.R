@@ -97,22 +97,54 @@ compare_latlon(IbMPD, iberian_pollen_records_9april, digits = 2) %>%
 # ------------------------------------------------------------------------------
 # |                      Juodonys pollen data from Migle                       |
 # ------------------------------------------------------------------------------
+juodonys_clean_ups <- readxl::read_xlsx("~/Downloads/SMPDSv2/Juodonys clean up.xlsx",
+                                        sheet = 1,
+                                        col_names = c("taxon_name", "clean_name")) %>%
+  dplyr::distinct() %>%
+  dplyr::mutate(action = ifelse(stringr::str_detect(clean_name, "EXC"), "delete", "update"),
+                clean_name = ifelse(stringr::str_detect(clean_name, "delete"), NA, clean_name)) %>%
+  dplyr::arrange(dplyr::desc(action), taxon_name) %>%
+  dplyr::filter(!is.na(taxon_name))
+juodonys_clean_ups %>%
+  readr::write_excel_csv("inst/extdata/juodonys_taxa.csv", na = "")
+
+juodonys_taxa <- readr::read_csv("inst/extdata/juodonys_taxa.csv")
+
 juodonys <- readxl::read_xls("~/Downloads/SMPDSv2/To check included/Juodonys pollen data from Migle.xls",
                              sheet = 1) %>%
   dplyr::select(2:3) %>%
   dplyr::slice(-c(1:2, 70:76)) %>%
-  magrittr::set_names(c("name", "value")) %>%
+  magrittr::set_names(c("taxon_name", "value")) %>%
+  dplyr::left_join(juodonys_taxa,
+                   by = "taxon_name") %>%
+  dplyr::filter(action != "delete") %>%
+  dplyr::select(-action) %>%
+  dplyr::rename(taxon_name_original = taxon_name,
+                taxon_name = clean_name) %>%
+  dplyr::group_by(taxon_name) %>%
+  dplyr::mutate(value = sum(as.double(value), na.rm = TRUE)) %>%
+  dplyr::ungroup() %>%
+  dplyr::mutate(taxon_name = ifelse(is.na(taxon_name),
+                                    taxon_name_original,
+                                    taxon_name)) %>%
+  dplyr::distinct(taxon_name, .keep_all = TRUE) %>%
+  dplyr::select(-taxon_name_original) %>%
   dplyr::mutate(entity_name = "juodonys", .before = 1) %>%
-  tidyr::pivot_wider(1, names_from = "name") %>%
+  tidyr::pivot_wider(1, names_from = "taxon_name") %>%
   smpds::sort_taxa() %>%
-  dplyr::mutate(longitude = NA,
-                latitude = NA,
-                elevation = NA,
+  dplyr::mutate(latitude = 55.74, # Metadata extracted from the RPD
+                longitude = 25.44,
+                elevation = 20,
+                site_type = "bog",
+                entity_type = "core top",
                 basin_size = NA,
-                site_type = NA,
-                entity_type = NA,
-                age_BP = -83,
-                publication = NA, .after = 1)
+                age_BP = "modern", #-83,
+                publication = paste0("Stančikaitė, M., Kisielienė, D., Strimaitienė, A., 2004. Vegetation response to the climatic and human impact changes during the Late Glacial and Holocene: case study of the marginal area of Baltija Upland, NE Lithuania. Baltica 17, 17–33.",
+                                     "\n",
+                                     "Stančikaitė, M., Kisielienė, D., Moe, D., Vaikutienė, G., 2009. Lateglacial and early Holocene environmental changes in northeastern Lithuania. Quaternary International 207, 80–92. doi: 10.1016/j.quaint.2008.10.009"
+                                     ),
+                source = "Stančikaitė et al., 2004 and 2009",
+                .after = 1)
 
 EMPDv2 %>%
   dplyr::filter(stringr::str_detect(entity_name, "Juodonys"))
@@ -144,6 +176,19 @@ EMPDv2 %>%
 # ------------------------------------------------------------------------------
 # |                     Petrasiunai_pollen_data_from Migle                     |
 # ------------------------------------------------------------------------------
+petresiunai_clean_ups <- readxl::read_xlsx("~/Downloads/SMPDSv2/petrrasiunai clean up.xlsx",
+                                        sheet = 1,
+                                        col_names = c("taxon_name", "clean_name")) %>%
+  dplyr::distinct() %>%
+  dplyr::mutate(action = ifelse(stringr::str_detect(clean_name, "EXC"), "delete", "update"),
+                clean_name = ifelse(stringr::str_detect(clean_name, "delete"), NA, clean_name)) %>%
+  dplyr::arrange(dplyr::desc(action), taxon_name) %>%
+  dplyr::filter(!is.na(taxon_name))
+petresiunai_clean_ups %>%
+  readr::write_excel_csv("inst/extdata/petresiunai_taxa.csv", na = "")
+
+petresiunai_taxa <- readr::read_csv("inst/extdata/petresiunai_taxa.csv")
+
 petresiunai <- readxl::read_xls("~/Downloads/SMPDSv2/To check included/Petrasiunai_pollen_data_from Migle.xls",
                                 sheet = 1) %>%
   dplyr::rename(taxon_name = `...1`) %>%
@@ -151,16 +196,36 @@ petresiunai <- readxl::read_xls("~/Downloads/SMPDSv2/To check included/Petrasiun
   tidyr::pivot_longer(-1, names_to = "depth") %>%
   dplyr::mutate(ID = seq_along(taxon_name),
                 entity_name = paste0("petresiunai_", depth), .before = 1) %>%
+  dplyr::left_join(petresiunai_taxa,
+                   by = "taxon_name") %>%
+  dplyr::filter(action != "delete") %>%
+  dplyr::select(-action) %>%
+  dplyr::rename(taxon_name_original = taxon_name,
+                taxon_name = clean_name) %>%
   dplyr::group_by(entity_name, taxon_name) %>%
-  dplyr::mutate(value = sum(value, na.rm = TRUE)) %>%
+  dplyr::mutate(value = sum(as.double(value), na.rm = TRUE)) %>%
   dplyr::ungroup() %>%
+  dplyr::mutate(taxon_name = ifelse(is.na(taxon_name),
+                                    taxon_name_original,
+                                    taxon_name)) %>%
   dplyr::distinct(entity_name, taxon_name, .keep_all = TRUE) %>%
+  dplyr::select(-taxon_name_original) %>%
   # dplyr::mutate(rows = length(entity_name))
   tidyr::pivot_wider(2, names_from = "taxon_name") %>%
-  smpds::sort_taxa()
+  smpds::sort_taxa() %>%
+  dplyr::mutate(latitude = 55.85, # Metadata extracted from the RPD
+                longitude = 25.7028,
+                elevation = 107,
+                site_type = "lake",
+                entity_type = "core top",
+                basin_size = "0.02",
+                age_BP = "modern", #-83,
+                publication = "Stančikaitė, M., Simniškytė, A., Skuratovič, Gedminienė, L., Kazakauskas, V., Uogintas, D., 2019. Reconstruction of the mid-to Late- Holocene history of vegetation and land-use in Petrešiūnai, north-east Lithuania: implications from palaeobotanical and archaeological data. Quaternary International 516, 5–20. doi: 10.1016/j.quaint.2018.09.029",
+                source = "Stančikaitė et al., 2019",
+                .after = 1)
 
 petresiunai %>%
-  readr::write_excel_csv("~/Downloads/SMPDSv2/petresiunai.csv", na = "")
+  readr::write_excel_csv("~/Downloads/SMPDSv2/petresiunai-2021-08-18.csv", na = "")
 
 
 # ------------------------------------------------------------------------------
