@@ -59,6 +59,8 @@ extract_biome <- function(.data, reference = smpds::PNV, buffer = 12000) {
 #' @param cpus Number of CPUs to be used in parallel, default = 2.
 #'
 #' @rdname extract_biome
+#'
+#' @export
 parallel_extract_biome <- function(.data, reference = smpds::PNV, buffer = 12000, cpus = 2) {
   if (!all(c("latitude", "longitude") %in% colnames(.data)))
     stop("The given data object does not contain a latitude and longitude columns.",
