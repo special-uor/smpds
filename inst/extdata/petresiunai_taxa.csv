@@ -1,0 +1,79 @@
+﻿taxon_name,clean_name,action
+Acer,Acer,update
+Achillea type,Achillea type,update
+Alnus,Alnus,update
+Anthemis type,Anthemis type,update
+Apiaceae,Apiaceae,update
+Arctostaphyllos,Arctostaphylos,update
+Artemisia,Artemisia,update
+Asteraceae aster.,Aster,update
+Asteraceae sect. cichor.,Cichoroideae,update
+Betula,Betula,update
+Botrychium,Botrychium,update
+Brassicaceae,Brassicaceae,update
+Calluna,Calluna,update
+Cannabinaceae,Cannabaceae,update
+Carpinus,Carpinus,update
+Caryophyllaceae,Caryophyllaceae,update
+Centaurea cyanus,Centaurea cyanus,update
+Chenopodiaceae,Amaranthaceae,update
+Corylus,Corylus,update
+Cyperaceae,Cyperaceae,update
+Dipsacaceae,Dipsacaceae,update
+Empetrum t.,Empetrum type,update
+Ephedra distahya,Ephedra distachya,update
+Ephedra fragilis,Ephedra fragilis,update
+Ericaceae,Ericaceae,update
+Fagus,Fagus,update
+Filipendula,Filipendula,update
+Fraxinus,Fraxinus,update
+Galium type,Galium type,update
+Helianthemum,Helianthemum,update
+Juniperus,Juniperus,update
+Lactucaceae,Cichorioideae,update
+Linum ussitatisimum,Linum usitatissimum,update
+Montia,Montia,update
+Onagraceae,Onagraceae,update
+Picea,Picea,update
+Pinus,Pinus,update
+Pl. lanceolata,Plantago lanceolata,update
+Pl. major/media,Plantago media/Plantago major,update
+Plantaginaceae,Plantaginaceae,update
+Poaceae,Poaceae,update
+Pol. bistorta t.,Polygonum bistorta type,update
+Polygonaceae,Polygonaceae,update
+Polypodiaceae,Polypodiaceae,update
+Populus,Populus,update
+Potentilla t.,Potentilla type,update
+Pteridium,Pteridium,update
+Quercus,Quercus,update
+R. acris,Ranunculus acris,update
+Ranunculaceae,Ranunculaceae,update
+Ranunculus flammula,exclude,update
+Rhamnus,Rhamnus,update
+Rosaceae,Rosaceae,update
+Rumex acetosa/acetosella t.,Rumex acetosa/Rumex acetosella type,update
+Rumex longifolius t.,Rumex longifolius type,update
+Salix,Salix,update
+Serratula,Serratula,update
+Taraxatum,Taraxacum,update
+Thalictrum,Thalictrum,update
+Tilia,Tilia,update
+Ulmus,Ulmus,update
+Urtica,Urtica,update
+Viburnum,Viburnum,update
+Cerealia,EXCLUDE,delete
+Charcoal,EXCLUDE,delete
+Humulus lupulus,EXCLUDE,delete
+Lycopodium added,EXCLUDE,delete
+Menyanthes trifoliata,EXCLUDE,delete
+Myriophyllum spicatum,EXCLUDE,delete
+Myriophyllum verticilatum,EXCLUDE,delete
+Nuphar,EXCLUDE,delete
+Nymphaea,EXCLUDE,delete
+Secale,EXCLUDE,delete
+Selaginella selaginoides,EXCLUDE,delete
+Sphagnum,EXCLUDE,delete
+Triticum t.,EXCLUDE,delete
+Typhaceae,EXCLUDE,delete
+Unidentifaid,EXCLUDE,delete
