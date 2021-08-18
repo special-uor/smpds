@@ -97,6 +97,7 @@ compare_latlon(IbMPD, iberian_pollen_records_9april, digits = 2) %>%
 # ------------------------------------------------------------------------------
 # |                      Juodonys pollen data from Migle                       |
 # ------------------------------------------------------------------------------
+# Pre-processing
 juodonys_clean_ups <- readxl::read_xlsx("~/Downloads/SMPDSv2/Juodonys clean up.xlsx",
                                         sheet = 1,
                                         col_names = c("taxon_name", "clean_name")) %>%
@@ -108,6 +109,7 @@ juodonys_clean_ups <- readxl::read_xlsx("~/Downloads/SMPDSv2/Juodonys clean up.x
 juodonys_clean_ups %>%
   readr::write_excel_csv("inst/extdata/juodonys_taxa.csv", na = "")
 
+# Load and clean raw data
 juodonys_taxa <- readr::read_csv("inst/extdata/juodonys_taxa.csv")
 
 juodonys <- readxl::read_xls("~/Downloads/SMPDSv2/To check included/Juodonys pollen data from Migle.xls",
@@ -176,6 +178,7 @@ EMPDv2 %>%
 # ------------------------------------------------------------------------------
 # |                     Petrasiunai_pollen_data_from Migle                     |
 # ------------------------------------------------------------------------------
+# Pre-processing
 petresiunai_clean_ups <- readxl::read_xlsx("~/Downloads/SMPDSv2/petrrasiunai clean up.xlsx",
                                         sheet = 1,
                                         col_names = c("taxon_name", "clean_name")) %>%
@@ -187,6 +190,7 @@ petresiunai_clean_ups <- readxl::read_xlsx("~/Downloads/SMPDSv2/petrrasiunai cle
 petresiunai_clean_ups %>%
   readr::write_excel_csv("inst/extdata/petresiunai_taxa.csv", na = "")
 
+# Load and clean raw data
 petresiunai_taxa <- readr::read_csv("inst/extdata/petresiunai_taxa.csv")
 
 petresiunai <- readxl::read_xls("~/Downloads/SMPDSv2/To check included/Petrasiunai_pollen_data_from Migle.xls",
@@ -210,19 +214,20 @@ petresiunai <- readxl::read_xls("~/Downloads/SMPDSv2/To check included/Petrasiun
                                     taxon_name)) %>%
   dplyr::distinct(entity_name, taxon_name, .keep_all = TRUE) %>%
   dplyr::select(-taxon_name_original) %>%
-  # dplyr::mutate(rows = length(entity_name))
   tidyr::pivot_wider(2, names_from = "taxon_name") %>%
   smpds::sort_taxa() %>%
+  dplyr::slice(1) %>% # Only the top depth
   dplyr::mutate(latitude = 55.85, # Metadata extracted from the RPD
                 longitude = 25.7028,
                 elevation = 107,
                 site_type = "lake",
                 entity_type = "core top",
                 basin_size = "0.02",
-                age_BP = "modern", #-83,
+                age_BP = "20",
                 publication = "Stančikaitė, M., Simniškytė, A., Skuratovič, Gedminienė, L., Kazakauskas, V., Uogintas, D., 2019. Reconstruction of the mid-to Late- Holocene history of vegetation and land-use in Petrešiūnai, north-east Lithuania: implications from palaeobotanical and archaeological data. Quaternary International 516, 5–20. doi: 10.1016/j.quaint.2018.09.029",
                 source = "Stančikaitė et al., 2019",
-                .after = 1)
+                .after = 1) %>%
+  smpds::rm_zero_taxa(1:10)
 
 petresiunai %>%
   readr::write_excel_csv("~/Downloads/SMPDSv2/petresiunai-2021-08-18.csv", na = "")
@@ -269,7 +274,8 @@ Spanish_sites <- readxl::read_xlsx("~/Downloads/SMPDSv2/To check included/Spanis
                         "site_type",
                         "entity_type",
                         "age_BP",
-                        colnames(.)[-c(1:10)]))
+                        colnames(.)[-c(1:10)])) %>%
+  dplyr::filter(age_BP <= 50)
 
 aux <- Spanish_sites %>%
   dplyr::filter(entity_name %in% SMPDSv1$entity_name)
