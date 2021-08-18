@@ -12,7 +12,7 @@ sort_taxa(.data, cols = 1)
 \item{cols}{Numeric vector with the columns to be ignored (metadata columns).}
 }
 \value{
-Data frame with taxa/column alphabetically sorted.
+Data frame with taxa/columns alphabetically sorted.
 }
 \description{
 Sorts taxa/columns alphabetically, ignoring the columns in the positions

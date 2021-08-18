@@ -2,16 +2,21 @@
 % Please edit documentation in R/utils-biome.R
 \name{extract_biome}
 \alias{extract_biome}
+\alias{parallel_extract_biome}
 \title{Extract biome}
 \usage{
-extract_biome(data, reference = smpds::PNV, buffer = 12000)
+extract_biome(.data, reference = smpds::PNV, buffer = 12000)
+
+parallel_extract_biome(.data, reference = smpds::PNV, buffer = 12000, cpus = 2)
 }
 \arguments{
-\item{data}{Table containing a geometry column.}
+\item{.data}{Table containing a geometry column.}
 
 \item{reference}{Reference map with biomes, default: \code{smpds::PNV}.}
 
 \item{buffer}{numeric. The radius of a buffer around each point from which to extract cell values. If the distance between the sampling point and the center of a cell is less than or equal to the buffer, the cell is included. The buffer can be specified as a single value, or as a vector of the length of the number of points.  If the data are not projected (latitude/longitude), the unit should be meters. Otherwise it should be in map-units (typically also meters).}
+
+\item{cpus}{Number of CPUs to be used in parallel, default = 2.}
 }
 \value{
 Tibble with matched biomes: dominant, sub-dominant, etc.
@@ -23,9 +28,8 @@ Hengl et al., 2018.
 \examples{
 `\%>\%` <- magrittr::`\%>\%`
 data <- tibble::tibble(entity_name = "University of Reading",
-                        latitude = 51.4414,
-                        longitude = 0.9418) \%>\%
-  sf::st_as_sf(x = ., coords = c("longitude", "latitude"))
+                        latitude = 51.44140,
+                        longitude = 0.9418)
 data \%>\%
   extract_biome()
 }
