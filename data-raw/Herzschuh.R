@@ -59,14 +59,16 @@ Herzschuh_file2 <- readr::read_csv("~/Downloads/SMPDSv2/SourceData_China_Herschu
   dplyr::select(-country, -province)
 Herzschuh_file2_modern <- Herzschuh_file2 %>%
   dplyr::filter(is.na(age_BP) | age_BP <= 50) %>%
-  smpds::rm_na_taxa(1:8) %>%
+  smpds::rm_na_taxa(1:6) %>%
   dplyr::mutate(age_BP = as.character(age_BP)) %>%
   dplyr::group_by(entity_name) %>%
   dplyr::mutate(n = length(entity_name),
                 entity_name2 = paste0(entity_name, " ", seq_along(entity_name)),
                 entity_name = ifelse(n > 1, entity_name2, entity_name)) %>%
   dplyr::select(-entity_name2) %>%
-  dplyr::ungroup()
+  dplyr::ungroup() %>%
+  smpds::normalise_counts(1:6) %>%
+  smpds::total_taxa(1:6)
 
 aux <- Herzschuh_file2_modern %>%
   dplyr::filter(entity_name %in% Herzschuh_file1$entity_name) %>%
@@ -77,7 +79,9 @@ aux_rev <- Herzschuh_file1 %>%
   smpds::rm_zero_taxa(1:6) %>%
   smpds::total_taxa(1:6)
 
-aux <- compare_latlon(Herzschuh_file2_modern, Herzschuh_file1, digits = 2) %>%
+aux <- smpds::compare_latlon(Herzschuh_file2_modern,
+                             Herzschuh_file1,
+                             digits = 2) %>%
   dplyr::distinct()
 Herzschuh_file2_modern %>%
   dplyr::filter(entity_name %in% aux$entity_name.x)
@@ -294,6 +298,20 @@ Herzschuh_clean_taxon_names <- readxl::read_xlsx("~/Downloads/SMPDSv2/smpdsv2-AP
                 clean_name = ifelse(stringr::str_detect(clean_name, "delete"), NA, clean_name)) %>%
   dplyr::arrange(dplyr::desc(action), taxon_name) %>%
   dplyr::filter(!is.na(taxon_name))
+
+Herzschuh_clean_taxon_names2 <- readr::read_csv("~/Downloads/SMPDSv2/Herzschuh_file2_taxa_SPH.csv")%>%
+  dplyr::distinct() %>%
+  dplyr::mutate(action = ifelse(stringr::str_detect(clean_name, "delete"), "delete", "update"),
+                clean_name = ifelse(stringr::str_detect(clean_name, "delete"), NA, clean_name)) %>%
+  dplyr::arrange(dplyr::desc(action), taxon_name) %>%
+  dplyr::filter(!is.na(taxon_name))
+
+Herzschuh_clean_taxon_names %>%
+  dplyr::bind_rows(Herzschuh_clean_taxon_names2) %>%
+  dplyr::distinct() %>%
+  dplyr::arrange(dplyr::desc(action), taxon_name) %>%
+  dplyr::filter(!is.na(taxon_name)) %>%
+  readr::write_csv("inst/extdata/herzschuh_taxa.csv", na = "")
 
 tmp30 <- Herzschuh_file1_long %>%
   dplyr::group_by(entity_name, taxon_name) %>%
