@@ -13,6 +13,8 @@ Herzschuh_file1 <- readr::read_csv("~/Downloads/SMPDSv2/SourceData_China_Herschu
                 longitude = Long,
                 latitude = Lat,
                 elevation = Elev) %>%
+  dplyr::select(-Pann) %>%
+  dplyr::mutate(age_BP = "modern", .after = elevation) %>%
   dplyr::mutate(entity_name = entity_name %>%
                   stringr::str_replace_all("s00-", "Alashan-00-") %>%
                   stringr::str_replace_all("s01-", "Alashan-01-") %>%
@@ -49,62 +51,115 @@ Herzschuh_file2 <- readr::read_csv("~/Downloads/SMPDSv2/SourceData_China_Herschu
   dplyr::rename(ID_HERZSCHUH = ID,
                 country = Country,
                 province = Province,
-                site_name = Site,
+                entity_name = Site,
                 latitude = Latitude,
                 longitude = Longitude,
                 elevation = Altitude,
-                age_BP = Cal.yr.BP)
+                age_BP = Cal.yr.BP) %>%
+  dplyr::select(-country, -province)
 Herzschuh_file2_modern <- Herzschuh_file2 %>%
-  dplyr::filter(is.na(age_BP) | age_BP <= 50)
+  dplyr::filter(is.na(age_BP) | age_BP <= 50) %>%
+  smpds::rm_na_taxa(1:8) %>%
+  dplyr::mutate(age_BP = as.character(age_BP)) %>%
+  dplyr::group_by(entity_name) %>%
+  dplyr::mutate(n = length(entity_name),
+                entity_name2 = paste0(entity_name, " ", seq_along(entity_name)),
+                entity_name = ifelse(n > 1, entity_name2, entity_name)) %>%
+  dplyr::select(-entity_name2) %>%
+  dplyr::ungroup()
 
-aux <- compare_latlon(Herzschuh_file2, Herzschuh_file1, digits = 2) %>%
-  dplyr::distinct()
+aux <- Herzschuh_file2_modern %>%
+  dplyr::filter(entity_name %in% Herzschuh_file1$entity_name) %>%
+  smpds::rm_zero_taxa(1:6) %>%
+  smpds::total_taxa(1:6)
+aux_rev <- Herzschuh_file1 %>%
+  dplyr::filter(entity_name %in% Herzschuh_file2_modern$entity_name) %>%
+  smpds::rm_zero_taxa(1:6) %>%
+  smpds::total_taxa(1:6)
+
 aux <- compare_latlon(Herzschuh_file2_modern, Herzschuh_file1, digits = 2) %>%
   dplyr::distinct()
+Herzschuh_file2_modern %>%
+  dplyr::filter(entity_name %in% aux$entity_name.x)
+Herzschuh_file1 %>%
+  dplyr::filter(entity_name %in% aux$entity_name.y)
+
 
 # con <- file("~/Downloads/SMPDSv2/SourceData_China_Herschuh/SourceDataFile3.dat", "rb")
 # readBin(con, what = "raw", 10e6)
 # Herzschuh_file3 <- readr::read_delim("~/Downloads/SMPDSv2/SourceData_China_Herschuh/SourceDataFile3.dat", delim = "\n")
 
 ## Filter taxon_names
-Herzschuh_clean_taxon_names <- readr::read_csv("inst/extdata/herzschuh_taxon.csv")
+Herzschuh_clean_taxon_names <- readr::read_csv("inst/extdata/herzschuh_taxa.csv")
 
 Herzschuh_file1_long <- Herzschuh_file1 %>%
-  dplyr::select(-Pann) %>%
-  tidyr::pivot_longer(-c(1:5), names_to = "taxon_name") %>%
+  tidyr::pivot_longer(-c(1:6), names_to = "taxon_name") %>%
   dplyr::left_join(Herzschuh_clean_taxon_names,
                    by = "taxon_name") %>%
   dplyr::filter(action != "delete") %>%
   dplyr::select(-action) %>%
   dplyr::rename(taxon_name_original = taxon_name,
                 taxon_name = clean_name) %>%
-  dplyr::group_by(entity_name, taxon_name) %>%
+  dplyr::group_by(entity_name, taxon_name, age_BP) %>%
   dplyr::mutate(value = sum(as.double(value), na.rm = TRUE)) %>%
   dplyr::ungroup() %>%
   dplyr::mutate(taxon_name = ifelse(is.na(taxon_name),
                                     taxon_name_original,
                                     taxon_name)) %>%
-  dplyr::distinct(entity_name, taxon_name, .keep_all = TRUE) %>%
+  dplyr::distinct(entity_name, taxon_name, age_BP, .keep_all = TRUE) %>%
   dplyr::select(-taxon_name_original)
 
+Herzschuh_file2_modern_long <- Herzschuh_file2_modern %>%
+  tidyr::pivot_longer(-c(1:6), names_to = "taxon_name") %>%
+  dplyr::left_join(Herzschuh_clean_taxon_names,
+                   by = "taxon_name") %>%
+  dplyr::filter(action != "delete") %>%
+  dplyr::select(-action) %>%
+  dplyr::rename(taxon_name_original = taxon_name,
+                taxon_name = clean_name) %>%
+  dplyr::group_by(entity_name, taxon_name, age_BP) %>%
+  dplyr::mutate(value = sum(as.double(value), na.rm = TRUE)) %>%
+  dplyr::ungroup() %>%
+  dplyr::mutate(taxon_name = ifelse(is.na(taxon_name),
+                                    taxon_name_original,
+                                    taxon_name)) %>%
+  dplyr::distinct(entity_name, taxon_name, age_BP, .keep_all = TRUE) %>%
+  dplyr::select(-taxon_name_original)
+
+aux <- compare_latlon(Herzschuh_file2_modern, Herzschuh_file1, digits = 2) %>%
+  dplyr::distinct()
+Herzschuh_file2_modern_long %>%
+  dplyr::filter(entity_name %in% aux$entity_name.x) %>%
+  tidyr::pivot_wider(1:6, names_from = "taxon_name") %>%
+  smpds::rm_zero_taxa(1:6) %>%
+  dplyr::rowwise() %>%
+  dplyr::mutate(total = dplyr::c_across(-c(1:6)) %>%
+                  sum(na.rm = TRUE),
+                .after = 6)
+Herzschuh_file1_long %>%
+  dplyr::filter(entity_name %in% aux$entity_name.y) %>%
+  tidyr::pivot_wider(1:6, names_from = "taxon_name") %>%
+  smpds::rm_zero_taxa(1:6) %>%
+  dplyr::rowwise() %>%
+  dplyr::mutate(total = dplyr::c_across(-c(1:6)) %>%
+                  sum(na.rm = TRUE),
+                .after = 6)
+
 Herzschuh <- Herzschuh_file1_long %>%
-  tidyr::pivot_wider(id_cols = 1:5, names_from = "taxon_name") %>%
-  dplyr::select(1:5, order(colnames(.)[-c(1:5)]) + 5) %>% # Sort the taxon_names alphabetically
+  # dplyr::bind_rows(Herzschuh_file2_modern_long) %>%
+  tidyr::pivot_wider(id_cols = 1:6, names_from = "taxon_name") %>%
+  smpds::sort_taxa(cols = 1:6) %>% # Sort the taxon_names alphabetically
   dplyr::mutate(basin_size = NA,
                 site_type = NA,
                 entity_type = NA,
-                age_BP = NA,
-                BiomeID = smpds::Herzschuh$BiomeID,
-                # BiomeID = list(latitude, longitude) %>%
-                #   purrr:::pmap_dbl(function(latitude, longitude) {
-                #     tibble::tibble(latitude,
-                #                    longitude) %>%
-                #       sf::st_as_sf(x = ., coords = c("longitude", "latitude")) %>%
-                #       smpds::extract_biome(buffer = 12000) %>%
-                #       dplyr::filter(!is.na(BiomeID)) %>%
-                #       dplyr::slice(1) %>%
-                #       .$BiomeID
-                #   }),
+                # BiomeID = smpds::Herzschuh$BiomeID,
+                BiomeID = tibble::tibble(latitude, longitude) %>%
+                  smpds::parallel_extract_biome(buffer = 12000, cpus = 6) %>%
+                  dplyr::filter(!is.na(BiomeID)) %>%
+                  dplyr::distinct(ID, .keep_all = TRUE) %>%
+                  dplyr::right_join(tibble::tibble(ID = seq_along(latitude)),
+                                    by = "ID") %>%
+                  .$BiomeID,
                 .after = elevation)
 
 usethis::use_data(Herzschuh, overwrite = TRUE, compress = "xz")
