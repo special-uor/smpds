@@ -1,4 +1,4 @@
-﻿taxon_name,clean_name,action
+taxon_name,clean_name,action
 Abies,Abies,update
 Acanthaceae,Acanthaceae,update
 Acer,Acer,update
@@ -49,6 +49,7 @@ Cercidiphyllum,Cercidiphyllum,update
 Chenopodiaceae,Amaranthaceae,update
 Cistaceae,Cistaceae,update
 Clethra,Clethra,update
+Clusiaceae,Clusiaceae,update
 Combretaceae,Combretaceae,update
 Commelinaceae,Commelinaceae,update
 Convolvulaceae,Convolvulaceae,update
@@ -89,6 +90,7 @@ Gesneriaceae,Gesneriaceae,update
 Ginkgo,Ginkgo,update
 Grewia,Grewia,update
 Guttiferae,Clusiaceae,update
+Haloragaceae,Haloragaceae,update
 Haloragidaceae,Haloragaceae,update
 Hamamelidaceae,Hamamelidaceae,update
 Hippophae,Hippophae,update
@@ -181,6 +183,7 @@ Rumex,Rumex,update
 Rutaceae,Rutaceae,update
 Sabiaceae,Sabiaceae,update
 Sabina,Juniperus,update
+Salicaceae,Salicaceae,update
 Salix,Salix,update
 Samydaceae,Salicaceae,update
 Sapindaceae,Sapindaceae,update
