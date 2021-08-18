@@ -85,3 +85,21 @@ tolerance <- function(x, digits = 1) {
   # round(x, digits = digits)
   trunc(x * 10 ^ digits) / 10 ^ digits
 }
+
+#' Add the taxa/columns counts by entity/row
+#'
+#' Adds the taxa/columns counts by entity/row and inserts the a new column,
+#' \code{total}, after the last index in \code{cols}, the metadata columns.
+#'
+#' @param .data Data frame.
+#' @param cols Numeric vector with the columns to be ignored (metadata columns).
+#'
+#' @return Data frame including a new column, \code{total}, with taxa counts.
+#' @export
+total_taxa <- function(.data, cols = 1) {
+  .data %>%
+    dplyr::rowwise() %>%
+    dplyr::mutate(total = dplyr::c_across(-cols) %>%
+                    sum(na.rm = TRUE),
+                  .after = max(cols))
+}
