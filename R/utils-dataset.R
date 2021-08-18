@@ -40,12 +40,28 @@ compare_latlon <- function(x, y, fx = tolerance, ...) {
 #' @param .data Data frame.
 #' @param cols Numeric vector with the columns to be ignored (metadata columns).
 #'
-#' @return Reduced data frame with non-missing taxa/column.
+#' @return Reduced data frame with non-missing taxa/columns.
 #' @export
 rm_na_taxa <- function(.data, cols = 1) {
   .data %>%
     tidyr::pivot_longer(-cols) %>%
     dplyr::filter(!is.na(value)) %>%
+    tidyr::pivot_wider(cols)
+}
+
+#' Remove taxa/columns with zeros
+#'
+#' Removes taxa/columns that are equal to zero
+#'
+#' @param .data Data frame.
+#' @param cols Numeric vector with the columns to be ignored (metadata columns).
+#'
+#' @return Reduced data frame without taxa/columns of zeros.
+#' @export
+rm_zero_taxa <- function(.data, cols = 1) {
+  .data %>%
+    tidyr::pivot_longer(-cols) %>%
+    dplyr::filter(value != 0) %>%
     tidyr::pivot_wider(cols)
 }
 
@@ -57,7 +73,7 @@ rm_na_taxa <- function(.data, cols = 1) {
 #' @param .data Data frame.
 #' @param cols Numeric vector with the columns to be ignored (metadata columns).
 #'
-#' @return Data frame with taxa/column alphabetically sorted.
+#' @return Data frame with taxa/columns alphabetically sorted.
 #' @export
 sort_taxa <- function(.data, cols = 1) {
   .data %>%
