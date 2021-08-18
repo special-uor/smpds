@@ -33,6 +33,29 @@ compare_latlon <- function(x, y, fx = tolerance, ...) {
     dplyr::select(-lat, -lon)
 }
 
+#' Normalise taxa/columns counts
+#'
+#' Normalises the taxa/columns counts by entity/row. The \code{scale} parameter
+#' can be used to scale the normalised values, defaults to 100.
+#'
+#' @param .data Data frame.
+#' @param cols Numeric vector with the columns to be ignored (metadata columns).
+#' @param scale Numeric scale factor, default = 100.
+#'
+#' @return Data frame with normalised taxa/columns counts.
+#' @export
+normalise_taxa <- function(.data, cols = 1, scale = 100) {
+  .data %>%
+    tidyr::pivot_longer(-cols) %>%
+    dplyr::group_by(dplyr::across(cols)) %>%
+    dplyr::mutate(total = dplyr::c_across(value) %>%
+                    sum(na.rm = TRUE),
+                  value = as.double(value) / total * scale) %>%
+    dplyr::select(-total) %>%
+    dplyr::ungroup() %>%
+    tidyr::pivot_wider(cols)
+}
+
 #' Remove missing taxa/columns
 #'
 #' Removes taxa/columns that are missing.
