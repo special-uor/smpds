@@ -1,6 +1,6 @@
 #' Biome names
 #'
-#' Obtain Biome names from the Hengl et al., 2018, using the \code{BiomeID}.
+#' Obtain Biome names from the Hengl et al., 2018, using the \code{ID_BIOME}.
 #'
 #' @param ID Numeric value linked to a Biome in provided by Hengl et al., 2018.
 #'
@@ -15,11 +15,11 @@
 #'   sf::st_as_sf(x = ., coords = c("longitude", "latitude"))
 #' data %>%
 #'   extract_biome() %>%
-#'   .$BiomeID %>%
+#'   .$ID_BIOME %>%
 #'   biome_name()
 biome_name <- function(ID) {
   smpds:::PNV_classes %>%
-    dplyr::filter(BiomeID %in% ID)
+    dplyr::filter(ID_BIOME %in% ID)
 }
 
 #' Extract biome
@@ -48,8 +48,8 @@ extract_biome <- function(.data, reference = smpds::PNV, buffer = 12000) {
   biomes %>%
     purrr::map_df(function(bio) {
       tibble::as_tibble(bio) %>%
-        magrittr::set_names("BiomeID") %>%
-        dplyr::group_by(BiomeID) %>%
+        magrittr::set_names("ID_BIOME") %>%
+        dplyr::group_by(ID_BIOME) %>%
         dplyr::summarise(n = dplyr::n()) %>%
         dplyr::arrange(dplyr::desc(n)) # %>%
         # dplyr::slice(which(dplyr::row_number() == 1))
