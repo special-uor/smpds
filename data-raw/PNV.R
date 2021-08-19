@@ -6,15 +6,20 @@ PNV <- raster::brick("./inst/extdata/pnv_biome.type_biome00k_c_1km_s0..0cm_2000.
 PNV_classes <- readxl::read_xlsx("./inst/extdata/pnv_basic_info.xlsx") %>%
   magrittr::set_names(c("ID_BIOME", "colour", "description")) %>%
   dplyr::select(1, 3, 2) %>%
-  dplyr::mutate(colour = stringr::str_to_upper(colour))
+  dplyr::mutate(colour = stringr::str_to_upper(colour)) %>%
+  dplyr::bind_rows(tibble::tibble(ID_BIOME = c(30, 31, 32),
+                                  description = "tundra",
+                                  colour = "#BFC9CA")) # Amalgamate the tundras
 # Amalgamate the tundras
-PNV[PNV == 30] <- 28
-PNV[PNV == 31] <- 28
-PNV[PNV == 32] <- 28
+# PNV[PNV == 30] <- 28
+# PNV[PNV == 31] <- 28
+# PNV[PNV == 32] <- 28
 
 # Crop the PNV map
 # p.region <- as(raster::extent(-25, 155, 25, 90), 'SpatialPolygons')
 # raster::crs(p.region) <- "+proj=longlat +datum=WGS84 +no_defs"
 # PNV <- raster::crop(pnv, p.region)
+
+# PNV_old <- smpds::PNV
 usethis::use_data(PNV, overwrite = TRUE, compress = "xz")
 usethis::use_data(PNV_classes, overwrite = TRUE, compress = "xz", internal = TRUE)
