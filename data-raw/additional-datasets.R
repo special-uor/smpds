@@ -143,7 +143,7 @@ juodonys <- readxl::read_xls("~/Downloads/SMPDSv2/To check included/Juodonys pol
                 age_BP = "modern", #-83,
                 publication = paste0("Stančikaitė, M., Kisielienė, D., Strimaitienė, A., 2004. Vegetation response to the climatic and human impact changes during the Late Glacial and Holocene: case study of the marginal area of Baltija Upland, NE Lithuania. Baltica 17, 17–33.",
                                      "\n",
-                                     "Stančikaitė, M., Kisielienė, D., Moe, D., Vaikutienė, G., 2009. Lateglacial and early Holocene environmental changes in northeastern Lithuania. Quaternary International 207, 80–92. doi: 10.1016/j.quaint.2008.10.009"
+                                     "Stančikaitė, M., Kisielienė, D., Moe, D., Vaikutienė, G., 2009. Lateglacial and early Holocene environmental changes in northeastern Lithuania. Quaternary International 207, 80–92. doi:10.1016/j.quaint.2008.10.009"
                                      ),
                 source = "Stančikaitė et al., 2004 and 2009",
                 .after = 1)
@@ -224,7 +224,13 @@ petresiunai <- readxl::read_xls("~/Downloads/SMPDSv2/To check included/Petrasiun
                 entity_type = "core top",
                 basin_size = "0.02",
                 age_BP = "20",
-                publication = "Stančikaitė, M., Simniškytė, A., Skuratovič, Gedminienė, L., Kazakauskas, V., Uogintas, D., 2019. Reconstruction of the mid-to Late- Holocene history of vegetation and land-use in Petrešiūnai, north-east Lithuania: implications from palaeobotanical and archaeological data. Quaternary International 516, 5–20. doi: 10.1016/j.quaint.2018.09.029",
+                publication =
+                  paste("Stančikaitė, M., Simniškytė, A., Skuratovič, Gedminienė, L.,",
+                        "Kazakauskas, V., Uogintas, D., 2019. Reconstruction of the mid-to",
+                        "Late- Holocene history of vegetation and land-use in Petrešiūnai,",
+                        "north-east Lithuania: implications from palaeobotanical and",
+                        "archaeological data. Quaternary International 516, 5–20.",
+                        "doi:10.1016/j.quaint.2018.09.029"),
                 source = "Stančikaitė et al., 2019",
                 .after = 1) %>%
   smpds::rm_zero_taxa(1:10)
