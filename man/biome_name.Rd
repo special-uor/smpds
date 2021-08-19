@@ -13,7 +13,7 @@ biome_name(ID)
 Table (\code{tibble} object) with Biome metadata.
 }
 \description{
-Obtain Biome names from the Hengl et al., 2018, using the \code{BiomeID}.
+Obtain Biome names from the Hengl et al., 2018, using the \code{ID_BIOME}.
 }
 \examples{
 `\%>\%` <- magrittr::`\%>\%`
@@ -23,6 +23,6 @@ data <- tibble::tibble(entity_name = "University of Reading",
   sf::st_as_sf(x = ., coords = c("longitude", "latitude"))
 data \%>\%
   extract_biome() \%>\%
-  .$BiomeID \%>\%
+  .$ID_BIOME \%>\%
   biome_name()
 }
