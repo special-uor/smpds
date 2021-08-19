@@ -56,7 +56,7 @@ Herzschuh_file2 <- readr::read_csv("~/Downloads/SMPDSv2/SourceData_China_Herschu
                 longitude = Longitude,
                 elevation = Altitude,
                 age_BP = Cal.yr.BP) %>%
-  dplyr::select(-country, -province)
+  dplyr::select(-country, -province, -dplyr::starts_with("Pann"))
 Herzschuh_file2_modern <- Herzschuh_file2 %>%
   dplyr::filter(is.na(age_BP) | age_BP <= 50) %>%
   smpds::rm_na_taxa(1:6) %>%
@@ -65,10 +65,9 @@ Herzschuh_file2_modern <- Herzschuh_file2 %>%
   dplyr::mutate(n = length(entity_name),
                 entity_name2 = paste0(entity_name, " ", seq_along(entity_name)),
                 entity_name = ifelse(n > 1, entity_name2, entity_name)) %>%
-  dplyr::select(-entity_name2) %>%
-  dplyr::ungroup() %>%
-  smpds::normalise_counts(1:6) %>%
-  smpds::total_taxa(1:6)
+  dplyr::select(-entity_name2, -n) %>%
+  dplyr::ungroup() #%>%
+  # smpds::normalise_taxa(1:6)
 
 aux <- Herzschuh_file2_modern %>%
   dplyr::filter(entity_name %in% Herzschuh_file1$entity_name) %>%
@@ -150,21 +149,39 @@ Herzschuh_file1_long %>%
                 .after = 6)
 
 Herzschuh <- Herzschuh_file1_long %>%
-  # dplyr::bind_rows(Herzschuh_file2_modern_long) %>%
+  dplyr::bind_rows(Herzschuh_file2_modern_long) %>%
   tidyr::pivot_wider(id_cols = 1:6, names_from = "taxon_name") %>%
   smpds::sort_taxa(cols = 1:6) %>% # Sort the taxon_names alphabetically
+  dplyr::arrange(entity_name) %>%
+  dplyr::group_by(entity_name) %>%
+  dplyr::mutate(n = length(entity_name),
+                entity_name2 = paste0(entity_name, "_", seq_along(entity_name)),
+                entity_name = ifelse(n > 1, entity_name2, entity_name)) %>%
+  dplyr::select(-entity_name2, -n, -ID_HERZSCHUH) %>%
+  dplyr::ungroup() %>%
   dplyr::mutate(basin_size = NA,
                 site_type = NA,
                 entity_type = NA,
-                # BiomeID = smpds::Herzschuh$BiomeID,
-                BiomeID = tibble::tibble(latitude, longitude) %>%
+                # ID_BIOME = NA,
+                # ID_BIOME = smpds::Herzschuh$ID_BIOME,
+                ID_BIOME = tibble::tibble(latitude, longitude) %>%
                   smpds::parallel_extract_biome(buffer = 12000, cpus = 6) %>%
-                  dplyr::filter(!is.na(BiomeID)) %>%
+                  dplyr::filter(!is.na(ID_BIOME)) %>%
                   dplyr::distinct(ID, .keep_all = TRUE) %>%
                   dplyr::right_join(tibble::tibble(ID = seq_along(latitude)),
                                     by = "ID") %>%
-                  .$BiomeID,
-                .after = elevation)
+                  .$ID_BIOME,
+                publication =
+                  paste("Herzschuh, U., Cao, X., Laepple, T., Dallmeyer, A., Telford, R.J., Ni, J.,",
+                        "Chen, F., Kong, Z., Liu, G., Liu, K.B. and Liu, X., 2019. Position and",
+                        "orientation of the westerly jet determined Holocene rainfall patterns in China.",
+                        "Nature communications, 10(1), pp.1-8.",
+                        "doi:10.1038/s41467-019-09866-8"),
+                .after = elevation) %>%
+  dplyr::mutate(source = "Herzschuh et al., 2019",
+                site_name = entity_name %>%
+                  stringr::str_remove_all("[-_0-9]*$"),
+                .before = 1)
 
 usethis::use_data(Herzschuh, overwrite = TRUE, compress = "xz")
 
