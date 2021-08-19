@@ -16,11 +16,18 @@ SMPDSv1 <- readxl::read_xlsx("~/Downloads/SMPDSv2/Sandy_s MPDS_20_October_expand
                 entity_type = `Entity Type`,
                 age_BP = AgeBP) %>%
   dplyr::mutate(ID_SMPDSv1 = seq_along(entity_name), .before = 1) %>%
-  # dplyr::mutate(age_BP = as.double(age_BP)) %>%
-  dplyr::select(1:11, order(colnames(.)[-c(1:11)]) + 11) # Sort the taxon_names alphabetically
+  smpds::sort_taxa(1:11) %>%
+  dplyr::mutate(ID_BIOME = tibble::tibble(latitude, longitude) %>%
+                  smpds::parallel_extract_biome(buffer = 12000, cpus = 6) %>%
+                  dplyr::filter(!is.na(ID_BIOME)) %>%
+                  dplyr::distinct(ID, .keep_all = TRUE) %>%
+                  dplyr::right_join(tibble::tibble(ID = seq_along(latitude)),
+                                    by = "ID") %>%
+                  .$ID_BIOME,
+                publication = NA,
+                .after = age_BP) # Sort the taxon_names alphabetically
 
 usethis::use_data(SMPDSv1, overwrite = TRUE, compress = "xz")
-
 
 # ------------------------------------------------------------------------------
 # |                         Find matches in the EMPDv2                         |
