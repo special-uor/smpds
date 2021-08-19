@@ -22,15 +22,15 @@ ssmpd_metadata <- readr::read_csv("inst/extdata/ssmpd_metadata.csv") %>%
                 site_type = NA,
                 entity_type = NA,
                 age_BP = NA,
-                BiomeID = list(latitude, longitude) %>%
+                ID_BIOME = list(latitude, longitude) %>%
                   purrr:::pmap_dbl(function(latitude, longitude) {
                     tibble::tibble(latitude,
                                    longitude) %>%
                       sf::st_as_sf(x = ., coords = c("longitude", "latitude")) %>%
                       smpds::extract_biome(buffer = 12000) %>%
-                      dplyr::filter(!is.na(BiomeID)) %>%
+                      dplyr::filter(!is.na(ID_BIOME)) %>%
                       dplyr::slice(1) %>%
-                      .$BiomeID
+                      .$ID_BIOME
                   }))
 
 ssmpd_taxon_names_clean <- readr::read_csv("inst/extdata/ssmpd_taxon.csv")

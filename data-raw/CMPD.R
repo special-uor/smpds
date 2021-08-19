@@ -46,19 +46,19 @@ cmpd_metadata <- readxl::read_xlsx("inst/extdata/cmpd_metadata.xlsx",
                 age_BP = NA,
                 DOI = NA,
                 source = "CMPD") %>%
-  dplyr::mutate(BiomeID = NA,
-                # BiomeID = list(latitude, longitude) %>%
+  dplyr::mutate(ID_BIOME = NA,
+                # ID_BIOME = list(latitude, longitude) %>%
                 #   purrr:::pmap_dbl(function(latitude, longitude) {
-                #     BiomeID <- tibble::tibble(latitude,
+                #     ID_BIOME <- tibble::tibble(latitude,
                 #                    longitude) %>%
                 #       sf::st_as_sf(x = ., coords = c("longitude", "latitude")) %>%
                 #       smpds::extract_biome(buffer = 12000) %>%
-                #       dplyr::filter(!is.na(BiomeID)) %>%
+                #       dplyr::filter(!is.na(ID_BIOME)) %>%
                 #       dplyr::slice(1) %>%
-                #       .$BiomeID
-                #     if (length(BiomeID) == 0)
+                #       .$ID_BIOME
+                #     if (length(ID_BIOME) == 0)
                 #       return(NA)
-                #     BiomeID
+                #     ID_BIOME
                 #   })
                 )
 
@@ -151,7 +151,7 @@ CMPD_all <- cmpd_metadata %>%
                 age_BP,
                 publication,
                 DOI,
-                BiomeID
+                ID_BIOME
   ) %>%
   dplyr::right_join(cmpd_counts_wide %>%
                       dplyr::select(-c(1:2, 4:6)),
