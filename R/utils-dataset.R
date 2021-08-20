@@ -124,5 +124,6 @@ total_taxa <- function(.data, cols = 1) {
     dplyr::rowwise() %>%
     dplyr::mutate(total = dplyr::c_across(-cols) %>%
                     sum(na.rm = TRUE),
-                  .after = max(cols))
+                  .after = max(cols)) %>%
+    dplyr::ungroup()
 }
