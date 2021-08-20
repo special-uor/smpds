@@ -76,6 +76,14 @@ usethis::use_data(SMPDSv1, overwrite = TRUE, compress = "xz")
 # |                         Find matches in the EMPDv2                         |
 # ------------------------------------------------------------------------------
 compare_latlon(EMPDv2, SMPDSv1, digits = 2)
+aux <- EMPDv2 %>%
+  dplyr::filter(entity_name %in% SMPDSv1$entity_name) %>%
+  smpds::rm_zero_taxa(1:14) %>%
+  smpds::total_taxa(1:14)
+aux_rev <- SMPDSv1 %>%
+  dplyr::filter(entity_name %in% EMPDv2$entity_name) %>%
+  smpds::rm_zero_taxa(1:14) %>%
+  smpds::total_taxa(1:14)
 
 # ------------------------------------------------------------------------------
 # |                                  Sandbox                                   |
