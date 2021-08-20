@@ -121,21 +121,50 @@ EMPDv2_all <- EMPD %>%
                   .$ID_BIOME,
                 .before = publication)
 
-EMPDv2_all %>% # Records without ID_BIOME
-  dplyr::filter(is.na(ID_BIOME))
+not_applicable_biome_pattern <-
+  "Marine|marine|Sea|sea|Coastal|coastal|Open Water|Amur River|Continental slope|Samsun ridge"
+EMPDv2_all2 <- EMPDv2_all %>%
+  dplyr::mutate(
+    ID_BIOME = ifelse(entity_type %>%
+                        stringr::str_detect(not_applicable_biome_pattern) &
+                        is.na(ID_BIOME),
+                      -888888,
+                      ID_BIOME),
+    ID_BIOME = ifelse(site_type %>%
+                        stringr::str_detect(not_applicable_biome_pattern) &
+                        is.na(ID_BIOME),
+                      -888888,
+                      ID_BIOME),
+    ID_BIOME = ifelse(is.na(ID_BIOME),
+                      -999999,
+                      ID_BIOME)
+    )
+EMPDv2_all %>%
+  dplyr::filter(is.na(ID_BIOME)) %>%
+  dplyr::select(1:14)
+EMPDv2_all2 %>%
+  dplyr::filter(is.na(ID_BIOME)) %>%
+  dplyr::select(1:14)
+
+# EMPDv2_all %>% # Records without ID_BIOME
+#   dplyr::filter(is.na(ID_BIOME)) %>%
+#   dplyr::select(1:14) %>%
+#   dplyr::rename(biome = ID_BIOME) %>%
+#   readr::write_excel_csv("~/Downloads/SMPDSv2/EMPDV2-records-without-biome_2021-08-20.csv", na = "")
 
 # ------------------------------------------------------------------------------
 # |                           Extract other subsets                            |
 # ------------------------------------------------------------------------------
-EMPDv2_excluded <- EMPDv2_all %>%
+EMPDv2_excluded <- EMPDv2_all2 %>%
   dplyr::filter(
     site_name %>% stringr::str_detect("Inner Mongolia") # Herzschuh
   )
 
-EMPDv2 <- EMPDv2_all %>%
-  dplyr::filter(
-    site_name %>% stringr::str_detect("Inner Mongolia", negate = TRUE) # Herzschuh
-  )
+EMPDv2 <- EMPDv2_all2 %>%
+  dplyr::filter(!(ID_EMPDv2 %in% EMPDv2_excluded$ID_EMPDv2))
+  # dplyr::filter(
+  #   site_name %>% stringr::str_detect("Inner Mongolia", negate = TRUE) # Herzschuh
+  # )
 
 usethis::use_data(EMPDv2, overwrite = TRUE, compress = "xz")
 
