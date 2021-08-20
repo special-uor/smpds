@@ -19,13 +19,19 @@ SMPDSv1 <- readxl::read_xlsx("~/Downloads/SMPDSv2/Sandy_s MPDS_20_October_expand
   smpds::sort_taxa(1:11) %>%
   dplyr::mutate(ID_BIOME = tibble::tibble(latitude, longitude) %>%
                   smpds::parallel_extract_biome(buffer = 12000, cpus = 6) %>%
-                  dplyr::filter(!is.na(ID_BIOME)) %>%
-                  dplyr::distinct(ID, .keep_all = TRUE) %>%
-                  dplyr::right_join(tibble::tibble(ID = seq_along(latitude)),
-                                    by = "ID") %>%
+                  # dplyr::filter(!is.na(ID_BIOME)) %>%
+                  # dplyr::distinct(ID, .keep_all = TRUE) %>%
+                  # dplyr::right_join(tibble::tibble(ID = seq_along(latitude)),
+                  #                   by = "ID") %>%
                   .$ID_BIOME,
                 publication = NA,
                 .after = age_BP) # Sort the taxon_names alphabetically
+
+SMPDSv1 %>%
+  dplyr::filter(is.na(ID_BIOME)) %>%
+  dplyr::select(1:13) %>%
+  dplyr::rename(biome = ID_BIOME) %>%
+  readr::write_excel_csv("~/Downloads/SMPDSv1_records_without_biome.csv", na = "")
 
 usethis::use_data(SMPDSv1, overwrite = TRUE, compress = "xz")
 
