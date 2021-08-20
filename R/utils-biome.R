@@ -107,10 +107,12 @@ parallel_extract_biome <- function(.data, reference = smpds::PNV,
 #' version (for large datasets), \code{\link{parallel_extract_biome}}.
 #'
 #' @param .data Data frame with spatial data and biome classification.
+#' @inheritParams ggplot2::cood_sf
+#' @inheritDotParams ggplot2::coord_sf -xlim -ylim
 #'
 #' @return \code{ggplot} object with the plot.
 #' @export
-plot_biome <- function(.data) {
+plot_biome <- function(.data, xlim = c(-180, 180), ylim = c(-60, 90), ...) {
   # create the breaks- and label vectors
   ewbrks <- seq(-180,180,30)
   nsbrks <- seq(-90,90,30)
@@ -126,7 +128,7 @@ plot_biome <- function(.data) {
   basemap <- rnaturalearth::ne_countries(scale = "small", returnclass = "sf") %>%
     ggplot2::ggplot() +
     ggplot2::geom_sf(fill = "white", size = 0.25) +
-    ggplot2::coord_sf(ylim = c(-60, 90), expand = FALSE)
+    ggplot2::coord_sf(xlim = xlim, ylim = ylim, ..., expand = FALSE)
   .data_biome <- .data$ID_BIOME %>% smpds::biome_name()
   .data <- .data %>%
     dplyr::left_join(.data_biome,
