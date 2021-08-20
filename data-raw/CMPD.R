@@ -46,27 +46,42 @@ cmpd_metadata <- readxl::read_xlsx("inst/extdata/cmpd_metadata.xlsx",
                 age_BP = NA,
                 DOI = NA,
                 source = "CMPD") %>%
-  dplyr::mutate(ID_BIOME = NA,
-                # ID_BIOME = list(latitude, longitude) %>%
-                #   purrr:::pmap_dbl(function(latitude, longitude) {
-                #     ID_BIOME <- tibble::tibble(latitude,
-                #                    longitude) %>%
-                #       sf::st_as_sf(x = ., coords = c("longitude", "latitude")) %>%
-                #       smpds::extract_biome(buffer = 12000) %>%
-                #       dplyr::filter(!is.na(ID_BIOME)) %>%
-                #       dplyr::slice(1) %>%
-                #       .$ID_BIOME
-                #     if (length(ID_BIOME) == 0)
-                #       return(NA)
-                #     ID_BIOME
-                #   })
-                )
+  dplyr::mutate(ID_BIOME = tibble::tibble(latitude, longitude) %>%
+                  smpds::parallel_extract_biome(buffer = 12000, cpus = 6) %>%
+                  .$ID_BIOME)
+
+cmpd_metadata2 <- cmpd_metadata %>%
+  dplyr::mutate(ID_BIOME =
+                  ifelse(site_name %>% stringr::str_detect("Qinghai Lake") &
+                           is.na(ID_BIOME),
+                         22,
+                         ID_BIOME)) %>% # Steppe (ID_BIOME = 22)
+  dplyr::mutate(ID_BIOME =
+                  ifelse(stringr::str_detect(entity_type,
+                                             "Marine|marine|Coastal|coastal") &
+                           is.na(ID_BIOME),
+                         -888888,
+                         ID_BIOME))
+cmpd_metadata2 %>%
+  dplyr::filter(site_name %>% stringr::str_detect("Qinghai Lake"),
+                is.na(ID_BIOME)) %>%
+  dplyr::select(1:6, 8, 27) # Steppe (ID_BIOME = 22)
+
+cmpd_metadata2 %>%
+  dplyr::filter(is.na(ID_BIOME))
+
+cmpd_metadata2 %>% # Entities from marine/coastal sites with ID_BIOME
+  dplyr::filter(stringr::str_detect(entity_type,
+                                    "Marine|marine|Coastal|coastal")) %>%
+  dplyr::select(1:6, 8, 27) %>%
+  dplyr::filter(!is.na(ID_BIOME)) %>%
+  readr::write_excel_csv("~/Downloads/SMPDSv2/CMPD-marine-sites-with-biomes.csv", na = "")
 
 # ------------------------------------------------------------------------------
 # |                                 Clean data                                 |
 # ------------------------------------------------------------------------------
 ## Load table with taxons
-cmpd_taxons <- readr::read_csv("inst/extdata/cmpd_taxon.csv")
+cmpd_taxons <- readr::read_csv("inst/extdata/cmpd_taxa.csv")
 ### Clean taxon names
 cmpd_clean_taxon_names <- cmpd_taxons %>%
   dplyr::filter(action == "update")
@@ -138,7 +153,7 @@ cmpd_counts_wide <- cmpd_counts_long2 %>%
   tidyr::pivot_wider(1:6, names_from = "taxon_name") %>%
   dplyr::select(1:6, order(colnames(.)[-c(1:6)]) + 6) # Sort the taxon_names alphabetically
 
-CMPD_all <- cmpd_metadata %>%
+CMPD_all <- cmpd_metadata2 %>%
   dplyr::select(ID_CMPD,
                 source,
                 site_name,
@@ -149,9 +164,9 @@ CMPD_all <- cmpd_metadata %>%
                 basin_size,
                 entity_type,
                 age_BP,
+                ID_BIOME,
                 publication,
-                DOI,
-                ID_BIOME
+                DOI
   ) %>%
   dplyr::right_join(cmpd_counts_wide %>%
                       dplyr::select(-c(1:2, 4:6)),
@@ -698,7 +713,7 @@ cmpd_counts_nonsense <- cmpd_counts %>%
   dplyr::ungroup() %>%
   dplyr::filter(total_count > 0)
 
-cmpd_counts_nonsense2 <- cmpd_metadata %>%
+cmpd_counts_nonsense2 <- cmpd_metadata2 %>%
   dplyr::select(ID_CMPD,
                 source,
                 site_name,
