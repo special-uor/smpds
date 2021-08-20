@@ -169,4 +169,5 @@ plot_biome <- function(.data, xlim = c(-180, 180), ylim = c(-60, 90), ...) {
                    # panel.background = ggplot2::element_rect(fill = "aliceblue"))
                    panel.background = ggplot2::element_rect(fill = NA))
   print(p)
+  return(invisible(p))
 }
