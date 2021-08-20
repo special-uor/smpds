@@ -5,9 +5,15 @@
 \alias{parallel_extract_biome}
 \title{Extract biome}
 \usage{
-extract_biome(.data, reference = smpds::PNV, buffer = 12000)
+extract_biome(.data, reference = smpds::PNV, buffer = 12000, all = FALSE)
 
-parallel_extract_biome(.data, reference = smpds::PNV, buffer = 12000, cpus = 2)
+parallel_extract_biome(
+  .data,
+  reference = smpds::PNV,
+  buffer = 12000,
+  cpus = 2,
+  all = TRUE
+)
 }
 \arguments{
 \item{.data}{Table containing a geometry column.}
@@ -15,6 +21,9 @@ parallel_extract_biome(.data, reference = smpds::PNV, buffer = 12000, cpus = 2)
 \item{reference}{Reference map with biomes, default: \code{smpds::PNV}.}
 
 \item{buffer}{numeric. The radius of a buffer around each point from which to extract cell values. If the distance between the sampling point and the center of a cell is less than or equal to the buffer, the cell is included. The buffer can be specified as a single value, or as a vector of the length of the number of points.  If the data are not projected (latitude/longitude), the unit should be meters. Otherwise it should be in map-units (typically also meters).}
+
+\item{all}{Boolean flag to indicate whether or not to return all the detected
+biomes, default: \code{FALSE} (dominant biome only).}
 
 \item{cpus}{Number of CPUs to be used in parallel, default = 2.}
 }

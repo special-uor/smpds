@@ -5,7 +5,7 @@
 \alias{Herzschuh}
 \title{\code{Herzschuh} dataset}
 \format{
-A data frame (\code{tibble} object) with 2559 rows and 159 variables:
+A data frame (\code{tibble} object) with 2598 rows and 221 variables:
 \describe{
 \item{...}{int ...}
 }
