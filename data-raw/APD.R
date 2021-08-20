@@ -14,7 +14,21 @@ output <- smpds::process_apd("~/Downloads/SMPDSv2/APD/",
                                            readr::col_double(),
                                            readr::col_double()))
 
-apd_clean_taxon_names <- readr::read_csv("inst/extdata/apd_taxon.csv")
+apd_clean_taxon_names <- readr::read_csv("inst/extdata/apd_taxa.csv")
+
+APD_SPH <- readxl::read_xlsx("~/Downloads/SMPDSv2/APD-modern-records_diagnosed/APD-modern-records_all_SPH_diagnosed.xlsx",
+                             sheet = 1) %>%
+  dplyr::rename(SPH_comment = ...14) %>%
+  dplyr::mutate(ID_APD = seq_along(sigle))
+APD_SPH2 <- APD_SPH %>%
+  dplyr::filter(
+    !is.na(age_BP)
+    # age_BP %>% stringr::str_detect("modern") |
+    #   SPH_comment %>% stringr::str_detect("^modern|^this might") |
+    #   is.na(SPH_comment)
+  )
+APD_SPH_unused2 <- APD_SPH %>%
+  dplyr::filter(!(ID_APD %in% APD_SPH2$ID_APD))
 
 APD <- output %>%
   purrr::map_df(~.x) %>%
@@ -49,6 +63,34 @@ APD <- output %>%
   # dplyr::distinct(site_name, taxon_name, .keep_all = TRUE) %>%
   dplyr::select(-taxon_name_original, -taxon_name_author)
 
+APD_all <- APD_SPH2 %>%
+  dplyr::mutate(taxon_name = taxon_name %>%
+                  stringr::str_squish()) %>%
+  dplyr::filter(taxon_name != "[ODD taxon]") %>%
+  dplyr::select(-taxon_name_original,-taxon_name_author, -SPH_comment, -ID_APD) %>%
+  dplyr::mutate(entity_name = paste0(site_name, "_", depth_in_m),
+                .after = site_name) %>%
+  dplyr::group_by(entity_name, taxon_name) %>%
+  dplyr::mutate(count = sum(count, na.rm = TRUE),
+                n = length(count)) %>%
+  dplyr::ungroup() %>%
+  dplyr::distinct(entity_name, taxon_name, .keep_all = TRUE) %>%
+  dplyr::select(site_name, entity_name, latitude, longitude, elevation, age_BP, publication, taxon_name, count) %>%
+  dplyr::mutate(ID_APD = seq_along(site_name), .before = 1)
+APD_all_wide <- APD_all %>%
+  dplyr::ungroup() %>%
+  tidyr::pivot_wider(2:10, names_from = "taxon_name", values_from = "count") %>%
+  dplyr::mutate(ID_BIOME = tibble::tibble(latitude, longitude) %>%
+                  smpds::parallel_extract_biome(buffer = 12000, cpus = 6) %>%
+                  .$ID_BIOME,
+                .after = age_BP)
+APD_all_wide %>%
+  dplyr::filter(is.na(ID_BIOME))
+
+APD <- APD_all_wide %>%
+  dplyr::mutate(ID_BIOME = ifelse(is.na(ID_BIOME),
+                                  -888888,
+                                  ID_BIOME))
 
 usethis::use_data(APD, overwrite = TRUE, compress = "xz")
 
