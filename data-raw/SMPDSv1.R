@@ -1,5 +1,9 @@
 ## code to prepare `SMPDSv1` dataset goes here
 # The SPECIAL Modern Pollen Dataset
+# Source:
+# Harrison, Sandy (2019): Modern pollen data for climate reconstructions,
+# version 1 (SMPDS). University of Reading. Dataset.
+# http://dx.doi.org/10.17864/1947.194
 `%>%` <- magrittr::`%>%`
 SMPDSv1 <- readxl::read_xlsx("~/Downloads/SMPDSv2/Sandy_s MPDS_20_October_expanded.xlsx",
                              sheet = 1,
@@ -20,7 +24,10 @@ SMPDSv1 <- readxl::read_xlsx("~/Downloads/SMPDSv2/Sandy_s MPDS_20_October_expand
   dplyr::mutate(ID_BIOME = tibble::tibble(latitude, longitude) %>%
                   smpds::parallel_extract_biome(buffer = 12000, cpus = 6) %>%
                   .$ID_BIOME,
-                publication = NA,
+                publication =
+                  paste("Harrison, Sandy P., 2019. Modern pollen data for",
+                        "climate reconstructions, version 1 (SMPDS). University",
+                        "of Reading. Dataset. doi:10.17864/1947.194"),
                 .after = age_BP)
 SMPDSv12 <- SMPDSv1 %>%
   dplyr::mutate(ID_BIOME = ifelse(entity_name %>%
@@ -48,15 +55,19 @@ SMPDSv12 <- SMPDSv1 %>%
                                     is.na(ID_BIOME),
                                   -888888,
                                   ID_BIOME))
+SMPDSv1 %>%
+  dplyr::filter(is.na(ID_BIOME)) %>%
+  dplyr::select(1:13)
+
 SMPDSv12 %>%
   dplyr::filter(is.na(ID_BIOME)) %>%
   dplyr::select(1:13)
 
-SMPDSv1 %>%
-  dplyr::filter(is.na(ID_BIOME)) %>%
-  dplyr::select(1:13) %>%
-  dplyr::rename(biome = ID_BIOME) %>%
-  readr::write_excel_csv("~/Downloads/SMPDSv1_records_without_biome.csv", na = "")
+# SMPDSv1 %>%
+#   dplyr::filter(is.na(ID_BIOME)) %>%
+#   dplyr::select(1:13) %>%
+#   dplyr::rename(biome = ID_BIOME) %>%
+#   readr::write_excel_csv("~/Downloads/SMPDSv1_records_without_biome.csv", na = "")
 
 SMPDSv1 <- SMPDSv12
 usethis::use_data(SMPDSv1, overwrite = TRUE, compress = "xz")
