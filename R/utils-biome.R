@@ -145,7 +145,7 @@ plot_biome <- function(.data, xlim = c(-180, 180), ylim = c(-60, 90), ...) {
   p <- basemap +
     ggplot2::geom_point(mapping = ggplot2::aes(x = longitude,
                                                y = latitude,
-                                               fill = colour
+                                               fill = description
                                                ),
                         data = .data,
                         size = 1.5,
@@ -153,7 +153,7 @@ plot_biome <- function(.data, xlim = c(-180, 180), ylim = c(-60, 90), ...) {
                         stroke = 0.2) +
     ggplot2::scale_fill_manual(name =
                                  "BIOME classification \n(Hengl et al., 2018)",
-                               labels = .data_biome$description,
+                               breaks = .data_biome$description,
                                values = .data_biome$colour) +
     ggplot2::scale_x_continuous(breaks = ewbrks) +
     ggplot2::labs(x = NULL, y = NULL) +

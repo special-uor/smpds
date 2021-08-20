@@ -82,8 +82,14 @@ aux <- EMPDv2 %>%
   smpds::total_taxa(1:14)
 aux_rev <- SMPDSv1 %>%
   dplyr::filter(entity_name %in% EMPDv2$entity_name) %>%
-  smpds::rm_zero_taxa(1:14) %>%
-  smpds::total_taxa(1:14)
+  smpds::rm_zero_taxa(1:13) %>%
+  smpds::total_taxa(1:13)
+
+waldo::compare(
+aux[1, ] %>%
+  smpds::rm_zero_taxa(1:15),
+aux_rev[1, ] %>%
+  smpds::rm_zero_taxa(1:14))
 
 # ------------------------------------------------------------------------------
 # |                                  Sandbox                                   |
