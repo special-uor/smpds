@@ -21,19 +21,19 @@ ssmpd_metadata <- readr::read_csv("inst/extdata/ssmpd_metadata.csv") %>%
   dplyr::mutate(basin_size = NA,
                 site_type = NA,
                 entity_type = NA,
-                age_BP = NA,
-                ID_BIOME = list(latitude, longitude) %>%
-                  purrr:::pmap_dbl(function(latitude, longitude) {
-                    tibble::tibble(latitude,
-                                   longitude) %>%
-                      sf::st_as_sf(x = ., coords = c("longitude", "latitude")) %>%
-                      smpds::extract_biome(buffer = 12000) %>%
-                      dplyr::filter(!is.na(ID_BIOME)) %>%
-                      dplyr::slice(1) %>%
-                      .$ID_BIOME
-                  }))
+                age_BP = "modern",
+                ID_BIOME = tibble::tibble(latitude, longitude) %>%
+                  smpds::parallel_extract_biome(buffer = 12000, cpus = 6) %>%
+                  .$ID_BIOME,
+                publication =
+                  paste0("Gaillard, M.J., Birks, H.J.B., Emanuelsson, U. and",
+                         "Berglund, B.E., 1992. Modern pollen/land-use",
+                         "relationships as an aid in the reconstruction of past",
+                         "land-uses and cultural landscapes: an example from ",
+                         "south Sweden. Vegetation history and archaeobotany, ",
+                         "1(1), pp.3-17. doi:10.1007/BF00190697"))
 
-ssmpd_taxon_names_clean <- readr::read_csv("inst/extdata/ssmpd_taxon.csv")
+ssmpd_taxon_names_clean <- readr::read_csv("inst/extdata/ssmpd_taxa.csv")
 
 ssmpd_counts_long <- ssmpd_counts %>%
   tidyr::pivot_longer(-c(1:2), names_to = "taxon_name") %>%
@@ -63,7 +63,7 @@ ssmpd_counts_wide <- ssmpd_counts_long %>%
 SSMPD <- ssmpd_metadata %>%
   dplyr::left_join(ssmpd_counts_wide,
                    by = "entity_name") %>%
-  dplyr::mutate(ID_SSMPD = seq_along(ID_SSMPD))
+  dplyr::mutate(ID_SSMPD = seq_along(ID_SSMPD))ß
 
 usethis::use_data(SSMPD, overwrite = TRUE, compress = "xz")
 
