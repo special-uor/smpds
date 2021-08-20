@@ -7,9 +7,19 @@ PNV_classes <- readxl::read_xlsx("./inst/extdata/pnv_basic_info.xlsx") %>%
   magrittr::set_names(c("ID_BIOME", "colour", "description")) %>%
   dplyr::select(1, 3, 2) %>%
   dplyr::mutate(colour = stringr::str_to_upper(colour)) %>%
-  dplyr::bind_rows(tibble::tibble(ID_BIOME = c(30, 31, 32),
-                                  description = "tundra",
-                                  colour = "#BFC9CA")) # Amalgamate the tundras
+  dplyr::bind_rows(
+    tibble::tibble(ID_BIOME = c(30, 31, 32), # Amalgamate the tundras
+                   description = "tundra",
+                   colour = "#BFC9CA")
+    ) %>%
+  dplyr::bind_rows(
+    tibble::tribble(
+      ~ID_BIOME, ~description, ~colour,
+      NA,"not applicable","#CC0033",
+      -888888,"not applicable","#CC0033",
+      -999999,"not known","#FFFFFF"
+    )
+  )
 # Amalgamate the tundras
 # PNV[PNV == 30] <- 28
 # PNV[PNV == 31] <- 28
