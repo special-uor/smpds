@@ -21,4 +21,5 @@ SMPDSv2_all_dup <- SMPDSv2_all %>%
 
 SMPDSv2_all2 <- SMPDSv2_all %>%
   dplyr::distinct(entity_name, .keep_all = TRUE)
+SMPDSv2 <- SMPDSv2_all2
 usethis::use_data(SMPDSv2, overwrite = TRUE)
