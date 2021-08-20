@@ -137,7 +137,11 @@ plot_biome <- function(.data, xlim = c(-180, 180), ylim = c(-60, 90), ...) {
                                     28, # Amalgamate tundras
                                     ID_BIOME)) %>%
     dplyr::left_join(.data_biome,
-                     by = "ID_BIOME")
+                     by = "ID_BIOME") %>%
+    dplyr::group_by(ID_BIOME) %>% # Reorder by ID_BIOME
+    dplyr::mutate(n = length(ID_BIOME)) %>%
+    dplyr::ungroup() %>%
+    dplyr::arrange(dplyr::desc(n))
   p <- basemap +
     ggplot2::geom_point(mapping = ggplot2::aes(x = longitude,
                                                y = latitude,
