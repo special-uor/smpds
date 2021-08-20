@@ -107,7 +107,7 @@ parallel_extract_biome <- function(.data, reference = smpds::PNV,
 #' version (for large datasets), \code{\link{parallel_extract_biome}}.
 #'
 #' @param .data Data frame with spatial data and biome classification.
-#' @inheritParams ggplot2::cood_sf
+#' @inheritParams ggplot2::coord_sf
 #' @inheritDotParams ggplot2::coord_sf -xlim -ylim
 #'
 #' @return \code{ggplot} object with the plot.
@@ -129,8 +129,13 @@ plot_biome <- function(.data, xlim = c(-180, 180), ylim = c(-60, 90), ...) {
     ggplot2::ggplot() +
     ggplot2::geom_sf(fill = "white", size = 0.25) +
     ggplot2::coord_sf(xlim = xlim, ylim = ylim, ..., expand = FALSE)
-  .data_biome <- .data$ID_BIOME %>% smpds::biome_name()
+  .data_biome <- .data$ID_BIOME %>%
+    smpds::biome_name() %>%
+    dplyr::distinct(description, .keep_all = TRUE)
   .data <- .data %>%
+    dplyr::mutate(ID_BIOME = ifelse(ID_BIOME %in% c(30:32),
+                                    28, # Amalgamate tundras
+                                    ID_BIOME)) %>%
     dplyr::left_join(.data_biome,
                      by = "ID_BIOME")
   p <- basemap +
