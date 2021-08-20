@@ -166,11 +166,14 @@ Herzschuh <- Herzschuh_file1_long %>%
                 # ID_BIOME = smpds::Herzschuh$ID_BIOME,
                 ID_BIOME = tibble::tibble(latitude, longitude) %>%
                   smpds::parallel_extract_biome(buffer = 12000, cpus = 6) %>%
-                  dplyr::filter(!is.na(ID_BIOME)) %>%
-                  dplyr::distinct(ID, .keep_all = TRUE) %>%
-                  dplyr::right_join(tibble::tibble(ID = seq_along(latitude)),
-                                    by = "ID") %>%
                   .$ID_BIOME,
+                # ID_BIOME = tibble::tibble(latitude, longitude) %>%
+                #   smpds::parallel_extract_biome(buffer = 12000, cpus = 6) %>%
+                #   dplyr::filter(!is.na(ID_BIOME)) %>%
+                #   dplyr::distinct(ID, .keep_all = TRUE) %>%
+                #   dplyr::right_join(tibble::tibble(ID = seq_along(latitude)),
+                #                     by = "ID") %>%
+                #   .$ID_BIOME,
                 publication =
                   paste("Herzschuh, U., Cao, X., Laepple, T., Dallmeyer, A., Telford, R.J., Ni, J.,",
                         "Chen, F., Kong, Z., Liu, G., Liu, K.B. and Liu, X., 2019. Position and",
@@ -183,6 +186,31 @@ Herzschuh <- Herzschuh_file1_long %>%
                   stringr::str_remove_all("[-_0-9]*$"),
                 .before = 1)
 
+not_applicable_biome_pattern <-
+  "Marine|marine|Sea|sea|Coastal|coastal|Open Water|Baikel Lake"
+Herzschuh2 <- Herzschuh %>%
+  dplyr::mutate(
+    ID_BIOME = ifelse(entity_type %>%
+                        stringr::str_detect(not_applicable_biome_pattern) &
+                        is.na(ID_BIOME),
+                      -888888,
+                      ID_BIOME),
+    ID_BIOME = ifelse(site_type %>%
+                        stringr::str_detect(not_applicable_biome_pattern) &
+                        is.na(ID_BIOME),
+                      -888888,
+                      ID_BIOME),
+    ID_BIOME = ifelse(entity_name %>%
+                        stringr::str_detect("Baikel Lake") &
+                        is.na(ID_BIOME),
+                      -888888,
+                      ID_BIOME),
+    ID_BIOME = ifelse(is.na(ID_BIOME),
+                      -999999,
+                      ID_BIOME)
+  )
+
+Herzschuh <- Herzschuh2
 usethis::use_data(Herzschuh, overwrite = TRUE, compress = "xz")
 
 # ------------------------------------------------------------------------------
