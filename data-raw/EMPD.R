@@ -89,7 +89,7 @@ empdv2_counts <- empdv2_workbook$counts %>%
   dplyr::mutate(ID_COUNT = seq_along(entity_name), .before = 1)
 
 ## Filter taxon_names
-empdv2_clean_taxon_names <- readr::read_csv("inst/extdata/empdv2_taxon.csv")
+empdv2_clean_taxon_names <- readr::read_csv("inst/extdata/empdv2_taxa.csv")
 
 empdv2_counts2 <- empdv2_counts %>%
   dplyr::left_join(empdv2_clean_taxon_names,
@@ -115,7 +115,14 @@ empdv2_counts_wide <- empdv2_counts2 %>%
 # Attach counts to metadata
 EMPDv2_all <- EMPD %>%
   dplyr::full_join(empdv2_counts_wide,
-                   by = "entity_name")
+                   by = "entity_name") %>%
+  dplyr::mutate(ID_BIOME = tibble::tibble(latitude, longitude) %>%
+                  smpds::parallel_extract_biome(buffer = 12000, cpus = 6) %>%
+                  .$ID_BIOME,
+                .before = publication)
+
+EMPDv2_all %>% # Records without ID_BIOME
+  dplyr::filter(is.na(ID_BIOME))
 
 # ------------------------------------------------------------------------------
 # |                           Extract other subsets                            |
