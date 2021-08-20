@@ -1,5 +1,9 @@
 ## code to prepare `SMPDSv1` dataset goes here
 # The SPECIAL Modern Pollen Dataset
+# Source:
+# Harrison, Sandy (2019): Modern pollen data for climate reconstructions,
+# version 1 (SMPDS). University of Reading. Dataset.
+# http://dx.doi.org/10.17864/1947.194
 `%>%` <- magrittr::`%>%`
 SMPDSv1 <- readxl::read_xlsx("~/Downloads/SMPDSv2/Sandy_s MPDS_20_October_expanded.xlsx",
                              sheet = 1,
@@ -16,16 +20,76 @@ SMPDSv1 <- readxl::read_xlsx("~/Downloads/SMPDSv2/Sandy_s MPDS_20_October_expand
                 entity_type = `Entity Type`,
                 age_BP = AgeBP) %>%
   dplyr::mutate(ID_SMPDSv1 = seq_along(entity_name), .before = 1) %>%
-  # dplyr::mutate(age_BP = as.double(age_BP)) %>%
-  dplyr::select(1:11, order(colnames(.)[-c(1:11)]) + 11) # Sort the taxon_names alphabetically
+  smpds::sort_taxa(1:11) %>% # Sort the taxon_names alphabetically
+  dplyr::mutate(ID_BIOME = tibble::tibble(latitude, longitude) %>%
+                  smpds::parallel_extract_biome(buffer = 12000, cpus = 6) %>%
+                  .$ID_BIOME,
+                publication =
+                  paste("Harrison, Sandy P., 2019. Modern pollen data for",
+                        "climate reconstructions, version 1 (SMPDS). University",
+                        "of Reading. Dataset. doi:10.17864/1947.194"),
+                .after = age_BP)
+SMPDSv12 <- SMPDSv1 %>%
+  dplyr::mutate(ID_BIOME = ifelse(entity_name %>%
+                                    stringr::str_detect("Barboni") &
+                                    is.na(ID_BIOME),
+                                  -999999,
+                                  ID_BIOME),
+                ID_BIOME = ifelse(site_name %>%
+                                    stringr::str_detect("Onego|Azov|Onegskoe") &
+                                    is.na(ID_BIOME),
+                                  -888888,
+                                  ID_BIOME),
+                ID_BIOME = ifelse(entity_type %>%
+                                    stringr::str_detect("marine") &
+                                    is.na(ID_BIOME),
+                                  -888888,
+                                  ID_BIOME),
+                site_type = ifelse(entity_name %>%
+                                     stringr::str_detect("Caspian SE") &
+                                     is.na(ID_BIOME),
+                                   "marine",
+                                   site_type),
+                ID_BIOME = ifelse(site_type %>%
+                                    stringr::str_detect("marine") &
+                                    is.na(ID_BIOME),
+                                  -888888,
+                                  ID_BIOME))
+SMPDSv1 %>%
+  dplyr::filter(is.na(ID_BIOME)) %>%
+  dplyr::select(1:13)
 
+SMPDSv12 %>%
+  dplyr::filter(is.na(ID_BIOME)) %>%
+  dplyr::select(1:13)
+
+# SMPDSv1 %>%
+#   dplyr::filter(is.na(ID_BIOME)) %>%
+#   dplyr::select(1:13) %>%
+#   dplyr::rename(biome = ID_BIOME) %>%
+#   readr::write_excel_csv("~/Downloads/SMPDSv1_records_without_biome.csv", na = "")
+
+SMPDSv1 <- SMPDSv12
 usethis::use_data(SMPDSv1, overwrite = TRUE, compress = "xz")
-
 
 # ------------------------------------------------------------------------------
 # |                         Find matches in the EMPDv2                         |
 # ------------------------------------------------------------------------------
 compare_latlon(EMPDv2, SMPDSv1, digits = 2)
+aux <- EMPDv2 %>%
+  dplyr::filter(entity_name %in% SMPDSv1$entity_name) %>%
+  smpds::rm_zero_taxa(1:14) %>%
+  smpds::total_taxa(1:14)
+aux_rev <- SMPDSv1 %>%
+  dplyr::filter(entity_name %in% EMPDv2$entity_name) %>%
+  smpds::rm_zero_taxa(1:13) %>%
+  smpds::total_taxa(1:13)
+
+waldo::compare(
+aux[1, ] %>%
+  smpds::rm_zero_taxa(1:15),
+aux_rev[1, ] %>%
+  smpds::rm_zero_taxa(1:14))
 
 # ------------------------------------------------------------------------------
 # |                                  Sandbox                                   |

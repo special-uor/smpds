@@ -1,0 +1,69 @@
+﻿taxon_name,clean_name,action
+Acer,Acer,update
+Achillea type,Achillea type,update
+Alnus,Alnus,update
+Anemone type,Anemone type,update
+Anthemis type,Anthemis type,update
+Apiaceae,Apiaceae,update
+Artemisia,Artemisia,update
+As.sect.Clchor.,Cichorioideae,update
+Asteraceae,Asteraceae,update
+Betula,Betula,update
+Botrychium,Botrychium,update
+Botrychium lanceolatum,Botrychium,update
+Brassicacae,Brassicaceae,update
+Calluna,Calluna,update
+Cannabinaceae,Cannabaceae,update
+Caryophyllaceae,Caryophyllaceae,update
+Centaurea cyanus,Centaurea cyanus,update
+Chenopodiaceae,Amaranthaceae,update
+Corylus,Corylus,update
+Cyperaceae,Cyperaceae,update
+Dianthus type,Dianthus type,update
+Ephedra fragilis,Ephedra fragilis,update
+Ericales,Ericales,update
+Filipendula,Filipendula,update
+Gentianaceae,Gentianaceae,update
+Geranium,Geranium,update
+Helianthemum,Helianthemum,update
+Juniperus,Juniperus,update
+Picea,Picea,update
+Pinus,Pinus,update
+Plantaginaceae,Plantaginaceae,update
+Plantago lanceolata,Plantago lanceolata,update
+Plantago major/media,Plantago media/Plantago major,update
+Poaceae,Poaceae,update
+Polugonum persicaria,Polygonum persicaria,update
+Polygonaceae,Polygonaceae,update
+Polypodiaceae,Polypodiaceae,update
+Populus,Populus,update
+Potentilla t.,Potentilla type,update
+Primulaceae,Primulaceae,update
+Pteridium,Pteridium,update
+Quercus,Quercus,update
+Ranunculaceae,Ranunculaceae,update
+Rhamnus,Rhamnus,update
+Rosaceae,Rosaceae,update
+Rubiaceae,Rubiaceae,update
+Rumex acetosa/acetosella,Rumex acetosa/Rumex acetosella,update
+Salix,Salix,update
+Serratula type,Serratula type,update
+Taraxatum,Taraxacum,update
+Thalictrum,Thalictrum,update
+Tilia,Tilia,update
+Tragopogon pratensis,Tragopogon pratensis,update
+Ulmus,Ulmus,update
+Urtica,Urtica,update
+Viburnum,Viburnum,update
+Caltha type,EXCLUDE,delete
+Cerealia,EXCLUDE,delete
+Charcoal,EXCLUDE,delete
+Humulus lupulus,EXCLUDE,delete
+Menyanthes trifoliata,EXCLUDE,delete
+Myriophyllum spicatum,EXCLUDE,delete
+Myriophyllum verticilatum,EXCLUDE,delete
+Secale cerealia,EXCLUDE,delete
+Selaginella selaginoides,EXCLUDE,delete
+Sphagnum,EXCLUDE,delete
+Typhaceae,EXCLUDE,delete
+Unidentifaid,EXCLUDE,delete

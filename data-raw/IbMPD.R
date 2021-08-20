@@ -25,20 +25,20 @@ ibmpd_all <- readr::read_csv("inst/extdata/iberia_pollen_records.csv",
 ibmpd_sites <- ibmpd_all %>%
   dplyr::distinct(site_name, .keep_all = TRUE) %>%
   dplyr::select(site_name, latitude, longitude) %>%
-  dplyr::mutate(BiomeID = list(latitude, longitude) %>%
+  dplyr::mutate(ID_BIOME = list(latitude, longitude) %>%
                   purrr:::pmap_dbl(function(latitude, longitude) {
                     tibble::tibble(latitude,
                                    longitude) %>%
                       sf::st_as_sf(x = ., coords = c("longitude", "latitude")) %>%
                       smpds::extract_biome(buffer = 12000) %>%
-                      dplyr::filter(!is.na(BiomeID)) %>%
+                      dplyr::filter(!is.na(ID_BIOME)) %>%
                       dplyr::slice(1) %>%
-                      .$BiomeID
+                      .$ID_BIOME
                   }))
 
 IbMPD <- ibmpd_all %>%
   dplyr::left_join(ibmpd_sites,
                    by = c("site_name", "latitude", "longitude")) %>%
-  dplyr::relocate(BiomeID, .after = age_BP)
+  dplyr::relocate(ID_BIOME, .after = age_BP)
 
 usethis::use_data(IbMPD, overwrite = TRUE, compress = "xz")

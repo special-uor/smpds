@@ -1,13 +1,20 @@
 Package: smpds
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
-Authors@R: 
-    person(given = "First",
-           family = "Last",
+Title: The SPECIAL Modern Pollen Data
+Version: 2.0.0.9000
+Authors@R: c(
+    person(given = "Roberto",
+           family = "Villegas-Diaz",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+           email = "r.villegas-diaz@reading.ac.uk",
+           comment = c(ORCID = "0000-0001-5036-8661")),
+    person(given = "Sandy P.",
+           family = "Harrison",
+           role = "aut",
+           email = "s.p.harrison@reading.ac.uk",
+           comment = c(ORCID = "0000-0001-5687-1903")),
+    person("SPECIAL Research Group @ University of Reading", role = c("cph")))
+Description: Provides functions to facilitate the access to the Modern Pollen 
+    Data for climate reconstructionS (SMPDS).
 License: MIT + file LICENSE
 Suggests: 
     covr,
