@@ -40,11 +40,17 @@ devtools::install_github("special-uor/smpds")
 ```
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+<!-- This is a basic example which shows you how to solve a common problem: -->
 
-```{r example, eval = FALSE}
+```{r example, eval = TRUE, fig.width = 12, fig.height = 8, dpi = 500}
 library(smpds)
 ## basic example code
+smpds::SMPDSv2 %>%
+  dplyr::slice(1:20) %>%
+  knitr::kable()
+  
+smpds::SMPDSv2 %>%
+  smpds::plot_biome()
 ```
 
 ## Code of Conduct
