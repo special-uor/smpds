@@ -43,6 +43,7 @@ cru_mask <- function(res = 0.5,
 #' @param reference Path to the NetCDF file from which \code{varid} will be
 #'     loaded.
 #' @inheritParams cru_mask
+#' @param cpus Number of CPUs to be used in parallel, default = 1.
 #'
 #' @return Table with interpolated values from \code{varid} for each record/row
 #'     in \code{.data}.
@@ -54,14 +55,15 @@ cru_mask <- function(res = 0.5,
 #'                        latitude = 51.44140,
 #'                        longitude = -0.9418,
 #'                        elevation = c(61, 161, 261, 361))
-#' data %>% dplyr::slice(1) %>%
+#' data %>%
 #'   smpds::gwr(varid = "tmp",
 #'              reference = "inst/extdata/cru_ts4.04-clim-1961-1990-daily_tmp_1-5.nc")
 gwr <- function(.data,
                 varid,
                 reference = NULL,
                 coordinates = smpds::CRU_coords,
-                res = 0.5) {
+                res = 0.5,
+                cpus = 1) {
   # reference <- "~/OneDrive - University of Reading/UoR/Data/CRU/4.04/cru_ts4.04-clim-1961-1990-daily.tmp.nc"
   ncin <- ncdf4::nc_open(reference)
   reference_tbl <- ncdf4::ncvar_get(ncin, varid) %>%
@@ -98,28 +100,52 @@ gwr <- function(.data,
                   latitude < max(!!.data$latitude + delta),
                   longitude > min(!!.data$longitude - delta),
                   longitude < max(!!.data$longitude + delta))
+  sp::coordinates(climate_grid2) <- c("longitude", "latitude")
 
   .data_coords <- .data
   sp::coordinates(.data_coords) <- c("longitude", "latitude")
-  sp::coordinates(climate_grid2) <- c("longitude", "latitude")
   # sp::gridded(climate_grid2) <- TRUE
 
   #Finally, extracted values by GWR
   #SWdown_1960_01_01 represent the first day of the month
   #Change V1 to V1-V31, get the value for day 1 to day 31 of the nc file
 
+  oplan <- future::plan(future::multisession, workers = cpus)
+  on.exit(future::plan(oplan), add = TRUE)
   fm_suffix <- " ~ elevation"
-  output <- names(climate_grid2) %>%
-    stringr::str_subset("^T[0-9]*$") %>%
-    stringr::str_c(fm_suffix) %>%
-    purrr::map_dfc(~spgwr::gwr(formula = .x,
-                               data = climate_grid2,
-                               bandwidth = 1.06,
-                               fit.points = .data_coords,
-                               predictions = TRUE)$SDF$pred %>%
-                     list() %>%
-                     magrittr::set_names(.x %>%
-                                           stringr::str_remove(fm_suffix)))
+  output <- seq_len(nrow(.data)) %>%
+    furrr:::future_map_dfr(function(i) {
+      climate_grid2 <- subset_coords(climate_grid,
+                                     .data$latitude[i],
+                                     .data$longitude[i],
+                                     delta)
+      fms <-  names(climate_grid2) %>%
+        stringr::str_subset("^T[0-9]*$") %>%
+        stringr::str_c(fm_suffix)
+      fms %>%
+        purrr::map_dfc(~spgwr::gwr(formula = .x,
+                                   data = climate_grid2,
+                                   bandwidth = 1.06,
+                                   fit.points = .data_coords[i, ],
+                                   predictions = TRUE)$SDF$pred %>%
+                         list() %>%
+                         magrittr::set_names(.x %>%
+                                               stringr::str_remove(fm_suffix)))
+  },
+  .progress = TRUE,
+  .options = furrr::furrr_options(seed = TRUE))
+
+  # output <- names(climate_grid2) %>%
+  #   stringr::str_subset("^T[0-9]*$") %>%
+  #   stringr::str_c(fm_suffix) %>%
+  #   purrr::map_dfc(~spgwr::gwr(formula = .x,
+  #                              data = climate_grid2,
+  #                              bandwidth = 1.06,
+  #                              fit.points = .data_coords,
+  #                              predictions = TRUE)$SDF$pred %>%
+  #                    list() %>%
+  #                    magrittr::set_names(.x %>%
+  #                                          stringr::str_remove(fm_suffix)))
 
   # SWdown_1960_01_01 <- (spgwr::gwr(V1 ~ Z,
   #                                  climate_grid2,
@@ -139,4 +165,15 @@ mask_nc <- function(.data, mask = cru_mask()) {
                            magrittr::set_names(paste0("T", t))
                        })
     )
+}
+
+#' @keywords internal
+subset_coords <- function(.data, latitude, longitude, delta) {
+  .data_coords <- .data %>%
+    dplyr::filter(latitude > min(!!latitude - delta),
+                  latitude < max(!!latitude + delta),
+                  longitude > min(!!longitude - delta),
+                  longitude < max(!!longitude + delta))
+  sp::coordinates(.data_coords) <- c("longitude", "latitude")
+  return(.data_coords)
 }
