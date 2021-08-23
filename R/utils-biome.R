@@ -28,12 +28,10 @@ biome_name <- function(ID) {
 #' Hengl et al., 2018.
 #'
 #' @param .data Table containing a geometry column.
-#' @param reference Reference map with biomes, default: \code{smpds::PNV}.
-#' @param all Boolean flag to indicate whether or not to return all the detected
-#'     biomes, default: \code{FALSE} (dominant biome only).
-#' @inherit raster::extract
+#' @inheritDotParams extract_biome.tbl_df
 #'
 #' @return Tibble with matched biomes: dominant, sub-dominant, etc.
+#' @rdname extract_biome
 #' @export
 #'
 #' @examples
@@ -43,27 +41,58 @@ biome_name <- function(ID) {
 #'                         longitude = 0.9418)
 #' data %>%
 #'   extract_biome()
-extract_biome <- function(.data,
-                          reference = smpds::PNV,
-                          buffer = 12000,
-                          all = FALSE) {
-  if (!("sf" %in% class(.data)))
-    .data <- .data %>% sf::st_as_sf(x = ., coords = c("longitude", "latitude"))
+extract_biome <- function(.data, ...) {
+  UseMethod("extract_biome", .data)
+}
+
+#' @param reference Reference map with biomes, default: \code{smpds::PNV}.
+#' @param all Boolean flag to indicate whether or not to return all the detected
+#'     biomes, default: \code{FALSE} (dominant biome only).
+#' @inherit raster::extract
+#'
+#' @rdname extract_biome
+#' @export
+extract_biome.tbl_df <- function(.data,
+                                 ...,
+                                 reference = smpds::PNV,
+                                 buffer = 12000,
+                                 all = FALSE) {
+  if (!all(c("latitude", "longitude") %in% colnames(.data)))
+    stop("The given data object does not contain a latitude and/or longitude.",
+         call. = FALSE)
+  # if (!("sf" %in% class(.data)))
+  .data <- .data %>% sf::st_as_sf(x = ., coords = c("longitude", "latitude"))
+  .data %>%
+    extract_biome()
+}
+
+#' @rdname extract_biome
+#' @export
+extract_biome.sf <- function(.data,
+                             ...,
+                             reference = smpds::PNV,
+                             buffer = 12000,
+                             all = FALSE) {
   biomes <- raster::extract(reference, .data, buffer = buffer, na.rm = TRUE)
   biomes %>%
     purrr::map_df(function(bio) {
       tmp <- tibble::as_tibble(bio) %>%
         magrittr::set_names("ID_BIOME") %>%
         dplyr::group_by(ID_BIOME) %>%
-        dplyr::summarise(n = dplyr::n()) %>%
-        dplyr::arrange(dplyr::desc(n)) %>%
+        dplyr::summarise(px = dplyr::n()) %>%
+        dplyr::arrange(dplyr::desc(px)) %>%
         dplyr::filter(!is.na(ID_BIOME))
       if (!all)
         tmp <- tmp %>% dplyr::slice(1)
       # tmp <- tmp %>% dplyr::slice(which(dplyr::row_number() == 1))
       if (nrow(tmp) == 0)
-        tmp <- tibble::tibble(ID_BIOME = NA, n = NA)
-      tmp
+        tmp <- tibble::tibble(ID_BIOME = NA, px = NA)
+      .data %>%
+        dplyr::bind_cols(tmp) %>%
+        dplyr::mutate(latitude = sf::st_coordinates(.)[, 2],
+                      longitude = sf::st_coordinates(.)[, 1],
+                      .after = geometry) %>%
+        sf::st_set_geometry(NULL)
     })
 }
 
@@ -76,9 +105,6 @@ parallel_extract_biome <- function(.data, reference = smpds::PNV,
                                    buffer = 12000,
                                    cpus = 2,
                                    all = TRUE) {
-  if (!all(c("latitude", "longitude") %in% colnames(.data)))
-    stop("The given data object does not contain a latitude and longitude columns.",
-         call. = FALSE)
   oplan <- future::plan(future::multisession, workers = cpus)
   on.exit(future::plan(oplan), add = TRUE)
   seq_len(nrow(.data)) %>%
@@ -87,7 +113,7 @@ parallel_extract_biome <- function(.data, reference = smpds::PNV,
           dplyr::slice(i) %>%
           dplyr::mutate(LATLON = is.na(latitude) | is.na(longitude)) %>%
           .$LATLON)
-        return(tibble::tibble(ID = i, ID_BIOME = NA, n = NA))
+        return(tibble::tibble(ID = i, ID_BIOME = NA, px = NA))
       .data %>%
         dplyr::slice(i) %>%
         sf::st_as_sf(x = ., coords = c("longitude", "latitude")) %>%
