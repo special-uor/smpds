@@ -1,25 +1,41 @@
 #' Biome names
 #'
-#' Obtain Biome names from the Hengl et al., 2018, using the \code{ID_BIOME}.
+#' Obtain biome names from the Hengl et al., 2018, using the \code{ID_BIOME}.
 #'
-#' @param ID Numeric value linked to a Biome in provided by Hengl et al., 2018.
+#' @param .data Numeric vector or data frame (tibble object with a column
+#'     called \code{ID_BIOME}) with values linked to a Biome provided by
+#'     Hengl et al., 2018. (See \code{\link{smpds:::PNV_classes}}).
 #'
 #' @return Table (\code{tibble} object) with Biome metadata.
 #' @export
-#'
+#' @rdname biome_name
+#' @family utils biome
 #' @examples
 #' `%>%` <- magrittr::`%>%`
 #' data <- tibble::tibble(entity_name = "University of Reading",
 #'                         latitude = 51.4414,
-#'                         longitude = 0.9418) %>%
-#'   sf::st_as_sf(x = ., coords = c("longitude", "latitude"))
+#'                         longitude = 0.9418)
 #' data %>%
 #'   extract_biome() %>%
-#'   .$ID_BIOME %>%
 #'   biome_name()
-biome_name <- function(ID) {
+biome_name <- function(.data, ...) {
+  UseMethod("biome_name", .data)
+}
+
+#' @export
+#' @rdname biome_name
+biome_name.tbl_df <- function(.data, ...) {
+  biome_tbl <- .data$ID_BIOME %>% biome_name
+  .data %>%
+    dplyr::left_join(biome_tbl,
+                     by = "ID_BIOME")
+}
+
+#' @export
+#' @rdname biome_name
+biome_name.double <- function(.data, ...) {
   smpds:::PNV_classes %>%
-    dplyr::filter(ID_BIOME %in% ID)
+    dplyr::filter(ID_BIOME %in% c(.data))
 }
 
 #' Extract biome
@@ -30,9 +46,18 @@ biome_name <- function(ID) {
 #' @param .data Table containing a geometry column.
 #' @inheritDotParams extract_biome.tbl_df
 #'
-#' @return Tibble with matched biomes: dominant, sub-dominant, etc.
+#' @return Tibble with original data and matched biomes:
+#' \itemize{
+#'  \item{if \code{all = FALSE} (default) }{ Only returns the dominant biome:
+#'  \code{ID_BIOME}}
+#'  \item{if \code{all = TRUE} }{ Returns all the detected biomes:
+#'  \code{ID_BIOME} and \code{px}, the number of pixels detected for each
+#'  biome.}
+#' }
+#'
 #' @rdname extract_biome
 #' @export
+#' @family utils biome
 #'
 #' @examples
 #' `%>%` <- magrittr::`%>%`
@@ -138,6 +163,7 @@ parallel_extract_biome <- function(.data, reference = smpds::PNV,
 #'
 #' @return \code{ggplot} object with the plot.
 #' @export
+#' @family utils biome
 plot_biome <- function(.data, xlim = c(-180, 180), ylim = c(-60, 90), ...) {
   # create the breaks- and label vectors
   ewbrks <- seq(-180,180,30)
