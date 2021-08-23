@@ -88,9 +88,14 @@ extract_biome.tbl_df <- function(.data,
     stop("The given data object does not contain a latitude and/or longitude.",
          call. = FALSE)
   # if (!("sf" %in% class(.data)))
-  .data <- .data %>% sf::st_as_sf(x = ., coords = c("longitude", "latitude"))
+  #   .data <- .data %>% sf::st_as_sf(x = ., coords = c("longitude", "latitude"))
   .data %>%
-    extract_biome()
+    sf::st_as_sf(x = ., coords = c("longitude", "latitude")) %>%
+    extract_biome() %>%
+    dplyr::mutate(latitude = sf::st_coordinates(.)[, 2],
+                  longitude = sf::st_coordinates(.)[, 1],
+                  .after = geometry) %>%
+    sf::st_set_geometry(NULL)
 }
 
 #' @rdname extract_biome
@@ -114,11 +119,7 @@ extract_biome.sf <- function(.data,
       if (!all)
         tmp <- tmp %>% dplyr::select(-px) %>% dplyr::slice(1)
       .data %>%
-        dplyr::bind_cols(tmp) %>%
-        dplyr::mutate(latitude = sf::st_coordinates(.)[, 2],
-                      longitude = sf::st_coordinates(.)[, 1],
-                      .after = geometry) %>%
-        sf::st_set_geometry(NULL)
+        dplyr::bind_cols(tmp)
     })
 }
 
