@@ -14,7 +14,7 @@
 #' `%>%` <- magrittr::`%>%`
 #' data <- tibble::tibble(entity_name = "University of Reading",
 #'                         latitude = 51.4414,
-#'                         longitude = 0.9418)
+#'                         longitude = -0.9418)
 #' data %>%
 #'   extract_biome() %>%
 #'   biome_name()
@@ -67,7 +67,7 @@ biome_name.numeric <- function(.data, ...) {
 #' `%>%` <- magrittr::`%>%`
 #' data <- tibble::tibble(entity_name = "University of Reading",
 #'                         latitude = 51.44140,
-#'                         longitude = 0.9418)
+#'                         longitude = -0.9418)
 #' data %>%
 #'   extract_biome()
 extract_biome <- function(.data, ...) {
