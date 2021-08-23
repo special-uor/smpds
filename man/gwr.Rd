@@ -4,7 +4,14 @@
 \alias{gwr}
 \title{Geographically Weighted Regression}
 \usage{
-gwr(.data, varid, reference = NULL, coordinates = smpds::CRU_coords, res = 0.5)
+gwr(
+  .data,
+  varid,
+  reference = NULL,
+  coordinates = smpds::CRU_coords,
+  res = 0.5,
+  cpus = 1
+)
 }
 \arguments{
 \item{.data}{Table with geographical data, including: \code{latitude},
@@ -20,6 +27,8 @@ loaded.}
 \code{\link{smpds::CRU_coords}}.}
 
 \item{res}{Numeric value for the mask resolution. Default: 0.5 degrees.}
+
+\item{cpus}{Number of CPUs to be used in parallel, default = 1.}
 }
 \value{
 Table with interpolated values from \code{varid} for each record/row
@@ -33,7 +42,7 @@ Geographically Weighted Regression
 data <- tibble::tibble(entity_name = "University of Reading",
                        latitude = 51.44140,
                        longitude = -0.9418,
-                       elevation = c(61, 161, 261))
+                       elevation = c(61, 161, 261, 361))
 data \%>\%
   smpds::gwr(varid = "tmp",
              reference = "inst/extdata/cru_ts4.04-clim-1961-1990-daily_tmp_1-5.nc")
