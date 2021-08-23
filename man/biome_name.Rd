@@ -13,12 +13,12 @@ biome_name(.data, ...)
 \method{biome_name}{numeric}(.data, ...)
 }
 \arguments{
-\item{.data}{Numeric vector or data frame (tibble object with a column
+\item{.data}{Numeric vector or data frame (\code{tibble} object with a column
 called \code{ID_BIOME}) with values linked to a Biome provided by
 Hengl et al., 2018. (See \code{\link{smpds:::PNV_classes}}).}
 }
 \value{
-Table (\code{tibble} object) with Biome metadata.
+Table (\code{tibble} object) with biome metadata.
 }
 \description{
 Obtain biome names from the Hengl et al., 2018, using the \code{ID_BIOME}.
@@ -27,7 +27,7 @@ Obtain biome names from the Hengl et al., 2018, using the \code{ID_BIOME}.
 `\%>\%` <- magrittr::`\%>\%`
 data <- tibble::tibble(entity_name = "University of Reading",
                         latitude = 51.4414,
-                        longitude = 0.9418)
+                        longitude = -0.9418)
 data \%>\%
   extract_biome() \%>\%
   biome_name()

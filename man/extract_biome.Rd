@@ -22,7 +22,9 @@ parallel_extract_biome(
 )
 }
 \arguments{
-\item{.data}{Table containing a geometry column.}
+\item{.data}{Table containing columns for \code{latitude} and
+\code{longitude} (\code{tibble} object) or table with a \code{geometry}
+column (\code{sf} object).}
 
 \item{...}{
   Arguments passed on to \code{\link[=extract_biome.tbl_df]{extract_biome.tbl_df}}
@@ -40,7 +42,7 @@ biomes, default: \code{FALSE} (dominant biome only).}
 \item{cpus}{Number of CPUs to be used in parallel, default = 2.}
 }
 \value{
-Tibble with original data and matched biomes:
+Table with the original data and matched biome(s):
 \itemize{
 \item{if \code{all = FALSE} (default) }{ Only returns the dominant biome:
 \code{ID_BIOME}}
@@ -50,14 +52,14 @@ biome.}
 }
 }
 \description{
-Extracts biome for a point (latitude, longitude) based on the map created by
-Hengl et al., 2018.
+Extracts biome for a point (\code{latitude}, \code{longitude}) based on the
+map with Potential Natural Vegetation (PNV) created by Hengl et al., 2018.
 }
 \examples{
 `\%>\%` <- magrittr::`\%>\%`
 data <- tibble::tibble(entity_name = "University of Reading",
                         latitude = 51.44140,
-                        longitude = 0.9418)
+                        longitude = -0.9418)
 data \%>\%
   extract_biome()
 }
