@@ -115,3 +115,9 @@ Plot biomes linked to entities/sites, in addition to \code{latitude} and
 be obtained using the function \code{\link{extract_biome}} or its faster
 version (for large datasets), \code{\link{parallel_extract_biome}}.
 }
+\seealso{
+Other utils biome: 
+\code{\link{biome_name}()},
+\code{\link{extract_biome}()}
+}
+\concept{utils biome}

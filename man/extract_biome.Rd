@@ -2,21 +2,33 @@
 % Please edit documentation in R/utils-biome.R
 \name{extract_biome}
 \alias{extract_biome}
+\alias{extract_biome.tbl_df}
+\alias{extract_biome.sf}
 \alias{parallel_extract_biome}
 \title{Extract biome}
 \usage{
-extract_biome(.data, reference = smpds::PNV, buffer = 12000, all = FALSE)
+extract_biome(.data, ...)
+
+\method{extract_biome}{tbl_df}(.data, ..., reference = smpds::PNV, buffer = 12000, all = FALSE)
+
+\method{extract_biome}{sf}(.data, ..., reference = smpds::PNV, buffer = 12000, all = FALSE)
 
 parallel_extract_biome(
   .data,
   reference = smpds::PNV,
   buffer = 12000,
   cpus = 2,
-  all = TRUE
+  all = FALSE
 )
 }
 \arguments{
 \item{.data}{Table containing a geometry column.}
+
+\item{...}{
+  Arguments passed on to \code{\link[=extract_biome.tbl_df]{extract_biome.tbl_df}}
+  \describe{
+    \item{\code{}}{}
+  }}
 
 \item{reference}{Reference map with biomes, default: \code{smpds::PNV}.}
 
@@ -28,7 +40,14 @@ biomes, default: \code{FALSE} (dominant biome only).}
 \item{cpus}{Number of CPUs to be used in parallel, default = 2.}
 }
 \value{
-Tibble with matched biomes: dominant, sub-dominant, etc.
+Tibble with original data and matched biomes:
+\itemize{
+\item{if \code{all = FALSE} (default) }{ Only returns the dominant biome:
+\code{ID_BIOME}}
+\item{if \code{all = TRUE} }{ Returns all the detected biomes:
+\code{ID_BIOME} and \code{px}, the number of pixels detected for each
+biome.}
+}
 }
 \description{
 Extracts biome for a point (latitude, longitude) based on the map created by
@@ -43,5 +62,8 @@ data \%>\%
   extract_biome()
 }
 \seealso{
-\code{\link[raster]{getValues}, \link[raster]{getValuesFocal}}
+Other utils biome: 
+\code{\link{biome_name}()},
+\code{\link{plot_biome}()}
 }
+\concept{utils biome}
