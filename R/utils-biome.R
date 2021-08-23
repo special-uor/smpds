@@ -2,11 +2,11 @@
 #'
 #' Obtain biome names from the Hengl et al., 2018, using the \code{ID_BIOME}.
 #'
-#' @param .data Numeric vector or data frame (tibble object with a column
+#' @param .data Numeric vector or data frame (\code{tibble} object with a column
 #'     called \code{ID_BIOME}) with values linked to a Biome provided by
 #'     Hengl et al., 2018. (See \code{\link{smpds:::PNV_classes}}).
 #'
-#' @return Table (\code{tibble} object) with Biome metadata.
+#' @return Table (\code{tibble} object) with biome metadata.
 #' @export
 #' @rdname biome_name
 #' @family utils biome
@@ -42,13 +42,15 @@ biome_name.numeric <- function(.data, ...) {
 
 #' Extract biome
 #'
-#' Extracts biome for a point (latitude, longitude) based on the map created by
-#' Hengl et al., 2018.
+#' Extracts biome for a point (\code{latitude}, \code{longitude}) based on the
+#' map with Potential Natural Vegetation (PNV) created by Hengl et al., 2018.
 #'
-#' @param .data Table containing a geometry column.
+#' @param .data Table containing columns for \code{latitude} and
+#'     \code{longitude} (\code{tibble} object) or table with a \code{geometry}
+#'     column (\code{sf} object).
 #' @inheritDotParams extract_biome.tbl_df
 #'
-#' @return Tibble with original data and matched biomes:
+#' @return Table with the original data and matched biome(s):
 #' \itemize{
 #'  \item{if \code{all = FALSE} (default) }{ Only returns the dominant biome:
 #'  \code{ID_BIOME}}
