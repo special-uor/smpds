@@ -20,6 +20,23 @@
 #' }
 "CMPD"
 
+#' \code{CRU_coords} dataset
+#'
+#' The CRU TS 2.1 dataset coordinates at 0.5 degrees resolution.
+#'
+#' @format A data frame (\code{tibble} object) with `r nrow(smpds::CRU_coords)` rows and `r ncol(smpds::CRU_coords)` variables:
+#' \describe{
+#'   \item{latitude}{Numeric values for latitude in decimal degrees.}
+#'   \item{longitude}{Numeric values for longitude in decimal degrees.}
+#'   \item{elevation}{Numeric values for elevation in metres above sea level.}
+#' }
+#' @source
+#' https://crudata.uea.ac.uk/~timm/grid/CRU_TS_2_1.html
+#' @references
+#' Mitchell, T.D. and Jones, P.D., 2005. An improved method of constructing a database of monthly climate observations and associated high‐resolution grids. International Journal of Climatology: A Journal of the Royal Meteorological Society, 25(6), pp.693-712. https://doi.org/10.1002/joc.1181
+#'
+"CRU_coords"
+
 #' \code{EMPDv2} dataset
 #'
 #' The Eurasian Modern Pollen Database (EMPD), version 2.
