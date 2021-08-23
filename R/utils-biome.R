@@ -18,6 +18,8 @@
 #' data %>%
 #'   extract_biome() %>%
 #'   biome_name()
+#'
+#' biome_name(1:10)
 biome_name <- function(.data, ...) {
   UseMethod("biome_name", .data)
 }
@@ -33,9 +35,9 @@ biome_name.tbl_df <- function(.data, ...) {
 
 #' @export
 #' @rdname biome_name
-biome_name.double <- function(.data, ...) {
+biome_name.numeric <- function(.data, ...) {
   smpds:::PNV_classes %>%
-    dplyr::filter(ID_BIOME %in% c(.data))
+    dplyr::filter(ID_BIOME %in% !!.data)
 }
 
 #' Extract biome
@@ -107,11 +109,10 @@ extract_biome.sf <- function(.data,
         dplyr::summarise(px = dplyr::n()) %>%
         dplyr::arrange(dplyr::desc(px)) %>%
         dplyr::filter(!is.na(ID_BIOME))
-      if (!all)
-        tmp <- tmp %>% dplyr::slice(1)
-      # tmp <- tmp %>% dplyr::slice(which(dplyr::row_number() == 1))
       if (nrow(tmp) == 0)
         tmp <- tibble::tibble(ID_BIOME = NA, px = NA)
+      if (!all)
+        tmp <- tmp %>% dplyr::select(-px) %>% dplyr::slice(1)
       .data %>%
         dplyr::bind_cols(tmp) %>%
         dplyr::mutate(latitude = sf::st_coordinates(.)[, 2],
@@ -129,7 +130,7 @@ extract_biome.sf <- function(.data,
 parallel_extract_biome <- function(.data, reference = smpds::PNV,
                                    buffer = 12000,
                                    cpus = 2,
-                                   all = TRUE) {
+                                   all = FALSE) {
   oplan <- future::plan(future::multisession, workers = cpus)
   on.exit(future::plan(oplan), add = TRUE)
   seq_len(nrow(.data)) %>%
@@ -142,7 +143,7 @@ parallel_extract_biome <- function(.data, reference = smpds::PNV,
       .data %>%
         dplyr::slice(i) %>%
         sf::st_as_sf(x = ., coords = c("longitude", "latitude")) %>%
-        extract_biome(reference = reference, buffer = buffer) %>%
+        extract_biome(reference = reference, buffer = buffer, all = all) %>%
         dplyr::mutate(ID = i, .before = 1)
     },
     .progress = TRUE,
