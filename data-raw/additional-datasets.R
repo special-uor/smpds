@@ -6,29 +6,30 @@ epdcore_finsinger <- readxl::read_xlsx("~/Downloads/SMPDSv2/To check included/ep
                                        sheet = 1) %>%
   dplyr::rename(entity_name = samplename,
                 taxon_name = original_varname) %>%
-  # dplyr::group_by(entity_name) %>%
-  # dplyr::mutate(total = sum(count, na.rm = TRUE),
-  #               percentage2 = count / total * 100) %>%
-  # tidyr::pivot_wider(1, names_from = "taxon_name", values_from = "percentage2") %>%
-  # tidyr::pivot_wider(1, names_from = "taxon_name", values_from = "percentage") %>%
   tidyr::pivot_wider(1, names_from = "taxon_name", values_from = "count") %>%
   smpds::sort_taxa(cols = 1) %>% # Sort the taxon_names alphabetically
-  dplyr::rowwise() %>%
-  dplyr::mutate(total = dplyr::c_across(Abies:`Zea mais`) %>%
-                  sum(na.rm = TRUE))
+  smpds::total_taxa(cols = 1)
 
 aux <- epdcore_finsinger %>%
   dplyr::filter(entity_name %in% EMPDv2$entity_name) %>%
   smpds::rm_na_taxa()
 aux_rev <- EMPDv2 %>%
   dplyr::filter(entity_name %in% aux$entity_name) %>%
-  smpds::rm_na_taxa(1:13)
+  smpds::rm_na_taxa(1:14)
+
+epdcore_finsinger2 <- aux_rev %>%
+  dplyr::select(1:14) %>%
+  dplyr::right_join(epdcore_finsinger,
+                    by = "entity_name")
+
+epdcore_finsinger2 %>%
+  readr::write_excel_csv("inst/extdata/epdcore_finsinger.csv", na = "")
 
 aux[1, ] %>%
   smpds::rm_na_taxa(cols = 1)
 
 aux_rev[1, ] %>%
-  smpds::rm_na_taxa(cols = 1:13)
+  smpds::rm_na_taxa(cols = 1:14)
 
 aux_rev %>%
   dplyr::select(-1) %>%
@@ -66,7 +67,15 @@ aux <- feurdeana3_epdcoretop %>%
   smpds::rm_na_taxa()
 aux_rev <- EMPDv2 %>%
   dplyr::filter(entity_name %in% aux$entity_name) %>%
-  smpds::rm_na_taxa(1:13)
+  smpds::rm_na_taxa(1:14)
+
+feurdeana3_epdcoretop2 <- aux_rev %>%
+  dplyr::select(1:14) %>%
+  dplyr::right_join(feurdeana3_epdcoretop,
+                    by = "entity_name")
+
+feurdeana3_epdcoretop2 %>%
+  readr::write_excel_csv("inst/extdata/feurdeana3_epdcoretop.csv", na = "")
 
 aux[1, ] %>%
   smpds::rm_na_taxa(cols = 1)
