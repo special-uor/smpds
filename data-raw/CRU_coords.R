@@ -30,6 +30,10 @@ lat_long <- rep(lat, length(lon))
 lon_long <- rep(lon, each = length(lat))
 elev_long <- matrix(t(elev), ncol = 1)[, 1]
 
+CRU_mask <- !is.na(elev) %>%
+  magrittr::set_colnames(lat) %>%
+  magrittr::set_rownames(lon)
+
 CRU_coords <- tibble::tibble(latitude = lat_long,
                              longitude = lon_long,
                              elevation = elev_long) %>%
