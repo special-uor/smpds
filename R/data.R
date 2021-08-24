@@ -83,6 +83,18 @@
 #' Finsinger, W., Heiri, O., Valsecchi, V., Tinner, W. and Lotter, A.F., 2007. Modern pollen assemblages as climate indicators in southern Europe. Global Ecology and Biogeography, 16(5), pp.567-582. https://doi.org/10.1111/j.1466-8238.2007.00313.x
 "ItMPD"
 
+#' \code{NEOTOMA} dataset
+#'
+#' The Neotoma Paleoecology Database subset (NEOTOMA).
+#'
+#' @format A data frame (\code{tibble} object) with `r nrow(smpds::NEOTOMA)` rows and `r ncol(smpds::NEOTOMA)` variables:
+#' \describe{
+#'   \item{...}{int ...}
+#' }
+#' @source
+#' https://www.neotomadb.org
+"NEOTOMA"
+
 #' \code{PNV} dataset
 #'
 #' Global Maps of Potential Natural Vegetation at 1 km resolution, version 4.
