@@ -20,7 +20,13 @@ aux_rev <- EMPDv2 %>%
 epdcore_finsinger2 <- aux_rev %>%
   dplyr::select(1:14) %>%
   dplyr::right_join(epdcore_finsinger,
-                    by = "entity_name")
+                    by = "entity_name") %>%
+  dplyr::select(-total)
+
+# Export list of taxon names for clean-up
+tibble::tibble(taxon_name = colnames(epdcore_finsinger2)[-c(1:14)],
+               clean_name = taxon_name) %>%
+  readr::write_excel_csv("~/Downloads/SMPDSv2/epdcore_finsinger-taxon_names_2021-08-24.csv", na = "")
 
 epdcore_finsinger2 %>%
   readr::write_excel_csv("inst/extdata/epdcore_finsinger.csv", na = "")
@@ -72,7 +78,14 @@ aux_rev <- EMPDv2 %>%
 feurdeana3_epdcoretop2 <- aux_rev %>%
   dplyr::select(1:14) %>%
   dplyr::right_join(feurdeana3_epdcoretop,
-                    by = "entity_name")
+                    by = "entity_name") %>%
+  smpds::rm_na_taxa(1:14) %>%
+  smpds::sort_taxa(1:14)
+
+# Export list of taxon names for clean-up
+tibble::tibble(taxon_name = colnames(feurdeana3_epdcoretop2)[-c(1:14)],
+               clean_name = taxon_name) %>%
+  readr::write_excel_csv("~/Downloads/SMPDSv2/feurdeana3_epdcoretop-taxon_names_2021-08-24.csv", na = "")
 
 feurdeana3_epdcoretop2 %>%
   readr::write_excel_csv("inst/extdata/feurdeana3_epdcoretop.csv", na = "")
@@ -97,10 +110,30 @@ aux_rev %>%
 # ------------------------------------------------------------------------------
 
 iberian_pollen_records_9april <- readxl::read_xlsx("~/Downloads/SMPDSv2/To check included/iberia_pollen_records_9April_to check.xlsx",
-                                                   sheet = 1)
+                                                   sheet = 1) %>%
+  dplyr::rename(source = souce,
+                avg_depth = avg_depth..cm.,
+                IPE_age_cal = IPE.age..cal.,
+                age_BP_mean = INTCAL2020_mean,
+                age_BP_median = INTCAL2020_median)
 
 compare_latlon(IbMPD, iberian_pollen_records_9april, digits = 2) %>%
   dplyr::distinct(site_name.y, .keep_all = TRUE)
+
+aux <- iberian_pollen_records_9april %>%
+  dplyr::filter(site_name %in% IbMPD$site_name)
+aux_rev <- IbMPD %>%
+  dplyr::filter(site_name %in% aux$site_name) # %>%
+  # smpds::rm_zero_taxa(1:10)
+
+tmp <- aux %>%
+  dplyr::select(1, 3:10) %>%
+  dplyr::right_join(smpds::IbMPD %>%
+                      dplyr::select(1:10),
+                    by = c("site_name", "latitude", "longitude", "elevation", "source", "avg_depth"))
+aux_rev %>%
+  dplyr::distinct(site_name, .keep_all = TRUE)
+
 
 
 # ------------------------------------------------------------------------------
@@ -148,7 +181,7 @@ juodonys <- readxl::read_xls("~/Downloads/SMPDSv2/To check included/Juodonys pol
                 elevation = 20,
                 site_type = "bog",
                 entity_type = "core top",
-                basin_size = NA,
+                basin_size = "small (0.01-1 km2)",
                 age_BP = "modern", #-83,
                 publication = paste0("Stančikaitė, M., Kisielienė, D., Strimaitienė, A., 2004. Vegetation response to the climatic and human impact changes during the Late Glacial and Holocene: case study of the marginal area of Baltija Upland, NE Lithuania. Baltica 17, 17–33.",
                                      "\n",
