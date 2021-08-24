@@ -83,7 +83,6 @@ gwr <- function(.data,
                 buffer = 1.5,
                 cpus = 1,
                 bandwidth = 1.06) {
-  # reference <- "~/OneDrive - University of Reading/UoR/Data/CRU/4.04/cru_ts4.04-clim-1961-1990-daily.tmp.nc"
   ncin <- ncdf4::nc_open(reference)
   reference_tbl <- ncdf4::ncvar_get(ncin, varid) %>%
     mask_nc(mask = cru_mask(res = res, coordinates = coordinates)) %>%
@@ -91,29 +90,15 @@ gwr <- function(.data,
     dplyr::select(-land, -sea)
   ncdf4::nc_close(ncin)
 
-  # Combine this daily gridded data with coordinates
-  # climate_grid <- cbind(lon, lat, Z, pre.array)
+  # Combine the daily gridded data with coordinates
   climate_grid <- coordinates %>%
     dplyr::right_join(reference_tbl,
                       by = c("latitude", "longitude"))
 
   # Start implementing Geographically Weighted Regression
-#
-#   # specify gridded area, where grid is ¡À1.5 degree of focus sites. See description above
-#   climate_grid2 <- climate_grid %>%
-#     dplyr::filter(latitude > min(!!.data$latitude - buffer),
-#                   latitude < max(!!.data$latitude + buffer),
-#                   longitude > min(!!.data$longitude - buffer),
-#                   longitude < max(!!.data$longitude + buffer))
-#   sp::coordinates(climate_grid2) <- c("longitude", "latitude")
-
   .data_coords <- .data
   sp::coordinates(.data_coords) <- c("longitude", "latitude")
   # sp::gridded(climate_grid2) <- TRUE
-
-  #Finally, extracted values by GWR
-  #SWdown_1960_01_01 represent the first day of the month
-  #Change V1 to V1-V31, get the value for day 1 to day 31 of the nc file
 
   oplan <- future::plan(future::multisession, workers = cpus)
   on.exit(future::plan(oplan), add = TRUE)
@@ -136,27 +121,10 @@ gwr <- function(.data,
                          list() %>%
                          magrittr::set_names(.x %>%
                                                stringr::str_remove(fm_suffix)))
-  },
-  .progress = TRUE,
-  .options = furrr::furrr_options(seed = TRUE))
+    },
+    .progress = TRUE,
+    .options = furrr::furrr_options(seed = TRUE))
 
-  # output <- names(climate_grid2) %>%
-  #   stringr::str_subset("^T[0-9]*$") %>%
-  #   stringr::str_c(fm_suffix) %>%
-  #   purrr::map_dfc(~spgwr::gwr(formula = .x,
-  #                              data = climate_grid2,
-  #                              bandwidth = 1.06,
-  #                              fit.points = .data_coords,
-  #                              predictions = TRUE)$SDF$pred %>%
-  #                    list() %>%
-  #                    magrittr::set_names(.x %>%
-  #                                          stringr::str_remove(fm_suffix)))
-
-  # SWdown_1960_01_01 <- (spgwr::gwr(V1 ~ Z,
-  #                                  climate_grid2,
-  #                                  bandwidth = 1.06,
-  #                                  fit.points = plot,
-  #                                  predictions = TRUE))$SDF$pred
   .data %>%
     dplyr::bind_cols(output)
 }
