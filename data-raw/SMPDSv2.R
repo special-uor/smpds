@@ -4,6 +4,7 @@ epdcore_finsinger <- readr::read_csv("inst/extdata/epdcore_finsinger.csv")
 feurdeana3_epdcoretop <- readr::read_csv("inst/extdata/feurdeana3_epdcoretop.csv")
 juodonys <- readr::read_csv("inst/extdata/juodonys.csv")
 petresiunai <- readr::read_csv("inst/extdata/petresiunai.csv")
+spanish_sites <- readr::read_csv("inst/extdata/spanish_sites.csv")
 
 SMPDSv2_all <- smpds::SMPDSv1 %>% ############################ SMPDSv1
   dplyr::mutate(original = "SMPDSv1", .before = 1) %>%
@@ -30,6 +31,11 @@ SMPDSv2_all <- smpds::SMPDSv1 %>% ############################ SMPDSv1
                      dplyr::mutate(basin_size = as.character(basin_size),
                                    age_BP = as.character(age_BP)) %>%
                      dplyr::mutate(original = "Stančikaitė et al., 2019",
+                                   before = 1)) %>%
+  dplyr::bind_rows(spanish_sites %>% ######################## Spanish sites
+                     dplyr::mutate(basin_size = as.character(basin_size),
+                                   age_BP = as.character(age_BP)) %>%
+                     dplyr::mutate(original = "EPD_Yicheng",
                                    before = 1)) %>%
   dplyr::bind_rows(NEOTOMA %>% ############################## NEOTOMA
                      dplyr::mutate(basin_size = as.character(basin_size),
