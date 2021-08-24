@@ -2,25 +2,45 @@
 
 epdcore_finsinger <- readr::read_csv("inst/extdata/epdcore_finsinger.csv")
 feurdeana3_epdcoretop <- readr::read_csv("inst/extdata/feurdeana3_epdcoretop.csv")
+juodonys <- readr::read_csv("inst/extdata/juodonys.csv")
+petresiunai <- readr::read_csv("inst/extdata/petresiunai.csv")
 
-SMPDSv2_all <- smpds::SMPDSv1 %>%
+SMPDSv2_all <- smpds::SMPDSv1 %>% ############################ SMPDSv1
   dplyr::mutate(original = "SMPDSv1", .before = 1) %>%
-  dplyr::bind_rows(smpds::SSMPD %>%
+  dplyr::bind_rows(smpds::SSMPD %>% ########################## SSMPD
                      dplyr::mutate(original = "SSMPD", .before = 1)) %>%
-  dplyr::bind_rows(smpds::Herzschuh %>%
+  dplyr::bind_rows(smpds::Herzschuh %>% ###################### Herzschuh
                      dplyr::mutate(original = "Herzschuh", .before = 1)) %>%
-  dplyr::bind_rows(epdcore_finsinger %>%
+  dplyr::bind_rows(epdcore_finsinger %>% ##################### Finsinger
                      dplyr::mutate(basin_size = as.character(basin_size),
                                    age_BP = as.character(age_BP)) %>%
-                     dplyr::mutate(original = "Finsinger et al., 2007", .before = 1)) %>%
-  dplyr::bind_rows(smpds::EMPDv2 %>%
+                     dplyr::mutate(original = "Finsinger et al., 2007",
+                                   .before = 1)) %>%
+  dplyr::bind_rows(feurdeana3_epdcoretop %>% ################# Feurdean
+                     dplyr::mutate(basin_size = as.character(basin_size),
+                                   age_BP = as.character(age_BP)) %>%
+                     dplyr::mutate(original = "Feurdean et al., 2009",
+                                   .before = 1)) %>%
+  dplyr::bind_rows(juodonys %>% ############################# Juodonys
+                     dplyr::mutate(basin_size = as.character(basin_size),
+                                   age_BP = as.character(age_BP)) %>%
+                     dplyr::mutate(original = "Stančikaitė et al., 2004",
+                                   .before = 1)) %>%
+  dplyr::bind_rows(petresiunai %>% ########################## Petresiunai
+                     dplyr::mutate(basin_size = as.character(basin_size),
+                                   age_BP = as.character(age_BP)) %>%
+                     dplyr::mutate(original = "Stančikaitė et al., 2019",
+                                   before = 1)) %>%
+  dplyr::bind_rows(smpds::EMPDv2 %>% ######################### EMPDv2
                      dplyr::mutate(basin_size = as.character(basin_size),
                                    age_BP = as.character(age_BP)) %>%
                      dplyr::mutate(original = "EMPDv2", .before = 1)) %>%
-  dplyr::bind_rows(smpds::CMPD %>%
+  dplyr::bind_rows(smpds::CMPD %>% ########################### CMPD
                      dplyr::mutate(original = "CMPD", .before = 1)) %>%
-  dplyr::bind_rows(smpds::APD %>%
-                     dplyr::mutate(original = "APD", .before = 1))
+  dplyr::bind_rows(smpds::APD %>% ############################ APD
+                     dplyr::mutate(original = "APD", .before = 1)) %>%
+  dplyr::bind_rows(smpds::IbMPD %>% ############################ APD
+                     dplyr::mutate(original = "IbMPD", .before = 1))
 idx <- duplicated(SMPDSv2_all$entity_name)
 SMPDSv2_all_dup <- SMPDSv2_all %>%
   dplyr::filter(entity_name %in% SMPDSv2_all$entity_name[idx]) %>%
