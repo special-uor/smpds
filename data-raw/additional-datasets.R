@@ -194,7 +194,7 @@ EMPDv2 %>%
   dplyr::filter(stringr::str_detect(entity_name, "Juodonys"))
 
 juodonys %>%
-  readr::write_excel_csv("~/Downloads/SMPDSv2/juodonys.csv", na = "")
+  readr::write_excel_csv("inst/extdata/juodonys.csv", na = "")
 
 # ------------------------------------------------------------------------------
 # |                           Novenko diagnosis.xlsx                           |
@@ -209,7 +209,7 @@ aux <- novenko %>%
   dplyr::filter(entity_name %in% EMPDv2$entity_name)
 aux_rev <- EMPDv2 %>%
   dplyr::filter(entity_name %in% aux$entity_name) %>%
-  smpds::rm_na_taxa(1:13)
+  smpds::rm_na_taxa(1:14)
 
 EMPDv2 %>%
   dplyr::filter(entity_name %>% stringr::str_detect("Novenko"))
@@ -277,6 +277,10 @@ petresiunai <- readxl::read_xls("~/Downloads/SMPDSv2/To check included/Petrasiun
                 .after = 1) %>%
   smpds::rm_zero_taxa(1:10)
 
+
+petresiunai %>%
+  readr::write_excel_csv("inst/extdata/petresiunai.csv", na = "")
+
 petresiunai %>%
   readr::write_excel_csv("~/Downloads/SMPDSv2/petresiunai-2021-08-18.csv", na = "")
 
@@ -326,7 +330,7 @@ Spanish_sites <- readxl::read_xlsx("~/Downloads/SMPDSv2/To check included/Spanis
   dplyr::filter(age_BP <= 50)
 
 aux <- Spanish_sites %>%
-  dplyr::filter(entity_name %in% SMPDSv1$entity_name)
+  dplyr::filter(entity_name %in% IbMPD$entity_name)
 aux_rev <- EMPDv2 %>%
   dplyr::filter(site_name %in% aux$entity_name) %>%
   smpds::rm_na_taxa(1:13)
