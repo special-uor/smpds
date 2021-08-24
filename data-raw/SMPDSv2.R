@@ -31,16 +31,26 @@ SMPDSv2_all <- smpds::SMPDSv1 %>% ############################ SMPDSv1
                                    age_BP = as.character(age_BP)) %>%
                      dplyr::mutate(original = "Stančikaitė et al., 2019",
                                    before = 1)) %>%
+  dplyr::bind_rows(NEOTOMA %>% ############################## NEOTOMA
+                     dplyr::mutate(basin_size = as.character(basin_size),
+                                   age_BP = as.character(age_BP)) %>%
+                     dplyr::mutate(original = "NEOTOMA",
+                                   .before = 1)) %>%
   dplyr::bind_rows(smpds::EMPDv2 %>% ######################### EMPDv2
                      dplyr::mutate(basin_size = as.character(basin_size),
                                    age_BP = as.character(age_BP)) %>%
                      dplyr::mutate(original = "EMPDv2", .before = 1)) %>%
   dplyr::bind_rows(smpds::CMPD %>% ########################### CMPD
+                     dplyr::mutate(basin_size = as.character(basin_size),
+                                   age_BP = as.character(age_BP)) %>%
                      dplyr::mutate(original = "CMPD", .before = 1)) %>%
   dplyr::bind_rows(smpds::APD %>% ############################ APD
+                     dplyr::mutate(age_BP = as.character(age_BP)) %>%
                      dplyr::mutate(original = "APD", .before = 1)) %>%
-  dplyr::bind_rows(smpds::IbMPD %>% ############################ APD
+  dplyr::bind_rows(smpds::IbMPD %>% ########################## IbMPD
+                     dplyr::mutate(age_BP = as.character(age_BP)) %>%
                      dplyr::mutate(original = "IbMPD", .before = 1))
+
 idx <- duplicated(SMPDSv2_all$entity_name)
 SMPDSv2_all_dup <- SMPDSv2_all %>%
   dplyr::filter(entity_name %in% SMPDSv2_all$entity_name[idx]) %>%
@@ -49,7 +59,7 @@ SMPDSv2_all_dup <- SMPDSv2_all %>%
 SMPDSv2_all2 <- SMPDSv2_all %>%
   dplyr::distinct(entity_name, .keep_all = TRUE)
 SMPDSv2 <- SMPDSv2_all2
-usethis::use_data(SMPDSv2, overwrite = TRUE)
+usethis::use_data(SMPDSv2, overwrite = TRUE, compress = "xz")
 
 taxa <- colnames(SMPDSv2_all)[-c(1:14)] %>% sort()
 tibble::tibble(
