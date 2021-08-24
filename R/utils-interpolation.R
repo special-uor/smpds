@@ -52,7 +52,7 @@ cru_mask <- function(res = 0.5,
 #'     }
 #' @param cpus Number of CPUs to be used in parallel, default = 1.
 #' @inheritParams spgwr::gwr
-#' @inheritDotParams spgwr::gwr -formula -data -bandwidth -fit.points -predictions
+# @inheritDotParams spgwr::gwr -formula -data -bandwidth -fit.points -predictions -coords
 #'
 #' @return Table with interpolated values from \code{varid} for each record/row
 #'     in \code{.data}.
@@ -82,8 +82,7 @@ gwr <- function(.data,
                 res = 0.5,
                 buffer = 1.5,
                 cpus = 1,
-                bandwidth = 1.06,
-                ...) {
+                bandwidth = 1.06) {
   # reference <- "~/OneDrive - University of Reading/UoR/Data/CRU/4.04/cru_ts4.04-clim-1961-1990-daily.tmp.nc"
   ncin <- ncdf4::nc_open(reference)
   reference_tbl <- ncdf4::ncvar_get(ncin, varid) %>%
@@ -133,8 +132,7 @@ gwr <- function(.data,
                                    data = climate_grid2,
                                    bandwidth = bandwidth,
                                    fit.points = .data_coords[i, ],
-                                   predictions = TRUE,
-                                   ...)$SDF$pred %>%
+                                   predictions = TRUE)$SDF$pred %>%
                          list() %>%
                          magrittr::set_names(.x %>%
                                                stringr::str_remove(fm_suffix)))
@@ -163,6 +161,24 @@ gwr <- function(.data,
     dplyr::bind_cols(output)
 }
 
+
+#' Mask NetCDF
+#'
+#' Mask NetCDF variable.
+#'
+#' @param .data 3D matrix with \code{latitude}, \code{longitude} and
+#'     \code{time}.
+#' @param mask 2D matrix with all combinations of \code{latitude},
+#'     \code{longitude} and a third variable called \code{land} with logical
+#'     values to indicated whether a grid cell should be used or ignored.
+#'     \itemize{
+#'      \item{\code{land = TRUE} }{ use this value.}
+#'      \item{\code{land = FALSE} }{ ignore this value.}
+#'     }
+#'
+#' @return 2D version of \code{.data}, including \code{latitute},
+#'     \code{longitude}, and variables with the format \code{T#}, for each
+#'     time step in \code{.data}: \code{T1}, \code{T2}, ..., \code{Tk}.
 #' @keywords internal
 mask_nc <- function(.data, mask = cru_mask()) {
   mask %>%
@@ -174,6 +190,18 @@ mask_nc <- function(.data, mask = cru_mask()) {
     )
 }
 
+#' Subset data
+#'
+#' Subset data using coordinates (\code{latitute} and \code{longitude}) and
+#' \code{buffer}.
+#'
+#' @param .data 2D matrix with columns called \code{latitude} and
+#'     \code{longitude}.
+#' @param latitude Numeric value for reference \code{latitude}.
+#' @param longitude Numeric value for reference \code{longitude}.
+#' @inheritParams gwr
+#'
+#' @return Filtered 2D matrix.
 #' @keywords internal
 subset_coords <- function(.data, latitude, longitude, buffer) {
   .data_coords <- .data %>%
