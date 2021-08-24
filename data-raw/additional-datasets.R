@@ -108,7 +108,6 @@ aux_rev %>%
 # ------------------------------------------------------------------------------
 # |                   iberia_pollen_records_9April_to check                    |
 # ------------------------------------------------------------------------------
-
 iberian_pollen_records_9april <- readxl::read_xlsx("~/Downloads/SMPDSv2/To check included/iberia_pollen_records_9April_to check.xlsx",
                                                    sheet = 1) %>%
   dplyr::rename(source = souce,
@@ -327,10 +326,19 @@ Spanish_sites <- readxl::read_xlsx("~/Downloads/SMPDSv2/To check included/Spanis
                         "entity_type",
                         "age_BP",
                         colnames(.)[-c(1:10)])) %>%
-  dplyr::filter(age_BP <= 50)
+  dplyr::filter(age_BP <= 50) %>%
+  dplyr::mutate(publication = paste("Harrison, S.P., Shen, Y. and",
+                                    "Sweeney, L., 2021. Pollen data and",
+                                    "charcoal data of the Iberian Peninsula.",
+                                    "University of Reading. Dataset."),
+                DOI = "10.17864/1947.294",
+                source = "Harrison et al., 2021")
 
 aux <- Spanish_sites %>%
   dplyr::filter(entity_name %in% IbMPD$entity_name)
 aux_rev <- EMPDv2 %>%
   dplyr::filter(site_name %in% aux$entity_name) %>%
   smpds::rm_na_taxa(1:13)
+
+Spanish_sites %>%
+  readr::write_excel_csv("inst/extdata/spanish_sites.csv", na = "")
