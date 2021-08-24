@@ -51,6 +51,11 @@ phelps_all <- phelps_a1 %>%
                 .after = site_name) %>%
   dplyr::mutate(ID_PHELPS = seq_along(sitenum))
 
+# Export list of taxon names for clean-up
+tibble::tibble(taxon_name = sort(unique(phelps_all$taxon_name)),
+               clean_name = taxon_name) %>%
+  readr::write_excel_csv("~/Downloads/SMPDSv2/feurdeana3_epdcoretop-taxon_names_2021-08-24.csv", na = "")
+
 phelps_all_sum <- phelps_all %>%
   dplyr::group_by(site_name, depth, taxon_name) %>%
   dplyr::mutate(count2 = sum(count, na.rm = TRUE)) %>%

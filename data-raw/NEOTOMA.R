@@ -9,7 +9,6 @@ NEOTOMA <- neotoma_metadata %>%
 
 usethis::use_data(NEOTOMA, overwrite = TRUE)
 
-
 # Export list of taxon names for clean-up
 tibble::tibble(taxon_name = colnames(NEOTOMA)[-c(1:11)],
                clean_name = taxon_name) %>%
