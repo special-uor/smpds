@@ -7,6 +7,12 @@ NEOTOMA <- neotoma_metadata %>%
   dplyr::relocate(ID_BIOME, .after = age_BP) %>%
   smpds::sort_taxa(1:11)
 
+aux <- NEOTOMA %>%
+  dplyr::filter(entity_name %in% EMPDv2$entity_name)
+aux_rev <- EMPDv2 %>%
+  dplyr::filter(entity_name %in% aux$entity_name) %>%
+  smpds::rm_na_taxa(1:14)
+
 usethis::use_data(NEOTOMA, overwrite = TRUE)
 
 # Export list of taxon names for clean-up
