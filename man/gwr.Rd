@@ -3,6 +3,9 @@
 \name{gwr}
 \alias{gwr}
 \title{Geographically Weighted Regression}
+\source{
+https://github.com/yunkepeng/gwr
+}
 \usage{
 gwr(
   .data,
@@ -10,7 +13,9 @@ gwr(
   reference = NULL,
   coordinates = smpds::CRU_coords,
   res = 0.5,
-  cpus = 1
+  buffer = 1.5,
+  cpus = 1,
+  bandwidth = 1.06
 )
 }
 \arguments{
@@ -28,7 +33,18 @@ loaded.}
 
 \item{res}{Numeric value for the mask resolution. Default: 0.5 degrees.}
 
+\item{buffer}{Numeric value to be used as the boundary for the search area:
+\itemize{
+\item \code{latitude} < \code{.data$latitude + buffer}
+\item \code{latitude} > \code{.data$latitude - buffer}
+\item \code{longitude} < \code{.data$longitude + buffer}
+\item \code{longitude} > \code{.data$longitude - buffer}
+}}
+
 \item{cpus}{Number of CPUs to be used in parallel, default = 1.}
+
+\item{bandwidth}{bandwidth used in the weighting function, possibly
+  calculated by \code{gwr.sel}}
 }
 \value{
 Table with interpolated values from \code{varid} for each record/row
@@ -46,4 +62,9 @@ data <- tibble::tibble(entity_name = "University of Reading",
 data \%>\%
   smpds::gwr(varid = "tmp",
              reference = "inst/extdata/cru_ts4.04-clim-1961-1990-daily_tmp_1-5.nc")
+}
+\references{
+Peng, Y., Bloomfield, K.J. and Prentice, I.C., 2020. A theory of plant
+function helps to explain leaf‐trait and productivity responses to elevation.
+New Phytologist, 226(5), pp.1274-1284. doi:10.1111/nph.16447
 }
