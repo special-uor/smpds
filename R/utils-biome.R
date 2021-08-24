@@ -93,7 +93,7 @@ extract_biome.tbl_df <- function(.data,
   #   .data <- .data %>% sf::st_as_sf(x = ., coords = c("longitude", "latitude"))
   .data %>%
     sf::st_as_sf(x = ., coords = c("longitude", "latitude")) %>%
-    extract_biome() %>%
+    extract_biome(reference = reference, buffer = buffer, all = all, ...) %>%
     dplyr::mutate(latitude = sf::st_coordinates(.)[, 2],
                   longitude = sf::st_coordinates(.)[, 1],
                   .after = geometry) %>%
@@ -145,7 +145,7 @@ parallel_extract_biome <- function(.data, reference = smpds::PNV,
         return(tibble::tibble(ID = i, ID_BIOME = NA, px = NA))
       .data %>%
         dplyr::slice(i) %>%
-        sf::st_as_sf(x = ., coords = c("longitude", "latitude")) %>%
+        # sf::st_as_sf(x = ., coords = c("longitude", "latitude")) %>%
         extract_biome(reference = reference, buffer = buffer, all = all) %>%
         dplyr::mutate(ID = i, .before = 1)
     },
