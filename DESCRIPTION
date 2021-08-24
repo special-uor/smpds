@@ -27,9 +27,11 @@ RoxygenNote: 7.1.1
 Imports: 
     dplyr,
     magrittr,
+    ncdf4,
     purrr,
     readr,
     sp,
+    spgwr,
     stringr,
     tibble,
     tidyr
