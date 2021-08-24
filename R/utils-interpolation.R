@@ -43,11 +43,28 @@ cru_mask <- function(res = 0.5,
 #' @param reference Path to the NetCDF file from which \code{varid} will be
 #'     loaded.
 #' @inheritParams cru_mask
+#' @param buffer Numeric value to be used as the boundary for the search area:
+#'     \itemize{
+#'      \item \code{latitude} < \code{.data$latitude + buffer}
+#'      \item \code{latitude} > \code{.data$latitude - buffer}
+#'      \item \code{longitude} < \code{.data$longitude + buffer}
+#'      \item \code{longitude} > \code{.data$longitude - buffer}
+#'     }
 #' @param cpus Number of CPUs to be used in parallel, default = 1.
+#' @inheritParams spgwr::gwr
+#' @inheritDotParams spgwr::gwr -formula -data -bandwidth -fit.points -predictions
 #'
 #' @return Table with interpolated values from \code{varid} for each record/row
 #'     in \code{.data}.
 #' @export
+#'
+#' @references
+#' Peng, Y., Bloomfield, K.J. and Prentice, I.C., 2020. A theory of plant
+#' function helps to explain leaf‐trait and productivity responses to elevation.
+#' New Phytologist, 226(5), pp.1274-1284. doi:10.1111/nph.16447
+#'
+#' @source
+#' https://github.com/yunkepeng/gwr
 #'
 #' @examples
 #' `%>%` <- magrittr::`%>%`
@@ -63,7 +80,10 @@ gwr <- function(.data,
                 reference = NULL,
                 coordinates = smpds::CRU_coords,
                 res = 0.5,
-                cpus = 1) {
+                buffer = 1.5,
+                cpus = 1,
+                bandwidth = 1.06,
+                ...) {
   # reference <- "~/OneDrive - University of Reading/UoR/Data/CRU/4.04/cru_ts4.04-clim-1961-1990-daily.tmp.nc"
   ncin <- ncdf4::nc_open(reference)
   reference_tbl <- ncdf4::ncvar_get(ncin, varid) %>%
@@ -79,28 +99,14 @@ gwr <- function(.data,
                       by = c("latitude", "longitude"))
 
   # Start implementing Geographically Weighted Regression
-
-  delta <- 1.5 # Here a is 1.5 degrees. It means that when extract values on a site, we only need site ¡À 1.5 lat/lon degrees of grid.
-  # This is reasonable, Because on below, we set our bandwidth = 1.06 in our gwr function, considered as the best value in previous research
-
-  # # # Now input our extracted site, let's create a site as an example
-  # plot <- data.frame(matrix(NA)) # for final sites climate data
-  # plot$Latitude <- 44.26
-  # plot$Longitude <- -122.2
-  # plot$Z <- 780
-  #
-  # .data <- tibble::tibble(entity_name = "University of Reading",
-  #                         latitude = 51.44140,
-  #                         longitude = -0.9418,
-  #                         elevation = 61)
-
-  # specify gridded area, where grid is ¡À1.5 degree of focus sites. See description above
-  climate_grid2 <- climate_grid %>%
-    dplyr::filter(latitude > min(!!.data$latitude - delta),
-                  latitude < max(!!.data$latitude + delta),
-                  longitude > min(!!.data$longitude - delta),
-                  longitude < max(!!.data$longitude + delta))
-  sp::coordinates(climate_grid2) <- c("longitude", "latitude")
+#
+#   # specify gridded area, where grid is ¡À1.5 degree of focus sites. See description above
+#   climate_grid2 <- climate_grid %>%
+#     dplyr::filter(latitude > min(!!.data$latitude - buffer),
+#                   latitude < max(!!.data$latitude + buffer),
+#                   longitude > min(!!.data$longitude - buffer),
+#                   longitude < max(!!.data$longitude + buffer))
+#   sp::coordinates(climate_grid2) <- c("longitude", "latitude")
 
   .data_coords <- .data
   sp::coordinates(.data_coords) <- c("longitude", "latitude")
@@ -118,16 +124,17 @@ gwr <- function(.data,
       climate_grid2 <- subset_coords(climate_grid,
                                      .data$latitude[i],
                                      .data$longitude[i],
-                                     delta)
+                                     buffer)
       fms <-  names(climate_grid2) %>%
         stringr::str_subset("^T[0-9]*$") %>%
         stringr::str_c(fm_suffix)
       fms %>%
         purrr::map_dfc(~spgwr::gwr(formula = .x,
                                    data = climate_grid2,
-                                   bandwidth = 1.06,
+                                   bandwidth = bandwidth,
                                    fit.points = .data_coords[i, ],
-                                   predictions = TRUE)$SDF$pred %>%
+                                   predictions = TRUE,
+                                   ...)$SDF$pred %>%
                          list() %>%
                          magrittr::set_names(.x %>%
                                                stringr::str_remove(fm_suffix)))
@@ -168,12 +175,12 @@ mask_nc <- function(.data, mask = cru_mask()) {
 }
 
 #' @keywords internal
-subset_coords <- function(.data, latitude, longitude, delta) {
+subset_coords <- function(.data, latitude, longitude, buffer) {
   .data_coords <- .data %>%
-    dplyr::filter(latitude > min(!!latitude - delta),
-                  latitude < max(!!latitude + delta),
-                  longitude > min(!!longitude - delta),
-                  longitude < max(!!longitude + delta))
+    dplyr::filter(latitude > min(!!latitude - buffer),
+                  latitude < max(!!latitude + buffer),
+                  longitude > min(!!longitude - buffer),
+                  longitude < max(!!longitude + buffer))
   sp::coordinates(.data_coords) <- c("longitude", "latitude")
   return(.data_coords)
 }
