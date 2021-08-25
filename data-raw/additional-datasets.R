@@ -76,21 +76,40 @@ aux_rev %>%
 # ------------------------------------------------------------------------------
 # |                      feurdeana3 and epdcoretop extras                      |
 # ------------------------------------------------------------------------------
+feurdeana3_epdcoretop_taxa <- readr::read_csv("~/Downloads/SMPDSv2/feurdeana3_epdcoretop-taxon_names_2021-08-24_SPH.csv") %>%
+  dplyr::distinct() %>%
+  dplyr::mutate(action = ifelse(clean_name %>%
+                                  stringr::str_detect("EXCLUDE"),
+                                "delete", "update"),
+                clean_name = ifelse(clean_name %>%
+                                      stringr::str_detect("EXCLUDE"),
+                                    NA, clean_name)) %>%
+  dplyr::arrange(dplyr::desc(action), taxon_name) %>%
+  dplyr::filter(!is.na(taxon_name))
+feurdeana3_epdcoretop_taxa %>%
+  readr::write_excel_csv("inst/extdata/feurdeana3_epdcoretop_taxa.csv", na = "")
+
 feurdeana3_epdcoretop <- readxl::read_xlsx("~/Downloads/SMPDSv2/To check included/feurdeana3 and epdcoretop extras.xlsx",
                                            sheet = 1) %>%
   dplyr::rename(entity_name = samplename,
                 taxon_name = original_varname) %>%
-  # dplyr::group_by(entity_name) %>%
-  # dplyr::mutate(total = sum(count, na.rm = TRUE),
-  #               percentage2 = count / total * 100) %>%
-  # tidyr::pivot_wider(1, names_from = "taxon_name", values_from = "percentage2") %>%
-  # tidyr::pivot_wider(1, names_from = "taxon_name", values_from = "percentage") %>%
+  dplyr::left_join(feurdeana3_epdcoretop_taxa,
+                   by = "taxon_name") %>%
+  dplyr::filter(action != "delete") %>%
+  dplyr::select(-action) %>%
+  dplyr::rename(taxon_name_original = taxon_name,
+                taxon_name = clean_name) %>%
+  dplyr::group_by(entity_name, taxon_name) %>%
+  dplyr::mutate(count = sum(as.double(count), na.rm = TRUE)) %>%
+  dplyr::ungroup() %>%
+  dplyr::mutate(taxon_name = ifelse(is.na(taxon_name),
+                                    taxon_name_original,
+                                    taxon_name)) %>%
+  dplyr::distinct(entity_name, taxon_name, .keep_all = TRUE) %>%
+  dplyr::select(-taxon_name_original) %>%
   tidyr::pivot_wider(1, names_from = "taxon_name", values_from = "count") %>%
-  smpds::sort_taxa(cols = 1) %>% # Sort the taxon_names alphabetically
-  dplyr::filter(!is.na(entity_name)) %>%
-  dplyr::rowwise() %>%
-  dplyr::mutate(total = dplyr::c_across(Abies:`Zea mays`) %>%
-                  sum(na.rm = TRUE))
+  smpds::sort_taxa(cols = 1) # Sort the taxon_names alphabetically
+
 feurdeana3_epdcoretop2 <- readxl::read_xlsx("~/Downloads/SMPDSv2/To check included/feurdeana3 and epdcoretop extras.xlsx",
                                             sheet = 2,
                                             col_names = FALSE)
