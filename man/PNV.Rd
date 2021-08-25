@@ -5,7 +5,7 @@
 \alias{PNV}
 \title{\code{PNV} dataset}
 \format{
-A data frame (\code{RasterBrick} object) with  rows and 43200 columns.
+A data frame (\code{RasterBrick} object) with 17924 rows and 43200 columns.
 }
 \source{
 Hengl, Tomislav (2018): Global Maps of Potential Natural Vegetation at 1 km resolution, version 4. Harvard Dataverse. Dataset. https://doi.org/10.7910/DVN/QQHCIK
