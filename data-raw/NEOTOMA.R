@@ -1,11 +1,34 @@
 ## code to prepare `NEOTOMA` dataset goes here
 neotoma_metadata <- readr::read_csv("inst/extdata/neotoma_metadata.csv")
 neotoma_count <- readr::read_csv("inst/extdata/neotoma_count.csv")
+neotoma_taxa <- readr::read_csv("inst/extdata/neotoma_taxa.csv")
 NEOTOMA <- neotoma_metadata %>%
   dplyr::left_join(neotoma_count, by = "entity_name") %>%
-  smpds::parallel_extract_biome(buffer = 12000, cpus = 1) %>%
+  smpds::parallel_extract_biome(buffer = 12000, cpus = 2) %>%
   dplyr::relocate(ID_BIOME, .after = age_BP) %>%
-  smpds::sort_taxa(1:11)
+  dplyr::select(-ID) %>%
+  tidyr::pivot_longer(-c(1:12),
+                      names_to = "taxon_name",
+                      values_to = "count") %>%
+  dplyr::filter(!is.na(count)) %>%
+  dplyr::left_join(neotoma_taxa,
+                   by = "taxon_name") %>%
+  dplyr::filter(action != "delete") %>%
+  dplyr::select(-action) %>%
+  dplyr::rename(taxon_name_original = taxon_name,
+                taxon_name = clean_name) %>%
+  dplyr::group_by(entity_name, taxon_name) %>%
+  dplyr::mutate(count = sum(as.double(count), na.rm = TRUE)) %>%
+  dplyr::ungroup() %>%
+  dplyr::mutate(taxon_name = ifelse(is.na(taxon_name),
+                                    taxon_name_original,
+                                    taxon_name)) %>%
+  dplyr::distinct(entity_name, taxon_name, .keep_all = TRUE) %>%
+  dplyr::select(-taxon_name_original) %>%
+  tidyr::pivot_wider(1:12,
+                     names_from = "taxon_name",
+                     values_from = "count") %>%
+  smpds::sort_taxa(cols = 1:12)
 
 aux <- NEOTOMA %>%
   dplyr::filter(entity_name %in% EMPDv2$entity_name)
@@ -16,7 +39,7 @@ aux_rev <- EMPDv2 %>%
 usethis::use_data(NEOTOMA, overwrite = TRUE)
 
 # Export list of taxon names for clean-up
-tibble::tibble(taxon_name = colnames(NEOTOMA)[-c(1:11)],
+tibble::tibble(taxon_name = colnames(NEOTOMA)[-c(1:12)],
                clean_name = taxon_name) %>%
   readr::write_excel_csv("~/Downloads/SMPDSv2/NEOTOMA_taxa_2021-08-24.csv", na = "")
 
@@ -87,3 +110,16 @@ neotoma_count_wide <- neotoma_count_long %>%
 
 neotoma_count_wide %>%
   readr::write_excel_csv("inst/extdata/neotoma_count.csv", na = "")
+
+neotoma_taxa <- readr::read_csv("~/Downloads/SMPDSv2/NEOTOMA_taxa_2021-08-24_SPH.csv") %>%
+  dplyr::distinct() %>%
+  dplyr::mutate(action = ifelse(clean_name %>%
+                                  stringr::str_detect("EXCLUDE"),
+                                "delete", "update"),
+                clean_name = ifelse(clean_name %>%
+                                      stringr::str_detect("EXCLUDE"),
+                                    NA, clean_name)) %>%
+  dplyr::arrange(dplyr::desc(action), taxon_name) %>%
+  dplyr::filter(!is.na(taxon_name))
+neotoma_taxa %>%
+  readr::write_excel_csv("inst/extdata/neotoma_taxa.csv", na = "")
