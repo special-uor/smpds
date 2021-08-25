@@ -10,32 +10,50 @@ phelps_a4 <- readr::read_csv("~/Downloads/SMPDSv2/Phelps_Appendix1-9/APPENDIX_4_
 phelps_a5 <- readr::read_csv("~/Downloads/SMPDSv2/Phelps_Appendix1-9/APPENDIX_5_samples-1.csv")
 phelps_a6 <- readr::read_csv("~/Downloads/SMPDSv2/Phelps_Appendix1-9/APPENDIX_6_counts-1.csv")
 phelps_a7 <- readr::read_csv("~/Downloads/SMPDSv2/Phelps_Appendix1-9/APPENDIX_7_date_ages-1.csv")
-phelps_a8 <- readr::read_csv("~/Downloads/SMPDSv2/Phelps_Appendix1-9/APPENDIX_8_CLAM_age-1.csv")
+phelps_a8 <- readr::read_csv("~/Downloads/SMPDSv2/Phelps_Appendix1-9/APPENDIX_8_CLAM_age-1.csv") %>%
+  dplyr::filter(calBP <= 50) %>%
+  dplyr::mutate(ENT_SAMP = paste0(entitynum, ",", samplenum))
 phelps_a9 <- readr::read_csv("~/Downloads/SMPDSv2/Phelps_Appendix1-9/APPENDIX_9_harmonized_biomization-1.csv")
 
-phelps_all <- phelps_a1 %>%
+# Filter the tables samples and counts to only modern CLAM ages
+phelps_a52 <- phelps_a5 %>%
+  dplyr::mutate(ENT_SAMP = paste0(entitynum, ",", samplenum)) %>%
+  dplyr::filter(ENT_SAMP %in% phelps_a8$ENT_SAMP)
+phelps_a62 <- phelps_a6 %>%
+  dplyr::mutate(ENT_SAMP = paste0(entitynum, ",", samplenum)) %>%
+  dplyr::filter(ENT_SAMP %in% phelps_a8$ENT_SAMP)
+
+phelps_sample_ages <- phelps_a52 %>%
+  dplyr::inner_join(phelps_a62,
+                    by = c("entitynum", "samplenum", "status", "ENT_SAMP"))
+phelps_site_entity <- phelps_a1 %>%
   dplyr::left_join(phelps_a2 %>%
                      dplyr::select(-data_source),
                    by = "sitenum") %>%
   dplyr::left_join(phelps_a3 %>%
                      dplyr::select(1:2, publication),
                    by = c("sitenum", "entitynum")) %>%
-  dplyr::left_join(phelps_a6 %>%
-                     dplyr::select(1:4, count),
-                   by = "entitynum") %>%
-  dplyr::left_join(phelps_a5 %>%
-                     dplyr::distinct(entitynum, .keep_all = TRUE) %>%
-                     dplyr::select(1:6),
-                   by = c("entitynum", "samplenum")) %>%
-  dplyr::left_join(phelps_a8 %>%
-                     dplyr::select(1:6),
-                   by = c("entitynum", "samplenum", "depth")) %>%
+  dplyr::filter(entitynum %in% phelps_a8$entitynum)
+
+# Verify sites included in the APD
+phelps_site_entity %>%
+  dplyr::filter(sitename %in% smpds::APD$site_name)
+phelps_site_entity %>%
+  dplyr::filter(data_source %>%
+                  stringr::str_detect("apd"))
+
+# Combine all the appendices
+phelps_all <- phelps_site_entity %>%
+  dplyr::inner_join(phelps_sample_ages,
+                    by = c("data_source", "entitynum", "status")) %>%
+  dplyr::inner_join(phelps_a8,
+                   by = c("entitynum", "status", "samplenum", "depth", "ENT_SAMP")) %>%
   dplyr::select(sitenum,
                 entitynum,
                 samplenum,
                 poldiv1,
-                sigle,
                 site_name = sitename,
+                entity_name = sigle,
                 latitude,
                 longitude,
                 data_source,
@@ -46,15 +64,30 @@ phelps_all <- phelps_a1 %>%
                 taxon_name = original_varname,
                 # accepted_varname,
                 count) %>%
-  dplyr::filter(is.na(age_BP) | age_BP <= 50) %>%
-  dplyr::mutate(entity_name = paste0(site_name, "_", depth),
-                .after = site_name) %>%
-  dplyr::mutate(ID_PHELPS = seq_along(sitenum))
+  dplyr::group_by(site_name) %>%
+  dplyr::mutate(n = length(unique(depth)),
+                entity_name = ifelse(n > 1,
+                                     paste0(entity_name, "_", depth),
+                                     entity_name)) %>%
+  dplyr::ungroup() %>%
+  dplyr::select(-n) %>%
+  dplyr::mutate(ID_PHELPS = seq_along(sitenum), .before = 1) %>%
+  dplyr::arrange(sitenum, entitynum, taxon_name)
+
+apd_taxa <- readr::read_csv("inst/extdata/apd_taxa.csv")
+phelps_all2 <- phelps_all %>%
+  dplyr::left_join(apd_taxa,
+                   by = "taxon_name") %>%
+  dplyr::filter(is.na(action) | action != "delete") %>%
+  dplyr::select(-action) %>%
+  dplyr::rename(taxon_name_original = taxon_name,
+                taxon_name = clean_name)
 
 # Export list of taxon names for clean-up
-tibble::tibble(taxon_name = sort(unique(phelps_all$taxon_name)),
-               clean_name = taxon_name) %>%
-  readr::write_excel_csv("~/Downloads/SMPDSv2/feurdeana3_epdcoretop-taxon_names_2021-08-24.csv", na = "")
+tibble::tibble(taxon_name = sort(unique(phelps_all$taxon_name))) %>%
+  dplyr::left_join(apd_taxa,
+                   by = "taxon_name") %>%
+  readr::write_excel_csv("~/Downloads/SMPDSv2/phelps-taxon_names_2021-08-25.csv", na = "")
 
 phelps_all_sum <- phelps_all %>%
   dplyr::group_by(site_name, depth, taxon_name) %>%
