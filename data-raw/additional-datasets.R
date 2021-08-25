@@ -2,10 +2,37 @@
 # ------------------------------------------------------------------------------
 # |                epdcore and finsinger other to check_pollen                 |
 # ------------------------------------------------------------------------------
+epdcore_finsinger_taxa <- readr::read_csv("~/Downloads/SMPDSv2/epdcore_finsinger-taxon_names_2021-08-24_SPH.csv") %>%
+  dplyr::distinct() %>%
+  dplyr::mutate(action = ifelse(clean_name %>%
+                                  stringr::str_detect("EXCLUDE"),
+                                "delete", "update"),
+                clean_name = ifelse(clean_name %>%
+                                      stringr::str_detect("EXCLUDE"),
+                                    NA, clean_name)) %>%
+  dplyr::arrange(dplyr::desc(action), taxon_name) %>%
+  dplyr::filter(!is.na(taxon_name))
+epdcore_finsinger_taxa %>%
+  readr::write_excel_csv("inst/extdata/epdcore_finsinger_taxa.csv", na = "")
+
 epdcore_finsinger <- readxl::read_xlsx("~/Downloads/SMPDSv2/To check included/epdcore and finsinger other to check_pollen.xlsx",
                                        sheet = 1) %>%
   dplyr::rename(entity_name = samplename,
                 taxon_name = original_varname) %>%
+  dplyr::left_join(epdcore_finsinger_taxa,
+                   by = "taxon_name") %>%
+  dplyr::filter(action != "delete") %>%
+  dplyr::select(-action) %>%
+  dplyr::rename(taxon_name_original = taxon_name,
+                taxon_name = clean_name) %>%
+  dplyr::group_by(entity_name, taxon_name) %>%
+  dplyr::mutate(count = sum(as.double(count), na.rm = TRUE)) %>%
+  dplyr::ungroup() %>%
+  dplyr::mutate(taxon_name = ifelse(is.na(taxon_name),
+                                    taxon_name_original,
+                                    taxon_name)) %>%
+  dplyr::distinct(entity_name, taxon_name, .keep_all = TRUE) %>%
+  dplyr::select(-taxon_name_original) %>%
   tidyr::pivot_wider(1, names_from = "taxon_name", values_from = "count") %>%
   smpds::sort_taxa(cols = 1) %>% # Sort the taxon_names alphabetically
   smpds::total_taxa(cols = 1)
