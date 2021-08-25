@@ -92,6 +92,7 @@ extract_biome.tbl_df <- function(.data,
   # if (!("sf" %in% class(.data)))
   #   .data <- .data %>% sf::st_as_sf(x = ., coords = c("longitude", "latitude"))
   .data %>%
+    dplyr::mutate(geometry = NA, .after = longitude) %>%
     sf::st_as_sf(x = ., coords = c("longitude", "latitude")) %>%
     extract_biome(reference = reference, buffer = buffer, all = all, ...) %>%
     dplyr::mutate(latitude = sf::st_coordinates(.)[, 2],
@@ -130,7 +131,8 @@ extract_biome.sf <- function(.data,
 #' @rdname extract_biome
 #'
 #' @export
-parallel_extract_biome <- function(.data, reference = smpds::PNV,
+parallel_extract_biome <- function(.data,
+                                   reference = smpds::PNV,
                                    buffer = 12000,
                                    cpus = 2,
                                    all = FALSE) {
@@ -142,7 +144,8 @@ parallel_extract_biome <- function(.data, reference = smpds::PNV,
           dplyr::slice(i) %>%
           dplyr::mutate(LATLON = is.na(latitude) | is.na(longitude)) %>%
           .$LATLON)
-        return(tibble::tibble(ID = i, ID_BIOME = NA, px = NA))
+        return(.data %>% dplyr::slice(i) %>% dplyr::mutate(ID = i, .before = 1))
+        # return(tibble::tibble(ID = i, ID_BIOME = NA, px = NA))
       .data %>%
         dplyr::slice(i) %>%
         # sf::st_as_sf(x = ., coords = c("longitude", "latitude")) %>%
