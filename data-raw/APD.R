@@ -28,7 +28,8 @@ APD_SPH2 <- APD_SPH %>%
     #   is.na(SPH_comment)
   )
 APD_SPH_unused2 <- APD_SPH %>%
-  dplyr::filter(!(ID_APD %in% APD_SPH2$ID_APD))
+  dplyr::filter(!(ID_APD %in% APD_SPH2$ID_APD)) %>%
+  dplyr::arrange(sigle)
 
 APD <- output %>%
   purrr::map_df(~.x) %>%

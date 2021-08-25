@@ -52,8 +52,9 @@ phelps_all <- phelps_site_entity %>%
                 entitynum,
                 samplenum,
                 poldiv1,
+                sigle,
+                source = data_source,
                 site_name = sitename,
-                entity_name = sigle,
                 latitude,
                 longitude,
                 data_source,
@@ -65,29 +66,57 @@ phelps_all <- phelps_site_entity %>%
                 # accepted_varname,
                 count) %>%
   dplyr::group_by(site_name) %>%
+  # dplyr::mutate(taxon_name = taxon_name %>%
+  #                 stringr::str_replace_all("-type", " type")) %>%
   dplyr::mutate(n = length(unique(depth)),
                 entity_name = ifelse(n > 1,
-                                     paste0(entity_name, "_", depth),
-                                     entity_name)) %>%
+                                     paste0(sigle, "_", depth),
+                                     sigle),
+                .after = site_name) %>%
   dplyr::ungroup() %>%
   dplyr::select(-n) %>%
   dplyr::mutate(ID_PHELPS = seq_along(sitenum), .before = 1) %>%
   dplyr::arrange(sitenum, entitynum, taxon_name)
 
+phelps_apd <- phelps_all %>%
+  dplyr::filter(source %>% stringr::str_detect("apd")) %>%
+  dplyr::select(2:14) %>%
+  dplyr::distinct(.keep_all = TRUE) %>%
+  dplyr::arrange(sigle)
+
+
 apd_taxa <- readr::read_csv("inst/extdata/apd_taxa.csv")
+ref_taxa <- apd_taxa %>%
+  dplyr::bind_rows(taxa_all %>%
+                     dplyr::select(1:3)) %>%
+  dplyr::distinct()
 phelps_all2 <- phelps_all %>%
-  dplyr::left_join(apd_taxa,
+  dplyr::mutate(taxon_name = taxon_name %>%
+                  stringr::str_replace_all("undiff\\.|undif", "") %>%
+                  stringr::str_squish()) %>%
+  dplyr::left_join(ref_taxa, #apd_taxa,
                    by = "taxon_name") %>%
   dplyr::filter(is.na(action) | action != "delete") %>%
   dplyr::select(-action) %>%
   dplyr::rename(taxon_name_original = taxon_name,
                 taxon_name = clean_name)
+b <- phelps_all2 %>%
+  dplyr::filter(is.na(taxon_name)) %>%
+  dplyr::select(16, 18) %>%
+  dplyr::distinct() %>%
+  dplyr::arrange(taxon_name_original)
 
 # Export list of taxon names for clean-up
 tibble::tibble(taxon_name = sort(unique(phelps_all$taxon_name))) %>%
-  dplyr::left_join(apd_taxa,
+  dplyr::mutate(taxon_name = taxon_name %>%
+                  stringr::str_replace_all("undiff\\.|undif", "") %>%
+                  stringr::str_squish()) %>%
+  dplyr::left_join(ref_taxa, #apd_taxa,
                    by = "taxon_name") %>%
-  readr::write_excel_csv("~/Downloads/SMPDSv2/phelps-taxon_names_2021-08-25.csv", na = "")
+  dplyr::filter(is.na(clean_name), is.na(action)) %>%
+  dplyr::mutate(clean_name = taxon_name) %>%
+  dplyr::distinct() %>%
+  readr::write_excel_csv("~/Downloads/SMPDSv2/phelps-taxon_names_2021-08-25v2.csv", na = "")
 
 phelps_all_sum <- phelps_all %>%
   dplyr::group_by(site_name, depth, taxon_name) %>%
