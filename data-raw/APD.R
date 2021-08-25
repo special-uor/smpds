@@ -114,10 +114,14 @@ apd_taxa_names <- readxl::read_xlsx("~/Downloads/SMPDSv2/smpdsv2-APD-Herzschuh-t
                                 "delete", "update"),
                 clean_name = ifelse(stringr::str_detect(tolower(clean_name),
                                                         "exclude"),
-                                    NA, clean_name)) %>%
+                                    NA, clean_name),
+                clean_name = clean_name %>%
+                  stringr::str_squish()) %>%
   dplyr::arrange(dplyr::desc(action), taxon_name) %>%
   dplyr::filter(!is.na(taxon_name)) %>%
   dplyr::distinct(taxon_name, clean_name, .keep_all = TRUE)
+apd_taxa_names %>%
+  readr::write_excel_csv("inst/extdata/apd_taxa.csv", na = "")
 
 
 aux <- output %>%
