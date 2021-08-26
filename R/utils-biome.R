@@ -168,7 +168,8 @@ parallel_extract_biome <- function(.data,
 #' version (for large datasets), \code{\link{parallel_extract_biome}}.
 #'
 #' @param .data Data frame with spatial data and biome classification.
-#' @inheritParams ggplot2::geom_point
+#' @param size Numeric value for the \code{size} aesthetic.
+#' @param stroke Numeric value for the \code{stroke} aesthetic.
 #' @inheritParams ggplot2::coord_sf
 #' @inheritDotParams ggplot2::coord_sf -xlim -ylim
 #'
