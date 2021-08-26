@@ -6,8 +6,7 @@ NEOTOMA <- neotoma_metadata %>%
   dplyr::left_join(neotoma_count, by = "entity_name") %>%
   smpds::parallel_extract_biome(buffer = 12000, cpus = 2) %>%
   dplyr::relocate(ID_BIOME, .after = age_BP) %>%
-  dplyr::select(-ID) %>%
-  tidyr::pivot_longer(-c(1:12),
+  tidyr::pivot_longer(-c(1:13),
                       names_to = "taxon_name",
                       values_to = "count") %>%
   dplyr::filter(!is.na(count)) %>%
@@ -25,10 +24,10 @@ NEOTOMA <- neotoma_metadata %>%
                                     taxon_name)) %>%
   dplyr::distinct(entity_name, taxon_name, .keep_all = TRUE) %>%
   dplyr::select(-taxon_name_original) %>%
-  tidyr::pivot_wider(1:12,
+  tidyr::pivot_wider(1:13,
                      names_from = "taxon_name",
                      values_from = "count") %>%
-  smpds::sort_taxa(cols = 1:12)
+  smpds::sort_taxa(cols = 1:13)
 
 aux <- NEOTOMA %>%
   dplyr::filter(entity_name %in% EMPDv2$entity_name)
@@ -39,7 +38,7 @@ aux_rev <- EMPDv2 %>%
 usethis::use_data(NEOTOMA, overwrite = TRUE)
 
 # Export list of taxon names for clean-up
-tibble::tibble(taxon_name = colnames(NEOTOMA)[-c(1:12)],
+tibble::tibble(taxon_name = colnames(NEOTOMA)[-c(1:13)],
                clean_name = taxon_name) %>%
   readr::write_excel_csv("~/Downloads/SMPDSv2/NEOTOMA_taxa_2021-08-24.csv", na = "")
 
