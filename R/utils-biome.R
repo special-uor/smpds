@@ -138,7 +138,7 @@ parallel_extract_biome <- function(.data,
                                    all = FALSE) {
   oplan <- future::plan(future::multisession, workers = cpus)
   on.exit(future::plan(oplan), add = TRUE)
-  seq_len(nrow(.data)) %>%
+  output <- seq_len(nrow(.data)) %>%
     furrr::future_map_dfr(function(i) {
       if (.data %>% # Return NA if  latitude or longitude are missing (NA)
           dplyr::slice(i) %>%
@@ -154,6 +154,9 @@ parallel_extract_biome <- function(.data,
     },
     .progress = TRUE,
     .options = furrr::furrr_options(seed = TRUE))
+  if (!all)  # Remove the
+    output <- output %>% dplyr::select(-ID)
+  output
 }
 
 
@@ -165,13 +168,18 @@ parallel_extract_biome <- function(.data,
 #' version (for large datasets), \code{\link{parallel_extract_biome}}.
 #'
 #' @param .data Data frame with spatial data and biome classification.
+#' @inheritParams ggplot2::geom_point
 #' @inheritParams ggplot2::coord_sf
 #' @inheritDotParams ggplot2::coord_sf -xlim -ylim
 #'
 #' @return \code{ggplot} object with the plot.
 #' @export
 #' @family utils biome
-plot_biome <- function(.data, xlim = c(-180, 180), ylim = c(-60, 90), ...) {
+plot_biome <- function(.data,
+                       size = 1,
+                       stroke = 0.1,
+                       xlim = c(-180, 180),
+                       ylim = c(-60, 90), ...) {
   # create the breaks- and label vectors
   ewbrks <- seq(-180,180,30)
   nsbrks <- seq(-90,90,30)
@@ -207,15 +215,16 @@ plot_biome <- function(.data, xlim = c(-180, 180), ylim = c(-60, 90), ...) {
                                                fill = description
                                                ),
                         data = .data,
-                        size = 1.5,
+                        size = size,
                         shape = 21,
-                        stroke = 0.2) +
+                        stroke = stroke) +
     ggplot2::scale_fill_manual(name =
                                  "BIOME classification \n(Hengl et al., 2018)",
                                breaks = .data_biome$description,
                                values = .data_biome$colour) +
     ggplot2::scale_x_continuous(breaks = ewbrks) +
     ggplot2::labs(x = NULL, y = NULL) +
+    ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1))) +
     ggplot2::theme(legend.position = c(.13, .225),
                    legend.background = ggplot2::element_rect(colour = "black",
                                                              fill = "white"),
