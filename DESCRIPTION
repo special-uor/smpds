@@ -30,6 +30,7 @@ Imports:
     ncdf4,
     purrr,
     readr,
+    sf,
     sp,
     spgwr,
     stringr,
