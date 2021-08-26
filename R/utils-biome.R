@@ -170,6 +170,7 @@ parallel_extract_biome <- function(.data,
 #' @param .data Data frame with spatial data and biome classification.
 #' @param size Numeric value for the \code{size} aesthetic.
 #' @param stroke Numeric value for the \code{stroke} aesthetic.
+#' @inheritParams ggplot2::theme
 #' @inheritParams ggplot2::coord_sf
 #' @inheritDotParams ggplot2::coord_sf -xlim -ylim
 #'
@@ -179,6 +180,7 @@ parallel_extract_biome <- function(.data,
 plot_biome <- function(.data,
                        size = 1,
                        stroke = 0.1,
+                       legend.position = "bottom",
                        xlim = c(-180, 180),
                        ylim = c(-60, 90), ...) {
   # create the breaks- and label vectors
@@ -225,8 +227,8 @@ plot_biome <- function(.data,
                                values = .data_biome$colour) +
     ggplot2::scale_x_continuous(breaks = ewbrks) +
     ggplot2::labs(x = NULL, y = NULL) +
-    ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1))) +
-    ggplot2::theme(legend.position = c(.13, .225),
+    ggplot2::guides(fill = ggplot2::guide_legend(override.aes = list(size = 2))) +
+    ggplot2::theme(legend.position = legend.position,
                    legend.background = ggplot2::element_rect(colour = "black",
                                                              fill = "white"),
                    legend.key = ggplot2::element_blank(),
