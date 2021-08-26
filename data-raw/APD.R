@@ -2,6 +2,7 @@
 `%>%` <- magrittr::`%>%`
 
 apd_clean_taxon_names <- readr::read_csv("inst/extdata/apd_taxa.csv")
+apd_publications <- readr::read_csv("inst/extdata/APD_publications.csv")
 
 APD_SPH <- readxl::read_xlsx("~/Downloads/SMPDSv2/APD-modern-records_diagnosed/APD-modern-records_all_SPH_diagnosed.xlsx",
                              sheet = 1) %>%
@@ -45,17 +46,19 @@ APD_all_wide <- APD_all %>%
   tidyr::pivot_wider(2:10, names_from = "taxon_name", values_from = "count") %>%
   smpds::parallel_extract_biome(buffer = 12000, cpus = 6) %>%
   dplyr::relocate(ID_BIOME, .after = age_BP)
-  # dplyr::mutate(ID_BIOME = tibble::tibble(latitude, longitude) %>%
-  #                 smpds::parallel_extract_biome(buffer = 12000, cpus = 6) %>%
-  #                 .$ID_BIOME,
-  #               .after = age_BP)
+
 APD_all_wide %>%
   dplyr::filter(is.na(ID_BIOME))
 
 APD <- APD_all_wide %>%
   dplyr::mutate(ID_BIOME = ifelse(is.na(ID_BIOME),
                                   -888888,
-                                  ID_BIOME))
+                                  ID_BIOME)) %>%
+  dplyr::rename(publication_old = publication) %>%
+  dplyr::left_join(apd_publications,
+                   by = "site_name") %>%
+  dplyr::relocate(publication, DOI, .after = publication_old) %>%
+  dplyr::select(-publication_old, -publicationv2)
 
 usethis::use_data(APD, overwrite = TRUE, compress = "xz")
 
@@ -76,7 +79,7 @@ output <- smpds::process_apd("~/Downloads/SMPDSv2/APD/",
                                            readr::col_double(),
                                            readr::col_double()))
 
-APD <- output %>%
+APD_old <- output %>%
   purrr::map_df(~.x) %>%
   dplyr::ungroup() %>%
   dplyr::rename(taxon_name = `Taxon Name [APD]`,
@@ -108,6 +111,14 @@ APD <- output %>%
   #                                   taxon_name)) %>%
   # dplyr::distinct(site_name, taxon_name, .keep_all = TRUE) %>%
   dplyr::select(-taxon_name_original, -taxon_name_author)
+
+APD_publications <- APD_old %>%
+  dplyr::filter(site_name %in% APD$site_name) %>%
+  dplyr::distinct(site_name, publication) %>%
+  dplyr::arrange(site_name)
+
+APD_publications %>%
+  readr::write_excel_csv("inst/extdata/APD_publications.csv", na = "")
 
 # ------------------------------------------------------------------------------
 # |                                APD Paradox                                 |
