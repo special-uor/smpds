@@ -1,4 +1,7 @@
 ## code to prepare `Phelps` dataset goes here
+# Source:
+# Phelps, L.N., Chevalier, M., Shanahan, T.M., Aleman, J.C., Courtney‐Mustaphi, C., Kiahtipes, C.A., Broennimann, O., Marchant, R., Shekeine, J., Quick, L.J. and Davis, B.A., 2020. Asymmetric response of forest and grassy biomes to climate variability across the African Humid Period: influenced by anthropogenic disturbance?. Ecography, 43(8), pp.1118-1142.
+# doi:10.1111/ecog.04990
 phelps_a1 <- readr::read_csv("~/Downloads/SMPDSv2/Phelps_Appendix1-9/APPENDIX_1_sites-1.csv")
 phelps_a2 <- readr::read_csv("~/Downloads/SMPDSv2/Phelps_Appendix1-9/APPENDIX_2_entities-1.csv")
 phelps_a3 <- readr::read_csv("~/Downloads/SMPDSv2/Phelps_Appendix1-9/APPENDIX_3_citations-1.csv") %>%
