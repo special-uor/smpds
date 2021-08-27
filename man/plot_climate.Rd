@@ -2,6 +2,7 @@
 % Please edit documentation in R/utils-plot.R
 \name{plot_climate}
 \alias{plot_climate}
+\alias{plot_gdd0}
 \alias{plot_mat}
 \alias{plot_mi}
 \alias{plot_mtco}
@@ -15,6 +16,18 @@ plot_climate(
   fill_scale = ggplot2::scale_fill_viridis_c(name = toupper(var)),
   size = 1,
   stroke = 0.1,
+  legend.key.width = ggplot2::unit(3, "cm"),
+  legend.position = "bottom",
+  xlim = c(-180, 180),
+  ylim = c(-60, 90),
+  ...
+)
+
+plot_gdd0(
+  .data,
+  size = 1,
+  stroke = 0.1,
+  legend.key.width = ggplot2::unit(3, "cm"),
   legend.position = "bottom",
   xlim = c(-180, 180),
   ylim = c(-60, 90),
@@ -25,6 +38,7 @@ plot_mat(
   .data,
   size = 1,
   stroke = 0.1,
+  legend.key.width = ggplot2::unit(3, "cm"),
   legend.position = "bottom",
   xlim = c(-180, 180),
   ylim = c(-60, 90),
@@ -35,6 +49,7 @@ plot_mi(
   .data,
   size = 1,
   stroke = 0.1,
+  legend.key.width = ggplot2::unit(3, "cm"),
   legend.position = "bottom",
   xlim = c(-180, 180),
   ylim = c(-60, 90),
@@ -45,6 +60,7 @@ plot_mtco(
   .data,
   size = 1,
   stroke = 0.1,
+  legend.key.width = ggplot2::unit(3, "cm"),
   legend.position = "bottom",
   xlim = c(-180, 180),
   ylim = c(-60, 90),
@@ -55,6 +71,7 @@ plot_mtwa(
   .data,
   size = 1,
   stroke = 0.1,
+  legend.key.width = ggplot2::unit(3, "cm"),
   legend.position = "bottom",
   xlim = c(-180, 180),
   ylim = c(-60, 90),
@@ -77,6 +94,9 @@ fill the individual points for the climate variable. Default:
 \item{size}{Numeric value for the \code{size} aesthetic.}
 
 \item{stroke}{Numeric value for the \code{stroke} aesthetic.}
+
+\item{legend.key.width}{size of legend keys (\code{unit}); key background height & width inherit from
+\code{legend.key.size} or can be specified separately}
 
 \item{legend.position}{the position of legends ("none", "left", "right",
 "bottom", "top", or two-element numeric vector)}
