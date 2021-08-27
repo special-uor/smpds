@@ -11,6 +11,7 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
+options(knitr.kable.NA = "")
 ```
 
 # SMPDS: Modern Pollen Data for climate reconstructionS
@@ -46,7 +47,10 @@ devtools::install_github("special-uor/smpds")
 library(smpds)
 ## basic example code
 smpds::SMPDSv2 %>%
+  dplyr::relocate(reference, DOI, .after = publication) %>%
   dplyr::slice(1:20) %>%
+  smpds::rm_na_taxa(cols = 1:16) %>% # Filter taxa without counts
+  dplyr::select(1:66) %>% # Select only the metadata (16) + the 50 first taxa
   knitr::kable()
 ```
 
