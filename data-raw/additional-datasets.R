@@ -165,7 +165,7 @@ iberian_pollen_records_9april <- readxl::read_xlsx("~/Downloads/SMPDSv2/To check
                 age_BP_mean = INTCAL2020_mean,
                 age_BP_median = INTCAL2020_median)
 
-compare_latlon(IbMPD, iberian_pollen_records_9april, digits = 2) %>%
+a <- compare_latlon(IbMPD, iberian_pollen_records_9april, digits = 2) %>%
   dplyr::distinct(site_name.y, .keep_all = TRUE)
 
 aux <- iberian_pollen_records_9april %>%
@@ -173,6 +173,9 @@ aux <- iberian_pollen_records_9april %>%
 aux_rev <- IbMPD %>%
   dplyr::filter(site_name %in% aux$site_name) # %>%
   # smpds::rm_zero_taxa(1:10)
+
+iberian_pollen_records_9april %>%
+  dplyr::filter(!(site_name %in% aux$site_name))
 
 tmp <- aux %>%
   dplyr::select(1, 3:10) %>%
@@ -351,11 +354,72 @@ POLNET_EST_PRT2 <- readxl::read_xlsx("~/Downloads/SMPDSv2/To check included/POLN
                 longitude = londd,
                 latitude = latdd)
 
+a <- compare_latlon(SMPDSv2, POLNET_EST_PRT, digits = 4) %>%
+  dplyr::distinct(site_name.y, .keep_all = TRUE)
+
+POLNET_EST_PRT_missing <- POLNET_EST_PRT %>%
+  dplyr::filter(!(site_name %in% a$site_name.y)) %>%
+  dplyr::filter(!(site_name %in% c("Conquezuela palaeolake",
+                                   "Hoya del Castillo",
+                                   "La Molina mire",
+                                   "Laguna Guallar",
+                                   "Lake Banyoles",
+                                   "Las Pardillas Lake",
+                                   "Marbore Lake",
+                                   "Pedrido",
+                                   "Posidonia Lligat",
+                                   "PRD-4",
+                                   "Puerto de Belate",
+                                   "Puerto de Serranillos",
+                                   "Tubilla del Lago",
+                                   "Verdeospesoa mire",
+                                   "Beliche-Guadiana CM5",
+                                   "Charco da Candieira")))
+
+b <- compare_latlon(SMPDSv2, POLNET_EST_PRT2, digits = 4) %>%
+  dplyr::distinct(site_name.y, .keep_all = TRUE)
+
+POLNET_EST_PRT_missing2 <- POLNET_EST_PRT %>%
+  dplyr::filter(!(site_name %in% b$site_name.y)) %>%
+  # dplyr::filter(!(site_name %in% a$site_name.y)) %>%
+  dplyr::filter(!(site_name %in% POLNET_EST_PRT_missing$site_name)) %>%
+  dplyr::filter(!(site_name %in% c("Conquezuela palaeolake",
+                                   "Hoya del Castillo",
+                                   "La Molina mire",
+                                   "Laguna Guallar",
+                                   "Lake Banyoles",
+                                   "Las Pardillas Lake",
+                                   "Marbore Lake",
+                                   "Pedrido",
+                                   "Posidonia Lligat",
+                                   "PRD-4",
+                                   "Puerto de Belate",
+                                   "Puerto de Serranillos",
+                                   "Tubilla del Lago",
+                                   "Verdeospesoa mire",
+                                   "Beliche-Guadiana CM5",
+                                   "Charco da Candieira")))
+
+POLNET_EST_PRT_missing %>%
+  readr::write_excel_csv("~/Downloads/SMPDSv2/POLNET_missing_records.csv", na = "")
+
+aux <- POLNET_EST_PRT_missing %>%
+  dplyr::filter(site_name %in% SMPDSv2$site_name)
+
+POLNET_EST_PRT_missing %>%
+  dplyr::filter(!(site_name %in% aux$site_name))
+
+compare_latlon(SMPDSv2, POLNET_EST_PRT_missing, digits = 1) %>%
+  dplyr::distinct(site_name.y, .keep_all = TRUE)
+
 aux <- POLNET_EST_PRT %>%
-  dplyr::filter(site_name %in% EMPDv2$site_name)
-aux_rev <- EMPDv2 %>%
-  dplyr::filter(site_name %in% aux$site_name) %>%
-  smpds::rm_na_taxa(1:13)
+  dplyr::filter(site_name %in% SMPDSv2$site_name)
+# aux_rev <- SMPDSv2 %>%
+#   dplyr::filter(site_name %in% aux$site_name) %>%
+#   smpds::rm_na_taxa(1:15)
+
+POLNET_EST_PRT %>%
+  dplyr::filter(!(site_name %in% aux$site_name))
 
 EMPDv2 %>%
   dplyr::filter(entity_name %>% stringr::str_detect("Novenko"))
