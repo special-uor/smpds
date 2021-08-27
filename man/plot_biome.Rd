@@ -4,10 +4,25 @@
 \alias{plot_biome}
 \title{Plot biomes/entities}
 \usage{
-plot_biome(.data, xlim = c(-180, 180), ylim = c(-60, 90), ...)
+plot_biome(
+  .data,
+  size = 1,
+  stroke = 0.1,
+  legend.position = "bottom",
+  xlim = c(-180, 180),
+  ylim = c(-60, 90),
+  ...
+)
 }
 \arguments{
 \item{.data}{Data frame with spatial data and biome classification.}
+
+\item{size}{Numeric value for the \code{size} aesthetic.}
+
+\item{stroke}{Numeric value for the \code{stroke} aesthetic.}
+
+\item{legend.position}{the position of legends ("none", "left", "right",
+"bottom", "top", or two-element numeric vector)}
 
 \item{xlim}{Limits for the x and y axes. These limits are specified
 in the units of the default CRS. By default, this means projected coordinates
