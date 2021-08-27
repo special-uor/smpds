@@ -95,6 +95,22 @@
 #' https://www.neotomadb.org
 "NEOTOMA"
 
+#' \code{Phelps} dataset
+#'
+#' Dataset provided by \insertCite{phelps2020asymmetric;textual}{smpds}.
+#'
+#' @format A data frame (\code{tibble} object) with `r nrow(smpds::Phelps)` rows and `r ncol(smpds::Phelps)` variables:
+#' \describe{
+#'   \item{...}{int ...}
+#' }
+#'
+#' @references
+#' \insertAllCited{}
+#'
+#' @source
+#' https://doi.pangaea.de/10.1594/PANGAEA.905309
+"Phelps"
+
 #' \code{PNV} dataset
 #'
 #' Global Maps of Potential Natural Vegetation at 1 km resolution, version 4.
