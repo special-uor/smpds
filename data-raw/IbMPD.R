@@ -11,9 +11,10 @@ ibmpd_all <- readr::read_csv("inst/extdata/iberia_pollen_records.csv",
   magrittr::set_names(colnames(.) %>%
                         stringr::str_replace_all("\\.\\.", " ") %>%
                         stringr::str_remove_all("\\.")) %>%
-  dplyr::filter((!is.na(`IPEage cal`) & `IPEage cal` <= 50) |
-                (!is.na(INTCAL2020_mean) & INTCAL2020_mean <= 50) |
-                (!is.na(INTCAL2020_median) & INTCAL2020_median <= 50)) %>%
+  dplyr::filter(INTCAL2020_median <= 100) %>%
+  # dplyr::filter((!is.na(`IPEage cal`) & `IPEage cal` <= 50) |
+  #               (!is.na(INTCAL2020_mean) & INTCAL2020_mean <= 50) |
+  #               (!is.na(INTCAL2020_median) & INTCAL2020_median <= 50)) %>%
   # dplyr::group_by(entity_name) %>%
   # dplyr::mutate(entity_name = entity_name %>%
   #                 stringr::str_c("_", seq_along(entity_name))) %>%
