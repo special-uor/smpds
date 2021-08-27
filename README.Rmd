@@ -42,13 +42,15 @@ devtools::install_github("special-uor/smpds")
 
 <!-- This is a basic example which shows you how to solve a common problem: -->
 
-```{r example, eval = TRUE, fig.width = 12, fig.height = 8, dpi = 500}
+```{r example, eval = TRUE}
 library(smpds)
 ## basic example code
 smpds::SMPDSv2 %>%
   dplyr::slice(1:20) %>%
   knitr::kable()
-  
+```
+
+```{r example-plot, eval =  TRUE, fig.width = 14, fig.height = 8, dpi = 300}
 smpds::SMPDSv2 %>%
   smpds::plot_biome()
 ```
