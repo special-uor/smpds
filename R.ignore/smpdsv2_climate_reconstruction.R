@@ -1,6 +1,10 @@
 path <- "~/OneDrive - University of Reading/UoR/Data/CRU/4.04/"
+CPUS <- 4
+N_MAX <- 2000
+
+CPUS <- 20
 path <- "/gpfs/scratch/roberto.villegasdiaz/R/CRU"
-CPUS <- 1
+N_MAX <- nrow(smpds::SMPDSv2)
 `%>%` <- magrittr::`%>%`
 
 # ------------------------------------------------------------------------------
@@ -51,7 +55,7 @@ pivot_data <- function(.data, cols = c(1:14), digits = 6, scale = 1, add = 0, va
                                     ",", round(longitude, digits = digits),
                                     ")")) %>%
     dplyr::group_by(entity_name) %>%
-    dplyr::mutate(value = list(value * scale + add)) %>%
+    dplyr::mutate(value = list(dplyr::all_of(value) * scale + add)) %>%
     dplyr::ungroup() %>%
     magrittr::set_names(colnames(.) %>%
                           stringr::str_replace_all("value", value)) %>%
@@ -59,8 +63,6 @@ pivot_data <- function(.data, cols = c(1:14), digits = 6, scale = 1, add = 0, va
 }
 
 # SPLASH is driven by daily temperature (tmp), precipitation (pre), cloud coverage (cld), and latitude.
-N_MAX <- nrow(smpds::SMPDSv2)
-N_MAX <- 500
 SMPDSv2_cld_rt <-
   readr::read_csv(file.path(path, "smpdsv2_climate_reconstructions_cld.csv"),
                   n_max = N_MAX)
@@ -154,6 +156,11 @@ SMPDSv2_climate <- SMPDSv2_all_vars2 %>%
                 mtwa = SMPDSv2_MTWA,
                 .after = age_BP)
 plot_climate(SMPDSv2_climate)
+p_gdd0 <- smpds::plot_gdd0(SMPDSv2_climate)
+p_mat <- smpds::plot_mat(SMPDSv2_climate)
+p_mi <- smpds::plot_mi(SMPDSv2_climate)
+p_mtco <- smpds::plot_mtco(SMPDSv2_climate)
+p_mtwa <- smpds::plot_mtwa(SMPDSv2_climate)
 
 tibble::tibble(x = rep(seq_len(length(SMPDSv2_MTWA)), 3),
                y = c(SMPDSv2_MTWA,
