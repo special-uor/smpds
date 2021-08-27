@@ -22,6 +22,6 @@ CRU_coords
 The CRU TS 2.1 dataset coordinates at 0.5 degrees resolution.
 }
 \references{
-Mitchell, T.D. and Jones, P.D., 2005. An improved method of constructing a database of monthly climate observations and associated high‐resolution grids. International Journal of Climatology: A Journal of the Royal Meteorological Society, 25(6), pp.693-712. https://doi.org/10.1002/joc.1181
+\insertRef{mitchell2005improved}{smpds}
 }
 \keyword{datasets}

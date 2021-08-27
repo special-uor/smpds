@@ -10,13 +10,13 @@ A data frame (\code{tibble} object) with 79 rows and 196 variables:
 \item{...}{int ...}
 }
 }
-\source{
-Finsinger, W., Heiri, O., Valsecchi, V., Tinner, W. and Lotter, A.F., 2007. Modern pollen assemblages as climate indicators in southern Europe. Global Ecology and Biogeography, 16(5), pp.567-582. https://doi.org/10.1111/j.1466-8238.2007.00313.x
-}
 \usage{
 ItMPD
 }
 \description{
 The Italian Modern Pollen Dataset (ItMPD).
+}
+\references{
+\insertRef{finsinger2007modern}{smpds}
 }
 \keyword{datasets}

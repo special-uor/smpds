@@ -11,7 +11,7 @@ A data frame (\code{tibble} object) with 6458 rows and 1569 variables:
 }
 }
 \source{
-Harrison, Sandy  (2019): Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset. http://dx.doi.org/10.17864/1947.194
+\insertRef{rdgdr194}{smpds}
 }
 \usage{
 SMPDSv1

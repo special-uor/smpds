@@ -19,4 +19,7 @@ NEOTOMA
 \description{
 The Neotoma Paleoecology Database subset (NEOTOMA).
 }
+\references{
+\insertRef{williams2018neotoma}{smpds}
+}
 \keyword{datasets}

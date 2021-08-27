@@ -8,12 +8,15 @@
 A data frame (\code{RasterBrick} object) with 17924 rows and 43200 columns.
 }
 \source{
-Hengl, Tomislav (2018): Global Maps of Potential Natural Vegetation at 1 km resolution, version 4. Harvard Dataverse. Dataset. https://doi.org/10.7910/DVN/QQHCIK
+\insertRef{hengl2018global1kmres}{smpds}
 }
 \usage{
 PNV
 }
 \description{
 Global Maps of Potential Natural Vegetation at 1 km resolution, version 4.
+}
+\references{
+\insertRef{hengl2018global}{smpds}
 }
 \keyword{datasets}
