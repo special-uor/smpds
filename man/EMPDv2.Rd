@@ -11,12 +11,15 @@ A data frame (\code{tibble} object) with 8713 rows and 1538 variables:
 }
 }
 \source{
-Davis, B.A., Chevalier, M., Sommer, P., Carter, V.A., Finsinger, W., Mauri, A., Phelps, L.N., Zanon, M., Abegglen, R., Åkesson, C.M. and Alba-Sánchez, F., 2020. The Eurasian Modern Pollen Database (EMPD), version 2. Earth system science data, 12(4), pp.2423-2445. https://doi.org/10.5194/essd-12-2423-2020
+https://doi.pangaea.de/10.1594/PANGAEA.909130
 }
 \usage{
 EMPDv2
 }
 \description{
 The Eurasian Modern Pollen Database (EMPD), version 2.
+}
+\references{
+\insertRef{davis2020eurasian}{smpds}
 }
 \keyword{datasets}

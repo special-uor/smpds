@@ -1,0 +1,141 @@
+﻿taxon_name,clean_name,action
+Abies,Abies,update
+Abies alba,Abies alba,update
+Acer,Acer,update
+Alnus,Alnus,update
+Alnus glutinosa,Alnus glutinosa,update
+Alnus viridis,Alnus alnobetula,update
+Ambrosia,Ambrosia,update
+Apiaceae,Apiaceae,update
+Artemisia,Artemisia,update
+Asteraceae subf. Asteroideae,Asteroideae,update
+Asteroideae,Asteroideae,update
+Betula,Betula,update
+Boraginaceae,Boraginaceae,update
+Brassicaceae,Brassicaceae,update
+C. Orientalis/Ostrya,Carpinus orientalis/Ostrya,update
+Campanulaceae,Campanulaceae,update
+Cannabiaceae,Cannabaceae,update
+Carpinus,Carpinus,update
+Carpinus betulus,Carpinus betulus,update
+Caryophylaceae,Caryophyllaceae,update
+Caryophyllaceae,Caryophyllaceae,update
+Castanea,Castanea,update
+Centaurea,Centaurea,update
+Chenopodiaceae,Amaranthaceae,update
+Chenopodiaceae/Amaranthaceae,Amaranthaceae,update
+Cichorioideae,Cichorioideae,update
+Cichoroideae,Cichorioideae,update
+Comandra elegans,Comandra umbellata,update
+Convolvulaceae,Convolvulaceae,update
+Cornus-type,Cornus type,update
+Corylus,Corylus,update
+Corylus avellana,Corylus avellana,update
+Crassulaceae,Crassulaceae,update
+Cyperaceae,Cyperaceae,update
+Dryopteris,Dryopteris,update
+Ericaceae,Ericaceae,update
+Euphorbia,Euphorbia,update
+Euphorbiaceae,Euphorbiaceae,update
+F. ornus,Fraxinus ornus,update
+Fabaceae,Fabaceae,update
+Fagus,Fagus,update
+Fagus sylvatica,Fagus sylvatica,update
+Filipendula,Filipendula,update
+Fraxinus,Fraxinus,update
+Gentianaceae,Gentianaceae,update
+Hedera,Hedera,update
+Helianthemum,Helianthemum,update
+Hypericum,Hypericum,update
+Iridaceae,Iridaceae,update
+Juglans,Juglans,update
+Juniperus,Juniperus,update
+Juniperus-type,Juniperus type,update
+Lamiaceae,Lamiaceae,update
+Lemna minor,exclude,update
+Liliaceae,Liliaceae,update
+Linum,Linum,update
+Monolete spores,Polypodiales,update
+Olea,Olea,update
+Oleaceae,Oleaceae,update
+Ostrya,Ostrya,update
+P. major type,Plantago major type,update
+Picea,Picea,update
+Picea abies,Picea abies,update
+Piceaabies,Picea abies,update
+Pinus,Pinus,update
+Pinus cembra,Pinus cembra,update
+Pinus diploxylon,Pinus (Diploxylon),update
+Pinus haploxylon/cembra,Pinus haploxylon/Pinus cembra,update
+Pinus sp.,Pinus,update
+Pinus sylvestris,Pinus sylvestris,update
+Plant. major type,Plantago major type,update
+Plantago l,Plantago lanceolata,update
+Plantago lanc.,Plantago lanceolata,update
+Plantago lanceolata,Plantago lanceolata,update
+Plantago major,Plantago major,update
+Plantago major type,Plantago major type,update
+Plantago major-type,Plantago major type,update
+Plantago med,Plantago media,update
+Plantago media,Plantago media,update
+Plantago sp.,Plantago,update
+Poaceae,Poaceae,update
+Poaceae<40,Poaceae,update
+Poacee,Poaceae,update
+Polygonaceae,Polygonaceae,update
+Polygonum aviculare,Polygonum aviculare,update
+Polygonum persicaria,Polygonum persicaria,update
+Polypodium,Polypodium,update
+Primulaceae,Primulaceae,update
+Quercus,Quercus,update
+Ranunculaceae,Ranunculaceae,update
+Rosaceae,Rosaceae,update
+Rubiaceae,Rubiaceae,update
+Rumex,Rumex,update
+Salix,Salix,update
+Scrofulariaceae,Scrophulariaceae,update
+Scrophulariaceae,Scrophulariaceae,update
+Solanaceae type,Solanaceae,update
+Spores monoletes,Polypodiales,update
+Spori monoleti,Polypodiales,update
+Thalictrum,Thalictrum,update
+Tilia,Tilia,update
+Ulmus,Ulmus,update
+Urtica,Urtica,update
+Urticaceae,Urticaceae,update
+Vaccinium,Vaccinium,update
+Verbascum type,Verbascum type,update
+Veronica,Veronica,update
+Veronica type,Veronica type,update
+Viburnum,Viburnum,update
+Aquatics,,delete
+Cannabis,,delete
+Cannabis type,,delete
+Cannabis-type,,delete
+Cereale,,delete
+Cereales,,delete
+Cerealia,,delete
+indet,,delete
+Indeterm,,delete
+Indeterminable: unknown,,delete
+Indetermines,,delete
+Menyanthes,,delete
+Odontites,,delete
+Phragmites,,delete
+Pl.acva,,delete
+Poaceae>40,,delete
+Potamogeton,,delete
+Secale,,delete
+Secale cereale,,delete
+Selaginella,,delete
+Sparga typha,,delete
+Sparganium/Typha,,delete
+Sphagnum,,delete
+Spores triletes,,delete
+total,,delete
+Trilete spores,,delete
+Typha/Sparganium,,delete
+Typha/Sparganium-type,,delete
+Vitis,,delete
+Zea,,delete
+Zea mays,,delete

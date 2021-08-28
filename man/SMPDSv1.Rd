@@ -5,13 +5,13 @@
 \alias{SMPDSv1}
 \title{\code{SMPDSv1} dataset}
 \format{
-A data frame (\code{tibble} object) with 6458 rows and 1568 variables:
+A data frame (\code{tibble} object) with 6458 rows and 1569 variables:
 \describe{
 \item{...}{int ...}
 }
 }
 \source{
-Harrison, Sandy  (2019): Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset. http://dx.doi.org/10.17864/1947.194
+\insertRef{rdgdr194}{smpds}
 }
 \usage{
 SMPDSv1

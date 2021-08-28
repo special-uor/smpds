@@ -27,7 +27,8 @@ SMPDSv1 <- readxl::read_xlsx("~/Downloads/SMPDSv2/Sandy_s MPDS_20_October_expand
                 publication =
                   paste("Harrison, Sandy P., 2019. Modern pollen data for",
                         "climate reconstructions, version 1 (SMPDS). University",
-                        "of Reading. Dataset. doi:10.17864/1947.194"),
+                        "of Reading. Dataset."),
+                DOI = "10.17864/1947.194",
                 .after = age_BP)
 SMPDSv12 <- SMPDSv1 %>%
   dplyr::mutate(ID_BIOME = ifelse(entity_name %>%

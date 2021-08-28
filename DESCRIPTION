@@ -27,11 +27,16 @@ RoxygenNote: 7.1.1
 Imports: 
     dplyr,
     magrittr,
+    ncdf4,
     purrr,
+    Rdpack (>= 0.7),
     readr,
+    sf,
     sp,
+    spgwr,
     stringr,
     tibble,
     tidyr
 Depends: 
     R (>= 2.10)
+RdMacros: Rdpack

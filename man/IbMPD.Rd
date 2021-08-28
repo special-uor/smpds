@@ -5,18 +5,21 @@
 \alias{IbMPD}
 \title{\code{IbMPD} dataset}
 \format{
-A data frame (\code{tibble} object) with 8141 rows and 215 variables:
+A data frame (\code{tibble} object) with 216 rows and 218 variables:
 \describe{
 \item{...}{int ...}
 }
 }
 \source{
-Harrison, S.P., Shen, Y. and Sweeney, L., 2021. Pollen data and charcoal data of the Iberian Peninsula. University of Reading. Dataset. http://doi.org/10.17864/1947.294
+https://researchdata.reading.ac.uk/294
 }
 \usage{
 IbMPD
 }
 \description{
 The Iberian Modern Pollen Dataset (IbMPD).
+}
+\references{
+\insertRef{rdgdr294}{smpds}
 }
 \keyword{datasets}

@@ -2,27 +2,41 @@
 % Please edit documentation in R/utils-biome.R
 \name{biome_name}
 \alias{biome_name}
+\alias{biome_name.tbl_df}
+\alias{biome_name.numeric}
 \title{Biome names}
 \usage{
-biome_name(ID)
+biome_name(.data, ...)
+
+\method{biome_name}{tbl_df}(.data, ...)
+
+\method{biome_name}{numeric}(.data, ...)
 }
 \arguments{
-\item{ID}{Numeric value linked to a Biome in provided by Hengl et al., 2018.}
+\item{.data}{Numeric vector or data frame (\code{tibble} object with a column
+called \code{ID_BIOME}) with values linked to a Biome provided by
+Hengl et al., 2018. (See \code{\link{smpds:::PNV_classes}}).}
 }
 \value{
-Table (\code{tibble} object) with Biome metadata.
+Table (\code{tibble} object) with biome metadata.
 }
 \description{
-Obtain Biome names from the Hengl et al., 2018, using the \code{ID_BIOME}.
+Obtain biome names from the Hengl et al., 2018, using the \code{ID_BIOME}.
 }
 \examples{
 `\%>\%` <- magrittr::`\%>\%`
 data <- tibble::tibble(entity_name = "University of Reading",
                         latitude = 51.4414,
-                        longitude = 0.9418) \%>\%
-  sf::st_as_sf(x = ., coords = c("longitude", "latitude"))
+                        longitude = -0.9418)
 data \%>\%
   extract_biome() \%>\%
-  .$ID_BIOME \%>\%
   biome_name()
+
+biome_name(1:10)
 }
+\seealso{
+Other utils biome: 
+\code{\link{extract_biome}()},
+\code{\link{plot_biome}()}
+}
+\concept{utils biome}

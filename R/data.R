@@ -6,8 +6,12 @@
 #' \describe{
 #'   \item{...}{int ...}
 #' }
+#'
+#' @references
+#' \insertRef{vincens2007african}{smpds}
+#'
 #' @source
-#' Davis, B.A., Chevalier, M., Sommer, P., Carter, V.A., Finsinger, W., Mauri, A., Phelps, L.N., Zanon, M., Abegglen, R., Åkesson, C.M. and Alba-Sánchez, F., 2020. The Eurasian Modern Pollen Database (EMPD), version 2. Earth system science data, 12(4), pp.2423-2445. https://doi.org/10.5194/essd-12-2423-2020
+#' http://fpd.sedoo.fr/fpd/bibli.do
 "APD"
 
 #' \code{CMPD} dataset
@@ -20,6 +24,24 @@
 #' }
 "CMPD"
 
+#' \code{CRU_coords} dataset
+#'
+#' The CRU TS 2.1 dataset coordinates at 0.5 degrees resolution.
+#'
+#' @format A data frame (\code{tibble} object) with `r nrow(smpds::CRU_coords)` rows and `r ncol(smpds::CRU_coords)` variables:
+#' \describe{
+#'   \item{latitude}{Numeric values for latitude in decimal degrees.}
+#'   \item{longitude}{Numeric values for longitude in decimal degrees.}
+#'   \item{elevation}{Numeric values for elevation in metres above sea level.}
+#' }
+#'
+#' @references
+#' \insertRef{mitchell2005improved}{smpds}
+#'
+#' @source
+#' https://crudata.uea.ac.uk/~timm/grid/CRU_TS_2_1.html
+"CRU_coords"
+
 #' \code{EMPDv2} dataset
 #'
 #' The Eurasian Modern Pollen Database (EMPD), version 2.
@@ -28,18 +50,28 @@
 #' \describe{
 #'   \item{...}{int ...}
 #' }
+#'
+#' @references
+#' \insertRef{davis2020eurasian}{smpds}
+#'
 #' @source
-#' Davis, B.A., Chevalier, M., Sommer, P., Carter, V.A., Finsinger, W., Mauri, A., Phelps, L.N., Zanon, M., Abegglen, R., Åkesson, C.M. and Alba-Sánchez, F., 2020. The Eurasian Modern Pollen Database (EMPD), version 2. Earth system science data, 12(4), pp.2423-2445. https://doi.org/10.5194/essd-12-2423-2020
+#' https://doi.pangaea.de/10.1594/PANGAEA.909130
 "EMPDv2"
 
 #' \code{Herzschuh} dataset
+#'
+#' Dataset provided by \insertCite{herzschuh2019position;textual}{smpds}.
 #'
 #' @format A data frame (\code{tibble} object) with `r nrow(smpds::Herzschuh)` rows and `r ncol(smpds::Herzschuh)` variables:
 #' \describe{
 #'   \item{...}{int ...}
 #' }
+#'
+#' @references
+#' \insertAllCited{}
+#'
 #' @source
-#' Herzschuh, U., Cao, X., Laepple, T., Dallmeyer, A., Telford, R.J., Ni, J., Chen, F., Kong, Z., Liu, G., Liu, K.B. and Liu, X., 2019. Position and orientation of the westerly jet determined Holocene rainfall patterns in China. Nature communications, 10(1), pp.1-8. https://doi.org/10.1038/s41467-019-09866-8
+#' https://static-content.springer.com/esm/art%3A10.1038%2Fs41467-019-09866-8/MediaObjects/41467_2019_9866_MOESM3_ESM.zip
 "Herzschuh"
 
 #' \code{IbMPD} dataset
@@ -50,8 +82,11 @@
 #' \describe{
 #'   \item{...}{int ...}
 #' }
+#' @references
+#' \insertRef{rdgdr294}{smpds}
+#'
 #' @source
-#' Harrison, S.P., Shen, Y. and Sweeney, L., 2021. Pollen data and charcoal data of the Iberian Peninsula. University of Reading. Dataset. http://doi.org/10.17864/1947.294
+#' https://researchdata.reading.ac.uk/294
 "IbMPD"
 
 #' \code{ItMPD} dataset
@@ -62,9 +97,42 @@
 #' \describe{
 #'   \item{...}{int ...}
 #' }
-#' @source
-#' Finsinger, W., Heiri, O., Valsecchi, V., Tinner, W. and Lotter, A.F., 2007. Modern pollen assemblages as climate indicators in southern Europe. Global Ecology and Biogeography, 16(5), pp.567-582. https://doi.org/10.1111/j.1466-8238.2007.00313.x
+#'
+#' @references
+#' \insertRef{finsinger2007modern}{smpds}
 "ItMPD"
+
+#' \code{NEOTOMA} dataset
+#'
+#' The Neotoma Paleoecology Database subset (NEOTOMA).
+#'
+#' @format A data frame (\code{tibble} object) with `r nrow(smpds::NEOTOMA)` rows and `r ncol(smpds::NEOTOMA)` variables:
+#' \describe{
+#'   \item{...}{int ...}
+#' }
+#'
+#' @references
+#' \insertRef{williams2018neotoma}{smpds}
+#'
+#' @source
+#' https://www.neotomadb.org
+"NEOTOMA"
+
+#' \code{Phelps} dataset
+#'
+#' Dataset provided by \insertCite{phelps2020asymmetric;textual}{smpds}.
+#'
+#' @format A data frame (\code{tibble} object) with `r nrow(smpds::Phelps)` rows and `r ncol(smpds::Phelps)` variables:
+#' \describe{
+#'   \item{...}{int ...}
+#' }
+#'
+#' @references
+#' \insertAllCited{}
+#'
+#' @source
+#' https://doi.pangaea.de/10.1594/PANGAEA.905309
+"Phelps"
 
 #' \code{PNV} dataset
 #'
@@ -72,8 +140,11 @@
 #'
 #' @format A data frame (\code{RasterBrick} object) with `r dim(smpds::PNV)[1]` rows and `r dim(smpds::PNV)[2]` columns.
 #'
+#' @references
+#' \insertRef{hengl2018global}{smpds}
+#'
 #' @source
-#' Hengl, Tomislav (2018): Global Maps of Potential Natural Vegetation at 1 km resolution, version 4. Harvard Dataverse. Dataset. https://doi.org/10.7910/DVN/QQHCIK
+#' \insertRef{hengl2018global1kmres}{smpds}
 "PNV"
 
 #' \code{SMPDSv1} dataset
@@ -86,5 +157,33 @@
 #' }
 #'
 #' @source
-#' Harrison, Sandy  (2019): Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset. http://dx.doi.org/10.17864/1947.194
+#' \insertRef{rdgdr194}{smpds}
 "SMPDSv1"
+
+#' \code{SMPDSv2} dataset
+#'
+#' SPECIAL Modern Pollen Data for climate reconstructionS, version 2.
+#'
+#' @format A data frame (\code{tibble} object) with `r nrow(smpds::SMPDSv2)` rows and `r ncol(smpds::SMPDSv2)` variables:
+#' \describe{
+#'   \item{...}{int ...}
+#' }
+#'
+#' @references
+#'
+#' \insertRef{davis2020eurasian}{smpds}
+#'
+#' \insertRef{finsinger2007modern}{smpds}
+#'
+#' \insertRef{rdgdr194}{smpds}
+#'
+#' \insertRef{rdgdr294}{smpds}
+#'
+#' \insertRef{herzschuh2019position}{smpds}
+#'
+#' \insertRef{phelps2020asymmetric}{smpds}
+#'
+#' \insertRef{vincens2007african}{smpds}
+#'
+#' \insertRef{williams2018neotoma}{smpds}
+"SMPDSv2"

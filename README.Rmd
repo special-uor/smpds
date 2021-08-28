@@ -11,6 +11,7 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
+options(knitr.kable.NA = "")
 ```
 
 # SMPDS: Modern Pollen Data for climate reconstructionS
@@ -40,11 +41,22 @@ devtools::install_github("special-uor/smpds")
 ```
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+<!-- This is a basic example which shows you how to solve a common problem: -->
 
-```{r example, eval = FALSE}
+```{r example, eval = TRUE}
 library(smpds)
 ## basic example code
+smpds::SMPDSv2 %>%
+  dplyr::relocate(reference, DOI, .after = publication) %>%
+  dplyr::slice(1:20) %>%
+  smpds::rm_na_taxa(cols = 1:16) %>% # Filter taxa without counts
+  dplyr::select(1:66) %>% # Select only the metadata (16) + the 50 first taxa
+  knitr::kable()
+```
+
+```{r example-plot, eval =  TRUE, fig.width = 14, fig.height = 8, dpi = 300}
+smpds::SMPDSv2 %>%
+  smpds::plot_biome()
 ```
 
 ## Code of Conduct

@@ -162,24 +162,15 @@ Herzschuh <- Herzschuh_file1_long %>%
   dplyr::mutate(basin_size = NA,
                 site_type = NA,
                 entity_type = NA,
-                # ID_BIOME = NA,
-                # ID_BIOME = smpds::Herzschuh$ID_BIOME,
                 ID_BIOME = tibble::tibble(latitude, longitude) %>%
                   smpds::parallel_extract_biome(buffer = 12000, cpus = 6) %>%
                   .$ID_BIOME,
-                # ID_BIOME = tibble::tibble(latitude, longitude) %>%
-                #   smpds::parallel_extract_biome(buffer = 12000, cpus = 6) %>%
-                #   dplyr::filter(!is.na(ID_BIOME)) %>%
-                #   dplyr::distinct(ID, .keep_all = TRUE) %>%
-                #   dplyr::right_join(tibble::tibble(ID = seq_along(latitude)),
-                #                     by = "ID") %>%
-                #   .$ID_BIOME,
                 publication =
                   paste("Herzschuh, U., Cao, X., Laepple, T., Dallmeyer, A., Telford, R.J., Ni, J.,",
                         "Chen, F., Kong, Z., Liu, G., Liu, K.B. and Liu, X., 2019. Position and",
                         "orientation of the westerly jet determined Holocene rainfall patterns in China.",
-                        "Nature communications, 10(1), pp.1-8.",
-                        "doi:10.1038/s41467-019-09866-8"),
+                        "Nature communications, 10(1), pp.1-8."),
+                DOI = "10.1038/s41467-019-09866-8",
                 .after = elevation) %>%
   dplyr::mutate(source = "Herzschuh et al., 2019",
                 site_name = entity_name %>%

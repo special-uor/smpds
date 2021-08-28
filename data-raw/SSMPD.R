@@ -31,7 +31,8 @@ ssmpd_metadata <- readr::read_csv("inst/extdata/ssmpd_metadata.csv") %>%
                          "relationships as an aid in the reconstruction of past",
                          "land-uses and cultural landscapes: an example from ",
                          "south Sweden. Vegetation history and archaeobotany, ",
-                         "1(1), pp.3-17. doi:10.1007/BF00190697"))
+                         "1(1), pp.3-17."),
+                DOI = "10.1007/BF00190697")
 
 ssmpd_taxon_names_clean <- readr::read_csv("inst/extdata/ssmpd_taxa.csv")
 
@@ -63,7 +64,7 @@ ssmpd_counts_wide <- ssmpd_counts_long %>%
 SSMPD <- ssmpd_metadata %>%
   dplyr::left_join(ssmpd_counts_wide,
                    by = "entity_name") %>%
-  dplyr::mutate(ID_SSMPD = seq_along(ID_SSMPD))ß
+  dplyr::mutate(ID_SSMPD = seq_along(ID_SSMPD))
 
 usethis::use_data(SSMPD, overwrite = TRUE, compress = "xz")
 

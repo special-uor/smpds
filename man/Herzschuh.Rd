@@ -5,18 +5,21 @@
 \alias{Herzschuh}
 \title{\code{Herzschuh} dataset}
 \format{
-A data frame (\code{tibble} object) with 2598 rows and 221 variables:
+A data frame (\code{tibble} object) with 2598 rows and 222 variables:
 \describe{
 \item{...}{int ...}
 }
 }
 \source{
-Herzschuh, U., Cao, X., Laepple, T., Dallmeyer, A., Telford, R.J., Ni, J., Chen, F., Kong, Z., Liu, G., Liu, K.B. and Liu, X., 2019. Position and orientation of the westerly jet determined Holocene rainfall patterns in China. Nature communications, 10(1), pp.1-8. https://doi.org/10.1038/s41467-019-09866-8
+https://static-content.springer.com/esm/art\%3A10.1038\%2Fs41467-019-09866-8/MediaObjects/41467_2019_9866_MOESM3_ESM.zip
 }
 \usage{
 Herzschuh
 }
 \description{
-\code{Herzschuh} dataset
+Dataset provided by \insertCite{herzschuh2019position;textual}{smpds}.
+}
+\references{
+\insertAllCited{}
 }
 \keyword{datasets}

@@ -5,18 +5,21 @@
 \alias{APD}
 \title{\code{APD} dataset}
 \format{
-A data frame (\code{tibble} object) with 72 rows and 254 variables:
+A data frame (\code{tibble} object) with 72 rows and 255 variables:
 \describe{
 \item{...}{int ...}
 }
 }
 \source{
-Davis, B.A., Chevalier, M., Sommer, P., Carter, V.A., Finsinger, W., Mauri, A., Phelps, L.N., Zanon, M., Abegglen, R., Åkesson, C.M. and Alba-Sánchez, F., 2020. The Eurasian Modern Pollen Database (EMPD), version 2. Earth system science data, 12(4), pp.2423-2445. https://doi.org/10.5194/essd-12-2423-2020
+http://fpd.sedoo.fr/fpd/bibli.do
 }
 \usage{
 APD
 }
 \description{
 The African Pollen Dataset.
+}
+\references{
+\insertRef{vincens2007african}{smpds}
 }
 \keyword{datasets}
