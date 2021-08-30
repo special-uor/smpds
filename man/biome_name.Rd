@@ -16,6 +16,8 @@ biome_name(.data, ...)
 \item{.data}{Numeric vector or data frame (\code{tibble} object with a column
 called \code{ID_BIOME}) with values linked to a Biome provided by
 Hengl et al., 2018. (See \code{\link{smpds:::PNV_classes}}).}
+
+\item{...}{Optional parameters (not used).}
 }
 \value{
 Table (\code{tibble} object) with biome metadata.

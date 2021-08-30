@@ -40,6 +40,18 @@ the value of the \code{baseline}; e.g., \code{gdd0} when
 Calculate Growing Degree Days above a baseline  \code{baseline}, (GDD) from
 daily values of temperature.
 }
+\examples{
+`\%>\%` <- magrittr::`\%>\%`
+data <- tibble::tibble(entity_name = "University of Reading",
+                       latitude = 51.44140,
+                       longitude = -0.9418,
+                       elevation = 61)
+data \%>\%
+  smpds::gwr(varid = "tmp",
+             reference = "inst/extdata/cru_ts4.04-clim-1961-1990-daily_tmp_1-5.nc") \%>\%
+  smpds::pivot_data(varname = "tmp") \%>\%
+  smpds::gdd()
+}
 \seealso{
 \code{\link{plot_gdd}}
 
