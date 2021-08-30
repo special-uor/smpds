@@ -1,3 +1,4 @@
+path <- "~/Downloads/SMPDSv2/"
 path <- "~/OneDrive - University of Reading/UoR/Data/CRU/4.04/"
 CPUS <- 4
 N_MAX <- 2000
@@ -136,15 +137,29 @@ SMPDSv2_MAT <- SMPDSv2_all_vars2 %>%
 # Calculate MTCO
 SMPDSv2_MTCO <- SMPDSv2_all_vars2 %>%
   purrr::pmap_dbl(function(tmp, ...) {
-    tmp %>%
+    tibble::tibble(tmp = tmp,
+                   date = (seq_along(tmp) - 1) %>% lubridate::as_date(),
+                   month = lubridate::month(date)) %>%
+      dplyr::group_by(month) %>%
+      dplyr::summarise(tmp = mean(tmp,  na.rm = TRUE)) %>%
+      .$tmp %>%
       min(na.rm = TRUE)
+    # tmp %>%
+    #   min(na.rm = TRUE)
   })
 
 # Calculate MTWA
 SMPDSv2_MTWA <- SMPDSv2_all_vars2 %>%
   purrr::pmap_dbl(function(tmp, ...) {
-    tmp %>%
+    tibble::tibble(tmp = tmp,
+                   date = (seq_along(tmp) - 1) %>% lubridate::as_date(),
+                   month = lubridate::month(date)) %>%
+      dplyr::group_by(month) %>%
+      dplyr::summarise(tmp = mean(tmp,  na.rm = TRUE)) %>%
+      .$tmp %>%
       max(na.rm = TRUE)
+    # tmp %>%
+    #   max(na.rm = TRUE)
   })
 
 SMPDSv2_climate <- SMPDSv2_all_vars2 %>%
