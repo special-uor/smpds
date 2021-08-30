@@ -129,7 +129,6 @@ gwr <- function(.data,
     dplyr::bind_cols(output)
 }
 
-
 #' Mask NetCDF
 #'
 #' Mask NetCDF variable.
@@ -156,6 +155,63 @@ mask_nc <- function(.data, mask = cru_mask()) {
                            magrittr::set_names(paste0("T", t))
                        })
     )
+}
+
+#' Pivot data
+#'
+#' Pivot data obtained with the function \code{\link{gwr}}. Groups all the data
+#' points for each entity/row into a single list of elements.
+#'
+#' @param .data Data frame (\code{tibble} object) obtained with
+#'     \code{\link{gwr}}.
+#' @param timestep String with the pattern used to name each data point at each
+#'     time-step. Default: \code{"^T[0-9]*"}.
+#' @param cols Metadata columns (\code{latitude}, \code{longitude}, etc.), to
+#'     be excluded from the data pivoting. Default: excluded columns matching
+#'     the \code{timestep} pattern, for the default pattern, ignores columns
+#'     with the prefix \code{T} and digits as suffix (e.g., \code{T1},
+#'     \code{T2}, ..., \code{Tt}, etc.).
+#' @param scale Numeric value to scale the data. Default: \code{1}, no scaling.
+#' @param add Numeric value to be added/subtracted from the data points.
+#'     Default: \code{0}, don't add anything.
+#' @param varname Output variable name. Default: \code{"value"}.
+#'
+#' @return Data frame (\code{tibble} object) with a new column named according
+#'     to the string passed with \code{value}, this new column contains a list
+#'     of the data points at each time step for each observation/row.
+#' @export
+#'
+#' @examples
+#' `%>%` <- magrittr::`%>%`
+#' data <- tibble::tibble(entity_name = "University of Reading",
+#'                        latitude = 51.44140,
+#'                        longitude = -0.9418,
+#'                        elevation = 61)
+#' data %>%
+#'   smpds::gwr(varid = "tmp",
+#'              reference = "inst/extdata/cru_ts4.04-clim-1961-1990-daily_tmp_1-5.nc") %>%
+#'   smpds::pivot_data(varname = "tmp")
+pivot_data <- function(.data,
+                       timestep = "^T[0-9]*",
+                       cols = colnames(.data) %>%
+                         stringr::str_detect(timestep, negate = TRUE) %>%
+                         which(),
+                       scale = 1,
+                       add = 0,
+                       varname = "value") {
+  # Local bindings
+  . <- .ID <- value <- NULL
+
+  .data %>%
+    dplyr::mutate(.ID = seq_len(nrow(.))) %>% # Create unique ID per row/entity
+    tidyr::pivot_longer(c(-cols, -.ID)) %>% # Pivot longer excluding cols and ID
+    dplyr::group_by(.ID) %>% # Group by the unique ID assigned to each entity
+    dplyr::mutate(value = list(value * scale + add)) %>%
+    dplyr::ungroup() %>%
+    magrittr::set_names(colnames(.) %>%
+                          stringr::str_replace_all("value", varname)) %>%
+    dplyr::distinct(.ID, .keep_all = TRUE) %>%
+    dplyr::select(-name, -.ID)
 }
 
 #' Subset data
