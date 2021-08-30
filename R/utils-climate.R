@@ -1,4 +1,3 @@
-
 #' Calculate GDD
 #'
 #' Calculate Growing Degree Days above a baseline  \code{baseline}, (GDD) from
@@ -18,11 +17,13 @@
 #'  \item Numeric vector, it returns a single value for GDD.
 #'  \item Data frame (\code{tibble} object), it returns the same data frame
 #'  with an additional column called \code{gddX} (where \code{X} represents
-#'  the value of the \code{baseline}; i.e., \code{gdd0} when
+#'  the value of the \code{baseline}; e.g., \code{gdd0} when
 #'  \code{baseline = 0}), containing values for GDD.
 #' }
 #' @export
 #' @rdname gdd
+#' @seealso \code{\link{plot_gdd}}
+#' @family utils climate
 gdd <- function(.data, ...) {
   UseMethod("gdd", .data)
 }
@@ -71,6 +72,8 @@ gdd.tbl_df <- function(.data, baseline = 0, ...) {
 #' }
 #' @export
 #' @rdname mtco
+#' @seealso \code{\link{plot_mtco}}
+#' @family utils climate
 mtco <- function(.data, ...) {
   UseMethod("mtco", .data)
 }
@@ -117,6 +120,8 @@ mtco.tbl_df <- function(.data, ...) {
 #' }
 #' @export
 #' @rdname mtwa
+#' @seealso \code{\link{plot_mtwa}}
+#' @family utils climate
 mtwa <- function(.data, ...) {
   UseMethod("mtwa", .data)
 }
