@@ -147,7 +147,7 @@ mtwa.numeric <- function(.data, ...) {
     dplyr::group_by(.month) %>%
     dplyr::summarise(tmp = mean(tmp,  na.rm = TRUE)) %>%
     dplyr::ungroup() %>%
-    dplyr::summarise(tmp = min(tmp, na.rm = TRUE)) %>%
+    dplyr::summarise(tmp = max(tmp, na.rm = TRUE)) %>%
     purrr::flatten_dbl()
 }
 

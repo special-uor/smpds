@@ -204,7 +204,8 @@ pivot_data <- function(.data,
 
   .data %>%
     dplyr::mutate(.ID = seq_len(nrow(.))) %>% # Create unique ID per row/entity
-    tidyr::pivot_longer(c(-cols, -.ID)) %>% # Pivot longer excluding cols and ID
+    tidyr::pivot_longer(c(-dplyr::all_of(cols),
+                          -.ID)) %>% # Pivot longer excluding cols and ID
     dplyr::group_by(.ID) %>% # Group by the unique ID assigned to each entity
     dplyr::mutate(value = list(value * scale + add)) %>%
     dplyr::ungroup() %>%
