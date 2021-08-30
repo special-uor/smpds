@@ -24,6 +24,18 @@
 #' @rdname gdd
 #' @seealso \code{\link{plot_gdd}}
 #' @family utils climate
+#'
+#' @examples
+#' `%>%` <- magrittr::`%>%`
+#' data <- tibble::tibble(entity_name = "University of Reading",
+#'                        latitude = 51.44140,
+#'                        longitude = -0.9418,
+#'                        elevation = 61)
+#' data %>%
+#'   smpds::gwr(varid = "tmp",
+#'              reference = "inst/extdata/cru_ts4.04-clim-1961-1990-daily_tmp_1-5.nc") %>%
+#'   smpds::pivot_data(varname = "tmp") %>%
+#'   smpds::gdd()
 gdd <- function(.data, ...) {
   UseMethod("gdd", .data)
 }
