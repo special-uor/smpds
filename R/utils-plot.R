@@ -81,20 +81,24 @@ plot_climate <- function(.data,
   return(invisible(p))
 }
 
+#' @param baseline Numeric value to be used as the baseline for the calculation
+#'     of the Growing Degree Days, default: \code{0}.
 #' @rdname plot_climate
 #' @export
-plot_gdd0 <- function(.data,
-                      size = 1,
-                      stroke = 0.1,
-                      legend.key.width = ggplot2::unit(3, "cm"),
-                      legend.position = "bottom",
-                      xlim = c(-180, 180),
-                      ylim = c(-60, 90),
-                      ...) {
+plot_gdd <- function(.data,
+                     baseline = 0,
+                     size = 1,
+                     stroke = 0.1,
+                     legend.key.width = ggplot2::unit(3, "cm"),
+                     legend.position = "bottom",
+                     xlim = c(-180, 180),
+                     ylim = c(-60, 90),
+                     ...) {
+  legend_name <- paste0("GDD", baseline)
   .data %>%
-    plot_climate(var = "gdd0",
+    plot_climate(var = paste0("gdd", baseline),
                  units = "\u00B0C days",
-                 fill_scale = ggplot2::scale_fill_distiller(name = "GDD0",
+                 fill_scale = ggplot2::scale_fill_distiller(name = legend_name,
                                                             palette = "Greens",
                                                             direction = 1),
                  size = size,
