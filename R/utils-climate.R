@@ -12,7 +12,7 @@
 #' @param ... Optional parameters. Including the \code{baseline} for the
 #'     calculation of the Growing Degree Days.
 #'
-#' @return If the input is a
+#' @return If the input (\code{.data}) is a
 #' \itemize{
 #'  \item Numeric vector, it returns a single value for GDD.
 #'  \item Data frame (\code{tibble} object), it returns the same data frame
@@ -63,6 +63,48 @@ gdd.tbl_df <- function(.data, baseline = 0, ...) {
                                                    paste0("gdd", baseline)))
 }
 
+#' Calculate MAT
+#'
+#' Calculate Mean Annual Temperature (MAT) from daily values of temperature.
+#'
+#' @param .data Object with daily values of temperature. The object can be a:
+#' \itemize{
+#'  \item Numeric vector
+#'  \item Data frame (\code{tibble} object) with a column called \code{tmp},
+#'  with values of daily temperature (a \code{list}).
+#' }
+#' @param ... Optional parameters (not used).
+#'
+#' @return If the input (\code{.data}) is a
+#' \itemize{
+#'  \item Numeric vector, it returns a single value for MAT.
+#'  \item Data frame (\code{tibble} object), it returns the same data frame
+#'  with an additional column called \code{mat}, containing values for MAT.
+#' }
+#' @export
+#' @rdname mat
+#' @seealso \code{\link{plot_mat}}
+#' @family utils climate
+mat <- function(.data, ...) {
+  UseMethod("mat", .data)
+}
+
+#' @export
+#' @rdname mat
+mat.numeric <- function(.data, ...) {
+  tibble::tibble(tmp = !!.data) %>%
+    dplyr::summarise(tmp = mean(tmp,  na.rm = TRUE)) %>%
+    purrr::flatten_dbl()
+}
+
+#' @export
+#' @rdname mat
+mat.tbl_df <- function(.data, ...) {
+  .data %>%
+    dplyr::mutate(mat = tmp %>%
+                    purrr::map_dbl(mat))
+}
+
 #' Calculate MTCO
 #'
 #' Calculate Mean Temperature of the COldest month (MTCO) from daily values
@@ -76,7 +118,7 @@ gdd.tbl_df <- function(.data, baseline = 0, ...) {
 #' }
 #' @param ... Optional parameters (not used).
 #'
-#' @return If the input is a
+#' @return If the input (\code{.data}) is a
 #' \itemize{
 #'  \item Numeric vector, it returns a single value for MTCO.
 #'  \item Data frame (\code{tibble} object), it returns the same data frame
@@ -124,7 +166,7 @@ mtco.tbl_df <- function(.data, ...) {
 #' }
 #' @param ... Optional parameters (not used).
 #'
-#' @return If the input is a
+#' @return If the input (\code{.data}) is a
 #' \itemize{
 #'  \item Numeric vector, it returns a single value for MTWA.
 #'  \item Data frame (\code{tibble} object), it returns the same data frame
