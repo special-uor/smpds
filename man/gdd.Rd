@@ -32,7 +32,7 @@ If the input is a
 \item Numeric vector, it returns a single value for GDD.
 \item Data frame (\code{tibble} object), it returns the same data frame
 with an additional column called \code{gddX} (where \code{X} represents
-the value of the \code{baseline}; i.e., \code{gdd0} when
+the value of the \code{baseline}; e.g., \code{gdd0} when
 \code{baseline = 0}), containing values for GDD.
 }
 }
@@ -40,3 +40,11 @@ the value of the \code{baseline}; i.e., \code{gdd0} when
 Calculate Growing Degree Days above a baseline  \code{baseline}, (GDD) from
 daily values of temperature.
 }
+\seealso{
+\code{\link{plot_gdd}}
+
+Other utils climate: 
+\code{\link{mtco}()},
+\code{\link{mtwa}()}
+}
+\concept{utils climate}

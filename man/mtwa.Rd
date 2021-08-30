@@ -34,3 +34,11 @@ with an additional column called \code{mtco}, containing values for MTWA.
 Calculate Mean Temperature of the WArmest month (MTWA) from daily values
 of temperature.
 }
+\seealso{
+\code{\link{plot_mtwa}}
+
+Other utils climate: 
+\code{\link{gdd}()},
+\code{\link{mtco}()}
+}
+\concept{utils climate}
