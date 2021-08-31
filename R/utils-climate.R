@@ -104,12 +104,16 @@ mat <- function(.data, ...) {
   UseMethod("mat", .data)
 }
 
+#' @inheritParams gdd.numeric
 #' @export
 #' @rdname mat
-mat.numeric <- function(.data, ...) {
-  tibble::tibble(tmp = !!.data) %>%
+mat.numeric <- function(.data, pb = NULL, ...) {
+  output <- tibble::tibble(tmp = !!.data) %>%
     dplyr::summarise(tmp = mean(tmp,  na.rm = TRUE)) %>%
     purrr::flatten_dbl()
+  if (!is.null(pb))
+    pb() # Signal progress
+  return(output)
 }
 
 #' @inheritParams gdd.tbl_df
@@ -228,17 +232,22 @@ mtco <- function(.data, ...) {
   UseMethod("mtco", .data)
 }
 
+#' @inheritParams gdd.numeric
 #' @export
 #' @rdname mtco
-mtco.numeric <- function(.data, ...) {
-  tibble::tibble(tmp = !!.data,
-                 .date = (seq_along(tmp) - 1) %>% lubridate::as_date(),
-                 .month = lubridate::month(.date)) %>%
+mtco.numeric <- function(.data, pb = NULL, ...) {
+  output <-
+    tibble::tibble(tmp = !!.data,
+                   .date = (seq_along(tmp) - 1) %>% lubridate::as_date(),
+                   .month = lubridate::month(.date)) %>%
     dplyr::group_by(.month) %>%
     dplyr::summarise(tmp = mean(tmp,  na.rm = TRUE)) %>%
     dplyr::ungroup() %>%
     dplyr::summarise(tmp = min(tmp, na.rm = TRUE)) %>%
     purrr::flatten_dbl()
+  if (!is.null(pb))
+    pb() # Signal progress
+  return(output)
 }
 
 #' @inheritParams gdd.tbl_df
@@ -283,17 +292,22 @@ mtwa <- function(.data, ...) {
   UseMethod("mtwa", .data)
 }
 
+#' @inheritParams gdd.numeric
 #' @export
 #' @rdname mtwa
-mtwa.numeric <- function(.data, ...) {
-  tibble::tibble(tmp = !!.data,
-                 .date = (seq_along(tmp) - 1) %>% lubridate::as_date(),
-                 .month = lubridate::month(.date)) %>%
+mtwa.numeric <- function(.data, pb = NULL, ...) {
+  output <-
+    tibble::tibble(tmp = !!.data,
+                   .date = (seq_along(tmp) - 1) %>% lubridate::as_date(),
+                   .month = lubridate::month(.date)) %>%
     dplyr::group_by(.month) %>%
     dplyr::summarise(tmp = mean(tmp,  na.rm = TRUE)) %>%
     dplyr::ungroup() %>%
     dplyr::summarise(tmp = max(tmp, na.rm = TRUE)) %>%
     purrr::flatten_dbl()
+  if (!is.null(pb))
+    pb() # Signal progress
+  return(output)
 }
 
 #' @inheritParams gdd.tbl_df
