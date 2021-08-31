@@ -1,0 +1,1807 @@
+﻿ID_SITE,ID_ENTITY,ID_SAMPLE,site_name,entity_name,latitude,longitude,elevation,site_type,entity_type,sample_type,basin_size,source,age_BP,avg_depth
+2,2,92,Sakhare,Sakhare core 1,41.58,45.32,800,"lacustrine, playa",core,marsh/bog sediment,small (0.01-1 km2),EMBSECBIO,-50,0
+2,2,93,Sakhare,Sakhare core 1,41.58,45.32,800,"lacustrine, playa",core,marsh/bog sediment,small (0.01-1 km2),EMBSECBIO,19,0.04
+2,1169,3086,Sakhare,Sakhare-2,41.58,45.32,800,"lacustrine, playa",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+2,1170,3087,Sakhare,Sakhare-3,41.58,45.32,800,"lacustrine, playa",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+2,1171,3088,Sakhare,Sakhare-4,41.58,45.32,800,"lacustrine, playa",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+2,1197,3114,Sakhare,Sakhare-1,41.58,45.32,800,"lacustrine, playa",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+3,3,111,Kumisi,Kumisi core 1,41.58,44.83,469,"lacustrine, natural open-water, tectonic lake",core,lacustrine sediment,medium (1.1-50 km2),EMBSECBIO,-54,0
+3,3,112,Kumisi,Kumisi core 1,41.58,44.83,469,"lacustrine, natural open-water, tectonic lake",core,lacustrine sediment,medium (1.1-50 km2),EMBSECBIO,-6,0.1
+3,3,113,Kumisi,Kumisi core 1,41.58,44.83,469,"lacustrine, natural open-water, tectonic lake",core,lacustrine sediment,medium (1.1-50 km2),EMBSECBIO,40,0.2
+3,1172,3089,Kumisi,Kumisi-2,41.58,44.83,469,"lacustrine, natural open-water, tectonic lake",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+3,1173,3090,Kumisi,Kumisi-3,41.58,44.83,469,"lacustrine, natural open-water, tectonic lake",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+3,1174,3091,Kumisi,Kumisi-4,41.58,44.83,469,"lacustrine, natural open-water, tectonic lake",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+4,4,216,Tsavkisi,Tsavkisi core 1,41.68,44.72,1100,"terrestrial, mire, bog",core,marsh/bog sediment,small (0.01-1 km2),EMBSECBIO,0,0
+4,1175,3092,Tsavkisi,Tsavkisi-1,41.68,44.72,1100,"terrestrial, mire, bog",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+4,1176,3093,Tsavkisi,Tsavkisi-2,41.68,44.72,1100,"terrestrial, mire, bog",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+4,1177,3094,Tsavkisi,Tsavkisi-3,41.68,44.72,1100,"terrestrial, mire, bog",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+4,1178,3095,Tsavkisi,Tsavkisi-4,41.68,44.72,1100,"terrestrial, mire, bog",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+5,5,311,Imera,Imera core 1,41.65,44.22,1610,"terrestrial, mire, bog",core,marsh/bog sediment,small (0.01-1 km2),EMBSECBIO,-51,0
+5,5,312,Imera,Imera core 1,41.65,44.22,1610,"terrestrial, mire, bog",core,marsh/bog sediment,small (0.01-1 km2),EMBSECBIO,35,0.05
+5,1186,3103,Imera,Imera-1,41.65,44.22,1610,"terrestrial, mire, bog",sediment sample,,small (0.01-1 km2),EMBSECBIO,0,0
+5,1187,3104,Imera,Imera-2,41.65,44.22,1610,"terrestrial, mire, bog",sediment sample,,small (0.01-1 km2),EMBSECBIO,0,0
+5,1188,3105,Imera,Imera-3,41.65,44.22,1610,"terrestrial, mire, bog",sediment sample,,small (0.01-1 km2),EMBSECBIO,0,0
+5,1189,3106,Imera,Imera-4,41.65,44.22,1610,"terrestrial, mire, bog",sediment sample,,small (0.01-1 km2),EMBSECBIO,0,0
+6,6,374,Aligol,Aligol core 1,41.63,44.02,1550,"terrestrial, mire, bog",core,marsh/bog sediment,small (0.01-1 km2),NOAA,-7,0
+6,6,375,Aligol,Aligol core 1,41.63,44.02,1550,"terrestrial, mire, bog",core,marsh/bog sediment,small (0.01-1 km2),NOAA,21,0.04
+6,6,376,Aligol,Aligol core 1,41.63,44.02,1550,"terrestrial, mire, bog",core,marsh/bog sediment,small (0.01-1 km2),NOAA,49,0.08
+6,2086,9901,Aligol,AL1,41.64,44.021,1550,"terrestrial, mire, bog",surface sample,sediment,small (0.01-1 km2),EMBSECBIO,-52,0
+6,2087,9902,Aligol,AL2,41.641,44.021,1550,"terrestrial, mire, bog",surface sample,sediment,small (0.01-1 km2),EMBSECBIO,-52,0
+6,2088,9903,Aligol,AL3,41.641,44.021,1550,"terrestrial, mire, bog",surface sample,sediment,small (0.01-1 km2),EMBSECBIO,-52,0
+7,7,428,Ispani-II,Ispani II core 1,41.87,41.8,2,"terrestrial, mire, bog,	raised bog",peat core,marsh/bog sediment,medium (1.1-50 km2),EMBSECBIO,-53,0
+7,7,429,Ispani-II,Ispani II core 1,41.87,41.8,2,"terrestrial, mire, bog,	raised bog",peat core,marsh/bog sediment,medium (1.1-50 km2),EMBSECBIO,43,0.25
+8,8,2,Lake Urmia,Urmia core 20,37.5,45.5,1297,"lacustrine, natural open-water",core,lacustrine sediment,very large (>500 km2),NOAA,-35,0
+9,9,52,Adange,Adange core 1,43.31,41.33,1750,fluvial,core,alluvial sediments,small (0.01-1 km2),NOAA,-12,0.02
+9,9,53,Adange,Adange core 1,43.31,41.33,1750,fluvial,core,alluvial sediments,small (0.01-1 km2),NOAA,19,0.05
+9,9,54,Adange,Adange core 1,43.31,41.33,1750,fluvial,core,alluvial sediments,small (0.01-1 km2),NOAA,30,0.06
+14,1045,467,Anzali lagoon,Anzali Lagoon 1,37.45,49.25,-28,"lacustrine, natural open-water",sediment sample,lacustrine mud,large (50.1-500 km2),EMBSECBIO,0,
+14,1165,468,Anzali lagoon,Anzali lagoon 12,37.45,49.25,-28,"lacustrine, natural open-water",sediment sample,lacustrine mud,large (50.1-500 km2),EMBSECBIO,0,
+14,1166,469,Anzali lagoon,Anzali lagoon 15,37.45,49.25,-28,"lacustrine, natural open-water",sediment sample,lacustrine mud,large (50.1-500 km2),EMBSECBIO,0,
+14,1167,470,Anzali lagoon,Anzali lagoon 6,37.45,49.25,-28,"lacustrine, natural open-water",sediment sample,lacustrine mud,large (50.1-500 km2),EMBSECBIO,0,
+14,1168,471,Anzali lagoon,Anzali lagoon 8,37.45,49.25,-28,"lacustrine, natural open-water",sediment sample,lacustrine mud,large (50.1-500 km2),EMBSECBIO,0,
+14,1505,6008,Anzali lagoon,HCGA05-core,37.46944,47.3525,-27,"lacustrine, natural open-water",core,,large (50.1-500 km2),EMBSECBIO,-11,0.11
+14,1505,6009,Anzali lagoon,HCGA05-core,37.46944,47.3525,-27,"lacustrine, natural open-water",core,,large (50.1-500 km2),EMBSECBIO,1,0.17
+14,1505,6010,Anzali lagoon,HCGA05-core,37.46944,47.3525,-27,"lacustrine, natural open-water",core,,large (50.1-500 km2),EMBSECBIO,15,0.23
+14,1505,6011,Anzali lagoon,HCGA05-core,37.46944,47.3525,-27,"lacustrine, natural open-water",core,,large (50.1-500 km2),EMBSECBIO,28,0.29
+14,1505,6012,Anzali lagoon,HCGA05-core,37.46944,47.3525,-27,"lacustrine, natural open-water",core,,large (50.1-500 km2),EMBSECBIO,41,0.35
+15,1100,472,Aral Sea,Aral Sea I,46.52,60.7,36,marine,marine core,lacustrine mud,very large (>500 km2),EMBSECBIO,0,0.5
+16,1050,473,Caspian Sea,Caspian Sea I,39.27,51.46,-28,marine,marine core,lacustrine mud,very large (>500 km2),EMBSECBIO,0,0.5
+17,1067,474,KBG08-01,KBG08-01,41.85,53.25,-28.4,"lacustrine, natural open-water",marine core,lacustrine mud,very large (>500 km2),EMBSECBIO,-46,0.005
+17,1067,475,KBG08-01,KBG08-01,41.85,53.25,-28.4,"lacustrine, natural open-water",marine core,lacustrine mud,very large (>500 km2),EMBSECBIO,-32,0.11
+17,1067,476,KBG08-01,KBG08-01,41.85,53.25,-28.4,"lacustrine, natural open-water",marine core,lacustrine mud,very large (>500 km2),EMBSECBIO,-29,0.14
+17,1067,477,KBG08-01,KBG08-01,41.85,53.25,-28.4,"lacustrine, natural open-water",marine core,lacustrine mud,very large (>500 km2),EMBSECBIO,-24,0.175
+17,1067,478,KBG08-01,KBG08-01,41.85,53.25,-28.4,"lacustrine, natural open-water",marine core,lacustrine mud,very large (>500 km2),EMBSECBIO,-23,0.185
+17,1067,479,KBG08-01,KBG08-01,41.85,53.25,-28.4,"lacustrine, natural open-water",marine core,lacustrine mud,very large (>500 km2),EMBSECBIO,-6,0.265
+17,1067,480,KBG08-01,KBG08-01,41.85,53.25,-28.4,"lacustrine, natural open-water",marine core,lacustrine mud,very large (>500 km2),EMBSECBIO,-4,0.275
+17,1067,481,KBG08-01,KBG08-01,41.85,53.25,-28.4,"lacustrine, natural open-water",marine core,lacustrine mud,very large (>500 km2),EMBSECBIO,10,0.345
+17,1067,482,KBG08-01,KBG08-01,41.85,53.25,-28.4,"lacustrine, natural open-water",marine core,lacustrine mud,very large (>500 km2),EMBSECBIO,27,0.425
+17,1067,483,KBG08-01,KBG08-01,41.85,53.25,-28.4,"lacustrine, natural open-water",marine core,lacustrine mud,very large (>500 km2),EMBSECBIO,36,0.465
+17,1067,484,KBG08-01,KBG08-01,41.85,53.25,-28.4,"lacustrine, natural open-water",marine core,lacustrine mud,very large (>500 km2),EMBSECBIO,45,0.505
+19,1802,7707,Arkutino Lake,Arkutino lake,42.3172222222222,27.7180555555556,23,"lacustrine, natural open-water",surface sample,,small (0.01-1 km2),EMBSECBIO,-55,
+24,1827,10935,Lake Varna,Lake Varna - 3,43.2,27.83333,0,"lacustrine, natural open-water",core,sediment,large (50.1-500 km2),EPD,0,0
+24,1862,8839,Lake Varna,EMPD_Arsenala Varna Lake,43.2,27.833333,0,"lacustrine, natural open-water",core,,large (50.1-500 km2),EMPD,0,
+26,1059,1909,E. Marmara basin,Marmara DM-13,40.4,27.6,0,marine,marine core,marine mud,very large (>500 km2),EMBSECBIO,-51,0
+27,1108,1939,Lake Van,Van - Wick Core,38.53,42.47,1648,"lacustrine, natural open-water, glacial origin, morainally dammed lake",core,lacustrine varved sediment,very large (>500 km2),NOAA,0,0.005
+27,1108,1940,Lake Van,Van - Wick Core,38.53,42.47,1648,"lacustrine, natural open-water, glacial origin, morainally dammed lake",core,lacustrine varved sediment,very large (>500 km2),NOAA,28,0.025
+27,1347,4389,Lake Van,Van - Bottema Core,38.5,43,,"lacustrine, natural open-water, glacial origin, morainally dammed lake",,,very large (>500 km2),EPD,0,0
+27,1915,8892,Lake Van,Lake Van,38.47388889,42.73861111,1648,"lacustrine, natural open-water, glacial origin, morainally dammed lake",core top,,very large (>500 km2),EMPD,0,
+32,1113,2405,Kararmik Batakligi,Kararmik Batakligi,38.425,30.8,1000,"terrestrial, marsh",sediment sample,lacustrine sediment,small (0.01-1 km2),NOAA,-14,0.01
+38,1149,2678,Core-2345,Core-2345 lower part,42.4,28.32,,marine,core,,large (50.1-500 km2),EMBSECBIO,-52,0
+49,1151,3028,Ribnoe,Ribnoe,43.708333,41.206944,2115,"lacustrine, natural open-water",core,,medium (1.1-50 km2),NOAA,0,0.02
+51,1153,3030,Belia Kanton,Belia Kanton,41.8333,24.3,1490,"terrestrial, mire, bog",peat surface,peat,small (0.01-1 km2),BIOME6000,0,0
+52,479,8732,Luganskoe,Luganskoe,43.72,40.68,2428,"terrestrial, mire, bog,	blanket bog",peat surface,,medium (1.1-50 km2),BIOME6000,-26,0.1
+53,1154,4101,Sibista,Sibista,43.233333,41.430556,2160,fluvial,profile or section,,medium (1.1-50 km2),EPD,-4,0.015
+57,1354,3036,Kaz Gölü,Kaz Gölü,40.283333,36.15,,"terrestrial, marsh",core,peat,medium (1.1-50 km2),EPD,0,0.03
+58,1145,4130,Sredna Gora mountains,Sredna Gora mountains,42.833333,24.833333,1300,"terrestrial, other sediments",profile or section,,small (0.01-1 km2),BIOME6000,-39,0
+58,1145,4131,Sredna Gora mountains,Sredna Gora mountains,42.833333,24.833333,1300,"terrestrial, other sediments",profile or section,,small (0.01-1 km2),BIOME6000,17,0.05
+59,1157,3039,SE Black Sea basin,B7,42.5,36.8,0,marine,core,marine sediment,very large (>500 km2),EMBSECBIO,-51,0
+62,1179,3096,Cherepanov,Cherepanov-1,41.57,44.37,1430,"terrestrial, mire, bog",sediment sample,,small (0.01-1 km2),EMBSECBIO,0,0
+62,1180,3097,Cherepanov,Cherepanov-2,41.57,44.37,1430,"terrestrial, mire, bog",sediment sample,,small (0.01-1 km2),EMBSECBIO,0,0
+62,1181,3098,Cherepanov,Cherepanov-3,41.57,44.37,1430,"terrestrial, mire, bog",sediment sample,,small (0.01-1 km2),EMBSECBIO,0,0
+62,1182,3099,Cherepanov,Cherepanov-4,41.57,44.37,1430,"terrestrial, mire, bog",sediment sample,,small (0.01-1 km2),EMBSECBIO,0,0
+63,1183,3100,Trialeti,Trialeti-2,41.53,44.12,1520,"terrestrial, mire, bog",sediment sample,,small (0.01-1 km2),EMBSECBIO,0,0
+63,1184,3101,Trialeti,Trialeti-3,41.53,44.12,1520,"terrestrial, mire, bog",sediment sample,,small (0.01-1 km2),EMBSECBIO,0,0
+63,1185,3102,Trialeti,Trialeti-4,41.53,44.12,1520,"terrestrial, mire, bog",sediment sample,,small (0.01-1 km2),EMBSECBIO,0,0
+64,1190,3107,Bareti,Bareti-1,41.67,44.17,1630,"terrestrial, mire, bog",sediment sample,,small (0.01-1 km2),EMBSECBIO,0,0
+64,1191,3108,Bareti,Bareti-2,41.67,44.17,1630,"terrestrial, mire, bog",sediment sample,,small (0.01-1 km2),EMBSECBIO,0,0
+64,1192,3109,Bareti,Bareti-3,41.67,44.17,1630,"terrestrial, mire, bog",sediment sample,,small (0.01-1 km2),EMBSECBIO,0,0
+65,1193,3110,Avchalagol,Avchalagol-1,41.33,43.7,2050,"terrestrial, mire, bog",sediment sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+65,1194,3111,Avchalagol,Avchalagol-2,41.33,43.7,2050,"terrestrial, mire, bog",sediment sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+65,1195,3112,Avchalagol,Avchalagol-3,41.33,43.7,2050,"terrestrial, mire, bog",sediment sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+65,1196,3113,Avchalagol,Avchalagol-4,41.33,43.7,2050,"terrestrial, mire, bog",sediment sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1198,3201,Western Georgia transect,W1,42.95,43.15,2200,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1199,3202,Western Georgia transect,W2,42.95,43.15,2300,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1200,3203,Western Georgia transect,W3,42.93,43.15,2100,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1201,3204,Western Georgia transect,W4,42.91667,43.15,1950,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1202,3205,Western Georgia transect,W5,42.916667,43.15,1840,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1203,3206,Western Georgia transect,W6,42.8833,43.15,1520,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1204,3207,Western Georgia transect,W7,42.8833,43.15,1520,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1205,3208,Western Georgia transect,W9,42.8833,43.1833,1440,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1206,3209,Western Georgia transect,W10,42.8833,43.183,1500,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1207,3210,Western Georgia transect,W11,42.8,43,1100,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1208,3211,Western Georgia transect,W13,42.8,43,1140,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1209,3212,Western Georgia transect,W15,42.7833333333333,42.7333333333333,840,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1210,3213,Western Georgia transect,W16,42.7,42.75,680,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1211,3214,Western Georgia transect,W17,42.7,42.75,580,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1212,3215,Western Georgia transect,W18,42.7,42.75,580,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1213,3216,Western Georgia transect,W19,42.6,42.6833333333333,900,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1214,3217,Western Georgia transect,W20,42.6,42.6833333333333,530,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1215,3218,Western Georgia transect,W21,42.6,42.6833333333333,520,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1216,3219,Western Georgia transect,W22,42.3666666666667,42.7333333333333,500,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1217,3220,Western Georgia transect,W23,42.3,42.7,400,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1218,3221,Western Georgia transect,W24,42.3,42.7,440,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1219,3222,Western Georgia transect,W25,42.3,42.7,300,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1220,3223,Western Georgia transect,W26,42.3,42.7,480,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1221,3224,Western Georgia transect,W27,42.2666666666667,42.7,240,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1222,3225,Western Georgia transect,W28,42.2333333333333,42.7333333333333,260,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1223,3226,Western Georgia transect,W29,42.2,42.7333333333333,140,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1224,3227,Western Georgia transect,W30,42.1666666666667,42.7333333333333,96,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1225,3228,Western Georgia transect,W32,42.0166666666667,42.8333333333333,290,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1226,3229,Western Georgia transect,W33,42.0167,42.833333,540,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1227,3230,Western Georgia transect,W34,41.9666666666667,42.9,900,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1228,3231,Western Georgia transect,W35,41.9,42.8833333333333,1360,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1229,3232,Western Georgia transect,W36,41.8667,42.88333,1800,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+66,1230,3233,Western Georgia transect,W37,41.8333,42.866667,2000,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+67,1231,3234,Georgian Military Hwy transect,M116,42.8333,44.633333,990,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+67,1232,3235,Georgian Military Hwy transect,M118,42.783,44.65,1180,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+67,1233,3236,Georgian Military Hwy transect,M119,42.75,44.63333,1270,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+67,1234,3237,Georgian Military Hwy transect,M120,42.66667,44.65,1730,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+67,1235,3238,Georgian Military Hwy transect,M122,42.63333,44.583333,1760,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+67,1236,3239,Georgian Military Hwy transect,M123,42.6,44.533333,1960,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+67,1237,3240,Georgian Military Hwy transect,M124,42.567,44.5,1850,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+67,1238,3241,Georgian Military Hwy transect,M125,42.533,44.483,2250,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+67,1239,3242,Georgian Military Hwy transect,M128,42.51667,44.466667,2330,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+67,1240,3243,Georgian Military Hwy transect,M129,42.5,44.45,2385,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+67,1241,3244,Georgian Military Hwy transect,M130,42.46667,44.4833,2200,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+67,1242,3245,Georgian Military Hwy transect,M131,42.4333,44.5,1800,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+67,1243,3246,Georgian Military Hwy transect,M132,42.43333,44.51667,1600,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+67,1244,3247,Georgian Military Hwy transect,M133,42.416667,44.55,1580,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+67,1245,3248,Georgian Military Hwy transect,M134,42.4166667,44.55,1580,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+67,1246,3249,Georgian Military Hwy transect,M135,42.4,44.633333,1250,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+67,1247,3250,Georgian Military Hwy transect,M136,42.4,44.63333,1270,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+67,1248,3251,Georgian Military Hwy transect,M137,42.4,44.633333,1270,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+67,1249,3252,Georgian Military Hwy transect,M138,42.4,44.6333333,1270,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+67,1250,3253,Georgian Military Hwy transect,M139,42.2333333333333,44.6667,880,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+67,1251,3254,Georgian Military Hwy transect,M140,42.2333333333333,44.666667,880,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+67,1252,3255,Georgian Military Hwy transect,M141,42.2333333333333,44.6666667,885,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+67,1253,3256,Georgian Military Hwy transect,M142,42.2333333333333,44.6666667,885,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+67,1254,3257,Georgian Military Hwy transect,M143,42.1833333333333,44.6833333333333,860,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+67,1255,3258,Georgian Military Hwy transect,M144,42.1833333333333,44.6833333333333,860,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+67,1256,3259,Georgian Military Hwy transect,M145,42.1833333333333,44.6833333333333,860,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+68,1257,3260,Akhaltsikhe transect,N167,41.8333333333333,42.9166666666667,2410,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+68,1258,3261,Akhaltsikhe transect,N168,41.8333333333333,42.9166666666667,2400,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+68,1259,3262,Akhaltsikhe transect,N169,41.8333333333333,42.8166666666667,2100,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+68,1260,3263,Akhaltsikhe transect,N170,41.8333333333333,42.8166666666667,2100,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+68,1261,3264,Akhaltsikhe transect,N171,41.8333333333333,42.8333333333333,2040,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+68,1262,3265,Akhaltsikhe transect,N172,41.8166666666667,42.8333333333333,1960,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+68,1263,3266,Akhaltsikhe transect,N173,41.8,42.8333333333333,1630,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+68,1264,3267,Akhaltsikhe transect,N174,41.7833333333333,42.8333333333333,1430,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+68,1265,3268,Akhaltsikhe transect,N175,41.7833333333333,42.85,1420,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+68,1266,3269,Akhaltsikhe transect,N176,41.7666666666667,42.85,1325,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+68,1267,3270,Akhaltsikhe transect,N177,41.7666666666667,42.85,1330,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+68,1268,3271,Akhaltsikhe transect,N178,41.75,42.8333333333333,1210,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+68,1269,3272,Akhaltsikhe transect,N179,41.75,42.8333333333333,1230,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+68,1270,3273,Akhaltsikhe transect,N180,41.75,42.8333333333333,1225,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+68,1271,3274,Akhaltsikhe transect,N181,41.7,42.85,1150,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+68,1272,3275,Akhaltsikhe transect,N182,41.7,42.85,1170,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+68,1273,3276,Akhaltsikhe transect,N183,41.7,42.9333333333333,1345,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+68,1274,3277,Akhaltsikhe transect,N184,41.7,42.9333333333333,1350,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+68,1275,3278,Akhaltsikhe transect,N185,41.65,42.95,1000,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+68,1276,3279,Akhaltsikhe transect,N186,41.65,42.9166666666667,1325,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+68,1277,3280,Akhaltsikhe transect,N187,41.6166666666667,42.9666666666667,1490,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+68,1278,3281,Akhaltsikhe transect,N188,41.6,42.95,1820,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+68,1279,3282,Akhaltsikhe transect,N189,41.5833333333333,42.95,1960,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+68,1280,3283,Akhaltsikhe transect,N190,41.5666666666667,42.95,2210,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+68,1281,3284,Akhaltsikhe transect,N191,41.55,42.95,2460,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+69,1282,3285,Bakuriani transect,P193,41.76666667,43.46666667,1900,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+69,1283,3286,Bakuriani transect,P194,41.76666667,43.46666667,1650,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+70,1284,3287,Wadi Thamad,Jordan-1,31.56,35.74,428,"terrestrial, soil",profile or section,fluvial/alluvial sediment,small (0.01-1 km2),EMBSECBIO,0,0
+70,1285,3288,Wadi Thamad,Jordan-2,31.56,35.74,428,"terrestrial, soil",profile or section,fluvial/alluvial sediment,small (0.01-1 km2),EMBSECBIO,0,0
+70,1286,3289,Wadi Thamad,Jordan-3,31.58,35.9,597,"terrestrial, soil",profile or section,fluvial/alluvial sediment,small (0.01-1 km2),EMBSECBIO,0,0
+70,1287,3290,Wadi Thamad,Jordan-4,31.58,35.9,597,"terrestrial, soil",profile or section,fluvial/alluvial sediment,small (0.01-1 km2),EMBSECBIO,0,0
+71,1288,3291,Wadi Aqraba,Jordan-5,32.72,35.8,219,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+72,1094,3401,Wadi Shallalah,Wadi Shallalah,32.6,35.9,385,"terrestrial, soil",profile or section,fluvial/alluvial sediment,small (0.01-1 km2),EMBSECBIO,0,0
+72,1289,3292,Wadi Shallalah,Jordan-6,32.59,35.94,376,"terrestrial, soil",profile or section,,small (0.01-1 km2),EMBSECBIO,0,0
+73,1290,3293,Salt,Jordan-7,32.05,35.72,908,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+73,1297,3300,Salt,Jordan-14,32.09,35.7,844,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+74,1291,3294,Azraq Basin,Jordan-8,31.83,36.82,506,"terrestrial, soil, litter, mor humus",sediment sample,,small (0.01-1 km2),EMBSECBIO,0,0
+74,1292,3295,Azraq Basin,Jordan-9,31.8,36.58,506,"terrestrial, soil, litter, mor humus",profile or section,,small (0.01-1 km2),EMBSECBIO,0,0
+75,1293,3296,Dana,Jordan-10,30.67,35.65,1237,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+76,1294,3297,Tafila,Jordan-11,30.58,35.78,1083,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+77,1295,3298,Wadi Rum,Jordan-12,29.56,35.41,1042,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+77,1296,3299,Wadi Rum,Jordan-13,29.55,35.42,960,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+77,1299,3302,Wadi Rum,Jordan-16,29.56,35.41,982,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+78,1298,3301,Ataruz plateau,Jordan-15,31.58,35.67,708,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+79,1300,3303,Heraklean Peninsula,Crimea-1,44.57,33.39,2,"terrestrial, soil",surface sample,,,EMBSECBIO,0,0
+79,1301,3304,Heraklean Peninsula,Crimea-2,44.53,33.46,29,"terrestrial, soil",surface sample,,,EMBSECBIO,0,0
+79,1302,3305,Heraklean Peninsula,Crimea-3,44.51,33.58,82,"terrestrial, soil",surface sample,,,EMBSECBIO,0,0
+79,1303,3306,Heraklean Peninsula,Crimea-4,44.52,33.54,195,"terrestrial, soil",surface sample,,,EMBSECBIO,0,0
+79,1304,3307,Heraklean Peninsula,Crimea-5,44.51,33.58,52,"terrestrial, soil",surface sample,,,EMBSECBIO,0,0
+79,1308,3311,Heraklean Peninsula,Crimea-11,44.55,33.73,314,"terrestrial, soil",sediment sample,,,EMBSECBIO,0,0
+80,1305,3308,Chernaya Valley,Crimea-6,44.59,33.61,6,"terrestrial, soil",sediment sample,fluvial/alluvial sediment,small (0.01-1 km2),EMBSECBIO,0,0
+80,1306,3309,Chernaya Valley,Crimea-7,44.59,33.61,4,"terrestrial, soil",sediment sample,fluvial/alluvial sediment,small (0.01-1 km2),EMBSECBIO,0,0
+81,1307,3310,McKenzie Heights,Crimea-8,44.61,33.66,226,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+82,1309,3312,Saki,Crimea-15,45.14,33.51,2,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+83,1310,3313,Kacha,Crimea-18,44.73,33.63,35,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+84,1311,3314,Crimean Mountains North,Crimea-23,44.49,33.99,925,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+85,1312,3315,Laspi,Crimea-30,44.42,33.7,17,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,0,0
+86,1095,3384,Yaila,Yaila,44.49,34.06,1205,"terrestrial, soil",soil sample,buried organic bed,very small (<0.01 km2),EMBSECBIO,-39,0
+86,1313,3316,Yaila,Crimea-32,44.5,33.7,1205,"terrestrial, soil",profile or section,,very small (<0.01 km2),EMBSECBIO,0,0
+88,1315,3317,Gorgan,Gorgan delta,37.92,54.083,-28,"coastal, other",sediment sample,,very large (>500 km2),EMBSECBIO,0,
+89,1316,3318,Karakol lake,KaraKol,43.38,51.34,-27.5,"lacustrine, natural open-water",sediment sample,lacustrine mud,medium (1.1-50 km2),EMBSECBIO,0,
+90,1317,3319,Ashyagar,Ashyagar,43.58,51.66,-125,fluvial,sediment sample,fluvial sediment,medium (1.1-50 km2),EMBSECBIO,0,0
+91,1097,1777,Black Sea South-West,A-159 (Black Sea South-West),42.184167,28.916667,1400,marine,,marine sediment,large (50.1-500 km2),NOAA,-44,0
+100,1324,3578,Demiryurt Gölü,Demiryurt Gölü Bottema Core,39.733333,37.383333,,"lacustrine, natural open-water",,,large (50.1-500 km2),EPD,-28,0.01
+100,1324,3579,Demiryurt Gölü,Demiryurt Gölü Bottema Core,39.733333,37.383333,,"lacustrine, natural open-water",,,large (50.1-500 km2),EPD,19,0.1
+105,1329,3704,Köycegiz Gölü,Köycegiz Gölü Bottema70 Core,36.875,28.641667,20,"lacustrine, natural open-water",core,,medium (1.1-50 km2),EPD,1,0.05
+105,1329,3705,Köycegiz Gölü,Köycegiz Gölü Bottema70 Core,36.875,28.641667,20,"lacustrine, natural open-water",core,,medium (1.1-50 km2),EPD,28,0.1
+108,1332,3862,Khodzal,Khodzal Kvavadze89 Core,42.954167,41.911111,2030,fluvial,,,small (0.01-1 km2),EMBSECBIO,29,0.05
+110,1334,3903,Lake Srebarna,Lake Srebarna Lazarova94 Core,44.109137,27.06915,20,"lacustrine, natural open-water",,,medium (1.1-50 km2),EMBSECBIO,-44,0
+112,1336,3975,Mutorog - Southern Pirin Mts.,Mutorog Bozilova93 Core,41.524322,23.616606,1700,"terrestrial, mire, bog",,,small (0.01-1 km2),EMBSECBIO,-39,0
+115,1339,4025,Popovo Ezero,Popovo Ezero Stefanova86,41.716667,23.666667,2185,"lacustrine, natural open-water",,,medium (1.1-50 km2),EPD,-36,0
+116,1340,4049,Sögüt Gölü,Sögüt Gölü Bottema70 Core,37.05,29.883333,1400,"lacustrine, natural open-water",,,medium (1.1-50 km2),EPD,43,0.05
+117,1341,4164,Trikhonis 5,Trikhonis 5 Bottema Core,38.6,21.5,20,"lacustrine, natural open-water",,,medium (1.1-50 km2),EPD,-51,0.9
+119,1343,4227,Vitosha mountain,Vitosha Mountain Filipovitch81 Core,42.568086,23.268947,2000,"terrestrial, mire, bog",,,small (0.01-1 km2),EMBSECBIO,-11,0
+127,1824,8041,Kupena,Kupena-3,41.9833333,24.3333,1356,"terrestrial, mire, bog,	raised bog",peat core,peat,small (0.01-1 km2),EPD,-59,0
+127,1849,8826,Kupena,EMPD_210 (Kupena),41.983,24.3333,1300,"terrestrial, mire, bog,	raised bog",surface sample,,small (0.01-1 km2),EMPD,0,
+127,1850,8827,Kupena,EMPD_211 (Kupena),41.983,24.3333,1300,"terrestrial, mire, bog,	raised bog",surface sample,,small (0.01-1 km2),EMPD,0,
+127,1851,8828,Kupena,EMPD_212 (Kupena),41.983,24.3333,1300,"terrestrial, mire, bog,	raised bog",surface sample,,small (0.01-1 km2),EMPD,0,
+127,1852,8829,Kupena,EMPD_213 (Kupena),41.967,24.3167,1257,"terrestrial, mire, bog,	raised bog",surface sample,,small (0.01-1 km2),EMPD,0,
+128,1799,7704,Lake Durankulak,Durankulak lake,43.6672222222222,28.5338888888889,10,"coastal, lacustrine",surface sample,,medium (1.1-50 km2),EMBSECBIO,-55,
+138,483,791,Imnatskoe,Imnatskoe,42.08,41.72,458,,surface sample,,,BIOME6000,0,
+155,13,987,A096,A096,48.91,24.06,300,,,,,BIOME6000,0,
+156,14,988,A097,A097,48.56,27.16,200,,,,,BIOME6000,0,
+157,15,989,A098,A098,48.25,24.33,150,,,,,BIOME6000,0,
+158,16,693,B219,B219,48.41,21.36,680,,,,,BIOME6000,0,
+159,17,986,B221,B221,46.78,20.01,100,,,,,BIOME6000,0,
+160,18,990,B473,B473,48.41,21.36,240,,,,,BIOME6000,0,
+161,19,1000,B697,B697,36.96,21.66,0,,,,,BIOME6000,0,
+162,20,992,B698,B698,37.51,21.56,0,,,,,BIOME6000,0,
+163,21,985,B700,B700,41.16,24.31,40,,,,,BIOME6000,0,
+164,22,994,B702,B702,39.53,21.51,1275,,,,,BIOME6000,0,
+165,23,995,B703,B703,40.08,22.5,25,,,,,BIOME6000,0,
+166,24,996,B704,B704,40.81,21.93,500,,,,,BIOME6000,0,
+167,25,997,B706,B706,43.11,23.13,1450,,,,,BIOME6000,0,
+168,26,998,B707,B707,43.13,23.01,1500,,,,,BIOME6000,0,
+169,27,999,B708,B708,42.61,24.31,1400,,,,,BIOME6000,0,
+170,28,977,B709,B709,42.56,24.46,1550,,,,,BIOME6000,0,
+171,29,975,B710,B710,42.06,23.58,1900,,,,,BIOME6000,0,
+172,30,991,B711,B711,41.76,23.43,1850,,,,,BIOME6000,0,
+173,31,971,B716,B716,43.25,23.06,1450,,,,,BIOME6000,0,
+174,32,972,B717,B717,43.25,23.06,1550,,,,,BIOME6000,0,
+175,33,973,B718,B718,43.25,23.06,1650,,,,,BIOME6000,0,
+176,34,974,B719,B719,42.75,24.18,1750,,,,,BIOME6000,0,
+177,35,984,B720,B720,41.66,23.41,1890,,,,,BIOME6000,0,
+178,36,976,B721,B721,41.66,23.41,1630,,,,,BIOME6000,0,
+179,37,969,B722,B722,41.71,23.33,2100,,,,,BIOME6000,0,
+180,38,978,B730,B730,35.08,24.66,100,,,,,BIOME6000,0,
+181,39,979,B731,B731,35.08,24.66,100,,,,,BIOME6000,0,
+182,40,980,B732,B732,35.08,24.66,100,,,,,BIOME6000,0,
+183,41,981,C705,C705,39.71,20.76,470,,,,,BIOME6000,0,
+184,42,983,C827,C827,47.58,24,1200,,,,,BIOME6000,0,
+185,43,1007,C828,C828,47.71,24.66,1450,,,,,BIOME6000,0,
+186,44,1032,C829,C829,46.46,22.75,1590,,,,,BIOME6000,0,
+187,45,993,C831,C831,45.93,26.33,1017,,,,,BIOME6000,0,
+188,46,1019,C832,C832,45.56,26.21,850,,,,,BIOME6000,0,
+189,47,1021,C833,C833,45.16,21.75,1382,,,,,BIOME6000,0,
+190,48,1022,C837,C837,48.16,24.51,1110,,,,,BIOME6000,0,
+191,49,1033,C838,C838,45.31,22.86,1840,,,,,BIOME6000,0,
+192,50,1025,C840,C840,48.91,22.11,500,,,,,BIOME6000,0,
+193,51,1017,E061,E061,43.2,43.25,1800,"terrestrial, other sediments",,,small (0.01-1 km2),BIOME6000,0,
+194,52,1027,F035,F035,48.5,52.5,-10,,,,,BIOME6000,0,
+195,53,1028,F042,F042,48,46.5,0,,,,,BIOME6000,0,
+196,54,1029,F043,F043,48.03,44.66,50,,,,,BIOME6000,0,
+197,55,1030,F092,F092,45.83,34.33,50,,,,,BIOME6000,0,
+198,56,1031,F093,F093,45.83,34.33,50,,,,,BIOME6000,0,
+199,57,1009,F094,F094,45.83,34.33,50,,,,,BIOME6000,0,
+200,58,1026,F095,F095,46.45,33.9,20,,,,,BIOME6000,0,
+201,59,1024,F096,F096,46.45,33.9,20,,,,,BIOME6000,0,
+202,60,1002,F097,F097,46.45,33.9,20,,,,,BIOME6000,0,
+203,61,1003,F098,F098,46.45,33.9,20,,,,,BIOME6000,0,
+204,62,1004,F099,F099,46.45,33.9,20,,,,,BIOME6000,0,
+205,63,1005,F102,F102,48.26,24.35,400,,,,,BIOME6000,0,
+206,64,1006,F106,F106,43,44.66,1000,,,,,BIOME6000,0,
+207,65,1016,F107,F107,39.41,53.5,-28,,,,,BIOME6000,0,
+208,66,1008,F108,F108,39.41,54.33,-10,,,,,BIOME6000,0,
+209,67,1001,F109,F109,39.41,54.75,50,,,,,BIOME6000,0,
+210,68,1010,F110,F110,39.33,55.66,20,,,,,BIOME6000,0,
+211,69,1011,F111,F111,39,54.16,0,,,,,BIOME6000,0,
+212,70,1012,F112,F112,38.91,54.08,0,,,,,BIOME6000,0,
+213,71,1013,F113,F113,39.91,54.16,200,,,,,BIOME6000,0,
+214,72,1014,F114,F114,39.41,57.41,50,,,,,BIOME6000,0,
+215,73,961,F115,F115,39.08,57.08,50,,,,,BIOME6000,0,
+216,74,1018,F116,F116,40,57.58,80,,,,,BIOME6000,0,
+217,75,970,F117,F117,41.5,58.75,50,,,,,BIOME6000,0,
+218,76,922,F118,F118,41.66,59,50,,,,,BIOME6000,0,
+219,77,923,F119,F119,41.41,58.08,80,,,,,BIOME6000,0,
+220,78,924,F120,F120,41.5,58.08,80,,,,,BIOME6000,0,
+221,79,925,F121,F121,41.41,57.58,50,,,,,BIOME6000,0,
+222,80,926,F122,F122,41.16,57.58,50,,,,,BIOME6000,0,
+223,81,936,F123,F123,41.75,57.16,0,,,,,BIOME6000,0,
+224,82,928,F129,F129,48.61,61.26,80,,,,,BIOME6000,0,
+225,83,921,F146,F146,48.93,24.08,400,,,,,BIOME6000,0,
+226,84,930,F168,F168,48.58,27.16,100,,,,,BIOME6000,0,
+227,85,931,F221,F221,40.75,45,1000,,,,,BIOME6000,0,
+228,86,932,F222,F222,42.08,41.71,20,,,,,BIOME6000,0,
+229,87,934,F223,F223,42,43,800,,,,,BIOME6000,0,
+230,88,935,F224,F224,42.11,44.96,700,,,,,BIOME6000,0,
+231,89,913,F225,F225,47.5,40.75,50,,,,,BIOME6000,0,
+232,90,911,F237,F237,43.41,42.15,1600,,,,,BIOME6000,0,
+233,91,927,F238,F238,43.3,41.63,1800,,,,,BIOME6000,0,
+234,92,907,F250,F250,40.78,43.8,1300,,,,,BIOME6000,0,
+235,93,908,F251,F251,41.05,43.6,2200,,,,,BIOME6000,0,
+236,94,909,F274,F274,47.51,40.75,80,,,,,BIOME6000,0,
+237,95,910,F275,F275,47.15,38.33,50,,,,,BIOME6000,0,
+238,96,920,G001,G001,44.85,44.68,0,,,,,BIOME6000,0,
+239,97,912,G002,G002,44.77,43,0,,,,,BIOME6000,0,
+240,98,905,G003,G003,44.68,43.25,0,,,,,BIOME6000,0,
+241,99,914,G004,G004,44.75,43.42,0,,,,,BIOME6000,0,
+242,100,915,G005,G005,45.85,43.17,0,,,,,BIOME6000,0,
+243,101,916,G006,G006,44.93,42.68,0,,,,,BIOME6000,0,
+244,102,917,G007,G007,44.68,42.68,0,,,,,BIOME6000,0,
+245,103,918,G008,G008,45.42,42.85,0,,,,,BIOME6000,0,
+246,104,938,G015,G015,40,53,0,,,,,BIOME6000,0,
+247,105,906,G016,G016,39,56,200,,,,,BIOME6000,0,
+248,106,929,G017,G017,38.5,54,100,,,,,BIOME6000,0,
+249,107,954,G018,G018,38.3,55,100,,,,,BIOME6000,0,
+250,108,955,G019,G019,39,54,100,,,,,BIOME6000,0,
+251,109,956,G020,G020,40,55,300,,,,,BIOME6000,0,
+252,110,957,G021,G021,39.85,56,200,,,,,BIOME6000,0,
+253,111,958,G022,G022,40.17,56.5,200,,,,,BIOME6000,0,
+254,112,968,G023,G023,40,57,200,,,,,BIOME6000,0,
+255,113,960,G024,G024,39.5,57.2,100,,,,,BIOME6000,0,
+256,114,953,G025,G025,39.25,57,100,,,,,BIOME6000,0,
+257,115,962,G026,G026,39.25,56,100,,,,,BIOME6000,0,
+258,116,963,G027,G027,38.34,58.68,0,,,,,BIOME6000,0,
+259,117,964,G028,G028,41.51,58.68,100,,,,,BIOME6000,0,
+260,118,965,G029,G029,41.68,58.85,100,,,,,BIOME6000,0,
+261,119,966,G030,G030,41.34,57.85,100,,,,,BIOME6000,0,
+262,120,967,G031,G031,41.5,58,100,,,,,BIOME6000,0,
+263,121,945,G032,G032,41.34,57.34,100,,,,,BIOME6000,0,
+264,122,943,G033,G033,41.68,57,100,,,,,BIOME6000,0,
+265,123,959,G034,G034,41.5,57.5,100,,,,,BIOME6000,0,
+266,124,939,G036,G036,45,60,0,,,,,BIOME6000,0,
+267,125,940,G057,G057,45,21,2190,,,,,BIOME6000,0,
+268,126,941,G058,G058,45,21,1450,,,,,BIOME6000,0,
+269,127,942,G083,G083,45,22,2190,,,,,BIOME6000,0,
+270,128,952,G084,G084,45,22,1850,,,,,BIOME6000,0,
+271,129,944,G085,G085,49,20,1000,,,,,BIOME6000,0,
+272,130,937,G086,G086,49,20,1100,,,,,BIOME6000,0,
+273,131,946,G087,G087,49,20,1350,,,,,BIOME6000,0,
+274,132,947,G094,G094,48,41.35,900,,,,,BIOME6000,0,
+275,133,948,G095,G095,48,41.35,1150,,,,,BIOME6000,0,
+276,134,949,G096,G096,48,41.35,1000,,,,,BIOME6000,0,
+277,135,950,G097,G097,48,41.35,850,,,,,BIOME6000,0,
+278,136,951,G098,G098,48,41.35,520,,,,,BIOME6000,0,
+279,137,1051,G107,G107,49,22.5,200,,,,,BIOME6000,0,
+280,138,1148,G108,G108,49,22.5,670,,,,,BIOME6000,0,
+281,139,1015,G189,G189,40.12,45.6,1400,,,,,BIOME6000,0,
+282,140,1117,H085,H085,35.65,56.7,1000,,,,,BIOME6000,0,
+283,141,1118,H186,H186,31.75,35.57,-399,,,,,BIOME6000,0,
+284,142,1119,H500,H500,37.28,39.08,812,,,,,BIOME6000,0,
+285,143,1120,H501,H501,37.22,38.5,610,,,,,BIOME6000,0,
+286,144,1130,H502,H502,37.22,38.5,610,,,,,BIOME6000,0,
+287,145,1122,H503,H503,37.22,38.5,610,,,,,BIOME6000,0,
+288,146,1115,H504,H504,37.27,38.53,610,,,,,BIOME6000,0,
+289,147,1124,H505,H505,37.38,38.85,884,,,,,BIOME6000,0,
+290,148,1125,H506,H506,37.72,39.42,914,,,,,BIOME6000,0,
+291,149,1126,H507,H507,37.91,40.1,762,,,,,BIOME6000,0,
+292,150,1127,H508,H508,38.18,39.72,914,,,,,BIOME6000,0,
+293,151,1128,H509,H509,38.18,39.72,914,,,,,BIOME6000,0,
+294,152,1129,H510,H510,38.18,39.72,914,,,,,BIOME6000,0,
+295,153,1107,H511,H511,38.18,39.72,914,,,,,BIOME6000,0,
+296,154,1105,H512,H512,38.18,39.72,914,,,,,BIOME6000,0,
+297,155,1121,H513,H513,38.17,41.47,884,,,,,BIOME6000,0,
+298,156,1101,H514,H514,38.13,41.67,1067,,,,,BIOME6000,0,
+299,157,1102,H515,H515,37.93,42.49,1067,,,,,BIOME6000,0,
+300,158,1103,H516,H516,37.92,42.42,914,,,,,BIOME6000,0,
+301,159,1104,H517,H517,37.91,42.36,1067,,,,,BIOME6000,0,
+302,160,1114,H518,H518,37.92,42.26,853,,,,,BIOME6000,0,
+303,161,1106,H519,H519,37.93,42.23,914,,,,,BIOME6000,0,
+304,162,1099,H520,H520,38,42.05,914,,,,,BIOME6000,0,
+305,163,1108,H521,H521,37.98,41.85,914,,,,,BIOME6000,0,
+306,164,1109,H522,H522,37.75,37.55,850,,,,,BIOME6000,0,
+307,165,1110,H523,H523,37.88,37.28,914,,,,,BIOME6000,0,
+308,166,1111,H524,H524,38.5,39.53,1219,,,,,BIOME6000,0,
+309,167,1112,H525,H525,38.47,39.55,1158,,,,,BIOME6000,0,
+310,168,1113,H526,H526,38.4,39.67,1158,,,,,BIOME6000,0,
+311,169,1137,H527,H527,38.28,39.75,1067,,,,,BIOME6000,0,
+312,170,1162,H528,H528,37.98,40.17,1067,,,,,BIOME6000,0,
+313,171,1123,H529,H529,38.07,40.05,610,,,,,BIOME6000,0,
+314,172,1149,H530,H530,38.18,39.88,762,,,,,BIOME6000,0,
+315,173,1150,H531,H531,38.2,39.82,762,,,,,BIOME6000,0,
+316,174,1151,H532,H532,38.5,41.03,1219,,,,,BIOME6000,0,
+317,175,1152,H533,H533,38.52,40.5,914,,,,,BIOME6000,0,
+318,176,1153,H534,H534,38.58,40.5,1158,,,,,BIOME6000,0,
+319,177,1163,H535,H535,38.77,40.98,1219,,,,,BIOME6000,0,
+320,178,1155,H536,H536,38.91,40.43,1448,,,,,BIOME6000,0,
+321,179,1147,H537,H537,38.87,40.2,1828,,,,,BIOME6000,0,
+322,180,1157,H538,H538,37.88,27.25,50,,,,,BIOME6000,0,
+323,181,1158,H539,H539,37.92,27.35,500,,,,,BIOME6000,0,
+324,182,1159,H540,H540,37.82,27.38,400,,,,,BIOME6000,0,
+325,183,1160,H541,H541,37.95,27.63,600,,,,,BIOME6000,0,
+326,184,1161,H542,H542,37.95,27.63,600,,,,,BIOME6000,0,
+327,185,1139,H543,H543,37.89,27.74,150,,,,,BIOME6000,0,
+328,186,1156,H544,H544,37.89,27.74,150,,,,,BIOME6000,0,
+329,187,1154,H545,H545,36.99,28.44,100,,,,,BIOME6000,0,
+330,188,1132,H546,H546,37.01,28.54,250,,,,,BIOME6000,0,
+331,189,1133,H547,H547,37.04,28.69,1000,,,,,BIOME6000,0,
+332,190,1134,H548,H548,37.01,28.67,500,,,,,BIOME6000,0,
+333,191,1135,H549,H549,36.79,28.78,20,,,,,BIOME6000,0,
+334,192,1136,H550,H550,36.9,28.73,20,,,,,BIOME6000,0,
+335,193,1146,H551,H551,36.84,28.63,0,,,,,BIOME6000,0,
+336,194,1138,H552,H552,37.1,28.44,600,,,,,BIOME6000,0,
+337,195,1131,H553,H553,37.15,28.34,750,,,,,BIOME6000,0,
+338,196,1140,H554,H554,37.22,28.22,550,,,,,BIOME6000,0,
+339,197,1141,H555,H555,37.36,28.17,650,,,,,BIOME6000,0,
+340,198,1142,H556,H556,37.52,28.03,350,,,,,BIOME6000,0,
+341,199,1143,H557,H557,37.65,27.96,130,,,,,BIOME6000,0,
+342,200,1144,H558,H558,37.74,27.85,100,,,,,BIOME6000,0,
+343,201,1145,H559,H559,37.93,28.55,400,,,,,BIOME6000,0,
+344,202,1083,H560,H560,37.79,28.59,1250,,,,,BIOME6000,0,
+345,203,1035,H561,H561,37.77,28.57,1150,,,,,BIOME6000,0,
+346,204,1100,H562,H562,37.85,28.86,500,,,,,BIOME6000,0,
+347,205,1052,H563,H563,37.39,29.42,850,,,,,BIOME6000,0,
+348,206,1053,H564,H564,37.53,29.66,1250,,,,,BIOME6000,0,
+349,207,1054,H565,H565,37.5,29.48,950,,,,,BIOME6000,0,
+350,208,1055,H566,H566,37.6,29.27,1150,,,,,BIOME6000,0,
+351,209,1065,H567,H567,37.69,29.24,1150,,,,,BIOME6000,0,
+352,210,1057,H568,H568,37.76,29.17,450,,,,,BIOME6000,0,
+353,211,1050,H569,H569,37.8,29.39,710,,,,,BIOME6000,0,
+354,212,1059,H570,H570,37.74,30.89,920,,,,,BIOME6000,0,
+355,213,1060,H571,H571,37.9,30.51,930,,,,,BIOME6000,0,
+356,214,1061,H572,H572,37.87,30.41,890,,,,,BIOME6000,0,
+357,215,1062,H573,H573,37.09,30.6,220,,,,,BIOME6000,0,
+358,216,1063,H574,H574,36.98,30.67,100,,,,,BIOME6000,0,
+359,217,1064,H575,H575,36.59,29.97,1050,,,,,BIOME6000,0,
+360,218,1042,H576,H576,36.59,29.97,1050,,,,,BIOME6000,0,
+361,219,1040,H577,H577,36.56,29.9,1050,,,,,BIOME6000,0,
+362,220,1056,H578,H578,36.63,29.91,1100,,,,,BIOME6000,0,
+363,221,1036,H579,H579,36.84,30.05,1100,,,,,BIOME6000,0,
+364,222,1037,H580,H580,36.95,30.16,1130,,,,,BIOME6000,0,
+365,223,1038,H581,H581,37.03,30.04,1350,,,,,BIOME6000,0,
+366,224,1039,H582,H582,37.05,30.48,600,,,,,BIOME6000,0,
+367,225,1049,H583,H583,37.05,30.57,400,,,,,BIOME6000,0,
+368,226,1041,H584,H584,37.15,30.56,350,,,,,BIOME6000,0,
+369,227,1034,H585,H585,37.67,30.34,1050,,,,,BIOME6000,0,
+370,228,1043,H586,H586,37.55,30.43,1150,,,,,BIOME6000,0,
+371,229,1044,H587,H587,37.38,30.75,700,,,,,BIOME6000,0,
+372,230,1045,H588,H588,37.45,30.53,700,,,,,BIOME6000,0,
+373,231,1046,H589,H589,37.28,30.52,700,,,,,BIOME6000,0,
+374,232,1047,H590,H590,37.11,31.82,1400,,,,,BIOME6000,0,
+375,233,1048,H591,H591,37.11,31.82,1400,,,,,BIOME6000,0,
+376,234,1072,H592,H592,37.13,31.82,1500,,,,,BIOME6000,0,
+377,235,1097,H593,H593,37.65,31.62,1150,,,,,BIOME6000,0,
+378,236,1058,H594,H594,38.39,31.94,1030,,,,,BIOME6000,0,
+379,237,1084,H595,H595,38.34,31.38,1125,,,,,BIOME6000,0,
+380,238,1085,H596,H596,38.81,31.06,1150,,,,,BIOME6000,0,
+381,239,1086,H597,H597,39,31.12,1250,,,,,BIOME6000,0,
+382,240,1087,H598,H598,40.52,22.7,0,,,,,BIOME6000,0,
+383,241,1088,H599,H599,40.53,22.7,0,,,,,BIOME6000,0,
+384,242,1098,H600,H600,40.53,22.7,0,,,,,BIOME6000,0,
+385,243,1090,H601,H601,40.53,22.7,0,,,,,BIOME6000,0,
+386,244,1082,H602,H602,40.54,22.71,0,,,,,BIOME6000,0,
+387,245,1092,H603,H603,40.56,22.71,0,,,,,BIOME6000,0,
+388,246,1093,H604,H604,40.58,22.71,0,,,,,BIOME6000,0,
+389,247,1094,H605,H605,40.73,22.65,100,,,,,BIOME6000,0,
+390,248,1095,H606,H606,40.75,22.54,50,,,,,BIOME6000,0,
+391,249,1096,H607,H607,40.77,22.48,50,,,,,BIOME6000,0,
+392,250,1074,H608,H608,40.77,22.4,50,,,,,BIOME6000,0,
+393,251,1091,H609,H609,40.69,22.34,50,,,,,BIOME6000,0,
+394,252,1089,H610,H610,40.9,22.63,100,,,,,BIOME6000,0,
+395,253,1067,H611,H611,40.9,22.63,100,,,,,BIOME6000,0,
+396,254,1068,H612,H612,40.89,22.63,100,,,,,BIOME6000,0,
+397,255,1069,H613,H613,40.89,22.63,100,,,,,BIOME6000,0,
+398,256,1070,H614,H614,40.63,22.1,200,,,,,BIOME6000,0,
+399,257,1071,H615,H615,40.62,22.07,400,,,,,BIOME6000,0,
+400,258,1081,H616,H616,40.61,22.06,500,,,,,BIOME6000,0,
+401,259,1073,H617,H617,40.6,22.05,650,,,,,BIOME6000,0,
+402,260,1066,H618,H618,40.6,22.05,1000,,,,,BIOME6000,0,
+403,261,1075,H619,H619,40.59,22.04,1200,,,,,BIOME6000,0,
+404,262,1076,H620,H620,40.58,22.04,1400,,,,,BIOME6000,0,
+405,263,1077,H621,H621,40.57,22.04,1500,,,,,BIOME6000,0,
+406,264,1078,H622,H622,40.56,22.03,1600,,,,,BIOME6000,0,
+407,265,1079,H623,H623,40.56,22.15,400,,,,,BIOME6000,0,
+408,266,886,H624,H624,40.56,22.13,600,,,,,BIOME6000,0,
+409,267,1116,H625,H625,40.55,22.16,300,,,,,BIOME6000,0,
+410,268,919,H626,H626,40.54,22.2,250,,,,,BIOME6000,0,
+411,269,728,H627,H627,40.42,22.29,1000,,,,,BIOME6000,0,
+412,270,729,H628,H628,40.43,22.27,1000,,,,,BIOME6000,0,
+413,271,730,H629,H629,40.44,22.26,800,,,,,BIOME6000,0,
+414,272,731,H630,H630,40.45,22.25,650,,,,,BIOME6000,0,
+415,273,732,H631,H631,40.46,22.25,400,,,,,BIOME6000,0,
+416,274,742,H632,H632,40.8,21.73,900,,,,,BIOME6000,0,
+417,275,734,H633,H633,40.82,21.78,650,,,,,BIOME6000,0,
+418,276,727,H634,H634,40.78,21.9,500,,,,,BIOME6000,0,
+419,277,736,H635,H635,40.78,21.93,500,,,,,BIOME6000,0,
+420,278,737,H636,H636,40.81,21.97,400,,,,,BIOME6000,0,
+421,279,738,H637,H637,40.62,22.15,150,,,,,BIOME6000,0,
+422,280,739,H638,H638,40.62,22.2,150,,,,,BIOME6000,0,
+423,281,740,H639,H639,40.67,22.25,50,,,,,BIOME6000,0,
+424,282,741,H640,H640,40.48,22.18,450,,,,,BIOME6000,0,
+425,283,719,H641,H641,40.44,22.15,600,,,,,BIOME6000,0,
+426,284,717,H642,H642,40.41,22.13,900,,,,,BIOME6000,0,
+427,285,733,H643,H643,40.4,22.08,1200,,,,,BIOME6000,0,
+428,286,713,H644,H644,40.38,22.07,1000,,,,,BIOME6000,0,
+429,287,714,H645,H645,40.38,22.08,1100,,,,,BIOME6000,0,
+430,288,715,H646,H646,40.37,21.97,700,,,,,BIOME6000,0,
+431,289,716,H647,H647,40.37,21.87,700,,,,,BIOME6000,0,
+432,290,726,H648,H648,40.29,21.71,700,,,,,BIOME6000,0,
+433,291,718,H649,H649,40.25,21.58,700,,,,,BIOME6000,0,
+434,292,711,H650,H650,40.29,21.5,600,,,,,BIOME6000,0,
+435,293,720,H651,H651,40.37,21.42,700,,,,,BIOME6000,0,
+436,294,721,H652,H652,40.44,21.34,700,,,,,BIOME6000,0,
+437,295,722,H653,H653,40.66,21.55,800,,,,,BIOME6000,0,
+438,296,723,H654,H654,40.6,21.49,800,,,,,BIOME6000,0,
+439,297,724,H655,H655,40.57,21.5,1050,,,,,BIOME6000,0,
+440,298,725,H656,H656,40.56,21.48,1100,,,,,BIOME6000,0,
+441,299,749,H657,H657,40.55,21.43,700,,,,,BIOME6000,0,
+442,300,774,H658,H658,40.51,21.38,700,,,,,BIOME6000,0,
+443,301,735,H659,H659,40.5,21.35,700,,,,,BIOME6000,0,
+444,302,761,H660,H660,40.56,21.32,700,,,,,BIOME6000,0,
+445,303,762,H661,H661,40.78,21.27,1500,,,,,BIOME6000,0,
+446,304,763,H662,H662,40.78,21.27,1400,,surface sample,,,BIOME6000,0,
+447,305,764,H663,H663,40.79,21.23,1350,,surface sample,,,BIOME6000,0,
+448,306,765,H664,H664,40.78,21.21,1200,,surface sample,,,BIOME6000,0,
+449,307,775,H665,H665,40.77,21.21,1100,,,,,BIOME6000,0,
+450,308,767,H666,H666,40.73,21.19,1000,,surface sample,,,BIOME6000,0,
+451,309,759,H667,H667,40.66,21.18,800,,,,,BIOME6000,0,
+452,310,769,H668,H668,40.65,21.18,700,,surface sample,,,BIOME6000,0,
+453,311,770,H669,H669,40.59,21.2,700,,,,,BIOME6000,0,
+454,312,771,H670,H670,40.25,21.44,650,,,,,BIOME6000,0,
+455,313,772,H671,H671,40.14,21.47,600,,,,,BIOME6000,0,
+456,314,773,H672,H672,40.01,21.5,700,,,,,BIOME6000,0,
+457,315,751,H673,H673,39.95,21.5,700,,,,,BIOME6000,0,
+458,316,768,H674,H674,39.92,21.53,700,,surface sample,,,BIOME6000,0,
+459,317,766,H675,H675,39.87,21.56,600,,surface sample,,,BIOME6000,0,
+460,318,744,H676,H676,39.72,21.21,1350,,,,,BIOME6000,0,
+461,319,745,H677,H677,39.71,21.22,1550,,,,,BIOME6000,0,
+462,320,746,H678,H678,39.72,21.22,1450,,,,,BIOME6000,0,
+463,321,747,H679,H679,39.72,21.19,1300,,,,,BIOME6000,0,
+464,322,748,H680,H680,39.73,21.19,1200,,,,,BIOME6000,0,
+465,323,758,H681,H681,39.72,21.04,800,,,,,BIOME6000,0,
+466,324,750,H682,H682,39.75,21.13,900,,,,,BIOME6000,0,
+467,325,743,H683,H683,39.74,21.16,1300,,,,,BIOME6000,0,
+468,326,752,H684,H684,39.77,21.16,1400,,,,,BIOME6000,0,
+469,327,753,H685,H685,39.78,21.22,1650,,,,,BIOME6000,0,
+470,328,754,H686,H686,39.79,21.29,1200,,,,,BIOME6000,0,
+471,329,755,H687,H687,39.78,21.32,800,,,,,BIOME6000,0,
+472,330,756,H688,H688,39.77,21.44,1100,,,,,BIOME6000,0,
+473,331,703,H689,H689,39.76,21.47,1000,,,,,BIOME6000,0,
+474,332,760,H690,H690,39.73,21.55,300,,,,,BIOME6000,0,
+475,333,712,H691,H691,39.49,20.86,600,,,,,BIOME6000,0,
+476,334,664,H692,H692,39.47,20.88,500,,surface sample,,,BIOME6000,0,
+477,335,665,H693,H693,39.69,20.78,600,,surface sample,,,BIOME6000,0,
+478,336,666,H694,H694,39.7,20.66,600,,surface sample,,,BIOME6000,0,
+479,337,667,H695,H695,39.71,20.61,250,,surface sample,,,BIOME6000,0,
+480,338,668,H696,H696,39.66,20.59,250,,surface sample,,,BIOME6000,0,
+481,339,678,H697,H697,39.62,20.53,300,,surface sample,,,BIOME6000,0,
+482,340,670,H698,H698,39.6,20.52,600,,surface sample,,,BIOME6000,0,
+483,341,663,H699,H699,39.58,20.5,700,,surface sample,,,BIOME6000,0,
+484,342,672,H700,H700,39.55,20.47,300,,surface sample,,,BIOME6000,0,
+485,343,673,H701,H701,39.53,20.32,300,,surface sample,,,BIOME6000,0,
+486,344,674,H702,H702,39.52,20.4,300,,surface sample,,,BIOME6000,0,
+487,345,675,H703,H703,39.54,20.45,300,,surface sample,,,BIOME6000,0,
+488,346,676,H704,H704,39.71,21.01,700,,surface sample,,,BIOME6000,0,
+489,347,677,H705,H705,39.69,20.98,600,,surface sample,,,BIOME6000,0,
+490,348,655,H706,H706,39.67,20.97,900,,surface sample,,,BIOME6000,0,
+491,349,653,H707,H707,39.72,20.78,500,,surface sample,,,BIOME6000,0,
+492,350,669,H708,H708,40.56,21.48,1200,,surface sample,,,BIOME6000,0,
+493,351,649,H709,H709,40.56,21.32,700,,surface sample,,,BIOME6000,0,
+494,352,650,H710,H710,34.91,24.75,30,,surface sample,,,BIOME6000,0,
+495,353,651,H711,H711,35.1,24.69,1,,surface sample,,,BIOME6000,0,
+496,354,652,H712,H712,35.14,24.81,900,,surface sample,,,BIOME6000,0,
+497,355,662,H713,H713,39.22,22.8,10,,surface sample,,,BIOME6000,0,
+498,356,654,H715,H715,36.37,40.21,700,,surface sample,,,BIOME6000,0,
+499,357,647,H716,H716,36.38,40.68,350,,surface sample,,,BIOME6000,0,
+500,358,656,H717,H717,36.4,41.14,450,,surface sample,,,BIOME6000,0,
+501,359,657,H718,H718,36.41,41.06,400,,surface sample,,,BIOME6000,0,
+502,360,658,H719,H719,36.43,40.88,300,,surface sample,,,BIOME6000,0,
+503,361,659,H720,H720,36.4,40.83,300,,surface sample,,,BIOME6000,0,
+504,362,660,H721,H721,36.15,40.79,300,,surface sample,,,BIOME6000,0,
+505,363,680,H722,H722,36.17,41.02,350,,surface sample,,,BIOME6000,0,
+506,364,648,H723,H723,35.6,40.71,250,,surface sample,,,BIOME6000,0,
+507,365,671,H724,H724,35.27,41.04,200,,surface sample,,,BIOME6000,0,
+508,366,696,H725,H725,35.17,41.19,162,,,,,BIOME6000,0,
+509,367,697,H726,H726,35.18,41.2,162,,,,,BIOME6000,0,
+510,368,698,H727,H727,35.19,41.08,200,,,,,BIOME6000,0,
+511,369,699,H728,H728,34.72,40.26,240,,,,,BIOME6000,0,
+512,370,700,H729,H729,34.89,40.38,245,,,,,BIOME6000,0,
+513,371,710,H730,H730,35.07,40.39,230,,,,,BIOME6000,0,
+514,372,702,H731,H731,35.43,40.6,225,,,,,BIOME6000,0,
+515,373,695,H732,H732,35.49,40.57,225,,,,,BIOME6000,0,
+516,374,704,H733,H733,35.5,40.32,230,,,,,BIOME6000,0,
+517,375,705,H734,H734,34.91,38.54,1150,,,,,BIOME6000,0,
+518,376,706,H735,H735,34.47,38.23,500,,,,,BIOME6000,0,
+519,377,707,H736,H736,34.5,37.97,500,,,,,BIOME6000,0,
+520,378,708,H737,H737,34.6,37.21,650,,,,,BIOME6000,0,
+521,379,709,H738,H738,34.66,36.95,650,,,,,BIOME6000,0,
+522,380,687,H739,H739,34.42,37.71,530,,surface sample,,,BIOME6000,0,
+523,381,685,H740,H740,34.32,37.42,600,,surface sample,,,BIOME6000,0,
+524,382,701,H741,H741,34.19,37.16,750,,,,,BIOME6000,0,
+525,383,681,H742,H742,34,36.96,825,,surface sample,,,BIOME6000,0,
+526,384,682,H743,H743,33.89,36.83,800,,surface sample,,,BIOME6000,0,
+527,385,683,H744,H744,33.82,36.75,800,,surface sample,,,BIOME6000,0,
+528,386,684,H745,H745,33.74,36.69,900,,surface sample,,,BIOME6000,0,
+529,387,694,H746,H746,33.8,36.63,1100,,,,,BIOME6000,0,
+530,388,686,H747,H747,34,36.69,1400,,surface sample,,,BIOME6000,0,
+531,389,679,H748,H748,33.95,36.59,1450,,surface sample,,,BIOME6000,0,
+532,390,688,H749,H749,33.91,36.48,1550,,,,,BIOME6000,0,
+533,391,689,H750,H750,33.91,36.35,2050,,,,,BIOME6000,0,
+534,392,690,H751,H751,33.9,36.36,2000,,,,,BIOME6000,0,
+535,393,691,H752,H752,33.89,36.36,1950,,,,,BIOME6000,0,
+536,394,692,H753,H753,33.86,36.41,1650,,,,,BIOME6000,0,
+537,395,790,H754,H754,33.8,36.4,1700,,surface sample,,,BIOME6000,0,
+538,396,661,H755,H755,33.76,36.39,1800,,surface sample,,,BIOME6000,0,
+539,397,757,H756,H756,33.7,36.37,1500,,,,,BIOME6000,0,
+540,398,857,H757,H757,33.37,35.88,1400,,,,,BIOME6000,0,
+541,399,858,H758,H758,33.63,35.98,1350,,,,,BIOME6000,0,
+542,400,859,H759,H759,33.66,35.98,1300,,,,,BIOME6000,0,
+543,401,860,H760,H760,33.68,35.96,1300,,,,,BIOME6000,0,
+544,402,861,H761,H761,33.93,36.23,1600,,,,,BIOME6000,0,
+545,403,871,H762,H762,33.94,36.21,1500,,,,,BIOME6000,0,
+546,404,863,H763,H763,33.97,36.19,1300,,,,,BIOME6000,0,
+547,405,856,H764,H764,33.99,36.2,1300,,,,,BIOME6000,0,
+548,406,865,H765,H765,34.07,36.15,1000,,,,,BIOME6000,0,
+549,407,866,H766,H766,34.09,36.13,1000,,,,,BIOME6000,0,
+550,408,867,H767,H767,34.13,36.12,1000,,,,,BIOME6000,0,
+551,409,868,H768,H768,34.13,36.03,1500,,,,,BIOME6000,0,
+552,410,869,H769,H769,34.13,36.03,1500,,,,,BIOME6000,0,
+553,411,870,H770,H770,34.16,36.08,1500,,,,,BIOME6000,0,
+554,412,848,H771,H771,34.25,36.06,2100,,,,,BIOME6000,0,
+555,413,846,H772,H772,34.29,35.98,1500,,,,,BIOME6000,0,
+556,414,862,H773,H773,34.3,35.97,1300,,,,,BIOME6000,0,
+557,415,842,H774,H774,34.31,35.92,1000,,,,,BIOME6000,0,
+558,416,843,H775,H775,34.31,35.91,600,,,,,BIOME6000,0,
+559,417,844,H776,H776,34.31,35.88,500,,,,,BIOME6000,0,
+560,418,845,H777,H777,34.33,35.85,400,,,,,BIOME6000,0,
+561,419,855,H778,H778,34.33,35.81,400,,,,,BIOME6000,0,
+562,420,847,H779,H779,34.33,35.75,200,,,,,BIOME6000,0,
+563,421,840,H780,H780,34.31,35.69,50,,,,,BIOME6000,0,
+564,422,849,H781,H781,34.1,35.83,1300,,,,,BIOME6000,0,
+565,423,850,H782,H782,34.1,35.81,1400,,,,,BIOME6000,0,
+566,424,851,H783,H783,34.1,35.78,1100,,,,,BIOME6000,0,
+567,425,852,H784,H784,34.11,35.78,900,,,,,BIOME6000,0,
+568,426,853,H785,H785,34.1,35.73,700,,,,,BIOME6000,0,
+569,427,854,H786,H786,34.11,35.7,600,,,,,BIOME6000,0,
+570,428,878,H787,H787,34.11,35.68,500,,,,,BIOME6000,0,
+571,429,903,H788,H788,34.11,35.67,300,,,,,BIOME6000,0,
+572,430,864,H789,H789,35.51,36.2,1000,,,,,BIOME6000,0,
+573,431,890,H790,H790,35.54,36.2,1000,,,,,BIOME6000,0,
+574,432,891,H791,H791,35.55,36.19,1200,,,,,BIOME6000,0,
+575,433,892,H792,H792,35.58,36.2,1000,,,,,BIOME6000,0,
+576,434,893,H793,H793,35.59,36.13,1100,,,,,BIOME6000,0,
+577,435,894,H794,H794,35.59,36.16,1100,,,,,BIOME6000,0,
+578,436,904,H795,H795,35.6,36.16,1100,,,,,BIOME6000,0,
+579,437,896,H796,H796,35.59,36.17,1100,,,,,BIOME6000,0,
+580,438,888,H797,H797,35.6,36.18,1100,,,,,BIOME6000,0,
+581,439,898,H798,H798,35.62,36.18,1100,,,,,BIOME6000,0,
+582,440,899,H799,H799,35.8,36.59,1100,,,,,BIOME6000,0,
+583,441,900,H800,H800,35.79,36.52,650,,,,,BIOME6000,0,
+584,442,901,H801,H801,35.81,36.47,500,,,,,BIOME6000,0,
+585,443,902,H802,H802,35.72,35.83,200,,,,,BIOME6000,0,
+586,444,880,H803,H803,35.73,35.84,200,,,,,BIOME6000,0,
+587,445,897,H804,H804,35.75,35.85,200,,,,,BIOME6000,0,
+588,446,895,H805,H805,35.83,35.81,200,,,,,BIOME6000,0,
+589,447,873,H806,H806,35.83,35.81,200,,,,,BIOME6000,0,
+590,448,874,H807,H807,35.83,35.81,200,,,,,BIOME6000,0,
+591,449,875,H808,H808,35.83,35.81,200,,,,,BIOME6000,0,
+592,450,876,H809,H809,36.46,35.85,200,,,,,BIOME6000,0,
+593,451,877,H810,H810,36.43,35.85,200,,,,,BIOME6000,0,
+594,452,887,H811,H811,36.29,35.85,300,,,,,BIOME6000,0,
+595,453,879,H812,H812,36.26,35.85,200,,,,,BIOME6000,0,
+596,454,872,H813,H813,33.69,46.41,1500,,,,,BIOME6000,0,
+597,455,881,H814,H814,33.69,46.41,1500,,,,,BIOME6000,0,
+598,456,882,H815,H815,35.53,46.33,1450,,,,,BIOME6000,0,
+599,457,883,H816,H816,35.52,46.41,1800,,,,,BIOME6000,0,
+615,484,776,192,192,46.17,62,,,surface sample,,,BIOME6000,0,
+616,485,785,245,245,44.5,50.33,,,surface sample,,,BIOME6000,0,
+617,486,786,248,248,47.17,52.17,,,surface sample,,,BIOME6000,0,
+618,487,787,249,249,47.33,52.08,,,surface sample,,,BIOME6000,0,
+619,488,788,388,388,43.2,43.25,,,surface sample,,,BIOME6000,0,
+620,489,789,496,496,41.05,43.6,,,surface sample,,,BIOME6000,0,
+621,490,809,564,564,48.16,24.51,,,,,,BIOME6000,0,
+622,491,777,565,565,43.2,43.25,,,surface sample,,,BIOME6000,0,
+623,492,800,568,568,48.61,61.26,,,,,,BIOME6000,0,
+624,493,825,598,598,43.41,42.15,,,,,,BIOME6000,0,
+625,494,826,599,599,43.3,41.63,,,,,,BIOME6000,0,
+626,495,827,636,636,48.5,52.5,,,,,,BIOME6000,0,
+627,496,828,666,666,43,44.66,,,,,,BIOME6000,0,
+628,497,829,687,687,48.92,24.07,,,,,,BIOME6000,0,
+629,498,839,688,688,48.26,24.35,,,,,,BIOME6000,0,
+630,499,831,690,690,40.12,45.6,,,,,,BIOME6000,0,
+631,500,824,691,691,40.12,45.6,,,,,,BIOME6000,0,
+632,501,833,696,696,48.57,27.16,,,,,,BIOME6000,0,
+633,502,834,697,697,48,46.5,,,,,,BIOME6000,0,
+634,503,835,699,699,40.75,45,,,,,,BIOME6000,0,
+635,504,836,701,701,48.25,24.33,,,,,,BIOME6000,0,
+636,505,837,702,702,42,43,,,,,,BIOME6000,0,
+637,506,838,707,707,48.03,44.66,,,,,,BIOME6000,0,
+638,507,816,708,708,47.51,40.75,,,,,,BIOME6000,0,
+639,508,814,709,709,47.15,38.33,,,,,,BIOME6000,0,
+640,509,830,710,710,42.11,44.96,,,,,,BIOME6000,0,
+641,510,810,714,714,45.83,34.33,,,,,,BIOME6000,0,
+642,511,811,715,715,46.45,33.9,,,,,,BIOME6000,0,
+643,512,812,716,716,41.66,59,,,,,,BIOME6000,0,
+644,513,813,717,717,41.5,58.75,,,,,,BIOME6000,0,
+645,514,823,718,718,41.46,58.08,,,,,,BIOME6000,0,
+646,515,815,719,719,41.41,57.58,,,,,,BIOME6000,0,
+647,516,808,720,720,41.16,57.58,,,,,,BIOME6000,0,
+648,517,817,721,721,41.75,57.16,,,,,,BIOME6000,0,
+649,518,818,722,722,42.08,41.71,,,,,,BIOME6000,0,
+650,519,819,723,723,39.41,53.5,,,,,,BIOME6000,0,
+651,520,820,724,724,39.91,54.16,,,,,,BIOME6000,0,
+652,521,821,725,725,39.41,57.41,,,,,,BIOME6000,0,
+653,522,822,726,726,39.08,57.08,,,,,,BIOME6000,0,
+654,523,1245,727,727,39.41,54.33,,,,,,BIOME6000,0,
+655,524,1634,728,728,39.41,54.75,,,,,,BIOME6000,0,
+656,525,1080,729,729,39.33,55.66,,,,,,BIOME6000,0,
+657,526,1505,730,730,40,57.58,,,,,,BIOME6000,0,
+658,527,1506,731,731,38.96,54.12,,,,,,BIOME6000,0,
+659,528,1507,796,796,47.27,37.28,,,,,,BIOME6000,0,
+660,529,1508,797,797,47.27,37.28,,,,,,BIOME6000,0,
+661,530,1518,798,798,47.27,37.28,,,,,,BIOME6000,0,
+662,531,1510,799,799,47.27,37.28,,,,,,BIOME6000,0,
+663,532,1503,806,806,48.88,31,,,,,,BIOME6000,0,
+664,533,1512,807,807,47.27,38.18,,,,,,BIOME6000,0,
+665,534,1513,808,808,47.27,38.18,,,,,,BIOME6000,0,
+666,535,1514,809,809,47.27,38.18,,,,,,BIOME6000,0,
+667,536,1515,810,810,47.27,38.18,,,,,,BIOME6000,0,
+668,537,1516,811,811,47.27,38.18,,,,,,BIOME6000,0,
+669,538,1517,812,812,47.27,38.18,,,,,,BIOME6000,0,
+670,539,1495,813,813,46.33,34.67,,,,,,BIOME6000,0,
+671,540,1493,814,814,46.33,34.67,,,,,,BIOME6000,0,
+672,541,1509,815,815,46.33,34.67,,,,,,BIOME6000,0,
+673,542,1489,816,816,46.33,34.67,,,,,,BIOME6000,0,
+674,543,1490,831,831,46.55,36.18,,,,,,BIOME6000,0,
+675,544,1491,832,832,46.55,36.18,,,,,,BIOME6000,0,
+676,545,1492,842,842,46.17,32.35,,,,,,BIOME6000,0,
+677,546,1502,843,843,46.17,32.35,,,,,,BIOME6000,0,
+678,547,1494,844,844,46.17,32.35,,,,,,BIOME6000,0,
+679,548,1487,845,845,46.17,32.35,,,,,,BIOME6000,0,
+680,549,1496,1367,1367,35.83,35.81,,,,,,BIOME6000,0,
+681,550,1497,1368,1368,35.83,35.81,,,,,,BIOME6000,0,
+682,551,1498,1369,1369,35.83,35.81,,,,,,BIOME6000,0,
+683,552,1499,1370,1370,35.83,35.81,,,,,,BIOME6000,0,
+684,553,1500,1365,1365,35.81,36.47,,,,,,BIOME6000,0,
+685,554,1501,1364,1364,35.8,36.59,,,,,,BIOME6000,0,
+686,555,1525,1363,1363,35.79,36.52,,,,,,BIOME6000,0,
+687,556,1550,1362,1362,35.75,35.85,,,,,,BIOME6000,0,
+688,557,1511,1352,1352,35.73,35.84,,,,,,BIOME6000,0,
+689,558,1537,1351,1351,35.72,35.83,,,,,,BIOME6000,0,
+690,559,1538,1349,1349,35.62,36.18,,,,,,BIOME6000,0,
+691,560,1539,1346,1346,35.6,36.16,,,,,,BIOME6000,0,
+692,561,1540,1347,1347,35.6,36.18,,,,,,BIOME6000,0,
+693,562,1541,1348,1348,35.6,40.71,,,,,,BIOME6000,0,
+694,563,1551,1339,1339,35.59,36.13,,,,,,BIOME6000,0,
+695,564,1543,1340,1340,35.59,36.16,,,,,,BIOME6000,0,
+696,565,1535,1341,1341,35.59,36.17,,,,,,BIOME6000,0,
+697,566,1545,1338,1338,35.58,36.2,,,,,,BIOME6000,0,
+698,567,1546,1337,1337,35.55,36.19,,,,,,BIOME6000,0,
+699,568,1547,1336,1336,35.54,36.2,,,,,,BIOME6000,0,
+700,569,1548,1335,1335,35.53,46.33,,,,,,BIOME6000,0,
+701,570,1549,1334,1334,35.52,46.41,,,,,,BIOME6000,0,
+702,571,1527,1332,1332,35.51,36.2,,,,,,BIOME6000,0,
+703,572,1544,1331,1331,35.5,40.32,,,,,,BIOME6000,0,
+704,573,1542,1327,1327,35.49,40.57,,,,,,BIOME6000,0,
+705,574,1520,1325,1325,35.43,40.6,,,,,,BIOME6000,0,
+706,575,1521,1315,1315,35.27,41.04,,,,,,BIOME6000,0,
+707,576,1522,1309,1309,35.19,41.08,,,,,,BIOME6000,0,
+708,577,1523,1308,1308,35.18,41.2,,,,,,BIOME6000,0,
+709,578,1524,1293,1293,35.17,41.19,,,,,,BIOME6000,0,
+710,579,1534,1277,1277,35.14,24.81,,,,,,BIOME6000,0,
+711,580,1526,1271,1271,35.1,24.69,,,,,,BIOME6000,0,
+712,581,1519,1267,1267,35.08,24.66,,,,,,BIOME6000,0,
+713,582,1528,1268,1268,35.08,24.66,,,,,,BIOME6000,0,
+714,583,1529,1269,1269,35.08,24.66,,,,,,BIOME6000,0,
+715,584,1530,1264,1264,35.07,40.39,,,,,,BIOME6000,0,
+716,585,1531,1257,1257,34.91,24.75,,,,,,BIOME6000,0,
+717,586,1532,1258,1258,34.91,38.54,,,,,,BIOME6000,0,
+718,587,1479,1253,1253,34.89,40.38,,,,,,BIOME6000,0,
+719,588,1536,1238,1238,34.72,40.26,,,,,,BIOME6000,0,
+720,589,1488,1236,1236,34.66,36.95,,,,,,BIOME6000,0,
+721,590,1440,1235,1235,34.6,37.21,,,,,,BIOME6000,0,
+722,591,1441,1234,1234,34.5,37.97,,,,,,BIOME6000,0,
+723,592,1442,1233,1233,34.47,38.23,,,,,,BIOME6000,0,
+724,593,1443,1229,1229,34.42,37.71,,,,,,BIOME6000,0,
+725,594,1444,1227,1227,34.4,37.76,,,,,,BIOME6000,0,
+726,595,1454,1228,1228,34.4,37.76,,,,,,BIOME6000,0,
+727,596,1446,1224,1224,34.33,35.75,,,,,,BIOME6000,0,
+728,597,1439,1225,1225,34.33,35.81,,,,,,BIOME6000,0,
+729,598,1448,1226,1226,34.33,35.85,,,,,,BIOME6000,0,
+730,599,1449,1223,1223,34.32,37.42,,,,,,BIOME6000,0,
+731,600,1450,1219,1219,34.31,35.69,,,,,,BIOME6000,0,
+732,601,1451,1220,1220,34.31,35.88,,,,,,BIOME6000,0,
+733,602,1452,1221,1221,34.31,35.91,,,,,,BIOME6000,0,
+734,603,1453,1222,1222,34.31,35.92,,,,,,BIOME6000,0,
+735,604,1431,1218,1218,34.3,35.97,,,,,,BIOME6000,0,
+736,605,1429,1217,1217,34.29,35.98,,,,,,BIOME6000,0,
+737,606,1445,1210,1210,34.25,36.06,,,,,,BIOME6000,0,
+738,607,1425,1201,1201,34.19,37.16,,,,,,BIOME6000,0,
+739,608,1426,1200,1200,34.16,36.08,,,,,,BIOME6000,0,
+740,609,1427,1197,1197,34.13,36.03,,,,,,BIOME6000,0,
+741,610,1428,1198,1198,34.13,36.03,,,,,,BIOME6000,0,
+742,611,1438,1199,1199,34.13,36.12,,,,,,BIOME6000,0,
+743,612,1430,1187,1187,34.11,35.67,,,,,,BIOME6000,0,
+744,613,1423,1188,1188,34.11,35.68,,,,,,BIOME6000,0,
+745,614,1432,1189,1189,34.11,35.7,,,,,,BIOME6000,0,
+746,615,1433,1190,1190,34.11,35.78,,,,,,BIOME6000,0,
+747,616,1434,1183,1183,34.1,35.73,,,,,,BIOME6000,0,
+748,617,1435,1184,1184,34.1,35.78,,,,,,BIOME6000,0,
+749,618,1436,1185,1185,34.1,35.81,,,,,,BIOME6000,0,
+750,619,1456,1186,1186,34.1,35.83,,,,,,BIOME6000,0,
+751,620,1424,1174,1174,34.09,36.13,,,,,,BIOME6000,0,
+752,621,1447,1166,1166,34.07,36.15,,,,,,BIOME6000,0,
+753,622,1472,1158,1158,34,36.69,,,,,,BIOME6000,0,
+754,623,1473,1159,1159,34,36.96,,,,,,BIOME6000,0,
+755,624,1474,1157,1157,33.99,36.2,,,,,,BIOME6000,0,
+756,625,1475,1156,1156,33.97,36.19,,,,,,BIOME6000,0,
+757,626,1476,1154,1154,33.95,36.59,,,,,,BIOME6000,0,
+758,627,1486,1153,1153,33.94,36.21,,,,,,BIOME6000,0,
+759,628,1478,1152,1152,33.93,36.23,,,,,,BIOME6000,0,
+760,629,1471,1150,1150,33.91,36.35,,,,,,BIOME6000,0,
+761,630,1480,1151,1151,33.91,36.48,,,,,,BIOME6000,0,
+762,631,1481,1149,1149,33.9,36.36,,,,,,BIOME6000,0,
+763,632,1482,1147,1147,33.89,36.36,,,,,,BIOME6000,0,
+764,633,1483,1148,1148,33.89,36.83,,,,,,BIOME6000,0,
+765,634,1484,1146,1146,33.86,36.41,,,,,,BIOME6000,0,
+766,635,1485,1145,1145,33.82,36.75,,,,,,BIOME6000,0,
+767,636,1463,1143,1143,33.8,36.4,,,,,,BIOME6000,0,
+768,637,1461,1144,1144,33.8,36.63,,,,,,BIOME6000,0,
+769,638,1477,1142,1142,33.76,36.39,,,,,,BIOME6000,0,
+770,639,1457,1140,1140,33.74,36.69,,,,,,BIOME6000,0,
+771,640,1458,1134,1134,33.7,36.37,,,,,,BIOME6000,0,
+772,641,1459,1132,1132,33.69,46.41,,,,,,BIOME6000,0,
+773,642,1460,1133,1133,33.69,46.41,,,,,,BIOME6000,0,
+774,643,1470,1131,1131,33.68,35.96,,,,,,BIOME6000,0,
+775,644,1462,1129,1129,33.66,35.98,,,,,,BIOME6000,0,
+776,645,1455,1128,1128,33.63,35.98,,,,,,BIOME6000,0,
+777,646,1464,1107,1107,33.37,35.88,,,,,,BIOME6000,0,
+778,647,1465,1067,1067,32.33,35.58,,,,,,BIOME6000,0,
+779,648,1466,1065,1065,32.25,35.64,,,,,,BIOME6000,0,
+780,649,1467,1063,1063,32.17,35.7,,,,,,BIOME6000,0,
+781,650,1468,1062,1062,32.09,35.76,,,,,,BIOME6000,0,
+782,651,1469,1061,1061,32.01,35.82,,,,,,BIOME6000,0,
+783,652,1569,1059,1059,31.85,35.94,,,,,,BIOME6000,0,
+784,653,1666,1060,1060,31.85,35.94,,,,,,BIOME6000,0,
+785,654,1533,1058,1058,31.77,36,,,,,,BIOME6000,0,
+786,655,1635,1057,1057,31.75,35.57,,,,,,BIOME6000,0,
+787,656,1636,1055,1055,31.6,36.05,,,,,,BIOME6000,0,
+788,657,1637,1009,1009,31.12,36.03,,,,,,BIOME6000,0,
+789,658,1638,984,984,30.69,35.83,,,,,,BIOME6000,0,
+790,659,1648,969,969,30.5,47.83,,,,,,BIOME6000,0,
+791,660,1640,967,967,30.49,47.5,,,,,,BIOME6000,0,
+792,661,1633,966,966,30.48,48.18,,,,,,BIOME6000,0,
+793,662,1642,965,965,30.47,48.15,,,,,,BIOME6000,0,
+794,663,1643,964,964,30.44,35.86,,,,,,BIOME6000,0,
+795,664,1644,954,954,29.85,48.12,,,,,,BIOME6000,0,
+796,665,1645,951,951,29.69,35.47,,,,,,BIOME6000,0,
+797,666,1646,948,948,29.6,47.6,,,,,,BIOME6000,0,
+798,667,1647,946,946,29.55,47.6,,,,,,BIOME6000,0,
+799,668,1625,945,945,29.5,47.65,,,,,,BIOME6000,0,
+800,669,1623,942,942,29.4,48.3,,,,,,BIOME6000,0,
+801,670,1639,943,943,29.4,48.3,,,,,,BIOME6000,0,
+802,671,1619,939,939,29.33,47.6,,,,,,BIOME6000,0,
+803,672,1620,936,936,29.24,47.6,,,,,,BIOME6000,0,
+804,673,1621,937,937,29.24,47.6,,,,,,BIOME6000,0,
+805,674,1622,938,938,29.24,47.6,,,,,,BIOME6000,0,
+806,675,1632,935,935,29.03,48.13,,,,,,BIOME6000,0,
+807,676,1624,928,928,28.44,47.85,,,,,,BIOME6000,0,
+808,677,1617,929,929,28.44,48.5,,,,,,BIOME6000,0,
+809,678,1626,930,930,28.44,48.5,,,,,,BIOME6000,0,
+810,679,1627,931,931,28.44,48.5,,,,,,BIOME6000,0,
+811,680,1628,932,932,28.44,48.52,,,,,,BIOME6000,0,
+812,681,1629,933,933,28.44,48.57,,,,,,BIOME6000,0,
+813,682,1630,934,934,28.44,49,,,,,,BIOME6000,0,
+814,683,1631,927,927,28.33,48,,,,,,BIOME6000,0,
+815,687,1667,2214,2214,49,20,,,,,,BIOME6000,0,
+816,688,1668,2215,2215,49,20,,,,,,BIOME6000,0,
+817,689,1669,2216,2216,49,20,,,,,,BIOME6000,0,
+818,690,1670,2217,2217,49,22.5,,,,,,BIOME6000,0,
+819,691,1671,2218,2218,49,22.5,,,,,,BIOME6000,0,
+820,692,1681,2208,2208,48.93,24.08,,,,,,BIOME6000,0,
+821,693,1673,2206,2206,48.91,22.11,,,,,,BIOME6000,0,
+822,694,1665,2207,2207,48.91,24.06,,,,,,BIOME6000,0,
+823,695,1675,2205,2205,48.88,31,,,,,,BIOME6000,0,
+824,696,1676,2199,2199,48.58,27.16,,,,,,BIOME6000,0,
+825,697,1677,2198,2198,48.56,27.16,,,,,,BIOME6000,0,
+826,698,1678,2196,2196,48.5,52.5,,,,,,BIOME6000,0,
+827,699,1679,2192,2192,48.41,21.36,,,,,,BIOME6000,0,
+828,700,1657,2193,2193,48.41,21.36,,,,,,BIOME6000,0,
+829,701,1674,2191,2191,48.26,24.35,,,,,,BIOME6000,0,
+830,702,1672,2190,2190,48.25,24.33,,,,,,BIOME6000,0,
+831,703,1650,2188,2188,48.16,24.51,,,,,,BIOME6000,0,
+832,704,1651,2185,2185,48.03,44.66,,,,,,BIOME6000,0,
+833,705,1652,2178,2178,48,41.35,,,,,,BIOME6000,0,
+834,706,1653,2179,2179,48,41.35,,,,,,BIOME6000,0,
+835,707,1654,2180,2180,48,41.35,,,,,,BIOME6000,0,
+836,708,1664,2181,2181,48,41.35,,,,,,BIOME6000,0,
+837,709,1656,2182,2182,48,41.35,,,,,,BIOME6000,0,
+838,710,1649,2183,2183,48,46.5,,,,,,BIOME6000,0,
+839,711,1658,2174,2174,47.9,46.17,,,,,,BIOME6000,0,
+840,712,1659,2168,2168,47.71,24.66,,,,,,BIOME6000,0,
+841,713,1660,2159,2159,47.58,24,,,,,,BIOME6000,0,
+842,714,1661,2152,2152,47.51,40.75,,,,,,BIOME6000,0,
+843,715,1662,2150,2150,47.5,40.75,,,,,,BIOME6000,0,
+844,716,1663,2145,2145,47.33,52.08,,,,,,BIOME6000,0,
+845,717,1601,2133,2133,47.27,37.28,,,,,,BIOME6000,0,
+846,718,1553,2134,2134,47.27,37.28,,,,,,BIOME6000,0,
+847,719,1618,2135,2135,47.27,37.28,,,,,,BIOME6000,0,
+848,720,1570,2136,2136,47.27,37.28,,,,,,BIOME6000,0,
+849,721,1571,2137,2137,47.27,38.18,,,,,,BIOME6000,0,
+850,722,1572,2138,2138,47.27,38.18,,,,,,BIOME6000,0,
+851,723,1573,2139,2139,47.27,38.18,,,,,,BIOME6000,0,
+852,724,1583,2140,2140,47.27,38.18,,,,,,BIOME6000,0,
+853,725,1575,2141,2141,47.27,38.18,,,,,,BIOME6000,0,
+854,726,1568,2142,2142,47.27,38.18,,,,,,BIOME6000,0,
+855,727,1577,2132,2132,47.17,52.17,,,,,,BIOME6000,0,
+856,728,1578,2131,2131,47.15,38.33,,,,,,BIOME6000,0,
+857,729,1579,2117,2117,46.78,20.01,,,,,,BIOME6000,0,
+858,730,1580,2096,2096,46.55,36.18,,,,,,BIOME6000,0,
+859,731,1581,2097,2097,46.55,36.18,,,,,,BIOME6000,0,
+860,732,1582,2089,2089,46.46,22.75,,,,,,BIOME6000,0,
+861,733,1560,2079,2079,46.45,33.9,,,,,,BIOME6000,0,
+862,734,1558,2080,2080,46.45,33.9,,,,,,BIOME6000,0,
+863,735,1574,2081,2081,46.45,33.9,,,,,,BIOME6000,0,
+864,736,1554,2082,2082,46.45,33.9,,,,,,BIOME6000,0,
+865,737,1555,2083,2083,46.45,33.9,,,,,,BIOME6000,0,
+866,738,1556,2072,2072,46.33,34.67,,,,,,BIOME6000,0,
+867,739,1557,2073,2073,46.33,34.67,,,,,,BIOME6000,0,
+868,740,1567,2074,2074,46.33,34.67,,,,,,BIOME6000,0,
+869,741,1559,2075,2075,46.33,34.67,,,,,,BIOME6000,0,
+870,742,1552,2066,2066,46.17,32.35,,,,,,BIOME6000,0,
+871,743,1561,2067,2067,46.17,32.35,,,,,,BIOME6000,0,
+872,744,1562,2068,2068,46.17,32.35,,,,,,BIOME6000,0,
+873,745,1563,2060,2060,45.93,26.33,,,,,,BIOME6000,0,
+874,746,1564,2058,2058,45.85,43.17,,,,,,BIOME6000,0,
+875,747,1565,2052,2052,45.83,34.33,,,,,,BIOME6000,0,
+876,748,1566,2053,2053,45.83,34.33,,,,,,BIOME6000,0,
+877,749,1590,2054,2054,45.83,34.33,,,,,,BIOME6000,0,
+878,750,1615,2046,2046,45.56,26.21,,,,,,BIOME6000,0,
+879,751,1576,2041,2041,45.42,42.85,,,,,,BIOME6000,0,
+880,752,1602,2034,2034,45.31,22.86,,,,,,BIOME6000,0,
+881,753,1603,2030,2030,45.16,21.75,,,,,,BIOME6000,0,
+882,754,1604,2023,2023,45,21,,,,,,BIOME6000,0,
+883,755,1605,2024,2024,45,21,,,,,,BIOME6000,0,
+884,756,1606,2025,2025,45,22,,,,,,BIOME6000,0,
+885,757,1616,2026,2026,45,22,,,,,,BIOME6000,0,
+886,758,1608,2020,2020,44.93,42.68,,,,,,BIOME6000,0,
+887,759,1600,2015,2015,44.85,44.68,,,,,,BIOME6000,0,
+888,760,1610,2012,2012,44.77,43,,,,,,BIOME6000,0,
+889,761,1611,2010,2010,44.75,43.42,,,,,,BIOME6000,0,
+890,762,1612,2004,2004,44.68,42.68,,,,,,BIOME6000,0,
+891,763,1613,2005,2005,44.68,43.25,,,,,,BIOME6000,0,
+892,764,1614,1998,1998,44.5,50.33,,,,,,BIOME6000,0,
+893,765,1592,1947,1947,43.41,42.15,,,,,,BIOME6000,0,
+894,766,1609,1936,1936,43.3,41.63,,,,,,BIOME6000,0,
+895,767,1607,1929,1929,43.25,23.06,,,,,,BIOME6000,0,
+896,768,1585,1930,1930,43.25,23.06,,,,,,BIOME6000,0,
+897,769,1586,1931,1931,43.25,23.06,,,,,,BIOME6000,0,
+898,770,1587,1925,1925,43.2,43.25,,,,,,BIOME6000,0,
+899,771,1588,1918,1918,43.13,23.01,,,,,,BIOME6000,0,
+900,772,1589,1911,1911,43.11,23.13,,,,,,BIOME6000,0,
+901,773,1599,1900,1900,43,44.66,,,,,,BIOME6000,0,
+902,774,1591,1885,1885,42.75,24.18,,,,,,BIOME6000,0,
+903,775,1584,1873,1873,42.61,24.31,,,,,,BIOME6000,0,
+904,776,1593,1869,1869,42.56,24.46,,,,,,BIOME6000,0,
+905,777,1594,1844,1844,42.11,44.96,,,,,,BIOME6000,0,
+906,778,1595,1841,1841,42.08,41.71,,,,,,BIOME6000,0,
+907,779,1596,1840,1840,42.06,23.58,,,,,,BIOME6000,0,
+908,780,1597,1835,1835,42,43,,,,,,BIOME6000,0,
+909,781,1598,1812,1812,41.76,23.43,,,,,,BIOME6000,0,
+910,782,1375,1811,1811,41.75,57.16,,,,,,BIOME6000,0,
+911,783,1178,1809,1809,41.71,23.33,,,,,,BIOME6000,0,
+912,784,1437,1804,1804,41.66,23.41,,,,,,BIOME6000,0,
+913,785,1246,1805,1805,41.66,23.41,,,,,,BIOME6000,0,
+914,786,1247,1806,1806,41.66,59,,,,,,BIOME6000,0,
+915,787,1248,1800,1800,41.5,58.75,,,,,,BIOME6000,0,
+916,788,1249,1799,1799,41.46,58.08,,,,,,BIOME6000,0,
+917,789,1259,1798,1798,41.41,57.58,,,,,,BIOME6000,0,
+918,790,1251,1791,1791,41.16,24.31,,,,,,BIOME6000,0,
+919,791,1244,1792,1792,41.16,57.58,,,,,,BIOME6000,0,
+920,792,1253,1789,1789,41.05,43.6,,,,,,BIOME6000,0,
+921,793,1254,1782,1782,40.9,22.63,,,,,,BIOME6000,0,
+922,794,1255,1783,1783,40.9,22.63,,,,,,BIOME6000,0,
+923,795,1256,1780,1780,40.89,22.63,,,,,,BIOME6000,0,
+924,796,1257,1781,1781,40.89,22.63,,,,,,BIOME6000,0,
+925,797,1258,1779,1779,40.82,21.78,,,,,,BIOME6000,0,
+926,798,1236,1777,1777,40.81,21.93,,,,,,BIOME6000,0,
+927,799,1234,1778,1778,40.81,21.97,,,,,,BIOME6000,0,
+928,800,1250,1776,1776,40.8,21.73,,,,,,BIOME6000,0,
+929,801,1230,1775,1775,40.79,21.23,,,,,,BIOME6000,0,
+930,802,1231,1769,1769,40.78,21.21,,,,,,BIOME6000,0,
+931,803,1232,1770,1770,40.78,21.27,,,,,,BIOME6000,0,
+932,804,1233,1771,1771,40.78,21.27,,,,,,BIOME6000,0,
+933,805,1243,1772,1772,40.78,21.9,,,,,,BIOME6000,0,
+934,806,1235,1773,1773,40.78,21.93,,,,,,BIOME6000,0,
+935,807,1228,1774,1774,40.78,43.8,,,,,,BIOME6000,0,
+936,808,1237,1766,1766,40.77,21.21,,,,,,BIOME6000,0,
+937,809,1238,1767,1767,40.77,22.4,,,,,,BIOME6000,0,
+938,810,1239,1768,1768,40.77,22.48,,,,,,BIOME6000,0,
+939,811,1240,1764,1764,40.75,22.54,,,,,,BIOME6000,0,
+940,812,1241,1765,1765,40.75,45,,,,,,BIOME6000,0,
+941,813,1242,1762,1762,40.73,21.19,,,,,,BIOME6000,0,
+942,814,1266,1763,1763,40.73,22.65,,,,,,BIOME6000,0,
+943,815,1291,1760,1760,40.69,22.34,,,,,,BIOME6000,0,
+944,816,1252,1759,1759,40.67,22.25,,,,,,BIOME6000,0,
+945,817,1278,1757,1757,40.66,21.18,,,,,,BIOME6000,0,
+946,818,1279,1758,1758,40.66,21.55,,,,,,BIOME6000,0,
+947,819,1280,1755,1755,40.65,21.18,,,,,,BIOME6000,0,
+948,820,1281,1754,1754,40.63,22.1,,,,,,BIOME6000,0,
+949,821,1282,1751,1751,40.62,22.07,,,,,,BIOME6000,0,
+950,822,1292,1752,1752,40.62,22.15,,,,,,BIOME6000,0,
+951,823,1284,1753,1753,40.62,22.2,,,,,,BIOME6000,0,
+952,824,1276,1750,1750,40.61,22.06,,,,,,BIOME6000,0,
+953,825,1286,1746,1746,40.6,21.49,,,,,,BIOME6000,0,
+954,826,1287,1747,1747,40.6,22.05,,,,,,BIOME6000,0,
+955,827,1288,1748,1748,40.6,22.05,,,,,,BIOME6000,0,
+956,828,1289,1744,1744,40.59,21.2,,,,,,BIOME6000,0,
+957,829,1290,1745,1745,40.59,22.04,,,,,,BIOME6000,0,
+958,830,1268,1742,1742,40.58,22.04,,,,,,BIOME6000,0,
+959,831,1285,1743,1743,40.58,22.71,,,,,,BIOME6000,0,
+960,832,1283,1740,1740,40.57,21.5,,,,,,BIOME6000,0,
+961,833,1261,1741,1741,40.57,22.04,,,,,,BIOME6000,0,
+962,834,1262,1730,1730,40.56,21.32,,,,,,BIOME6000,0,
+963,835,1263,1731,1731,40.56,21.32,,,,,,BIOME6000,0,
+964,836,1264,1732,1732,40.56,21.48,,,,,,BIOME6000,0,
+965,837,1265,1733,1733,40.56,21.48,,,,,,BIOME6000,0,
+966,838,1275,1734,1734,40.56,22.03,,,,,,BIOME6000,0,
+967,839,1267,1735,1735,40.56,22.13,,,,,,BIOME6000,0,
+968,840,1260,1736,1736,40.56,22.15,,,,,,BIOME6000,0,
+969,841,1269,1737,1737,40.56,22.71,,,,,,BIOME6000,0,
+970,842,1270,1728,1728,40.55,21.43,,,,,,BIOME6000,0,
+971,843,1271,1729,1729,40.55,22.16,,,,,,BIOME6000,0,
+972,844,1272,1725,1725,40.54,22.2,,,,,,BIOME6000,0,
+973,845,1273,1726,1726,40.54,22.71,,,,,,BIOME6000,0,
+974,846,1220,1722,1722,40.53,22.7,,,,,,BIOME6000,0,
+975,847,1277,1723,1723,40.53,22.7,,,,,,BIOME6000,0,
+976,848,1229,1724,1724,40.53,22.7,,,,,,BIOME6000,0,
+977,849,1181,1721,1721,40.52,22.7,,,,,,BIOME6000,0,
+978,850,1182,1716,1716,40.51,21.38,,,,,,BIOME6000,0,
+979,851,1183,1715,1715,40.5,21.35,,,,,,BIOME6000,0,
+980,852,1184,1707,1707,40.48,22.18,,,,,,BIOME6000,0,
+981,853,1185,1704,1704,40.46,22.25,,,,,,BIOME6000,0,
+982,854,1195,1703,1703,40.45,22.25,,,,,,BIOME6000,0,
+983,855,1187,1699,1699,40.44,21.34,,,,,,BIOME6000,0,
+984,856,1180,1700,1700,40.44,22.15,,,,,,BIOME6000,0,
+985,857,1189,1701,1701,40.44,22.26,,,,,,BIOME6000,0,
+986,858,1190,1698,1698,40.43,22.27,500,,,,,BIOME6000,0,
+987,859,1191,1696,1696,40.42,22.29,470,,,,,BIOME6000,0,
+988,860,1192,1695,1695,40.41,22.13,700,,,,,BIOME6000,0,
+989,861,1193,1694,1694,40.4,22.08,589,,,,,BIOME6000,0,
+990,862,1194,1691,1691,40.38,22.07,640,,,,,BIOME6000,0,
+991,863,1172,1692,1692,40.38,22.08,660,,,,,BIOME6000,0,
+992,864,1170,1686,1686,40.37,21.42,600,,,,,BIOME6000,0,
+993,865,1186,1687,1687,40.37,21.87,590,,,,,BIOME6000,0,
+994,866,1166,1688,1688,40.37,21.97,670,,,,,BIOME6000,0,
+995,867,1167,1676,1676,40.29,21.5,730,,,,,BIOME6000,0,
+996,868,1168,1677,1677,40.29,21.71,730,,,,,BIOME6000,0,
+997,869,1169,1673,1673,40.25,21.44,700,,,,,BIOME6000,0,
+998,870,1179,1674,1674,40.25,21.58,500,,,,,BIOME6000,0,
+999,871,1171,1667,1667,40.14,21.47,630,,,,,BIOME6000,0,
+1000,872,1164,1664,1664,40.12,45.6,130,,,,,BIOME6000,0,
+1001,873,1173,1662,1662,40.08,22.5,500,,,,,BIOME6000,0,
+1002,874,1174,1658,1658,40.01,21.5,660,,,,,BIOME6000,0,
+1003,875,1175,1657,1657,40,57.58,62,,,,,BIOME6000,0,
+1004,876,1176,1655,1655,39.95,21.5,663,,,,,BIOME6000,0,
+1005,877,1177,1654,1654,39.92,21.53,580,,,,,BIOME6000,0,
+1006,878,1197,1653,1653,39.91,54.16,37,,,,,BIOME6000,0,
+1007,879,1165,1652,1652,39.87,21.56,500,,,,,BIOME6000,0,
+1008,880,1188,1651,1651,39.79,21.29,580,,,,,BIOME6000,0,
+1009,881,1213,1649,1649,39.78,21.22,640,,,,,BIOME6000,0,
+1010,882,1214,1650,1650,39.78,21.32,450,,,,,BIOME6000,0,
+1011,883,1215,1647,1647,39.77,21.16,730,,,,,BIOME6000,0,
+1012,884,1216,1648,1648,39.77,21.44,586,,,,,BIOME6000,0,
+1013,885,1217,1646,1646,39.76,21.47,600,,,,,BIOME6000,0,
+1014,886,1227,1645,1645,39.75,21.13,730,,,,,BIOME6000,0,
+1015,887,1219,1644,1644,39.74,21.16,,,,,,BIOME6000,0,
+1016,888,1212,1642,1642,39.73,21.19,,,,,,BIOME6000,0,
+1017,889,1221,1643,1643,39.73,21.55,,,,,,BIOME6000,0,
+1018,890,1222,1637,1637,39.72,20.78,,,,,,BIOME6000,0,
+1019,891,1223,1638,1638,39.72,21.04,,,,,,BIOME6000,0,
+1020,892,1224,1639,1639,39.72,21.19,,,,,,BIOME6000,0,
+1021,893,1225,1640,1640,39.72,21.21,,,,,,BIOME6000,0,
+1022,894,1226,1641,1641,39.72,21.22,,,,,,BIOME6000,0,
+1023,895,1204,1633,1633,39.71,20.61,,,,,,BIOME6000,0,
+1024,896,1202,1634,1634,39.71,20.76,,,,,,BIOME6000,0,
+1025,897,1218,1635,1635,39.71,21.01,,,,,,BIOME6000,0,
+1026,898,1198,1636,1636,39.71,21.22,,,,,,BIOME6000,0,
+1027,899,1199,1632,1632,39.7,20.66,,,,,,BIOME6000,0,
+1028,900,1200,1628,1628,39.69,20.78,,,,,,BIOME6000,0,
+1029,901,1201,1629,1629,39.69,20.98,,,,,,BIOME6000,0,
+1030,902,1211,1626,1626,39.67,20.97,,,,,,BIOME6000,0,
+1031,903,1203,1625,1625,39.66,20.59,,,,,,BIOME6000,0,
+1032,904,1196,1624,1624,39.62,20.53,,,,,,BIOME6000,0,
+1033,905,1205,1623,1623,39.6,20.52,,,,,,BIOME6000,0,
+1034,906,1206,1621,1621,39.58,20.5,,,,,,BIOME6000,0,
+1035,907,1207,1620,1620,39.55,20.47,,,,,,BIOME6000,0,
+1036,908,1208,1619,1619,39.54,20.45,,,,,,BIOME6000,0,
+1037,909,1209,1617,1617,39.53,20.32,,,,,,BIOME6000,0,
+1038,910,1210,1618,1618,39.53,21.51,,,,,,BIOME6000,0,
+1039,911,1310,1615,1615,39.52,20.4,,,,,,BIOME6000,0,
+1040,912,1407,1613,1613,39.49,20.86,,,,,,BIOME6000,0,
+1041,913,1274,1610,1610,39.47,20.88,,,,,,BIOME6000,0,
+1042,914,1376,1604,1604,39.41,53.5,,,,,,BIOME6000,0,
+1043,915,1377,1605,1605,39.41,54.33,,,,,,BIOME6000,0,
+1044,916,1378,1606,1606,39.41,54.75,,,,,,BIOME6000,0,
+1045,917,1379,1607,1607,39.41,57.41,,,,,,BIOME6000,0,
+1046,918,1389,1598,1598,39.33,55.66,,,,,,BIOME6000,0,
+1047,919,1381,1596,1596,39.22,22.8,,,,,,BIOME6000,0,
+1048,920,1374,1593,1593,39.08,57.08,,,,,,BIOME6000,0,
+1049,921,1383,1592,1592,39,31.12,,,,,,BIOME6000,0,
+1050,922,1384,1591,1591,38.96,54.12,,,,,,BIOME6000,0,
+1051,923,1385,1590,1590,38.91,40.43,,,,,,BIOME6000,0,
+1052,924,1386,1589,1589,38.87,40.2,,,,,,BIOME6000,0,
+1053,925,1387,1588,1588,38.81,31.06,,,,,,BIOME6000,0,
+1054,926,1388,1586,1586,38.77,40.98,,,,,,BIOME6000,0,
+1055,927,1366,1583,1583,38.58,40.5,,,,,,BIOME6000,0,
+1056,928,1364,1580,1580,38.52,40.5,,,,,,BIOME6000,0,
+1057,929,1380,1577,1577,38.5,39.53,,,,,,BIOME6000,0,
+1058,930,1360,1578,1578,38.5,41.03,,,,,,BIOME6000,0,
+1059,931,1361,1574,1574,38.47,39.55,,,,,,BIOME6000,0,
+1060,932,1362,1573,1573,38.4,39.67,,,,,,BIOME6000,0,
+1061,933,1363,1572,1572,38.39,31.94,,,,,,BIOME6000,0,
+1062,934,1373,1569,1569,38.34,31.38,,,,,,BIOME6000,0,
+1063,935,1365,1568,1568,38.28,39.75,,,,,,BIOME6000,0,
+1064,936,1358,1567,1567,38.2,39.82,,,,,,BIOME6000,0,
+1065,937,1367,1561,1561,38.18,39.72,,,,,,BIOME6000,0,
+1066,938,1368,1562,1562,38.18,39.72,,,,,,BIOME6000,0,
+1067,939,1369,1563,1563,38.18,39.72,,,,,,BIOME6000,0,
+1068,940,1370,1564,1564,38.18,39.72,,,,,,BIOME6000,0,
+1069,941,1371,1565,1565,38.18,39.72,,,,,,BIOME6000,0,
+1070,942,1372,1566,1566,38.18,39.88,,,,,,BIOME6000,0,
+1071,943,1396,1560,1560,38.17,41.47,,,,,,BIOME6000,0,
+1072,944,1421,1559,1559,38.13,41.67,,,,,,BIOME6000,0,
+1073,945,1382,1558,1558,38.07,40.05,,,,,,BIOME6000,0,
+1074,946,1408,1556,1556,38,42.05,,,,,,BIOME6000,0,
+1075,947,1409,1554,1554,37.98,40.17,,,,,,BIOME6000,0,
+1076,948,1410,1555,1555,37.98,41.85,,,,,,BIOME6000,0,
+1077,949,1411,1550,1550,37.95,27.63,,,,,,BIOME6000,0,
+1078,950,1412,1551,1551,37.95,27.63,,,,,,BIOME6000,0,
+1079,951,1422,1547,1547,37.93,28.55,,,,,,BIOME6000,0,
+1080,952,1414,1548,1548,37.93,42.23,,,,,,BIOME6000,0,
+1081,953,1406,1549,1549,37.93,42.49,,,,,,BIOME6000,0,
+1082,954,1416,1544,1544,37.92,27.35,,,,,,BIOME6000,0,
+1083,955,1417,1545,1545,37.92,42.26,,,,,,BIOME6000,0,
+1084,956,1418,1546,1546,37.92,42.42,,,,,,BIOME6000,0,
+1085,957,1419,1540,1540,37.91,40.1,,,,,,BIOME6000,0,
+1086,958,1420,1541,1541,37.91,42.36,,,,,,BIOME6000,0,
+1087,959,1398,1539,1539,37.9,30.51,,,,,,BIOME6000,0,
+1088,960,1415,1537,1537,37.89,27.74,,,,,,BIOME6000,0,
+1089,961,1413,1538,1538,37.89,27.74,,,,,,BIOME6000,0,
+1090,962,1391,1535,1535,37.88,27.25,,,,,,BIOME6000,0,
+1091,963,1392,1536,1536,37.88,37.28,,,,,,BIOME6000,0,
+1092,964,1393,1534,1534,37.87,30.41,,,,,,BIOME6000,0,
+1093,965,1394,1532,1532,37.85,28.86,,,,,,BIOME6000,0,
+1094,966,1395,1531,1531,37.82,27.38,,,,,,BIOME6000,0,
+1095,967,1405,1529,1529,37.8,29.39,,,,,,BIOME6000,0,
+1096,968,1397,1528,1528,37.79,28.59,,,,,,BIOME6000,0,
+1097,969,1390,1527,1527,37.77,28.57,,,,,,BIOME6000,0,
+1098,970,1399,1525,1525,37.76,29.17,,,,,,BIOME6000,0,
+1099,971,1400,1524,1524,37.75,37.55,,,,,,BIOME6000,0,
+1100,972,1401,1521,1521,37.74,27.85,,,,,,BIOME6000,0,
+1101,973,1402,1522,1522,37.74,30.89,,,,,,BIOME6000,0,
+1102,974,1403,1519,1519,37.72,39.42,,,,,,BIOME6000,0,
+1103,975,1404,1518,1518,37.69,29.24,,,,,,BIOME6000,0,
+1104,976,1342,1517,1517,37.67,30.34,,,,,,BIOME6000,0,
+1105,977,1294,1513,1513,37.65,27.96,,,,,,BIOME6000,0,
+1106,978,1359,1514,1514,37.65,31.62,,,,,,BIOME6000,0,
+1107,979,1311,1509,1509,37.6,29.27,,,,,,BIOME6000,0,
+1108,980,1312,1506,1506,37.55,30.43,,,,,,BIOME6000,0,
+1109,981,1313,1505,1505,37.53,29.66,,,,,,BIOME6000,0,
+1110,982,1314,1504,1504,37.52,28.03,,,,,,BIOME6000,0,
+1111,983,1324,1502,1502,37.51,21.56,,,,,,BIOME6000,0,
+1112,984,1316,1501,1501,37.5,29.48,,,,,,BIOME6000,0,
+1113,985,1309,1499,1499,37.45,30.53,,,,,,BIOME6000,0,
+1114,986,1318,1498,1498,37.39,29.42,,,,,,BIOME6000,0,
+1115,987,1319,1496,1496,37.38,30.75,,,,,,BIOME6000,0,
+1116,988,1320,1497,1497,37.38,38.85,,,,,,BIOME6000,0,
+1117,989,1321,1495,1495,37.36,28.17,,,,,,BIOME6000,0,
+1118,990,1322,1491,1491,37.28,30.52,,,,,,BIOME6000,0,
+1119,991,1323,1492,1492,37.28,39.08,,,,,,BIOME6000,0,
+1120,992,1301,1490,1490,37.27,38.53,,,,,,BIOME6000,0,
+1121,993,1299,1486,1486,37.22,28.22,,,,,,BIOME6000,0,
+1122,994,1315,1487,1487,37.22,38.5,,,,,,BIOME6000,0,
+1123,995,1295,1488,1488,37.22,38.5,,,,,,BIOME6000,0,
+1124,996,1296,1489,1489,37.22,38.5,,,,,,BIOME6000,0,
+1125,997,1297,1477,1477,37.15,28.34,,,,,,BIOME6000,0,
+1126,998,1298,1478,1478,37.15,30.56,,,,,,BIOME6000,0,
+1127,999,1308,1473,1473,37.13,31.82,,,,,,BIOME6000,0,
+1128,1000,1300,1459,1459,37.11,31.82,,,,,,BIOME6000,0,
+1129,1001,1293,1460,1460,37.11,31.82,,,,,,BIOME6000,0,
+1130,1002,1302,1457,1457,37.1,28.44,,,,,,BIOME6000,0,
+1131,1003,1303,1454,1454,37.09,30.6,,,,,,BIOME6000,0,
+1132,1004,1304,1446,1446,37.05,30.48,,,,,,BIOME6000,0,
+1133,1005,1305,1447,1447,37.05,30.57,,,,,,BIOME6000,0,
+1134,1006,1306,1441,1441,37.04,28.69,,,,,,BIOME6000,0,
+1135,1007,1307,1440,1440,37.03,30.04,,,,,,BIOME6000,0,
+1136,1008,1331,1432,1432,37.01,28.54,,,,,,BIOME6000,0,
+1137,1009,1356,1433,1433,37.01,28.67,,,,,,BIOME6000,0,
+1138,1010,1317,1430,1430,36.99,28.44,,,,,,BIOME6000,0,
+1139,1011,1343,1429,1429,36.98,30.67,,,,,,BIOME6000,0,
+1140,1012,1344,1424,1424,36.96,21.66,,,,,,BIOME6000,0,
+1141,1013,1345,1423,1423,36.95,30.16,,,,,,BIOME6000,0,
+1142,1014,1346,1416,1416,36.9,28.73,,,,,,BIOME6000,0,
+1143,1015,1347,1413,1413,36.84,28.63,,,,,,BIOME6000,0,
+1144,1016,1357,1414,1414,36.84,30.05,,,,,,BIOME6000,0,
+1145,1017,1349,1407,1407,36.79,28.78,,,,,,BIOME6000,0,
+1146,1018,1341,1393,1393,36.63,29.91,,,,,,BIOME6000,0,
+1147,1019,1351,1391,1391,36.59,29.97,,,,,,BIOME6000,0,
+1148,1020,1352,1392,1392,36.59,29.97,,,,,,BIOME6000,0,
+1149,1021,1353,1390,1390,36.56,29.9,,,,,,BIOME6000,0,
+1150,1022,1354,1386,1386,36.46,35.85,,,,,,BIOME6000,0,
+1151,1023,1355,1384,1384,36.43,35.85,,,,,,BIOME6000,0,
+1152,1024,1333,1385,1385,36.43,40.88,,,,,,BIOME6000,0,
+1153,1025,1350,1383,1383,36.41,41.06,,,,,,BIOME6000,0,
+1154,1026,1348,1381,1381,36.4,40.83,,,,,,BIOME6000,0,
+1155,1027,1326,1382,1382,36.4,41.14,,,,,,BIOME6000,0,
+1156,1028,1327,1380,1380,36.38,40.68,,,,,,BIOME6000,0,
+1157,1029,1328,1379,1379,36.37,40.21,,,,,,BIOME6000,0,
+1158,1030,1329,1377,1377,36.29,35.85,,,,,,BIOME6000,0,
+1159,1031,1330,1376,1376,36.26,35.85,,,,,,BIOME6000,0,
+1160,1032,1340,1374,1374,36.17,41.02,,,,,,BIOME6000,0,
+1161,1033,1332,1373,1373,36.15,40.79,,,,,,BIOME6000,0,
+1163,1800,7705,Lake Shabla Eseretz,Shabla-Ezeretz lake,43.5672222222222,28.5675,14,"coastal, lacustrine",surface sample,,medium (1.1-50 km2),EMBSECBIO,-55,
+1163,1886,8863,Lake Shabla Eseretz,EMPD_Bulga31,43.55,28.53333333,0,"coastal, lacustrine",surface sample,,medium (1.1-50 km2),EMPD,0,
+1163,1894,8871,Lake Shabla Eseretz,Lake Shabla Ezeretz                        ,43.585833,28.564444,1,"coastal, lacustrine",core,,medium (1.1-50 km2),EMPD,0,
+1172,1058,6037,Dead Sea,Dead Sea DS7-1SC core,31.493,35.4361,-402,"lacustrine, natural open-water",profile or section,,large (50.1-500 km2),EMBSECBIO,-42,0.025
+1173,1060,5416,DM-13,DM-13,40.5,27.53,,marine,marine core,,large (50.1-500 km2),EMBSECBIO,-48,0
+1178,1071,5446,KL-97,KL-97,40.88,28.67,,marine,marine core,unknown,large (50.1-500 km2),EMBSECBIO,0,0
+1201,1366,5293,Golestan lowland,Golestan R1,37.3722,55.9292,900,"terrestrial, other sediments",,,small (0.01-1 km2),EMBSECBIO,0,
+1201,1367,5294,Golestan lowland,Golestan R2,37.3708,55.9375,800,"terrestrial, other sediments",,,small (0.01-1 km2),EMBSECBIO,0,
+1201,1368,5295,Golestan lowland,Golestan R3,37.3708,55.9389,800,"terrestrial, other sediments",,,small (0.01-1 km2),EMBSECBIO,0,
+1201,1369,5296,Golestan lowland,Golestan R4,37.3666,55.9444,900,"terrestrial, other sediments",,,small (0.01-1 km2),EMBSECBIO,0,
+1201,1370,5297,Golestan lowland,Golestan R5,37.3711,55.9514,900,"terrestrial, other sediments",,,small (0.01-1 km2),EMBSECBIO,0,
+1201,1371,5298,Golestan lowland,Golestan R6,37.3711,55.9631,900,"terrestrial, other sediments",,,small (0.01-1 km2),EMBSECBIO,0,
+1201,1372,5299,Golestan lowland,Golestan R7,37.3722,55.9767,850,"terrestrial, other sediments",,,small (0.01-1 km2),EMBSECBIO,0,
+1201,1373,5300,Golestan lowland,Golestan R8,37.3669,56.0014,1000,"terrestrial, other sediments",,,small (0.01-1 km2),EMBSECBIO,0,
+1201,1374,5301,Golestan lowland,Golestan R9,37.3583,56.0042,900,"terrestrial, other sediments",,,small (0.01-1 km2),EMBSECBIO,0,
+1201,1375,5302,Golestan lowland,Golestan R10,37.35,56.1167,1100,"terrestrial, other sediments",,,small (0.01-1 km2),EMBSECBIO,0,
+1201,1376,5303,Golestan lowland,Golestan R11,37.35,56.1167,1100,"terrestrial, other sediments",,,small (0.01-1 km2),EMBSECBIO,0,
+1201,1377,5304,Golestan lowland,Golestan R12,37.6194,56.0069,950,"terrestrial, other sediments",,,small (0.01-1 km2),EMBSECBIO,0,
+1201,1378,5305,Golestan lowland,Golestan R13,37.3439,56.0256,1500,"terrestrial, other sediments",,,small (0.01-1 km2),EMBSECBIO,0,
+1201,1379,5306,Golestan lowland,Golestan R14,37.3369,56.0256,1300,"terrestrial, other sediments",,,small (0.01-1 km2),EMBSECBIO,0,
+1201,1380,5307,Golestan lowland,Golestan R15,37.3303,56.0222,1000,"terrestrial, other sediments",,,small (0.01-1 km2),EMBSECBIO,0,
+1202,1381,5290,Golestan upland,Golestan R16,37.35,56.15,1800,"terrestrial, other sediments",,,small (0.01-1 km2),EMBSECBIO,0,
+1202,1382,5291,Golestan upland,Golestan R17,37.35,56.1833,1450,"terrestrial, other sediments",,,small (0.01-1 km2),EMBSECBIO,0,
+1202,1383,5292,Golestan upland,Golestan R18,37.35,56.1833,1450,"terrestrial, other sediments",,,small (0.01-1 km2),EMBSECBIO,0,
+1203,1387,5308,SS DJM PEAK,SS DJM PEAK,36.478056,51.506667,2370,"terrestrial, mire, bog",moss polster or moss,,small (0.01-1 km2),Author,0,0
+1204,1388,5309,SS DJM ECOT,SS DJM ECOT,36.478889,51.509722,2300,"terrestrial, mire, bog",moss polster or moss,,small (0.01-1 km2),Author,0,0
+1205,1389,5310,SS DJM FAG 1,SS DJM FAG 1,36.483889,51.511111,2130,"terrestrial, mire, bog",moss polster or moss,,small (0.01-1 km2),Author,0,0
+1206,1390,5311,SS DJM FAG 2,SS DJM FAG 2,36.487778,51.512222,2010,"terrestrial, mire, bog",moss polster or moss,,small (0.01-1 km2),Author,0,0
+1207,1391,5312,SS DJM FAG 3,SS DJM FAG 3,36.490833,51.513611,1810,"terrestrial, mire, bog",moss polster or moss,,small (0.01-1 km2),Author,0,0
+1208,1392,5313,SS DJM FAG 4,SS DJM FAG 4,36.492222,51.515556,1690,"terrestrial, mire, bog",moss polster or moss,,small (0.01-1 km2),Author,0,0
+1209,1393,5314,SS DJM MIRE,SS DJM MIRE,36.501944,51.506944,1550,"terrestrial, mire, bog",peat surface,,medium (1.1-50 km2),Author,0,0
+1210,1394,5315,SS DJM FAG 5,SS DJM FAG 5,36.4975,51.520833,1470,"terrestrial, mire, bog",moss polster or moss,,small (0.01-1 km2),Author,0,0
+1211,1395,5316,SS DJM FAG 6,SS DJM FAG 6,36.506944,51.513056,1320,"terrestrial, mire, bog",moss polster or moss,,small (0.01-1 km2),Author,0,0
+1212,1396,5317,SS GZN SPOT N,SS GZN SPOT N,36.555833,51.643056,1220,"terrestrial, mire, bog",moss polster or moss,,small (0.01-1 km2),Author,0,0
+1213,1397,5318,SS GZN SPOT S,SS GZN SPOT S,36.555833,51.643056,1200,"terrestrial, mire, bog",moss polster or moss,,small (0.01-1 km2),Author,0,0
+1214,1398,5319,SS DJM FAG 7,SS DJM FAG 7,36.561944,51.515278,1140,"terrestrial, mire, bog",moss polster or moss,,small (0.01-1 km2),Author,0,0
+1215,1399,5320,SSLARU 1,SSLARU 1,36.518889,51.51,1030,"terrestrial, mire, bog",moss polster or moss,,small (0.01-1 km2),Author,0,0
+1216,1400,5321,SSLARU 2,SSLARU 2,36.523889,51.508889,940,"terrestrial, mire, bog",moss polster or moss,,small (0.01-1 km2),Author,0,0
+1217,1401,5322,SSLARU 3,SSLARU 3,36.540278,51.513611,700,"terrestrial, mire, bog",moss polster or moss,,small (0.01-1 km2),Author,0,0
+1218,1402,5323,LARG 600,LARG 600,36.55,51.510556,600,"terrestrial, mire, bog",moss polster or moss,,small (0.01-1 km2),Author,0,0
+1219,1403,5324,EIGMIREPLT,EIGMIREPLT,36.543333,51.483333,560,"terrestrial, mire, bog",moss polster or moss,,small (0.01-1 km2),Author,0,0
+1220,1404,5325,LARU 520,LARU 520,36.556111,51.501667,520,"terrestrial, mire, bog",moss polster or moss,,small (0.01-1 km2),Author,0,0
+1221,1405,5326,LIRSARA 400,LIRSARA 400,36.564167,51.517222,400,"terrestrial, mire, bog",moss polster or moss,,small (0.01-1 km2),Author,0,0
+1222,1406,5327,LIRSARA,LIRSARA,36.571667,51.52,300,"terrestrial, mire, bog",moss polster or moss,,small (0.01-1 km2),Author,0,0
+1223,1407,5328,CARP-PAROT,CARP-PAROT,36.605,51.524167,180,"terrestrial, mire, bog",moss polster or moss,,small (0.01-1 km2),Author,0,0
+1224,1408,5329,ESKANSP501,ESKANSP501,36.593056,51.5225,160,"terrestrial, mire, bog",moss polster or moss,,small (0.01-1 km2),Author,0,0
+1225,1409,5330,ESKANFORES,ESKANFORES,36.594444,51.520278,150,"terrestrial, mire, bog",moss polster or moss,,small (0.01-1 km2),Author,0,0
+1226,1410,5331,BUXSUS,BUXSUS,36.610833,51.526389,75,"terrestrial, mire, bog",moss polster or moss,,small (0.01-1 km2),Author,0,0
+1230,1414,5360,Straldza,Straldza,42.6308,26.7728,137,"terrestrial, mire, fen",peat core,lacustrine mud,medium (1.1-50 km2),EPD,-36,0.1
+1230,1828,10706,Straldza,Straldzha mire CANAL,42.6308,26.7728,137,"terrestrial, mire, fen",core,sediment,medium (1.1-50 km2),EPD,0,0.2
+1230,1828,10707,Straldza,Straldzha mire CANAL,42.6308,26.7728,137,"terrestrial, mire, fen",core,sediment,medium (1.1-50 km2),EPD,0,0.4
+1230,1828,10708,Straldza,Straldzha mire CANAL,42.6308,26.7728,137,"terrestrial, mire, fen",core,sediment,medium (1.1-50 km2),EPD,-57,0.6
+1231,1415,5507,"Azov sea cost, site1","Azov, site1",46.3728,37.97361,0,"terrestrial, soil",soil sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+1232,1416,5508,"Azov sea cost, site2","Azov, site2",46.72997,38.39834,0,"terrestrial, soil",soil sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+1233,1417,5509,"Azov sea cost, site3","Azov, site3",46.6844,37.7336,0,"terrestrial, soil",soil sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+1234,1418,5510,"Azov sea cost, site4","Azov, site4",45.23435,36.7719,0,"terrestrial, soil",soil sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+1235,1419,5511,"Azov sea cost, site5","Azov, site5",46.86432,38.47795,0,"terrestrial, soil",soil sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+1236,1420,5512,"Azov sea cost, site6","Azov, site6",45.30955,36.79867,0,"terrestrial, soil",soil sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+1237,1421,5513,"Azov sea cost, site7","Azov, site7",45.2025,36.6105,0,"terrestrial, soil",soil sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+1238,1422,5514,"Azov sea cost, site8","Azov, site8",45.36737,36.77222,0,"terrestrial, soil",soil sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+1239,1423,5515,"Azov sea cost, site9","Azov, site9",46.8647,38.47707,0,"terrestrial, soil",soil sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+1240,1424,5516,"Azov sea cost, site10","Azov, site10",46.2593,38.29004,0,"terrestrial, soil",soil sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+1241,1425,5517,"Azov sea cost, site11","Azov, site11",45.44601,36.82801,0,"terrestrial, soil",soil sample,,medium (1.1-50 km2),EMBSECBIO,0,0
+1242,1426,5518,"Azov sea, core133","Azov, core133",46.5516,36.755,0,marine,core top,marine mud,large (50.1-500 km2),EMBSECBIO,0,3
+1243,1427,5519,"Azov sea, core86","Azov, core185",45.6858,37.3213,0,marine,core top,marine mud,large (50.1-500 km2),EMBSECBIO,0,5
+1244,1428,5520,"Azov sea, core185","Azov, core87",46.8319,38.0094,0,marine,core top,marine sediment,large (50.1-500 km2),EMBSECBIO,0,5
+1245,1598,6169,Amirkola Lagoon,Amirkola Surface samples_1,37.33366,50.187,-26,"coastal, other",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-56,
+1245,1599,6170,Amirkola Lagoon,Amirkola Surface samples_2,37.33338,50.18336,-26,"coastal, other",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-56,
+1245,1600,6171,Amirkola Lagoon,Amirkola Surface samples_3,37.3303,50.183525,-26,"coastal, other",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-56,
+1245,1601,6172,Amirkola Lagoon,Amirkola Surface samples_4,37.3282,50.1802,-26,"coastal, other",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-56,
+1245,1602,6173,Amirkola Lagoon,Amirkola Surface samples_5,37.3308,50.18896,-28,"coastal, other",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-56,
+1245,1603,6174,Amirkola Lagoon,Amirkola Surface samples_6,37.3437,50.200319,-28,"coastal, other",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-56,
+1245,1604,6175,Amirkola Lagoon,Amirkola Surface samples_7,37.3419,50.1966,-28,"coastal, other",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-56,
+1246,1506,6093,Lake Sapanca,Sapanca long core SA03R6,40.718056,30.258333,30,"lacustrine, natural open-water",core,,medium (1.1-50 km2),EMBSECBIO,18,0.185
+1247,1508,6131,Sapanca modern pollen samples,Esme-Ahmediye,40.75241,30.246,177,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1509,6132,Sapanca modern pollen samples,Kuru river_1,40.73694,30.22,44,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1510,6133,Sapanca modern pollen samples,Chicken farm,40.72194,30.1738,36,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1511,6134,Sapanca modern pollen samples,Quercus,40.77763,30.1814,385,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1512,6135,Sapanca modern pollen samples,Findik upstream,40.88805,30.17408,187,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1513,6136,Sapanca modern pollen samples,Dagtarla Hill,40.755833,30.21897,354,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1514,6137,Sapanca modern pollen samples,Pinus,40.86472,30.24,425,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1515,6138,Sapanca modern pollen samples,Keltepe Rd 600,40.838055,30.1495,600,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1516,6139,Sapanca modern pollen samples,Keltepe Rd 800,40.82027,30.1354,800,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1517,6140,Sapanca modern pollen samples,Carpinus,40.656666,30.2089,1039,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1518,6141,Sapanca modern pollen samples,Picea ,40.81222,30.1975,1097,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1519,6142,Sapanca modern pollen samples,Abies 1120,40.62583,30.19633,1120,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1520,6143,Sapanca modern pollen samples,Keltepe 1460,40.6575,30.08603,1460,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1521,6144,Sapanca modern pollen samples,Bogaz/Sakarya,40.63661,30.34075,80,"terrestrial, other sediments",sediment sample,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1522,6145,Sapanca modern pollen samples,Kum Tepe,40.75181,30.23991,100,"terrestrial, other sediments",sediment sample,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1523,6146,Sapanca modern pollen samples,Kuru river_2,40.73694,30.22016,44,"terrestrial, other sediments",sediment sample,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1524,6147,Sapanca modern pollen samples,ChickenFarmMud,40.72194,30.17388,36,"terrestrial, other sediments",sediment sample,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1525,6148,Sapanca modern pollen samples,Balkaya,40.66063,30.24255,250,"terrestrial, other sediments",sediment sample,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1526,6149,Sapanca modern pollen samples,Guldibi,40.66907,30.2527,86,"terrestrial, other sediments",sediment sample,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1527,6150,Sapanca modern pollen samples,Mahmudiye delta,40.70363,30.235897,41,"terrestrial, other sediments",sediment sample,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1528,6151,Sapanca modern pollen samples,Kurtkoy delta,40.70861,30.1859,32,"terrestrial, other sediments",sediment sample,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1529,6152,Sapanca modern pollen samples,Karacay river,40.702005,30.18047,67,"terrestrial, other sediments",sediment sample,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1530,6153,Sapanca modern pollen samples,Musmula river,40.719444,30.147555,30,"terrestrial, other sediments",sediment sample,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1531,6154,Sapanca modern pollen samples,regulator,40.7188,30.3418,28,"terrestrial, other sediments",sediment sample,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1532,6155,Sapanca modern pollen samples,tennis club,40.72222,30.318,31,"terrestrial, other sediments",sediment sample,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1533,6156,Sapanca modern pollen samples,Atmaca street,40.71961,30.33584,30,"terrestrial, other sediments",sediment sample,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1534,6157,Sapanca modern pollen samples,E. of Nehirkent,40.68504,30.368775,30,"terrestrial, other sediments",sediment sample,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1535,6158,Sapanca modern pollen samples,Adliye bridge,40.6741,30.3687,34,"terrestrial, other sediments",sediment sample,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1536,6159,Sapanca modern pollen samples,Dogancay,40.63472,30.331,55,"terrestrial, other sediments",sediment sample,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1537,6160,Sapanca modern pollen samples,K1.2,40.7319,30.2527,29.05,"terrestrial, other sediments",sediment sample,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1538,6161,Sapanca modern pollen samples,K2.1,40.7277,30.252,31.05,"terrestrial, other sediments",sediment sample,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1539,6162,Sapanca modern pollen samples,K6.1,40.71805,30.2583,52,"terrestrial, other sediments",sediment sample,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1540,6163,Sapanca modern pollen samples,K7.1,40.718,30.26805,54,"terrestrial, other sediments",sediment sample,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1541,6164,Sapanca modern pollen samples,KA.2,40.71483,30.17419,15.2,"terrestrial, other sediments",sediment sample,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1542,6165,Sapanca modern pollen samples,KB.2,40.715472,30.16555,11,"terrestrial, other sediments",sediment sample,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1543,6166,Sapanca modern pollen samples,KC.2,40.7151,30.1614,4.5,"terrestrial, other sediments",sediment sample,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1544,6167,Sapanca modern pollen samples,KD.1,40.714722,30.1819,21.7,"terrestrial, other sediments",sediment sample,,medium (1.1-50 km2),EMBSECBIO,0,
+1247,1545,6168,Sapanca modern pollen samples,KE.2,40.726527,30.2033,25,"terrestrial, other sediments",sediment sample,,medium (1.1-50 km2),EMBSECBIO,0,
+1248,1605,6176,Stara planina,Central Stara Planina N1,42.735,25.32138,1310,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-52,
+1248,1605,6177,Stara planina,Central Stara Planina N1,42.735,25.32138,1310,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-53,
+1248,1605,6178,Stara planina,Central Stara Planina N1,42.735,25.32138,1310,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-54,
+1248,1606,6179,Stara planina,Central Stara Planina N2,42.746,25.3258,1195,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-52,
+1248,1606,6180,Stara planina,Central Stara Planina N2,42.746,25.3258,1195,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-53,
+1248,1606,6181,Stara planina,Central Stara Planina N2,42.746,25.3258,1195,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-54,
+1248,1606,6182,Stara planina,Central Stara Planina N2,42.746,25.3258,1195,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-55,
+1248,1607,6183,Stara planina,Central Stara Planina N3,42.738,25.325,1061,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-52,
+1248,1607,6184,Stara planina,Central Stara Planina N3,42.738,25.325,1061,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-53,
+1248,1607,6185,Stara planina,Central Stara Planina N3,42.738,25.325,1061,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-54,
+1248,1607,6186,Stara planina,Central Stara Planina N3,42.738,25.325,1061,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-55,
+1248,1608,6187,Stara planina,Central Stara Planina N4,42.7244,25.323,895,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-52,
+1248,1608,6188,Stara planina,Central Stara Planina N4,42.7244,25.323,895,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-53,
+1248,1608,6189,Stara planina,Central Stara Planina N4,42.7244,25.323,895,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-54,
+1248,1609,6190,Stara planina,Central Stara Planina N5,42.717,25.3202,690,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-52,
+1248,1609,6191,Stara planina,Central Stara Planina N5,42.717,25.3202,690,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-53,
+1248,1609,6192,Stara planina,Central Stara Planina N5,42.717,25.3202,690,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-54,
+1249,1685,6193,Lake Sudochie, SD10PVC4 core,43.585,58.544,50,"lacustrine, natural open-water",core top,,medium (1.1-50 km2),EMBSECBIO,-60,
+1251,1687,6345,Beg Bunar Osogovo Mts.,Beg Bunar peat bog,42.1525,22.535,1750,"terrestrial, mire, bog",peat core,,medium (1.1-50 km2),EPD,-50,0
+1253,1690,6511,Athos Basin,GeoTü SL152,40.1,24.36,0,marine,marine core,,large (50.1-500 km2),EMBSECBIO,16,0.005
+1254,1691,6672,Steregoiu,Steregoiu,47.813,23.5447,790,"lacustrine, volcanic lake",peat core,,medium (1.1-50 km2),EPD,-39,0.005
+1254,1691,6673,Steregoiu,Steregoiu,47.813,23.5447,790,"lacustrine, volcanic lake",peat core,,medium (1.1-50 km2),EPD,-10,0.02
+1254,1691,6674,Steregoiu,Steregoiu,47.813,23.5447,790,"lacustrine, volcanic lake",peat core,,medium (1.1-50 km2),EPD,36,0.045
+1256,1693,6943,Mohos,Mohos1,46.083,25.9167,1050,"terrestrial, mire, bog",peat or bog sediment,,small (0.01-1 km2),EPD,-17,0
+1256,1693,6944,Mohos,Mohos1,46.083,25.9167,1050,"terrestrial, mire, bog",peat or bog sediment,,small (0.01-1 km2),EPD,1,0.1
+1256,1693,6945,Mohos,Mohos1,46.083,25.9167,1050,"terrestrial, mire, bog",peat or bog sediment,,small (0.01-1 km2),EPD,10,0.15
+1256,1693,6946,Mohos,Mohos1,46.083,25.9167,1050,"terrestrial, mire, bog",peat or bog sediment,,small (0.01-1 km2),EPD,19,0.2
+1256,1693,6947,Mohos,Mohos1,46.083,25.9167,1050,"terrestrial, mire, bog",peat or bog sediment,,small (0.01-1 km2),EPD,29,0.25
+1256,1693,6948,Mohos,Mohos1,46.083,25.9167,1050,"terrestrial, mire, bog",peat or bog sediment,,small (0.01-1 km2),EPD,38,0.3
+1256,1693,6949,Mohos,Mohos1,46.083,25.9167,1050,"terrestrial, mire, bog",peat or bog sediment,,small (0.01-1 km2),EPD,47,0.35
+1257,1694,7142,Dry Lake,Dry Lake 2,42.038,23.533,1900,"lacustrine, natural open-water",core,,medium (1.1-50 km2),EPD,0,0.1
+1257,1694,7143,Dry Lake,Dry Lake 2,42.038,23.533,1900,"lacustrine, natural open-water",core,,medium (1.1-50 km2),EPD,24,0.12
+1259,1696,7317,Argive plain,Argive plain ,37.730278,22.755833,240,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-40,0
+1259,1696,7318,Argive plain,Argive plain ,37.730278,22.755833,240,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-40,0
+1259,1696,7319,Argive plain,Argive plain ,37.730278,22.755833,240,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-40,0
+1259,1696,7320,Argive plain,Argive plain ,37.730278,22.755833,240,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-40,0
+1259,1696,7321,Argive plain,Argive plain ,37.730278,22.755833,240,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-40,0
+1259,1696,7322,Argive plain,Argive plain ,37.730278,22.755833,240,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-40,0
+1259,1696,7323,Argive plain,Argive plain ,37.730278,22.755833,240,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-40,0
+1259,1696,7324,Argive plain,Argive plain ,37.730278,22.755833,240,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-40,0
+1259,1696,7325,Argive plain,Argive plain ,37.730278,22.755833,240,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-40,0
+1259,1696,7326,Argive plain,Argive plain ,37.730278,22.755833,240,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-40,0
+1260,1697,7327," Attika, Anavyssos",Attika village Anavyssos/1,37.71972,24.096389,30,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-41,0
+1260,1697,7328," Attika, Anavyssos",Attika village Anavyssos/1,37.71972,24.096389,30,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-41,0
+1260,1697,7329," Attika, Anavyssos",Attika village Anavyssos/1,37.71972,24.096389,30,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-41,0
+1260,1697,7330," Attika, Anavyssos",Attika village Anavyssos/1,37.71972,24.096389,30,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-41,0
+1261,1698,7331,Katouna ,Katouna depression,38.795,21.1275,350,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-49,0
+1261,1698,7332,Katouna ,Katouna depression,38.795,21.1275,350,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-49,0
+1261,1698,7333,Katouna ,Katouna depression,38.795,21.1275,350,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-49,0
+1261,1698,7334,Katouna ,Katouna depression,38.795,21.1275,350,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-49,0
+1261,1698,7335,Katouna ,Katouna depression,38.795,21.1275,350,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-49,0
+1261,1698,7336,Katouna ,Katouna depression,38.795,21.1275,350,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-49,0
+1261,1698,7337,Katouna ,Katouna depression,38.795,21.1275,350,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-49,0
+1262,1699,7338,Menalo mountains,Menalo mountains,37.569167,22.2066666666667,1200,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-41,0
+1263,1700,7339,Psatha Bay surface samples,Psatha Bay,38.2202778,23.2202778,15,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-41,0
+1263,1700,7340,Psatha Bay surface samples,Psatha Bay,38.2202778,23.2202778,15,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-41,0
+1263,1700,7341,Psatha Bay surface samples,Psatha Bay,38.2202778,23.2202778,15,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-41,0
+1263,1700,7342,Psatha Bay surface samples,Psatha Bay,38.2202778,23.2202778,15,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-41,0
+1264,1701,7343,Oiniadai,Oiniadai,38.40805556,21.19472,20,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-49,0
+1265,1702,7344,Palairos,Palairos,38.83972,20.8256,150,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-49,0
+1265,1702,7345,Palairos,Palairos,38.83972,20.8256,150,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-49,0
+1265,1702,7346,Palairos,Palairos,38.83972,20.8256,150,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-49,0
+1265,1702,7347,Palairos,Palairos,38.83972,20.8256,150,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-49,0
+1265,1702,7348,Palairos,Palairos,38.83972,20.8256,150,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-49,0
+1265,1702,7349,Palairos,Palairos,38.83972,20.8256,150,"terrestrial, other sediments",moss polster or moss,,small (0.01-1 km2),EMBSECBIO,-49,0
+1266,1703,7350,Limni Ozeros,Limni Ozeros  Stratike,38.65194444,21.21277778,350,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMBSECBIO,-49,0
+1266,1703,7351,Limni Ozeros,Limni Ozeros  Stratike,38.65194444,21.21277778,350,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMBSECBIO,-49,0
+1267,1704,7352,Lake Lerna,Lake Lerna,37.58083,22.73,0,"coastal, lacustrine",core,,,EMBSECBIO,0,0.02
+1269,1707,7588,Beglika Region W Rhodopes,Beglika moss polsters,41.8596,24.0651,1550,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-52,0
+1269,1707,7589,Beglika Region W Rhodopes,Beglika moss polsters,41.8596,24.0651,1550,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-52,0
+1269,1707,7590,Beglika Region W Rhodopes,Beglika moss polsters,41.8596,24.0651,1550,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-52,0
+1269,1707,7591,Beglika Region W Rhodopes,Beglika moss polsters,41.8596,24.0651,1550,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-52,0
+1269,1707,7592,Beglika Region W Rhodopes,Beglika moss polsters,41.8596,24.0651,1550,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-52,0
+1269,1707,7593,Beglika Region W Rhodopes,Beglika moss polsters,41.8596,24.0651,1550,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-52,0
+1269,1707,7594,Beglika Region W Rhodopes,Beglika moss polsters,41.8596,24.0651,1550,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-52,0
+1269,1707,7595,Beglika Region W Rhodopes,Beglika moss polsters,41.8596,24.0651,1550,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-52,0
+1269,1707,7596,Beglika Region W Rhodopes,Beglika moss polsters,41.8596,24.0651,1550,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-52,0
+1269,1707,7597,Beglika Region W Rhodopes,Beglika moss polsters,41.8596,24.0651,1550,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-52,0
+1269,1707,7598,Beglika Region W Rhodopes,Beglika moss polsters,41.8596,24.0651,1550,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-52,0
+1269,1707,7599,Beglika Region W Rhodopes,Beglika moss polsters,41.8596,24.0651,1550,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-52,0
+1269,1707,7600,Beglika Region W Rhodopes,Beglika moss polsters,41.8596,24.0651,1550,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-52,0
+1269,1707,7601,Beglika Region W Rhodopes,Beglika moss polsters,41.8596,24.0651,1550,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-52,0
+1269,1707,7602,Beglika Region W Rhodopes,Beglika moss polsters,41.8596,24.0651,1550,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-52,0
+1269,1707,7603,Beglika Region W Rhodopes,Beglika moss polsters,41.8596,24.0651,1550,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMBSECBIO,-52,0
+1269,1708,7433,Beglika Region W Rhodopes,Beglika traps,41.8525,24.09083,1550,"terrestrial, other sediments",pollen trap,,medium (1.1-50 km2),EMBSECBIO,-52,0
+1269,1708,7434,Beglika Region W Rhodopes,Beglika traps,41.8525,24.09083,1550,"terrestrial, other sediments",pollen trap,,medium (1.1-50 km2),EMBSECBIO,-52,0
+1269,1708,7435,Beglika Region W Rhodopes,Beglika traps,41.8525,24.09083,1550,"terrestrial, other sediments",pollen trap,,medium (1.1-50 km2),EMBSECBIO,-52,0
+1269,1708,7436,Beglika Region W Rhodopes,Beglika traps,41.8525,24.09083,1550,"terrestrial, other sediments",pollen trap,,medium (1.1-50 km2),EMBSECBIO,-52,0
+1269,1708,7437,Beglika Region W Rhodopes,Beglika traps,41.8525,24.09083,1550,"terrestrial, other sediments",pollen trap,,medium (1.1-50 km2),EMBSECBIO,-52,0
+1269,1708,7438,Beglika Region W Rhodopes,Beglika traps,41.8525,24.09083,1550,"terrestrial, other sediments",pollen trap,,medium (1.1-50 km2),EMBSECBIO,-52,0
+1269,1708,7439,Beglika Region W Rhodopes,Beglika traps,41.8525,24.09083,1550,"terrestrial, other sediments",pollen trap,,medium (1.1-50 km2),EMBSECBIO,-52,0
+1269,1708,7440,Beglika Region W Rhodopes,Beglika traps,41.8525,24.09083,1550,"terrestrial, other sediments",pollen trap,,medium (1.1-50 km2),EMBSECBIO,-52,0
+1269,1708,7441,Beglika Region W Rhodopes,Beglika traps,41.8525,24.09083,1550,"terrestrial, other sediments",pollen trap,,medium (1.1-50 km2),EMBSECBIO,-53,0
+1269,1708,7442,Beglika Region W Rhodopes,Beglika traps,41.8525,24.09083,1550,"terrestrial, other sediments",pollen trap,,medium (1.1-50 km2),EMBSECBIO,-53,0
+1269,1708,7443,Beglika Region W Rhodopes,Beglika traps,41.8525,24.09083,1550,"terrestrial, other sediments",pollen trap,,medium (1.1-50 km2),EMBSECBIO,-53,0
+1269,1708,7444,Beglika Region W Rhodopes,Beglika traps,41.8525,24.09083,1550,"terrestrial, other sediments",pollen trap,,medium (1.1-50 km2),EMBSECBIO,-53,0
+1269,1708,7445,Beglika Region W Rhodopes,Beglika traps,41.8525,24.09083,1550,"terrestrial, other sediments",pollen trap,,medium (1.1-50 km2),EMBSECBIO,-53,0
+1269,1708,7446,Beglika Region W Rhodopes,Beglika traps,41.8525,24.09083,1550,"terrestrial, other sediments",pollen trap,,medium (1.1-50 km2),EMBSECBIO,-53,0
+1269,1708,7447,Beglika Region W Rhodopes,Beglika traps,41.8525,24.09083,1550,"terrestrial, other sediments",pollen trap,,medium (1.1-50 km2),EMBSECBIO,-53,0
+1270,1712,7448,Semenic,Semenic 1,45.18,22.0594,1400,"terrestrial, mire, swamp (forested wetland or peatland)",core top,,small (0.01-1 km2),EPD,-16,0.03
+1270,1712,7449,Semenic,Semenic 1,45.18,22.0594,1400,"terrestrial, mire, swamp (forested wetland or peatland)",core top,,small (0.01-1 km2),EPD,6,0.05
+1270,1712,7450,Semenic,Semenic 1,45.18,22.0594,1400,"terrestrial, mire, swamp (forested wetland or peatland)",core top,,small (0.01-1 km2),EPD,29,0.07
+1271,1710,7526,Novienky peat bog,Torbenov,52.2096,54.751,197,"terrestrial, mire, bog",core top,,small (0.01-1 km2),EPD,-50,0
+1273,1803,7708,Strandzha Mountains,Strandzha Mts (Brodilovo)_MFBG075,42.1336111111111,27.7841666666667,85,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,-55,
+1273,1804,7709,Strandzha Mountains,Strandzha Mts (Brodilovo)_MFBG085,42.1005555555556,27.9675,56,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,-55,
+1273,1805,7710,Strandzha Mountains,Strandzha Mts (Brodilovo)_MFBG105,42.084,27.8503,62,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,-55,
+1274,1797,7702,Cape of Kaliakra,Cape Kaliakra,43.3833333333333,28.4505555555556,233,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMBSECBIO,-55,
+1275,1798,7703,Bolata dere,Bolata dere,43.3833333333333,28.4669444444444,117,"terrestrial, soil, litter",surface sample,,medium (1.1-50 km2),EMBSECBIO,-55,
+1278,1801,7706,Kamchia River estuary,Kamchia River estuary,43.0175,27.8838888888889,9,fluvial,surface sample,,medium (1.1-50 km2),EMBSECBIO,-55,
+1280,1716,7605,Pietrele-surface,Piet-902,44.06671,26.15824,16.4,"terrestrial, soil, litter",sediment sample,other,not applicable,EMBSECBIO,-59,0
+1280,1717,7606,Pietrele-surface,Piet-903,44.06573,26.15859,16.7,"terrestrial, soil, litter",sediment sample,,not applicable,EMBSECBIO,-59,0
+1280,1719,7607,Pietrele-surface,Piet-905,44.0687,26.15717,33.3,"terrestrial, soil, litter",soil sample,,not applicable,EMBSECBIO,-59,0
+1280,1720,7608,Pietrele-surface,Piet-906,44.0693,26.15626,43.3,"terrestrial, soil, litter",soil sample,,not applicable,EMBSECBIO,-59,0
+1280,1721,7609,Pietrele-surface,Piet-907,44.06729,26.15832,44,"terrestrial, soil, litter",moss polster or moss,,not applicable,EMBSECBIO,-59,0
+1282,1723,7628,Southern Black Sea/Anatolia transect,S. Black Sea Transect/24,41.0364166666667,37.2158333333333,376,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,-60,0
+1282,1724,7629,Southern Black Sea/Anatolia transect,S. Black Sea Transect/25,40.996,37.16875,491,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,-60,0
+1282,1725,7630,Southern Black Sea/Anatolia transect,S. Black Sea Transect/36,40.80805,37.0079833333333,1278,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,-60,0
+1282,1726,7631,Southern Black Sea/Anatolia transect,S. Black Sea Transect/40,40.7101166666667,37.0091166666667,989,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,-60,0
+1282,1727,7632,Southern Black Sea/Anatolia transect,S. Black Sea Transect/43,40.71345,37.0160833333333,954,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,-60,0
+1282,1728,7633,Southern Black Sea/Anatolia transect,S. Black Sea Transect/49.1,40.4221333333333,37.09005,729,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,-60,0
+1282,1729,7634,Southern Black Sea/Anatolia transect,S. Black Sea Transect/50,40.4080666666667,36.68175,719,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,-60,0
+1282,1730,7635,Southern Black Sea/Anatolia transect,S. Black Sea Transect/51,40.0547667,36.56143333,1239,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,-60,0
+1282,1731,7636,Southern Black Sea/Anatolia transect,S. Black Sea Transect/53.2,39.942933,36.5276,1586,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,-60,0
+1282,1732,7637,Southern Black Sea/Anatolia transect,S. Black Sea Transect/57,39.8930666666667,37.40335,1432,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,-60,0
+1282,1733,7638,Southern Black Sea/Anatolia transect,S. Black Sea Transect/62,39.5714,40.16255,1416,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,-60,0
+1282,1734,7639,Southern Black Sea/Anatolia transect,S. Black Sea Transect/65,39.9943,40.5648833333333,1822,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,-60,0
+1282,1735,7640,Southern Black Sea/Anatolia transect,S. Black Sea Transect/69,40.2114166666667,40.2743666666667,1664,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,-60,0
+1282,1736,7641,Southern Black Sea/Anatolia transect,S. Black Sea Transect/71.3,40.4789833333333,40.2639333333333,1807,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,-60,0
+1282,1737,7642,Southern Black Sea/Anatolia transect,S. Black Sea Transect/72,40.5009833333333,40.2530833333333,2054,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,-60,0
+1282,1738,7643,Southern Black Sea/Anatolia transect,S. Black Sea Transect/84,40.5799166666667,40.2285333333333,1279,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,-60,0
+1282,1739,7644,Southern Black Sea/Anatolia transect,S. Black Sea Transect/85,40.6539166666667,40.2100333333333,807,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,-60,0
+1282,1740,7645,Southern Black Sea/Anatolia transect,S. Black Sea Transect/86,40.678,40.2278,617,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,-60,0
+1282,1741,7646,Southern Black Sea/Anatolia transect,S. Black Sea Transect/93,40.7510833,40.2464666666667,273,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,-60,0
+1282,1742,7647,Southern Black Sea/Anatolia transect,S. Black Sea Transect/95,40.8198667,40.2667166666667,142,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,-60,0
+1282,1743,7648,Southern Black Sea/Anatolia transect,S. Black Sea Transect/96,40.96895,40.3652666666667,24,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,-60,0
+1282,1744,7649,Southern Black Sea/Anatolia transect,S. Black Sea Transect/122,41.1459,41.9315833333333,260,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,-60,0
+1282,1745,7650,Southern Black Sea/Anatolia transect,S. Black Sea Transect/124,41.20215,42.5207,2429,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,-60,0
+1282,1746,7651,Southern Black Sea/Anatolia transect,S. Black Sea Transect/126,41.22667,42.4675833333333,2195,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,-60,0
+1282,1747,7652,Southern Black Sea/Anatolia transect,S. Black Sea Transect/127,41.2243833,42.4556,2007,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,-60,0
+1282,1748,7653,Southern Black Sea/Anatolia transect,S. Black Sea Transect/132,41.251733,42.3292833333333,1033,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,-60,0
+1282,1749,7654,Southern Black Sea/Anatolia transect,S. Black Sea Transect/133,41.2628667,42.2942,805,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,-60,0
+1282,1750,7655,Southern Black Sea/Anatolia transect,S. Black Sea Transect/134,41.2583833,42.1534333333333,603,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,-60,0
+1282,1751,7656,Southern Black Sea/Anatolia transect,S. Black Sea Transect/137,41.221,41.7935,257,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,-60,0
+1282,1752,7657,Southern Black Sea/Anatolia transect,S. Black Sea Transect/140,41.37,41.64,217,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,-60,0
+1282,1753,7658,Southern Black Sea/Anatolia transect,S. Black Sea Transect/143,41.39,41.5,368,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMBSECBIO,-60,0
+1283,1754,7659,Caspian SE transect,Caspian SE/US24,43.32,49.1,61,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-44,
+1283,1755,7660,Caspian SE transect,Caspian SE/US26,43.33,49.09,61,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-44,
+1283,1756,7661,Caspian SE transect,Caspian SE/Torkmen 20 m,37.08,53.58,-27,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-60,
+1283,1757,7662,Caspian SE transect,Caspian SE/CS10,36.81,52.55,-27,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-57,
+1283,1758,7663,Caspian SE transect,Caspian SE/Babolsar 100 m,36.82,52.65,-27,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-61,
+1283,1759,7664,Caspian SE transect,Caspian SE/Babolsar 20 m,36.77,52.66,-27,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-61,
+1283,1760,7665,Caspian SE transect,Caspian SE/Almagol,37.43,54.64,0,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-60,
+1283,1761,7666,Caspian SE transect,Caspian SE/Alagol,37.36,54.57,-6,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-60,
+1283,1762,7667,Caspian SE transect,Caspian SE/TR1,37.06,54.03,-27,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-60,
+1283,1763,7668,Caspian SE transect,Caspian SE/BTorkman2,36.899,54.05,-27,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-61,
+1283,1764,7669,Caspian SE transect,Caspian SE/BTorkman1,36.897,54.04,-27,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-61,
+1283,1765,7670,Caspian SE transect,Caspian SE/Ashyagar,43.59,51.66,-125,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-56,
+1283,1766,7671,Caspian SE transect,Caspian SE/Karakol,43.41,51.34,-27,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-56,
+1283,1767,7672,Caspian SE transect,Caspian SE/SD10PVC4,43.59,58.54,53,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-60,
+1283,1768,7673,Caspian SE transect,Caspian SE/Amu-Daria canal,43.17,58.58,53,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-60,
+1283,1769,7674,Caspian SE transect,Caspian SE/S. Aral phragmites,43.1486111111111,58.6344444444444,56,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-60,
+1283,1770,7675,Caspian SE transect,Caspian SE/Chilpak-Kala 1,42.2651111111111,60.0821666666667,80,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-60,
+1283,1771,7676,Caspian SE transect,Caspian SE/Chilpak-Kala 2,42.2651111111111,60.0821666666667,80,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-60,
+1283,1772,7677,Caspian SE transect,Caspian SE/Amu-Daria bridge,42.2239444444444,60.1073888888889,91,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-60,
+1283,1773,7678,Caspian SE transect,Caspian SE/Amu-Daria Tortkul,42.2222222222222,60.1154166666667,70,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-60,
+1283,1774,7679,Caspian SE transect,Caspian SE/S. Aral Bogolon,41.7111111111111,60.5188888888889,95,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-60,
+1283,1775,7680,Caspian SE transect,Caspian SE/Bahardok,38.8077222222222,58.4834305555556,70,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-62,
+1283,1776,7681,Caspian SE transect, Caspian SE/TR2,37.1511722222222,54.0030833333333,-28,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-60,
+1283,1777,7682,Caspian SE transect,Caspian SE/AqQaleh,37.0144611111111,54.4605722222222,-12,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-60,
+1283,1778,7683,Caspian SE transect,Caspian SE/Gorgan delta,36.9775,54.0166666666667,-27,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-55,
+1283,1779,7684,Caspian SE transect,Caspian SE/BTorkman3,36.9010833333333,54.05475,-27,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-61,
+1283,1780,7685,Caspian SE transect,Caspian SE/KaraSu 3,36.8280277777778,54.0372222222222,-27,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-61,
+1283,1781,7686,Caspian SE transect,Caspian SE/KaraSu 4,36.8277222222222,54.0420277777778,-27,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-61,
+1283,1782,7687,Caspian SE transect,Caspian SE/KaraSu 5,36.8277222222222,54.0420277777778,-27,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-61,
+1283,1783,7688,Caspian SE transect,Caspian SE/KaraSu 1,36.8259444444444,54.0423888888889,-27,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-61,
+1283,1784,7689,Caspian SE transect,Caspian SE/KaraSu 6,36.8256666666667,54.0486111111111,-27,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-61,
+1283,1785,7690,Caspian SE transect,Caspian SE/KaraSu 2,36.8247222222222,54.0425277777778,-27,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-61,
+1283,1786,7691,Caspian SE transect,Caspian SE/Nahar Khoran 2,36.7669444444444,54.4697777777778,18,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-61,
+1283,1787,7692,Caspian SE transect,Caspian SE/Nowkandeh river,36.7481666666667,53.9053888888889,-27,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-61,
+1283,1788,7693,Caspian SE transect,Caspian SE/Babolsar River,36.7065555555556,52.6494166666667,-27,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-61,
+1283,1789,7694,Caspian SE transect,Caspian SE/Aral black moss,45.10125,58.3245833333333,51,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-60,
+1283,1790,7695,Caspian SE transect,Caspian SE/Saiga,45.1005833333333,58.3328611111111,48,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-60,
+1283,1791,7696,Caspian SE transect,Caspian SE/Nahar Khoran 1,36.7669444444444,54.4697777777778,18,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-61,
+1283,1792,7697,Caspian SE transect,Caspian SE/Huto cave,36.6904361111111,53.4969055555556,24,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-55,
+1283,1793,7698,Caspian SE transect,Caspian SE/Gomishan,36.6705555555556,53.3658333333333,33,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-61,
+1283,1794,7699,Caspian SE transect,Caspian SE/Firuz Kuh 230,36.2548611111111,52.9004166666667,230,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-61,
+1283,1795,7700,Caspian SE transect,Caspian SE/Firuz Kuh 700,36.0669166666667,53.07325,700,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-61,
+1283,1796,7701,Caspian SE transect,Caspian SE/Firuz Kuh 1550,35.8979444444444,52.9833055555556,1550,"terrestrial, soil",surface sample,,small (0.01-1 km2),EMBSECBIO,-61,
+1293,1813,10753,Asi Gonia,Asi Gonia 1,35.248611,24.277778,780,"terrestrial, mire, bog",peat core,peat,small (0.01-1 km2),EPD,-34,0
+1293,1813,10754,Asi Gonia,Asi Gonia 1,35.248611,24.277778,780,"terrestrial, mire, bog",peat core,peat,small (0.01-1 km2),EPD,-20,0.05
+1293,1813,10755,Asi Gonia,Asi Gonia 1,35.248611,24.277778,780,"terrestrial, mire, bog",peat core,peat,small (0.01-1 km2),EPD,-5,0.1
+1293,1813,10756,Asi Gonia,Asi Gonia 1,35.248611,24.277778,780,"terrestrial, mire, bog",peat core,peat,small (0.01-1 km2),EPD,8,0.15
+1293,1813,10757,Asi Gonia,Asi Gonia 1,35.248611,24.277778,780,"terrestrial, mire, bog",peat core,peat,small (0.01-1 km2),EPD,23,0.2
+1293,1813,10758,Asi Gonia,Asi Gonia 1,35.248611,24.277778,780,"terrestrial, mire, bog",peat core,peat,small (0.01-1 km2),EPD,37,0.25
+1293,1814,10845,Asi Gonia,Asi Gonia 2,35.248611,24.2778,780,"terrestrial, mire, bog",peat core,peat,small (0.01-1 km2),EPD,-31,0.01
+1293,1814,10846,Asi Gonia,Asi Gonia 2,35.248611,24.2778,780,"terrestrial, mire, bog",peat core,peat,small (0.01-1 km2),EPD,1,0.06
+1293,1814,10847,Asi Gonia,Asi Gonia 2,35.248611,24.2778,780,"terrestrial, mire, bog",peat core,peat,small (0.01-1 km2),EPD,33,0.11
+1293,2110,10886,Asi Gonia,Asi Gonia moss polster,35.248611,24.2778,780,"terrestrial, mire, bog",moss polster or moss,other,small (0.01-1 km2),EMBSECBIO,-49,0
+1293,2111,10887,Asi Gonia,Asi Gonia Pollen Trap 1,35.248611,24.2778,780,"terrestrial, mire, bog",pollen trap,other,small (0.01-1 km2),EMBSECBIO,-49,0
+1293,2112,10888,Asi Gonia,Asi Gonia Pollen Trap 2,35.248611,24.2778,780,"terrestrial, mire, bog",pollen trap,other,small (0.01-1 km2),EMBSECBIO,-49,0
+1297,1818,10970,Lake Ohrid,Lake Ohrid,40.938,20.759,693,"lacustrine, natural open-water",core,lacustrine sediment,large (50.1-500 km2),PANG,-4.4974201332,0.02
+1297,1818,10971,Lake Ohrid,Lake Ohrid,40.938,20.759,693,"lacustrine, natural open-water",core,lacustrine sediment,large (50.1-500 km2),PANG,40.7040953763,0.17
+1303,1831,8333,Lake Orestias,Orestias G25,40.5117,21.2578,630,"lacustrine, natural open-water",core,,medium (1.1-50 km2),EMBSECBIO,32,0.02
+1304,1832,8415,Pesteana,Pesteana peat bog,45.5433,22.8061,480,"terrestrial, mire, bog",peat or bog sediment,,small (0.01-1 km2),EPD,-34,0
+1304,1832,8416,Pesteana,Pesteana peat bog,45.5433,22.8061,480,"terrestrial, mire, bog",peat or bog sediment,,small (0.01-1 km2),EPD,-12,0.05
+1304,1832,8417,Pesteana,Pesteana peat bog,45.5433,22.8061,480,"terrestrial, mire, bog",peat or bog sediment,,small (0.01-1 km2),EPD,9,0.1
+1304,1832,8418,Pesteana,Pesteana peat bog,45.5433,22.8061,480,"terrestrial, mire, bog",peat or bog sediment,,small (0.01-1 km2),EPD,33,0.15
+1305,1833,8452,Preluca,Preluca,47.8175,23.5358,730,"lacustrine, natural open-water",,,medium (1.1-50 km2),EPD,33,0.04
+1307,1835,8706,Mount Voras,Voras,41.0179,21.9122,1640,"terrestrial, mire, bog",,,very small (<0.01 km2),EPD,49,0
+1533,1836,8813,Roman_E,EMPD_197,44.08,27.11,200,"terrestrial, soil",surface sample,,large (50.1-500 km2),EMPD,0,
+1533,1837,8814,Roman_E,EMPD_198,44.08,27.11,200,"terrestrial, soil",surface sample,,large (50.1-500 km2),EMPD,0,
+1533,1838,8815,Roman_E,EMPD_199,44.08,27.11,200,"terrestrial, soil",surface sample,,large (50.1-500 km2),EMPD,0,
+1533,1839,8816,Roman_E,EMPD_200,44.08,27.11,200,"terrestrial, soil",surface sample,,large (50.1-500 km2),EMPD,0,
+1533,1840,8817,Roman_E,EMPD_201,44.08,27.11,200,"terrestrial, soil",surface sample,,large (50.1-500 km2),EMPD,0,
+1533,1841,8818,Roman_E,EMPD_202,44.08,27.11,200,"terrestrial, soil",surface sample,,large (50.1-500 km2),EMPD,0,
+1533,1842,8819,Roman_E,EMPD_203,44.08,27.11,200,"terrestrial, soil",surface sample,,large (50.1-500 km2),EMPD,0,
+1533,1843,8820,Roman_E,EMPD_204,44.08,27.11,200,"terrestrial, soil",surface sample,,large (50.1-500 km2),EMPD,0,
+1541,1844,8821,Bulg_Danube_mireGarvan,EMPD_205,44.11,26.9,200,"terrestrial, mire, fen",surface sample,,large (50.1-500 km2),EMPD,0,
+1541,1845,8822,Bulg_Danube_mireGarvan,EMPD_206,44.11,26.9,200,"terrestrial, mire, fen",surface sample,,large (50.1-500 km2),EMPD,0,
+1541,1846,8823,Bulg_Danube_mireGarvan,EMPD_207,44.11,26.9,200,"terrestrial, mire, fen",surface sample,,large (50.1-500 km2),EMPD,0,
+1541,1847,8824,Bulg_Danube_mireGarvan,EMPD_208,44.11,26.9,200,"terrestrial, mire, fen",surface sample,,large (50.1-500 km2),EMPD,0,
+1541,1848,8825,Bulg_Danube_mireGarvan,EMPD_209,44.11,26.9,200,"terrestrial, mire, fen",surface sample,,large (50.1-500 km2),EMPD,0,
+1550,1853,8830,Bulg_South_PirinMts_c50,EMPD_214,41.5,23.6,1200,"terrestrial, mire, bog",surface sample,,small (0.01-1 km2),EMPD,0,
+1551,1854,8831,Bulg_South_PirinMts_c51,EMPD_215,41.53,23.61,1430,"terrestrial, mire, bog",surface sample,,medium (1.1-50 km2),EMPD,0,
+1552,1855,8832,Bulg_South_PirinMts_c52,EMPD_216,41.51,23.61,1700,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMPD,0,
+1553,1856,8833,Bulg_South_PirinMts_c53,EMPD_217,41.51,23.61,1700,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMPD,0,
+1554,1857,8834,Bulg_South_PirinMts_c54,EMPD_218,41.51,23.61,1700,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMPD,0,
+1555,1858,8835,Bulg_South_PirinMts_c55,EMPD_219,41.51,23.61,1700,"terrestrial, soil, litter, mor humus",surface sample,,small (0.01-1 km2),EMPD,0,
+1556,1859,8836,Bulg_Belasitsa_c56,EMPD_220,41.35,23.1,500,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMPD,0,
+1557,1860,8837,Bulg_Belasitsa_c57,EMPD_221,41.35,23.11,500,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMPD,0,
+1558,1861,8838,Bulg_Belasitsa_c58,EMPD_222,41.33,23.1,1600,"terrestrial, soil, litter, mor humus",surface sample,,medium (1.1-50 km2),EMPD,0,
+1560,1863,8840,Bulga1                                     ,EMPD_Bulga1                                     ,42.63833333,27.858333,0,marine,marine core,,large (50.1-500 km2),EMPD,0,
+1561,1864,8841,Bulga10                                    ,EMPD_Bulga10                                    ,42.1175,28.485,0,marine,marine core,,large (50.1-500 km2),EMPD,0,
+1562,1865,8842,Bulga11                                    ,EMPD_Bulga11                                    ,42.78388889,28.55138889,0,marine,marine core,,large (50.1-500 km2),EMPD,0,
+1563,1866,8843,Bulga12                                    ,EMPD_Bulga12                                    ,42.20083333,28.48527778,0,marine,marine core,,large (50.1-500 km2),EMPD,0,
+1564,1867,8844,Bulga13                                    ,EMPD_Bulga13                                    ,43.73916667,30.24972222,0,marine,marine core,,large (50.1-500 km2),EMPD,0,
+1565,1868,8845,Bulga14                                    ,EMPD_Bulga14                                    ,43.31805556,31.1,0,marine,marine core,,large (50.1-500 km2),EMPD,0,
+1566,1869,8846,Bulga16                                    ,EMPD_Bulga16                                    ,42.0675,28.88888889,0,marine,marine core,,large (50.1-500 km2),EMPD,0,
+1567,1870,8847,Bulga17                                    ,EMPD_Bulga17                                    ,42.88555556,31.11888889,0,marine,marine core,,large (50.1-500 km2),EMPD,0,
+1568,1871,8848,Bulga18                                    ,EMPD_Bulga18                                    ,43.6,28.61666667,0,marine,marine core,,large (50.1-500 km2),EMPD,0,
+1569,1872,8849,Bulga19                                    ,EMPD_Bulga19                                    ,43.55,28.53333333,0,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1570,1873,8850,Bulga2                                     ,EMPD_Bulga2                                     ,42.65833333,27.93194444,0,marine,marine core,,large (50.1-500 km2),EMPD,0,
+1571,1874,8851,Bulga20                                    ,EMPD_Bulga20                                    ,43.41666667,28.11666667,0,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1572,1875,8852,Bulga21                                    ,EMPD_Bulga21,43.25,27.63333333,0,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1573,1876,8853,Bulga22                                    ,EMPD_Bulga22,43.25,27.96666667,283,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1574,1877,8854,Bulga23                                    ,EMPD_Bulga23,43.28333333,27.98333333,268,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1575,1878,8855,Byala_Bulga24,EMPD_Bulga24,42.91666667,27.83333333,174,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1576,1879,8856,Byala_Bulga25,EMPD_Bulga25,42.91666667,27.83333333,174,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1577,1880,8857,Byala_Bulga26,EMPD_Bulga26,42.96666667,27.63333333,60,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1578,1881,8858,Staro Oryahovo_Bulga27,EMPD_Bulga27,42.98333333,27.8,14,fluvial,surface sample,,medium (1.1-50 km2),EMPD,0,
+1579,1882,8859,Staro Oryahovo_Bulga28,EMPD_Bulga28,43.03333333,27.88333333,29,fluvial,surface sample,,medium (1.1-50 km2),EMPD,0,
+1580,1883,8860,Bulga29                                    ,EMPD_Bulga29,43.36666667,28.11666667,0,marine,marine core,,large (50.1-500 km2),EMPD,0,
+1581,1884,8861,Bulga3                                     ,EMPD_Bulga3,42.65638889,27.87777778,0,marine,marine core,,large (50.1-500 km2),EMPD,0,
+1582,1885,8862,Bulga30                                    ,EMPD_Bulga30,43.03333333,27.88333333,0,fluvial,surface sample,,medium (1.1-50 km2),EMPD,0,
+1584,1887,8864,Bulga32                                    ,EMPD_Bulga32,43.58333333,28.63333333,0,marine,marine core,,large (50.1-500 km2),EMPD,0,
+1585,1888,8865,Bulga4                                     ,EMPD_Bulga4,42.645,27.87777778,0,marine,marine core,,large (50.1-500 km2),EMPD,0,
+1586,1889,8866,Bulga5                                     ,EMPD_Bulga5,42.65333333,27.89194444,0,marine,marine core,,large (50.1-500 km2),EMPD,0,
+1587,1890,8867,Bulga6                                     ,EMPD_Bulga6,42.67555556,28.16888889,0,marine,marine core,,large (50.1-500 km2),EMPD,0,
+1588,1891,8868,Bulga7                                     ,EMPD_Bulga7,42.20166667,27.96861111,0,marine,marine core,,large (50.1-500 km2),EMPD,0,
+1589,1892,8869,Bulga8                                     ,EMPD_Bulga8,42.13444444,27.96861111,0,marine,marine core,,large (50.1-500 km2),EMPD,0,
+1590,1893,8870,Bulga9                                     ,EMPD_Bulga9,42.20166667,28.41861111,0,marine,marine core,,large (50.1-500 km2),EMPD,0,
+1592,1895,8872,Kastorias,EMPD_Gr1966,40.53,21.3,700,"lacustrine, natural open-water",core,,medium (1.1-50 km2),EMPD,0,
+1593,1896,8873,Lake Viviis                                ,Lake Viviis                                ,39.558112,22.709345,50,"lacustrine, natural open-water",core,,medium (1.1-50 km2),EMPD,0,
+1594,1897,8874,Lake Lerna                                 ,EMPD_Lake_Lerna,37.583821,22.734054,0,"lacustrine, natural open-water",core,,medium (1.1-50 km2),EMPD,0,
+1595,1898,8875,Tersana                                    ,EMPD_Tersana,35.573839,24.080557,8,"lacustrine, natural open-water",core,,medium (1.1-50 km2),EMPD,0,
+1596,1899,8876,Iran_IR24,EMPD_Iran_IR26,35.53,46.33,1450,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMPD,0,
+1597,1900,8877,Iran_IR28,EMPD_Iran_IR28,35.52,46.41,1800,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMPD,0,
+1598,1901,8878,Iran_IR91,EMPD_Iran_IR91,33.69,46.41,1500,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMPD,0,
+1599,1902,8879,Iran_IR92,EMPD_Iran_IR92,33.69,46.41,1500,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMPD,0,
+1600,1903,8880,Dead Sea                                   ,EMPD_DeadSea_Jord,31.75,35.5833,-400,"lacustrine, natural open-water",core,,medium (1.1-50 km2),EMPD,0,
+1601,1904,8881,Wadi Rum                                   ,EMPD_WadiRum,29.5,35.5,350,"terrestrial, other sediments",surface,,small (0.01-1 km2),EMPD,0,
+1602,1905,8882,SY82                                       ,SY82                                       ,36.461944,36.896944,200,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMPD,0,
+1603,1906,8883,SY83                                       ,SY83,36.443056,36.873333,200,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMPD,0,
+1604,1907,8884,SY84                                       ,SY84,36.306111,36.843889,200,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMPD,0,
+1605,1908,8885,SY85                                       ,SY85,36.301944,36.848611,200,"terrestrial, other sediments",moss polster or moss,,medium (1.1-50 km2),EMPD,0,
+1606,1909,8886,Golhisar Golu (WA)                         ,Golhisar Golu (WA),37.125,29.597222,946,"lacustrine, natural open-water",core top,,medium (1.1-50 km2),EMPD,0,
+1607,1910,8887,Akgol Adabag,Akgol Adabag,37.5,33.81666667,1000,"lacustrine, natural open-water",core top,,medium (1.1-50 km2),EMPD,0,
+1608,1911,8888,Avlan Golu                                 ,Avlan Golu,36.58333333,29.95,1043,"lacustrine, natural open-water",sediment sample,,medium (1.1-50 km2),EMPD,0,
+1609,1912,8889,Buyuk Golu                                 ,Buyuk Golu,39.86666667,37.38333333,1349.71,"lacustrine, natural open-water",core top,,medium (1.1-50 km2),EMPD,0,
+1610,1913,8890,Demiryurt Golu                             ,Demiryurt Golu,39.73333333,37.38333333,1491.76,"lacustrine, natural open-water",core top,,medium (1.1-50 km2),EMPD,0,
+1611,1914,8891,Elmali                                     ,Elmali_EMPDa769,36.67222222,29.89166667,1030,"lacustrine, natural open-water",core top,,medium (1.1-50 km2),EMPD,0,
+1613,1916,8893,Pinarbasi                                  ,Pinarbasi,37.46666667,30.05,980,"lacustrine, natural open-water",core top,,medium (1.1-50 km2),EMPD,0,
+1614,1917,8894,Turkie_EPMD_Barb_a1405                                   ,Turkie_EMPD_Barb_a1405,39.2,34.38,1100,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1615,1918,8895,Turkie_EPMD_Barb_a1406                                     ,Turkie_EMPD_Barb_a1406,38.63,34.93,1100,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1616,1919,8896,Turkie_EPMD_Barb_a1407                                     ,Turkie_EMPD_Barb_a1407,38.59,35.029,1200,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1617,1920,8897,Turkie_EPMD_Barb_a1408,Turkie_EMPD_Barb_a1408,39.029,35.79,900,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1618,1921,8898,Turkie_EPMD_Barb_a1409,Turkie_EMPD_Barb_a1409,39.069,35.83,900,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1619,1922,8899,Turkie_EPMD_Barb_a1410                                   ,Turkie_EMPD_Barb_a1410,38.279,35.38,1000,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1620,1923,8900,Turkie_EPMD_Barb_a1411                                   ,Turkie_EMPD_Barb_a1411,39.4,36.47,1200,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1621,1924,8901,Turkie_EPMD_Barb_a1412,Turkie_EMPD_Barb_a1412,39.88,37.61,1200,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1622,1925,8902,Turkie_EPMD_Barb_a1413                                     ,Turkie_EMPD_Barb_a1413,39.95,36.529,1400,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1623,1926,8903,Turkie_EPMD_Barb_a1414                                  ,Turkie_EMPD_Barb_a1414,39.95,36.529,1400,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1624,1927,8904,Turkie_EPMD_Barb_a1415                                  ,Turkie_EMPD_Barb_a1415,40.02,36.5,1200,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1625,1928,8905,Turkie_EPMD_Barb_a1416                                  ,Turkie_EMPD_Barb_a1416,40.27,36.15,500,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1626,1929,8906,Turkie_EPMD_Barb_a1417                                ,Turkie_EMPD_Barb_a1417,40.419,36.09,450,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1627,1930,8907,Turkie_EPMD_Barb_a1418                                    ,Turkie_EMPD_Barb_a1418,40.479,36.15,600,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1628,1931,8908,Turkie_EPMD_Barb_a1419                                  ,Turkie_EMPD_Barb_a1419,40.529,36.159,700,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1629,1932,8909,Turkie_EPMD_Barb_a1420                               ,Turkie_EMPD_Barb_a1420,40.9,36.02,800,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1630,1933,8910,Turkie_EPMD_Barb_a1421                                ,Turkie_EMPD_Barb_a1421,40.979,35.72,750,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1631,1934,8911,Turkie_EPMD_Barb_a1422                            ,Turkie_EMPD_Barb_a1422,41.169,36.13,750,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1632,1935,8912,Turkie_EPMD_Barb_a1423                                 ,Turkie_EMPD_Barb_a1423,41.38,36.209,50,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1633,1936,8913,Turkie_EPMD_Barb_a1424                                ,Turkie_EMPD_Barb_a1424,41.729,35.25,200,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1634,1937,8914,Turkie_EPMD_Barb_a1425                             ,Turkie_EMPD_Barb_a1425,41.819,35.18,75,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1635,1938,8915,Turkie_EPMD_Barb_a1426                              ,Turkie_EMPD_Barb_a1426,41.81,35.029,1300,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1636,1939,8916,Turkie_EPMD_Barb_a1427                                ,Turkie_EMPD_Barb_a1427,41.63,34.849,1300,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1637,1940,8917,Turkie_EPMD_Barb_a1428                                 ,Turkie_EMPD_Barb_a1428,41.569,34.279,550,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1638,1941,8918,Turkie_EPMD_Barb_a1429                              ,Turkie_EMPD_Barb_a1429,41.369,33.319,1000,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1639,1942,8919,Turkie_EPMD_Barb_a1430                                  ,Turkie_EMPD_Barb_a1430,41.25,33.669,800,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1640,1943,8920,Turkie_EPMD_Barb_a1431                           ,Turkie_EMPD_Barb_a1431,41.15,33.22,500,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1641,1944,8921,Turkie_EPMD_Barb_a1432                           ,Turkie_EMPD_Barb_a1432,41.2,32.869,350,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1642,1945,8922,Turkie_EPMD_Barb_a1433                              ,Turkie_EMPD_Barb_a1433,41.229,32.72,300,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1643,1946,8923,Turkie_EPMD_Barb_a1434                                ,Turkie_EMPD_Barb_a1434,41.18,32.63,250,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1644,1947,8924,Turkie_EPMD_Barb_a1435                            ,Turkie_EMPD_Barb_a1435,40.779,32.009,980,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1645,1948,8925,Turkie_EPMD_Barb_a1436                             ,Turkie_EMPD_Barb_a1436,40.849,31.62,1200,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1646,1949,8926,Turkie_EPMD_Barb_a1437                               ,Turkie_EMPD_Barb_a1437,40.779,31.1,125,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1647,1950,8927,Turkie_EPMD_Barb_a1438                                  ,Turkie_EMPD_Barb_a1438,40.869,30.44,50,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1648,1951,8928,Turkie_EPMD_Barb_a1439                                 ,Turkie_EMPD_Barb_a1439,41.029,30.569,50,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1649,1952,8929,Turkie_EPMD_Barb_a1440                        ,Turkie_EMPD_Barb_a1440,40.58,31.25,1650,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1650,1953,8930,Turkie_EPMD_Barb_a1441                                 ,Turkie_EMPD_Barb_a1441,40.61,31.299,1300,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1651,1954,8931,Turkie_EPMD_Barb_a1442                                ,Turkie_EMPD_Barb_a1442,40.61,31.309,1375,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1652,1955,8932,Tuzla Golu                                 ,Tuzla Golu,39.03333333,35.8275,1188.3,"lacustrine, natural open-water",surface sample,,medium (1.1-50 km2),EMPD,0,
+1653,1956,8933,Gravgaz Marsh_a1,Gravgaz Marsh_1,37.591179,30.401436,1241,"terrestrial, marsh",surface sample,,medium (1.1-50 km2),EMPD,0,
+1654,1957,8934,Gravgaz Marsh_a2,Gravgaz Marsh_2,37.591353,30.380378,1284,"terrestrial, marsh",surface sample,,medium (1.1-50 km2),EMPD,0,
+1655,1958,8935,Gravgaz Marsh_a3,Gravgaz Marsh_3,37.57448,30.41412,1251,"terrestrial, marsh",surface sample,,medium (1.1-50 km2),EMPD,0,
+1656,1959,8936,Gravgaz Marsh_a4,Gravgaz Marsh_4,37.566355,30.407665,1264,"terrestrial, marsh",surface sample,,medium (1.1-50 km2),EMPD,0,
+1657,1960,8937,Gravgaz Marsh_a5,Gravgaz Marsh_5,37.56973,30.40911,1236,"terrestrial, marsh",surface sample,,medium (1.1-50 km2),EMPD,0,
+1658,1961,8938,Gravgaz Marsh_a6,Gravgaz Marsh_6,37.589715,30.393515,1268,"terrestrial, marsh",surface sample,,medium (1.1-50 km2),EMPD,0,
+1659,1962,8939,Gravgaz Marsh_a7,Gravgaz Marsh_7,37.585288,30.40608,1217,"terrestrial, marsh",surface sample,,medium (1.1-50 km2),EMPD,0,
+1660,1963,8940,Gravgaz Marsh_a8,Gravgaz Marsh_8,37.589223,30.39121,1264,"terrestrial, marsh",surface sample,,medium (1.1-50 km2),EMPD,0,
+1661,1964,8941,Gravgaz Marsh_a9,Gravgaz Marsh_9,37.58995,30.403755,1237,"terrestrial, marsh",surface sample,,medium (1.1-50 km2),EMPD,0,
+1662,1965,8942,Bereket Basin_a10,Bereket Basin_Bakkera10,37.550905,30.297804,1486,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1663,1966,8943,Bereket Basin_a11,Bereket Basin_Bakkera11,37.546514,30.300453,1449,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1664,1967,8944,Bereket Basin_a12,Bereket Basin_Bakkera12,37.538868,30.290816,1427,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1665,1968,8945,Bereket Basin_a13,Bereket Basin_Bakkera13,37.5388,30.284311,1446,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1666,1969,8946,Beskavac,Beskavac,37.568253,30.368871,1348,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1667,1970,8947,Canakli_a15,Canakli_Bakkera15,37.566754,30.622577,1034,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1668,1971,8948,Ovacik,Ovacik,37.547705,30.385371,1312,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1669,1972,8949,Baskoy_b1,Baskoy_Bakkerb1,37.6600166666667,30.4739666666667,1316,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1670,1973,8950,Canakli_b2,Canakli_Bakkerb2,37.5798833333333,30.5904,1055,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1671,1974,8951,Baskoy_b3,Baskoy_Bakkerb3,37.6419166666667,30.4737,1341,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1672,1975,8952,Baskoy_b4,Baskoy_Bakkerb4,37.671017,30.51635,1164,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1673,1976,8953,Baskoy_b5,Baskoy_Bakkerb5,37.6367166666667,30.4973666666667,1214,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1674,1977,8954,Baskoy_b6,Baskoy_Bakkerb6,37.6457333333333,30.4964,1150,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1675,1978,8955,Sagalassos_b7,Sagalassos_Bakkerb7,37.6759166666667,30.5287833333333,1498,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1676,1979,8956,Canakli_b8,Canakli_Bakkerb8,37.5841666666667,30.58115,1239,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1677,1980,8957,Gravgaz Marsh_b9,Gravgaz Marsh_Bakkerb9,37.5630833333333,30.4055833333333,1394,"terrestrial, marsh",surface sample,,medium (1.1-50 km2),EMPD,0,
+1678,1981,8958,Gravgaz Marsh_b10,Gravgaz Marsh_Bakkerb10,37.5628,30.4046,1430,"terrestrial, marsh",surface sample,,medium (1.1-50 km2),EMPD,0,
+1679,1982,8959,Gravgaz Marsh_b11,Gravgaz Marsh_Bakkerb11,37.57375,30.39715,1445,"terrestrial, marsh",surface sample,,medium (1.1-50 km2),EMPD,0,
+1680,1983,8960,Aglasun_b12,Aglasun_Bakker_b12,37.628,30.5527,1221,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1681,1984,8961,Sagalassos_b13,Sagalassos_Bakker_b13,37.6673833333333,30.5083166666667,1522,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1682,1985,8962,Sagalassos_b14,Sagalassos_Bakker_b14,37.6681166666667,30.5085333333333,1447,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1683,1986,8963,Sagalassos_b15,Sagalassos_Bakker_b15,37.6785,30.5123166666667,1528,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1684,1987,8964,Canakli_b16,Canakli_Bakker_b16,37.5806833333333,30.5788833333333,1124,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1685,1988,8965,Canakli_b17,Canakli_Bakker_b17,37.5609166666667,30.5947166666667,1158,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1686,1989,8966,Sagalassos_b18,Sagalassos_Bakker_b18,37.6850833333333,30.5137333333333,1774,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1687,1990,8967,Sagalassos_b19,Sagalassos_Bakker_b19,37.68305,30.5174166666667,1822,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1688,1991,8968,Sagalassos_b20,Sagalassos_Bakker_b20,37.6755166666667,30.52795,1495,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1689,1992,8969,Baskoy_b21,Baskoy_Bakker_b21,37.63625,30.4995,1350,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1690,1993,8970,Hisarkoy,Hisarkoy,37.6220166666667,30.7254666666667,837,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1691,1994,8971,Sagalassos_b23,Sagalassos_Bakker_b23,37.6752666666667,30.5154666666667,1453,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1692,1995,8972,Aglasun_b24,Aglasun_Bakker_b24,37.62145,30.55915,1239,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1693,1996,8973,Canakli_b25,Canakli_Bakker_b25,37.56605,30.5602666666667,1270,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1694,1997,8974,Canakli_b26,Canakli_Bakker_b26,37.551,30.5761833333333,1348,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1695,1998,8975,Canakli_b27,Canakli_Bakker_b27,37.54915,30.57835,1400,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1696,1999,8976,Canakli_b28,Canakli_Bakker_b28,37.5532333333333,30.5998,1232,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1697,2000,8977,Derekoy_b29,Derekoy_Bakker_b29,37.6272833333333,30.6566333333333,1400,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1698,2001,8978,Derekoy_b30,Derekoy_Bakker_b30,37.6347666666667,30.5032666666667,1040,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1699,2002,8979,Derekoy_b31,Derekoy_Bakker_b31,37.6337333333333,30.65485,1036,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1700,2003,8980,Derekoy_b32,Derekoy_Bakker_b32,37.6289,30.6594,1254,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1701,2004,8981,Derekoy_b33,Derekoy_Bakker_b33,37.6294333333333,30.6557666666667,1244,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1702,2005,8982,Derekoy_b34,Derekoy_Bakker_b34,37.6288166666667,30.6571166666667,1356,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1703,2006,8983,Derekoy_b35,Derekoy_Bakker_b35,37.6375833333333,30.6600333333333,1056,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1704,2007,8984,Baskoy_b36,Baskoy_Bakker_b36,37.6783666666667,30.494233333333302,1369,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1705,2008,8985,Canakli_b37,Canakli_Bakker_b37,37.5861333333333,30.5561666666667,1020,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1706,2009,8986,Canakli_b38,Canakli_Bakker_b38,37.58135,30.5598666666667,1020,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1707,2010,8987,Canakli_b39,Canakli_Bakker_b39,37.5902166666667,30.5467166666667,1020,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1708,2011,8988,Gravgaz_b40,Gravgaz_Bakker_b40,37.5812333333333,30.3994333333333,1215,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1709,2012,8989,Gravgaz_b41,Gravgaz_Bakker_b41,37.5854833333333,30.4040166666667,1215,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1710,2013,8990,Gravgaz_b42,Gravgaz_Bakker_b42,37.58045,30.4021666666667,1215,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1711,2014,8991,Gravgaz_b43,Gravgaz_Bakker_b43,37.5818833333333,30.4037,1215,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1712,2015,8992,Kayaalti_b44,Kayaalti_Bakker_b44,37.6197166666667,30.3469333333333,1150,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1713,2016,8993,Kayaalti_b45,Kayaalti_Bakker_b45,37.6197166666667,30.3364333333333,1150,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1714,2017,8994,Aglasun (Duzen Tepe),Aglasun (Duzen Tepe),37.6594333333333,30.5101833333333,1404,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1715,2018,8995,Sagalassos_b47,Sagalassos_Bakker_b47,37.6806,30.5306,1568,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1716,2019,8996,Sagalassos_b48,Sagalassos_Bakker_b48,37.67705,30.5037333333333,1529,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1717,2020,8997,Sagalassos_b49,Sagalassos_Bakker_b49,37.6770833333333,30.5273833333333,1525,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1718,2021,8998,Canakli_b50,Canakli_Bakker_b50,37.5529333333333,30.57835,1258,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1719,2022,8999,Canakli_b51,Canakli_Bakker_b51,37.5498,30.5793666666667,1402,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1720,2023,9000,Sagalassos_b52,Sagalassos_Bakker_b52,37.6673166666667,30.5078833333333,1488,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1721,2024,9001,Canakli_b53,Canakli_Bakker_b53,37.5556666666667,30.5841333333333,1182,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1722,2025,9002,Baskoy_b54,Baskoy_Bakker_b54,37.63465,30.4949833333333,1237,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1723,2026,9003,Baskoy_b55,Baskoy_Bakker_b55,37.6330166666667,30.4954,1269,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1724,2027,9004,Baskoy_b56,Baskoy_Bakker_b56,37.6583666666667,30.4928833333333,1397,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1725,2028,9005,Baskoy_b57,Baskoy_Bakker_b57,37.6618,30.4759,1349,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1726,2029,9006,Aglasun_b58,Aglasun_Bakker_b58,37.6300666666667,30.5507833333333,1246,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1727,2030,9007,Aglasun_b59,Aglasun_Bakker_b59,37.6241166666667,30.5594333333333,1166,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1728,2031,9008,Aglasun_b60,Aglasun_Bakker_b60,37.61925,30.5611833333333,1285,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1729,2032,9009,Canakli_b61,Canakli_Bakker_b61,37.56245,30.5971833333333,1162,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1730,2033,9010,Aglasun_b62,Aglasun_Bakker_b62,37.6279,30.594,1100,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1731,2034,9011,Aglasun_b63,Aglasun_Bakker_b63,37.6217,30.56458333,1231,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1732,2035,9012,Aglasun_b64,Aglasun_Bakker_b64,37.6205,30.564133000000002,1269,"terrestrial, other sediments",surface sample,,medium (1.1-50 km2),EMPD,0,
+1733,2036,9013,Iosipovo,Iosipovo,51.2,28,8,"terrestrial, mire, bog",surface sample,,medium (1.1-50 km2),EMPD,0,
+1734,2037,9014,Khomin Mokh,Khomin Mokh,51.2,28,8,"terrestrial, mire, bog",surface sample,,medium (1.1-50 km2),EMPD,0,
+1735,2038,9015,Turova Dacha,Turova Dacha,48.9,24.1,8,"terrestrial, mire, bog",surface sample,,medium (1.1-50 km2),EMPD,0,
+1737,2040,9017,Central Jordan Rift_a1,Central Jordan Rift_Fall_a1,30.40749,35.49882,1700,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMPD,0,
+1738,2041,9018,Central Jordan Rift_a2,Central Jordan Rift_EMPD_a2,30.40096,35.48847,1600,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMPD,0,
+1739,2042,9019,Central Jordan Rift_a3,Central Jordan Rift_EMPD_a3,30.39092,35.48821,1500,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMPD,0,
+1740,2043,9020,Central Jordan Rift_a4,Central Jordan Rift_EMPD_a4,30.3793,35.48624,1400,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMPD,0,
+1741,2044,9021,Central Jordan Rift_a5,Central Jordan Rift_EMPD_a5,30.37049,35.48069,1300,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMPD,0,
+1742,2045,9022,Central Jordan Rift_a6,Central Jordan Rift_EMPD_a6,30.36988,35.4746,1200,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMPD,0,
+1743,2046,9023,Central Jordan Rift_a7,Central Jordan Rift_EMPD_a7,30.44202,35.45922,1100,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMPD,0,
+1744,2047,9024,Central Jordan Rift_a8,Central Jordan Rift_EMPD_a8,30.44389,35.44599,1000,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMPD,0,
+1745,2048,9025,Central Jordan Rift_a9,Central Jordan Rift_EMPD_a9,30.43976,35.41962,900,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMPD,0,
+1746,2049,9026,Central Jordan Rift_a10,Central Jordan Rift_EMPD_a10,30.43815,35.41481,800,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMPD,0,
+1747,2050,9027,Central Jordan Rift_a11,Central Jordan Rift_EMPD_a11,30.44048,35.4116,700,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMPD,0,
+1748,2051,9028,Central Jordan Rift_a12,Central Jordan Rift_EMPD_a12,30.44663,35.40754,600,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMPD,0,
+1749,2052,9029,Central Jordan Rift_a13,Central Jordan Rift_EMPD_a13,30.45817,35.40549,500,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMPD,0,
+1750,2053,9030,Central Jordan Rift_a14,Central Jordan Rift_EMPD_a14,30.46837,35.40116,400,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMPD,0,
+1751,2054,9031,Central Jordan Rift_a15,Central Jordan Rift_EMPD_a15,30.47815,35.39822,300,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMPD,0,
+1752,2055,9032,Central Jordan Rift_a16,Central Jordan Rift_EMPD_a16,30.48608,35.3855,200,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMPD,0,
+1753,2056,9033,Central Jordan Rift_a17,Central Jordan Rift_EMPD_a17,30.49884,35.36652,100,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMPD,0,
+1754,2057,9034,Central Jordan Rift_a18,Central Jordan Rift_EMPD_a18,30.5647,35.32521,0,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMPD,0,
+1755,2058,9035,Central Jordan Rift_a19,Central Jordan Rift_EMPD_a19,30.75096,35.38494,-100,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMPD,0,
+1756,2059,9036,Central Jordan Rift_a20,Central Jordan Rift_EMPD_a20,30.87001,35.42741,-200,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMPD,0,
+1757,2060,9037,Central Jordan Rift_a21,Central Jordan Rift_EMPD_a21,30.89953,35.41629,-300,"terrestrial, soil",surface sample,,medium (1.1-50 km2),EMPD,0,
+1760,2064,9204,Flambouro,Flambouro mire,40.259444,22.170833,1645,"terrestrial, mire, bog",core,peat,very small (<0.01 km2),EPD,-59,0
+1761,2065,9220,Litochoro Katarinis,Litochoro_core,40.138889,22.546111,25,"terrestrial, mire, bog",core,unknown,small (0.01-1 km2),EPD,-20,0
+1761,2065,9221,Litochoro Katarinis,Litochoro_core,40.138889,22.546111,25,"terrestrial, mire, bog",core,unknown,small (0.01-1 km2),EPD,25,0.1
+1762,2066,9284,Pertouli,Pertouli core,39.524167,21.4775,1440,"terrestrial, mire, bog",core,unknown,small (0.01-1 km2),EPD,-25,0
+1763,2067,9308,Capatana,Capatana core,46.466111,23.136389,1220,"terrestrial, mire, bog",core,peat,small (0.01-1 km2),EPD,16,0.55
+1765,2069,9435,Lailias,Lailias_core,41.267778,23.599444,1420,"terrestrial, mire, bog",core,peat,small (0.01-1 km2),EPD,-79,0
+1765,2069,9436,Lailias,Lailias_core,41.267778,23.599444,1420,"terrestrial, mire, bog",core,peat,small (0.01-1 km2),EPD,-6,0.1
+1766,2070,9462,Iaz,Iaz Core,47.108333,22.661111,300,"terrestrial, mire, bog",core,unknown,small (0.01-1 km2),EPD,15,0
+1766,2070,9463,Iaz,Iaz Core,47.108333,22.661111,300,"terrestrial, mire, bog",core,unknown,small (0.01-1 km2),EPD,48,0.05
+1768,2075,9584,Pashennoe,Pashennoe Core,49.37,75.4,871,"lacustrine, natural open-water",core,unknown,small (0.01-1 km2),EPD,0,0
+1770,2077,9654,Kumata,Kumata Core,42.590278,23.251667,1770,"terrestrial, mire, bog",core,peat,small (0.01-1 km2),EPD,-40,0
+1770,2077,9655,Kumata,Kumata Core,42.590278,23.251667,1770,"terrestrial, mire, bog",core,peat,small (0.01-1 km2),EPD,18,0.05
+1772,2079,9682,Taul Zanogutii,Taul Zanogutii core,45.327778,22.802778,1840,"terrestrial, marsh",core,lacustrine silt and banded silt,small (0.01-1 km2),EPD,6,0.2
+1774,2081,9896,Jvari Lake,JV0,41.838667,44.74015,570,"lacustrine, natural open-water",surface sample,sediment,medium (1.1-50 km2),EMBSECBIO,-52,0
+1774,2082,9897,Jvari Lake,JV1,41.838667,44.74015,570,"lacustrine, natural open-water",surface sample,sediment,medium (1.1-50 km2),EMBSECBIO,-52,0
+1775,2083,9898,Chili Lake,CHL1,41.812483,44.6781,1130,"lacustrine, natural open-water",surface sample,sediment,medium (1.1-50 km2),EMBSECBIO,-52,0
+1775,2084,9899,Chili Lake,CHL2,41.812483,44.6781,1130,"lacustrine, natural open-water",surface sample,sediment,medium (1.1-50 km2),EMBSECBIO,-52,0
+1775,2085,9900,Chili Lake,CHL3,41.812583,44.676983,1130,"lacustrine, natural open-water",surface sample,sediment,medium (1.1-50 km2),EMBSECBIO,-52,0
+1776,2089,9904,Khachalgora,KH1,41.316667,43.933333,2640,"terrestrial, mire, bog",surface sample,sediment,small (0.01-1 km2),EMBSECBIO,-52,0
+1776,2090,9905,Khachalgora,KH2,41.316667,43.933333,2640,"terrestrial, mire, bog",surface sample,sediment,small (0.01-1 km2),EMBSECBIO,-52,0
+1776,2091,9906,Khachalgora,KH3,41.316667,43.933333,2640,"terrestrial, mire, bog",surface sample,sediment,small (0.01-1 km2),EMBSECBIO,-52,0
+1776,2092,9907,Khachalgora,KHE,41.316667,43.933333,2634,"terrestrial, mire, bog",surface sample,pond sediment,small (0.01-1 km2),EMBSECBIO,-52,0
+1776,2093,9908,Khachalgora,KHW,41.316667,43.933333,2633,"terrestrial, mire, bog",surface sample,pond sediment,small (0.01-1 km2),EMBSECBIO,-52,0
+1777,2094,9909,Patara Gldani lake,PGT,41.810983,44.828933,530,"lacustrine, natural open-water",surface sample,sediment,medium (1.1-50 km2),EMBSECBIO,-52,0
+1778,2095,9910,"Blato do Lebed, Rhodope Mts.",Lebed-0.5,41.472586,25.210148,725,"lacustrine, natural open-water",core top,sediment,medium (1.1-50 km2),EMBSECBIO,-60,0.05
+1779,2096,9911,Mount Paiko,Paiko,41.051667,22.274722,1080,"terrestrial, mire, bog",core,unknown,small (0.01-1 km2),EPD,-44,0
+1782,2101,10263,Didachara,Didachara core,41.683889,42.496944,2000,"terrestrial, mire, fen",core,,small (0.01-1 km2),EPD,-62,0
+1782,2101,10264,Didachara,Didachara core,41.683889,42.496944,2000,"terrestrial, mire, fen",core,,small (0.01-1 km2),EPD,21,0.1
+1784,2105,10501,Elatia-Rhodopes,Elatia-Rhodopes,41.479722,24.325833,1520,"terrestrial, mire, bog",peat core,peat,small (0.01-1 km2),EPD,-45,0
+1785,2106,10521,Lake Blatisto,Lake Blatisto,41.621389,24.678056,1540,"lacustrine, natural open-water",lacustrine core,unknown,small (0.01-1 km2),EPD,-59,0.01
+1785,2106,10522,Lake Blatisto,Lake Blatisto,41.621389,24.678056,1540,"lacustrine, natural open-water",lacustrine core,unknown,small (0.01-1 km2),EPD,-37,0.08
+1785,2106,10523,Lake Blatisto,Lake Blatisto,41.621389,24.678056,1540,"lacustrine, natural open-water",lacustrine core,unknown,small (0.01-1 km2),EPD,-18,0.14
+1785,2106,10524,Lake Blatisto,Lake Blatisto,41.621389,24.678056,1540,"lacustrine, natural open-water",lacustrine core,unknown,small (0.01-1 km2),EPD,13,0.24
+1785,2106,10525,Lake Blatisto,Lake Blatisto,41.621389,24.678056,1540,"lacustrine, natural open-water",lacustrine core,unknown,small (0.01-1 km2),EPD,45,0.34
+1786,2107,10663,XK-120 (Black Sea South),XK-120 (Black Sea South),42.1,28.5,-94,marine,marine core,marine sediment,large (50.1-500 km2),EPD,-41,0
+1787,2108,10674,XK-55 (Black Sea SW),XK-55 (Black Sea SW),42.1,28.9,0,marine,marine core,marine sediment,large (50.1-500 km2),EPD,-41,0
+1789,1806,7711,Dervisha Reserve,Dervisha Reserve ss,43.1575,26.765,170,"coastal, other",surface sample,,medium (1.1-50 km2),EMBSECBIO,-55,
+1790,1807,7712,Patleyna Reserve,Patleyna Reserve ss,43.1358,26.824,297,"coastal, other",surface sample,,medium (1.1-50 km2),EMBSECBIO,-55,
+1792,2117,11552,Al Jourd,Aljourd,34.35,36.2,2100,"terrestrial, marsh",marsh core,,,,-70,0
+1796,2121,11972,Kis-Mohos To,Kismohos,48.33724,20.42333,315,"terrestrial, mire, bog",peat core,,very small (<0.01 km2),,0,2.74
+1797,2122,12063,Popradske pleso,Popradske,49.15343,20.07971,1513,"lacustrine, natural open-water, glacial origin",lacustrine core,,small (0.01-1 km2),,-70,11
+1797,2122,12064,Popradske pleso,Popradske,49.15343,20.07971,1513,"lacustrine, natural open-water, glacial origin",lacustrine core,,small (0.01-1 km2),,-51,11.01
+1797,2122,12065,Popradske pleso,Popradske,49.15343,20.07971,1513,"lacustrine, natural open-water, glacial origin",lacustrine core,,small (0.01-1 km2),,-32,11.02
+1797,2122,12066,Popradske pleso,Popradske,49.15343,20.07971,1513,"lacustrine, natural open-water, glacial origin",lacustrine core,,small (0.01-1 km2),,-14,11.03
+1797,2122,12067,Popradske pleso,Popradske,49.15343,20.07971,1513,"lacustrine, natural open-water, glacial origin",lacustrine core,,small (0.01-1 km2),,5,11.04
+1797,2122,12068,Popradske pleso,Popradske,49.15343,20.07971,1513,"lacustrine, natural open-water, glacial origin",lacustrine core,,small (0.01-1 km2),,24,11.05
+1797,2122,12069,Popradske pleso,Popradske,49.15343,20.07971,1513,"lacustrine, natural open-water, glacial origin",lacustrine core,,small (0.01-1 km2),,48,11.06
