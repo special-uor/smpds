@@ -139,23 +139,27 @@ parallel_extract_biome <- function(.data,
                                    all = FALSE) {
   oplan <- future::plan(future::multisession, workers = cpus)
   on.exit(future::plan(oplan), add = TRUE)
-  output <- seq_len(nrow(.data)) %>%
-    furrr::future_map_dfr(function(i) {
-      if (.data %>% # Return NA if  latitude or longitude are missing (NA)
-          dplyr::slice(i) %>%
-          dplyr::mutate(LATLON = is.na(latitude) | is.na(longitude)) %>%
-          .$LATLON)
-        return(.data %>% dplyr::slice(i) %>% dplyr::mutate(ID = i, .before = 1))
+  {
+    pb <- progressr::progressor(steps = nrow(.data))
+    output <- seq_len(nrow(.data)) %>%
+      furrr::future_map_dfr(function(i) {
+        if (.data %>% # Return NA if  latitude or longitude are missing (NA)
+            dplyr::slice(i) %>%
+            dplyr::mutate(LATLON = is.na(latitude) | is.na(longitude)) %>%
+            .$LATLON)
+          return(.data %>% dplyr::slice(i) %>% dplyr::mutate(ID = i, .before = 1))
         # return(tibble::tibble(ID = i, ID_BIOME = NA, px = NA))
-      .data %>%
-        dplyr::slice(i) %>%
-        # sf::st_as_sf(x = ., coords = c("longitude", "latitude")) %>%
-        extract_biome(reference = reference, buffer = buffer, all = all) %>%
-        dplyr::mutate(ID = i, .before = 1)
-    },
-    .progress = TRUE,
-    .options = furrr::furrr_options(seed = TRUE))
-  if (!all)  # Remove the
+        tmp <- .data %>%
+          dplyr::slice(i) %>%
+          # sf::st_as_sf(x = ., coords = c("longitude", "latitude")) %>%
+          extract_biome(reference = reference, buffer = buffer, all = all) %>%
+          dplyr::mutate(ID = i, .before = 1)
+        pb()
+        tmp
+      },
+      .options = furrr::furrr_options(seed = TRUE))
+  }
+  if (!all)  # Remove the ID
     output <- output %>% dplyr::select(-ID)
   output
 }
