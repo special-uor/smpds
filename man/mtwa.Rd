@@ -8,9 +8,9 @@
 \usage{
 mtwa(.data, ...)
 
-\method{mtwa}{numeric}(.data, ...)
+\method{mtwa}{numeric}(.data, pb = NULL, ...)
 
-\method{mtwa}{tbl_df}(.data, ...)
+\method{mtwa}{tbl_df}(.data, cpus = 1, ...)
 }
 \arguments{
 \item{.data}{Object with daily values of temperature. The object can be a:
@@ -20,10 +20,16 @@ mtwa(.data, ...)
 with values of daily temperature.
 }}
 
-\item{...}{Optional parameters (not used).}
+\item{...}{Optional parameters, including \code{cpus} and \code{pb}.}
+
+\item{pb}{Function to signal the execution of one cycle (e.g.
+\code{progressr::progressor(...)}). Default: \code{NULL}, do nothing.}
+
+\item{cpus}{Numeric value with the number of CPUs to be used for the
+computation. Default: \code{1}, serial computation.}
 }
 \value{
-If the input is a
+If the input (\code{.data}) is a
 \itemize{
 \item Numeric vector, it returns a single value for MTWA.
 \item Data frame (\code{tibble} object), it returns the same data frame
@@ -39,6 +45,8 @@ of temperature.
 
 Other utils climate: 
 \code{\link{gdd}()},
+\code{\link{mat}()},
+\code{\link{mi}()},
 \code{\link{mtco}()}
 }
 \concept{utils climate}

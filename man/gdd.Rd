@@ -8,9 +8,9 @@
 \usage{
 gdd(.data, ...)
 
-\method{gdd}{numeric}(.data, baseline = 0, ...)
+\method{gdd}{numeric}(.data, baseline = 0, pb = NULL, ...)
 
-\method{gdd}{tbl_df}(.data, baseline = 0, ...)
+\method{gdd}{tbl_df}(.data, baseline = 0, cpus = 1, ...)
 }
 \arguments{
 \item{.data}{Object with daily values of temperature. The object can be a:
@@ -20,14 +20,20 @@ gdd(.data, ...)
 with values of daily temperature.
 }}
 
-\item{...}{Optional parameters. Including the \code{baseline} for the
-calculation of the Growing Degree Days.}
+\item{...}{Optional parameters, including the \code{baseline} for the
+calculation of the Growing Degree Days, \code{cpus} and \code{pb}.}
 
 \item{baseline}{Numeric value to be used as the baseline for the calculation
 of the Growing Degree Days, default: \code{0}.}
+
+\item{pb}{Function to signal the execution of one cycle (e.g.
+\code{progressr::progressor(...)}). Default: \code{NULL}, do nothing.}
+
+\item{cpus}{Numeric value with the number of CPUs to be used for the
+computation. Default: \code{1}, serial computation.}
 }
 \value{
-If the input is a
+If the input (\code{.data}) is a
 \itemize{
 \item Numeric vector, it returns a single value for GDD.
 \item Data frame (\code{tibble} object), it returns the same data frame
@@ -56,6 +62,8 @@ data \%>\%
 \code{\link{plot_gdd}}
 
 Other utils climate: 
+\code{\link{mat}()},
+\code{\link{mi}()},
 \code{\link{mtco}()},
 \code{\link{mtwa}()}
 }
