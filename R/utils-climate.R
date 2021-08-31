@@ -112,12 +112,19 @@ mat.numeric <- function(.data, ...) {
     purrr::flatten_dbl()
 }
 
+#' @inheritParams gdd.tbl_df
 #' @export
 #' @rdname mat
-mat.tbl_df <- function(.data, ...) {
-  .data %>%
-    dplyr::mutate(mat = tmp %>%
-                    purrr::map_dbl(mat))
+mat.tbl_df <- function(.data, cpus = 1, ...) {
+  oplan <- future::plan(future::multisession, workers = cpus)
+  {
+    pb <- progressr::progressor(steps = nrow(.data))
+    output <- .data %>%
+      dplyr::mutate(mat = tmp %>%
+                      furrr::future_map_dbl(mat, pb = pb))
+  }
+  future::plan(oplan)
+  return(output)
 }
 
 #' Calculate MI
@@ -151,8 +158,7 @@ mi <- function(.data, ...) {
 }
 
 #' @importFrom magrittr `%$%`
-#' @param cpus Numeric value with the number of CPUs to be used for the
-#'     computation. Default: \code{1}, serial computation.
+#' @inheritParams gdd.tbl_df
 #' @export
 #' @rdname mi
 mi.tbl_df <- function(.data, cpus = 1, ...) {
@@ -170,8 +176,7 @@ mi.tbl_df <- function(.data, cpus = 1, ...) {
     p <- progressr::progressor(steps = nrow(.data))
     .pet <- seq_len(nrow(.data)) %>%
       furrr::future_map(function(k) {
-        p()
-        seq_len(365) %>% # Daily values
+        output <- seq_len(365) %>% # Daily values
           purrr::map_dbl(function(i) {
             .data %>%
               dplyr::slice(k) %$%
@@ -183,9 +188,10 @@ mi.tbl_df <- function(.data, cpus = 1, ...) {
                                       tc = tmp[[1]][i]) %$%
               pet_mm # Extract PET
           })
+        p()
+        output
       })
-  } %>%
-    progressr::with_progress()
+  }
   future::plan(oplan)
 
   # Calculate MI
@@ -235,12 +241,19 @@ mtco.numeric <- function(.data, ...) {
     purrr::flatten_dbl()
 }
 
+#' @inheritParams gdd.tbl_df
 #' @export
 #' @rdname mtco
-mtco.tbl_df <- function(.data, ...) {
-  .data %>%
-    dplyr::mutate(mtco = tmp %>%
-                    purrr::map_dbl(mtco))
+mtco.tbl_df <- function(.data, cpus = 1, ...) {
+  oplan <- future::plan(future::multisession, workers = cpus)
+  {
+    pb <- progressr::progressor(steps = nrow(.data))
+    output <- .data %>%
+      dplyr::mutate(mtco = tmp %>%
+                      furrr::future_map_dbl(mtco, pb = pb))
+  }
+  future::plan(oplan)
+  return(output)
 }
 
 #' Calculate MTWA
@@ -283,10 +296,17 @@ mtwa.numeric <- function(.data, ...) {
     purrr::flatten_dbl()
 }
 
+#' @inheritParams gdd.tbl_df
 #' @export
 #' @rdname mtwa
-mtwa.tbl_df <- function(.data, ...) {
-  .data %>%
-    dplyr::mutate(mtwa = tmp %>%
-                    purrr::map_dbl(mtwa))
+mtwa.tbl_df <- function(.data, cpus = 1, ...) {
+  oplan <- future::plan(future::multisession, workers = cpus)
+  {
+    pb <- progressr::progressor(steps = nrow(.data))
+    output <- .data %>%
+      dplyr::mutate(mtwa = tmp %>%
+                      furrr::future_map_dbl(mtwa, pb = pb))
+  }
+  future::plan(oplan)
+  return(output)
 }
