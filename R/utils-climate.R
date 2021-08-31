@@ -9,8 +9,8 @@
 #'  \item Data frame (\code{tibble} object) with a column called \code{tmp},
 #'  with values of daily temperature.
 #' }
-#' @param ... Optional parameters. Including the \code{baseline} for the
-#'     calculation of the Growing Degree Days.
+#' @param ... Optional parameters, including the \code{baseline} for the
+#'     calculation of the Growing Degree Days, \code{cpus} and \code{pb}.
 #'
 #' @return If the input (\code{.data}) is a
 #' \itemize{
@@ -88,7 +88,7 @@ gdd.tbl_df <- function(.data, baseline = 0, cpus = 1, ...) {
 #'  \item Data frame (\code{tibble} object) with a column called \code{tmp},
 #'  with values of daily temperature (a \code{list}).
 #' }
-#' @param ... Optional parameters (not used).
+#' @param ... Optional parameters, including \code{cpus} and \code{pb}.
 #'
 #' @return If the input (\code{.data}) is a
 #' \itemize{
@@ -216,7 +216,7 @@ mi.tbl_df <- function(.data, cpus = 1, ...) {
 #'  \item Data frame (\code{tibble} object) with a column called \code{tmp},
 #'  with values of daily temperature (a \code{list}).
 #' }
-#' @param ... Optional parameters (not used).
+#' @param ... Optional parameters, including \code{cpus} and \code{pb}.
 #'
 #' @return If the input (\code{.data}) is a
 #' \itemize{
@@ -276,7 +276,7 @@ mtco.tbl_df <- function(.data, cpus = 1, ...) {
 #'  \item Data frame (\code{tibble} object) with a column called \code{tmp},
 #'  with values of daily temperature.
 #' }
-#' @param ... Optional parameters (not used).
+#' @param ... Optional parameters, including \code{cpus} and \code{pb}.
 #'
 #' @return If the input (\code{.data}) is a
 #' \itemize{
