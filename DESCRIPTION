@@ -26,8 +26,10 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Imports: 
     dplyr,
+    furrr,
     magrittr,
     ncdf4,
+    progressr,
     purrr,
     Rdpack (>= 0.7),
     readr,
