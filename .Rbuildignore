@@ -10,4 +10,5 @@
 ^pkgdown$
 ^data-raw$
 ^tests$
-^inst$
+^inst/images$
+^inst/extdata$
