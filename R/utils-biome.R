@@ -37,7 +37,7 @@ biome_name.tbl_df <- function(.data, ...) {
 #' @export
 #' @rdname biome_name
 biome_name.numeric <- function(.data, ...) {
-  smpds:::PNV_classes %>%
+  PNV_classes %>% # Internal dataset
     dplyr::filter(ID_BIOME %in% !!.data)
 }
 

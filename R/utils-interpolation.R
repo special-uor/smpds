@@ -107,7 +107,7 @@ gwr <- function(.data,
   on.exit(future::plan(oplan), add = TRUE)
   fm_suffix <- " ~ elevation"
   output <- seq_len(nrow(.data)) %>%
-    furrr:::future_map_dfr(function(i) {
+    furrr::future_map_dfr(function(i) {
       climate_grid2 <- subset_coords(climate_grid,
                                      .data$latitude[i],
                                      .data$longitude[i],
