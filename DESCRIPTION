@@ -18,21 +18,32 @@ Description: Provides functions to facilitate the access to the Modern Pollen
 License: MIT + file LICENSE
 Suggests: 
     covr,
+    knitr,
+    Rdpack (>= 0.7)
+    rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
+URL: https://github.com/special-uor/smpds/, 
+     https://special-uor.github.io/smpds/,
+     https://research.reading.ac.uk/palaeoclimate/
+BugReports: https://github.com/special-uor/smpds/issues/
 Imports: 
     dplyr,
     furrr,
+    future,
+    ggplot2,
+    lubridate,
     magrittr,
     ncdf4,
     progressr,
     purrr,
-    Rdpack (>= 0.7),
+    raster,
     readr,
+    rnaturalearth,
     sf,
     sp,
     spgwr,
@@ -42,3 +53,4 @@ Imports:
 Depends: 
     R (>= 2.10)
 RdMacros: Rdpack
+VignetteBuilder: knitr
