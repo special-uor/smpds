@@ -52,7 +52,6 @@ Juglans,Juglans,update
 Juniperus,Juniperus,update
 Juniperus-type,Juniperus type,update
 Lamiaceae,Lamiaceae,update
-Lemna minor,exclude,update
 Liliaceae,Liliaceae,update
 Linum,Linum,update
 Monolete spores,Polypodiales,update
@@ -119,6 +118,7 @@ indet,,delete
 Indeterm,,delete
 Indeterminable: unknown,,delete
 Indetermines,,delete
+Lemna minor,,delete
 Menyanthes,,delete
 Odontites,,delete
 Phragmites,,delete
