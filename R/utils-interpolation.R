@@ -61,10 +61,12 @@ cru_mask <- function(res = 0.5,
 #' @references
 #' Peng, Y., Bloomfield, K.J. and Prentice, I.C., 2020. A theory of plant
 #' function helps to explain leaf‐trait and productivity responses to elevation.
-#' New Phytologist, 226(5), pp.1274-1284. doi:10.1111/nph.16447
+#' New Phytologist, 226(5), pp.1274-1284. \doi{10.1111/nph.16447}
 #'
 #' @source
-#' https://github.com/yunkepeng/gwr
+#' This function was adapted from a code developed by Yunke Peng
+#' (\email{yunke.peng@usys.ethz.ch}) - ETH Zürich:
+#' \url{https://github.com/yunkepeng/gwr}
 #'
 #' @examples
 #' `%>%` <- magrittr::`%>%`
