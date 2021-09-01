@@ -158,8 +158,6 @@ Liquidambar,Liquidambar,update
 Loiseleuria procumbens-type,Kalmia procumbens type,update
 Lonicera t.,Lonicera type,update
 Lotus-type,Lotus type,update
-Lycopodium (counted) for charcoal,exclude,update
-Lycopodium (spores/tablet),exclude,update
 Lythrum,Lythrum,update
 Lythrum salicaria,Lythrum salicaria,update
 Matricaria t.,Matricaria type,update
@@ -188,7 +186,6 @@ Phillyrea,Phillyrea,update
 Phyteuma,Phyteuma,update
 Picea,Picea,update
 Picea schrenkiana,Picea schrenkiana,update
-Picea Stomata,exclude,update
 Pimpinella major-type,Pimpinella major type,update
 Pinus,Pinus,update
 Pinus cembra,Pinus cembra,update
@@ -321,8 +318,11 @@ Counted exote,,delete
 Humulus lupulus,,delete
 Humulus-type,,delete
 Juniperus Stomata,,delete
+Lycopodium (counted) for charcoal,,delete
+Lycopodium (spores/tablet),,delete
 Lycopodium tablets (number),,delete
 Odontites-type,,delete
+Picea Stomata,,delete
 Potamogeton natans t.,,delete
 Ranunculus aquatilis t.,,delete
 Ruppia,,delete
