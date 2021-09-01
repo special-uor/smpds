@@ -42,11 +42,13 @@ process_apd <- function(path, ext = "ascii", delim = ";", comment = "#", ...) {
                         as.double()) %>%
         dplyr::rename(elevation = altitude) %>%
         dplyr::rowwise() %>%
-        dplyr::mutate(publication = dplyr::across(dplyr::starts_with("reference")) %>% #c(reference1, reference2, reference3)
+        dplyr::mutate(publication =
+                        dplyr::across(dplyr::starts_with("reference")) %>%
                         .[!is.na(.)] %>%
                         unique() %>%
                         stringr::str_c(collapse = ";\n"),
-                      publication = ifelse(publication == "", NA, publication)) %>%
+                      publication =
+                        ifelse(publication == "", NA, publication)) %>%
         dplyr::select(-dplyr::starts_with("reference"))
 
       data <- f %>%

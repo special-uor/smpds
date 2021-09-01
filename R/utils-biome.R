@@ -90,8 +90,6 @@ extract_biome.tbl_df <- function(.data,
   if (!all(c("latitude", "longitude") %in% colnames(.data)))
     stop("The given data object does not contain a latitude and/or longitude.",
          call. = FALSE)
-  # if (!("sf" %in% class(.data)))
-  #   .data <- .data %>% sf::st_as_sf(x = ., coords = c("longitude", "latitude"))
   .data %>%
     dplyr::mutate(geometry = NA, .after = longitude) %>%
     sf::st_as_sf(x = ., coords = c("longitude", "latitude")) %>%
@@ -147,7 +145,9 @@ parallel_extract_biome <- function(.data,
             dplyr::slice(i) %>%
             dplyr::mutate(LATLON = is.na(latitude) | is.na(longitude)) %>%
             .$LATLON)
-          return(.data %>% dplyr::slice(i) %>% dplyr::mutate(ID = i, .before = 1))
+          return(.data %>%
+                   dplyr::slice(i) %>%
+                   dplyr::mutate(ID = i, .before = 1))
         # return(tibble::tibble(ID = i, ID_BIOME = NA, px = NA))
         tmp <- .data %>%
           dplyr::slice(i) %>%
@@ -200,7 +200,8 @@ plot_biome <- function(.data,
   #                          paste(.x, "\u00B0S"),
   #                          ifelse(.x > 0, paste(.x, "\u00B0N"), "0")))
   # world <- rnaturalearth::ne_countries(scale = "small", returnclass = "sf")
-  basemap <- rnaturalearth::ne_countries(scale = "small", returnclass = "sf") %>%
+  basemap <- rnaturalearth::ne_countries(scale = "small",
+                                         returnclass = "sf") %>%
     ggplot2::ggplot() +
     ggplot2::geom_sf(fill = "white", size = 0.25) +
     ggplot2::coord_sf(xlim = xlim, ylim = ylim, ..., expand = FALSE)
@@ -232,7 +233,8 @@ plot_biome <- function(.data,
                                values = .data_biome$colour) +
     ggplot2::scale_x_continuous(breaks = ewbrks) +
     ggplot2::labs(x = NULL, y = NULL) +
-    ggplot2::guides(fill = ggplot2::guide_legend(override.aes = list(size = 2))) +
+    ggplot2::guides(fill = ggplot2::guide_legend(override.aes =
+                                                   list(size = 2))) +
     ggplot2::theme(legend.position = legend.position,
                    legend.background = ggplot2::element_rect(colour = "black",
                                                              fill = "white"),
@@ -242,7 +244,6 @@ plot_biome <- function(.data,
                                                             size = 0.4),
                    panel.border = ggplot2::element_rect(colour = "black",
                                                         fill = NA),
-                   # panel.background = ggplot2::element_rect(fill = "aliceblue"))
                    panel.background = ggplot2::element_rect(fill = NA))
   print(p)
   return(invisible(p))

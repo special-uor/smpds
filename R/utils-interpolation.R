@@ -52,7 +52,6 @@ cru_mask <- function(res = 0.5,
 #'     }
 #' @param cpus Number of CPUs to be used in parallel, default = 1.
 #' @inheritParams spgwr::gwr
-# @inheritDotParams spgwr::gwr -formula -data -bandwidth -fit.points -predictions -coords
 #'
 #' @return Table with interpolated values from \code{varid} for each record/row
 #'     in \code{.data}.
@@ -69,6 +68,7 @@ cru_mask <- function(res = 0.5,
 #' \url{https://github.com/yunkepeng/gwr}
 #'
 #' @examples
+#' \dontrun{
 #' `%>%` <- magrittr::`%>%`
 #' data <- tibble::tibble(entity_name = "University of Reading",
 #'                        latitude = 51.44140,
@@ -76,7 +76,8 @@ cru_mask <- function(res = 0.5,
 #'                        elevation = c(61, 161, 261, 361))
 #' data %>%
 #'   smpds::gwr(varid = "tmp",
-#'              reference = "inst/extdata/cru_ts4.04-clim-1961-1990-daily_tmp_1-5.nc")
+#'              reference = "/path/to/reference-tmp.nc")
+#' }
 gwr <- function(.data,
                 varid,
                 reference = NULL,
@@ -184,6 +185,7 @@ mask_nc <- function(.data, mask = cru_mask()) {
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' `%>%` <- magrittr::`%>%`
 #' data <- tibble::tibble(entity_name = "University of Reading",
 #'                        latitude = 51.44140,
@@ -191,8 +193,9 @@ mask_nc <- function(.data, mask = cru_mask()) {
 #'                        elevation = 61)
 #' data %>%
 #'   smpds::gwr(varid = "tmp",
-#'              reference = "inst/extdata/cru_ts4.04-clim-1961-1990-daily_tmp_1-5.nc") %>%
+#'              reference = "/path/to/reference-tmp.nc") %>%
 #'   smpds::pivot_data(varname = "tmp")
+#' }
 pivot_data <- function(.data,
                        timestep = "^T[0-9]*",
                        cols = colnames(.data) %>%

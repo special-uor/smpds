@@ -24,7 +24,8 @@
 plot_climate <- function(.data,
                          var = "mat",
                          units = NA,
-                         fill_scale = ggplot2::scale_fill_viridis_c(name = toupper(var)),
+                         fill_scale =
+                           ggplot2::scale_fill_viridis_c(name = toupper(var)),
                          size = 1,
                          stroke = 0.1,
                          legend.key.width = ggplot2::unit(3, "cm"),
@@ -44,7 +45,8 @@ plot_climate <- function(.data,
 
   # create the breaks- and labels vector
   ewbrks <- seq(-180,180,30)
-  basemap <- rnaturalearth::ne_countries(scale = "small", returnclass = "sf") %>%
+  basemap <- rnaturalearth::ne_countries(scale = "small",
+                                         returnclass = "sf") %>%
     ggplot2::ggplot() +
     ggplot2::geom_sf(fill = "white", size = 0.25) +
     ggplot2::coord_sf(xlim = xlim, ylim = ylim, ..., expand = FALSE)
@@ -75,7 +77,6 @@ plot_climate <- function(.data,
                                                             size = 0.4),
                    panel.border = ggplot2::element_rect(colour = "black",
                                                         fill = NA),
-                   # panel.background = ggplot2::element_rect(fill = "aliceblue"))
                    panel.background = ggplot2::element_rect(fill = NA))
   print(p)
   return(invisible(p))
@@ -123,9 +124,10 @@ plot_mat <- function(.data,
   .data %>%
     plot_climate(var = "mat",
                  units = "\u00B0C",
-                 fill_scale = ggplot2::scale_fill_distiller(name = "MAT",
-                                                            palette = "Spectral",
-                                                            direction = -1),
+                 fill_scale =
+                   ggplot2::scale_fill_distiller(name = "MAT",
+                                                 palette = "Spectral",
+                                                 direction = -1),
                  size = size,
                  stroke = stroke,
                  legend.key.width = legend.key.width,
