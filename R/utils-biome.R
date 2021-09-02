@@ -1,10 +1,14 @@
 #' Biome names
 #'
-#' Obtain biome names from the Hengl et al., 2018, using the \code{ID_BIOME}.
+#' Obtain biome names from the map created by
+#' \insertCite{hengl2018global;textual}{smpds},
+#' using the \code{ID_BIOME}.
 #'
 #' @param .data Numeric vector or data frame (\code{tibble} object with a column
-#'     called \code{ID_BIOME}) with values linked to a Biome provided by
-#'     Hengl et al., 2018. (See \code{\link{smpds:::PNV_classes}}).
+#'     called \code{ID_BIOME}) with values linked to a biome provided by the
+#'     map created by
+#'     \insertCite{hengl2018global1kmres;textual}{smpds}.
+#'     (See \code{\link{smpds::pnv_classes}}).
 #' @param ... Optional parameters (not used).
 #'
 #' @return Table (\code{tibble} object) with biome metadata.
@@ -21,6 +25,9 @@
 #'   biome_name()
 #'
 #' biome_name(1:10)
+#'
+#' @references
+#' \insertAllCited{}
 biome_name <- function(.data, ...) {
   UseMethod("biome_name", .data)
 }
@@ -39,7 +46,8 @@ biome_name.tbl_df <- function(.data, ...) {
 biome_name.numeric <- function(.data, ...) {
   # Local binding
   ID_BIOME <- NULL
-  PNV_classes %>% # Internal dataset
+  # PNV_classes %>% # Internal dataset
+  smpds::pnv_classes() %>%
     dplyr::filter(ID_BIOME %in% !!.data)
 }
 
@@ -170,4 +178,48 @@ parallel_extract_biome <- function(.data,
   if (!all)  # Remove the ID
     output <- output %>% dplyr::select(-ID)
   output
+}
+
+#' PNV classes
+#'
+#' Potential Natural Vegetation (PNV) classes based on the map created by
+#' \insertCite{hengl2018global1kmres;textual}{smpds}.
+#'
+#' @return Data frame (\code{tibble} object) with three columns:
+#' \itemize{
+#'  \item \code{ID_BIOME}: an unique identification number for each biome.
+#'  \item \code{description}: string witha description of each biome.
+#'  \item \code{colour}: hexadecimal colour code used to represent each biome.
+#' }
+#' @export
+#'
+#' @references
+#' \insertAllCited{}
+pnv_classes <- function() {
+  tibble::tribble(
+    ~ID_BIOME,                                   ~description,   ~colour,
+    1,                  "tropical evergreen broadleaf forest", "#1C5510",
+    2,             "tropical semi-evergreen broadleaf forest", "#659208",
+    3,     "tropical deciduous broadleaf forest and woodland", "#AE7D20",
+    4,  "warm-temperate evergreen broadleaf and mixed forest", "#000065",
+    7,                            "cool-temperate rainforest", "#BBCB35",
+    8,                     "cool evergreen needleleaf forest", "#009A18",
+    9,                                    "cool mixed forest", "#CAFFCA",
+    13,                "temperate deciduous broadleaf forest", "#55EB49",
+    14,                               "cold deciduous forest", "#65B2FF",
+    15,                    "cold evergreen needleleaf forest", "#0020CA",
+    16,        "temperate sclerophyll woodland and shrubland", "#8EA228",
+    17,        "temperate evergreen needleleaf open woodland", "#FF9ADF",
+    18,                                    "tropical savanna", "#BAFF35",
+    20,                              "xerophytic woods/scrub", "#FFBA9A",
+    22,                                              "steppe", "#FFBA35",
+    27,                                              "desert", "#F7FFCA",
+    28,                                              "tundra", "#BFC9CA",
+    30,                                              "tundra", "#BFC9CA",
+    31,                                              "tundra", "#BFC9CA",
+    32,                                              "tundra", "#BFC9CA",
+    NA,                                      "not applicable", "#CC0033",
+    -888888,                                 "not applicable", "#CC0033",
+    -999999,                                       "not known", "#FFFFFF"
+  )
 }
