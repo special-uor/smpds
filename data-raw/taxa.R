@@ -47,8 +47,13 @@ discrepancies <- taxa_clean_all %>%
   dplyr::filter(taxon_name %in% taxa_clean_all4$taxon_name) %>%
   dplyr::distinct(taxon_name, clean_name, .keep_all = TRUE) %>%
   dplyr::arrange(taxon_name, clean_name)
+discrepancies %>%
+  dplyr::select(-ID) %>%
+  dplyr::mutate(action = ifelse(!is.na(clean_name) & taxon_name == clean_name,
+                                "keep original name", action)) %>%
+  readr::write_excel_csv("~/Downloads/SMPDSv2/SMPDSv2_taxa_discrepancies_2021-09-02.csv", na = "EXCLUDE")
 
-# taxa_clean %>%
+    # taxa_clean %>%
 #   dplyr::distinct(taxon_name, clean_name, .keep_all = TRUE)
 #   readr::write_excel_csv("inst/extdata/taxa_clean.csv", na = "")
 taxa <- taxa_clean
