@@ -8,7 +8,7 @@
 #'     called \code{ID_BIOME}) with values linked to a biome provided by the
 #'     map created by
 #'     \insertCite{hengl2018global1kmres;textual}{smpds}.
-#'     (See \code{\link{smpds::pnv_classes}}).
+#'     (See \code{\link{pnv_classes}}).
 #' @param ... Optional parameters (not used).
 #'
 #' @return Table (\code{tibble} object) with biome metadata.

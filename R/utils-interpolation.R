@@ -3,7 +3,7 @@
 #' @param res Numeric value for the mask resolution. Default: 0.5 degrees.
 #' @param coordinates Reference data set with columns for \code{latitude},
 #'     \code{longitude} and \code{elevation}. Default:
-#'     \code{\link{smpds::CRU_coords}}.
+#'     \code{\link{CRU_coords}}.
 #'
 #' @return Table with land-sea mask:
 #' \itemize{
