@@ -8,7 +8,9 @@
 #' }
 #'
 #' @references
-#' \insertRef{vincens2007african}{smpds}
+#' `r Rdpack::insert_ref("vincens2007african", "smpds")`
+#'
+# \insertRef{vincens2007african}{smpds}
 #'
 #' @source
 #' http://fpd.sedoo.fr/fpd/bibli.do
