@@ -12,3 +12,4 @@
 ^tests$
 ^inst/images$
 ^inst/extdata$
+^R\.ignore$
