@@ -19,7 +19,7 @@ License: MIT + file LICENSE
 Suggests: 
     covr,
     knitr,
-    Rdpack (>= 0.7)
+    Rdpack (>= 0.7),
     rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
@@ -52,5 +52,7 @@ Imports:
     tidyr
 Depends: 
     R (>= 2.10)
+Remotes: 
+    github::villegar/splash
 RdMacros: Rdpack
 VignetteBuilder: knitr
