@@ -60,6 +60,25 @@
 #' https://doi.pangaea.de/10.1594/PANGAEA.909130
 "EMPDv2"
 
+#' \code{EMBSeCBIO} dataset
+#'
+#' The Eastern Mediterranean-Black Sea-Caspian-Corridor region and biome
+#' reconstructions database.
+#'
+#' @format A data frame (\code{tibble} object) with `r nrow(smpds::EMBSeCBIO)` rows and `r ncol(smpds::EMBSeCBIO)` variables:
+#' \describe{
+#'   \item{...}{int ...}
+#' }
+#'
+#' @references
+#' \insertRef{harrison2017embsecbio}{smpds}
+#'
+#' \insertRef{harrison2021embsecbio}{smpds}
+#'
+#' @source
+#' 10.17864/1947.309
+"EMBSeCBIO"
+
 #' \code{Herzschuh} dataset
 #'
 #' Dataset provided by \insertCite{herzschuh2019position;textual}{smpds}.
@@ -189,3 +208,19 @@
 #'
 #' \insertRef{williams2018neotoma}{smpds}
 "SMPDSv2"
+
+#' \code{SSMPD} dataset
+#'
+#' Dataset provided by \insertCite{gaillard1992modern;textual}{smpds}.
+#'
+#' @format A data frame (\code{tibble} object) with `r nrow(smpds::SSMPD)` rows and `r ncol(smpds::SSMPD)` variables:
+#' \describe{
+#'   \item{...}{int ...}
+#' }
+#'
+#' @references
+#' \insertAllCited{}
+#'
+#' @source
+#' https://doi.org/10.1007/BF00190697
+"SSMPD"
