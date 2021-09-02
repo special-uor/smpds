@@ -26,12 +26,12 @@ ssmpd_metadata <- readr::read_csv("inst/extdata/ssmpd_metadata.csv") %>%
                   smpds::parallel_extract_biome(buffer = 12000, cpus = 6) %>%
                   .$ID_BIOME,
                 publication =
-                  paste0("Gaillard, M.J., Birks, H.J.B., Emanuelsson, U. and",
-                         "Berglund, B.E., 1992. Modern pollen/land-use",
-                         "relationships as an aid in the reconstruction of past",
-                         "land-uses and cultural landscapes: an example from ",
-                         "south Sweden. Vegetation history and archaeobotany, ",
-                         "1(1), pp.3-17."),
+                  paste("Gaillard, M.J., Birks, H.J.B., Emanuelsson, U. and",
+                        "Berglund, B.E., 1992. Modern pollen/land-use",
+                        "relationships as an aid in the reconstruction of past",
+                        "land-uses and cultural landscapes: an example from",
+                        "south Sweden. Vegetation history and archaeobotany,",
+                        "1(1), pp.3-17."),
                 DOI = "10.1007/BF00190697")
 
 ssmpd_taxon_names_clean <- readr::read_csv("inst/extdata/ssmpd_taxa.csv")
