@@ -17,7 +17,7 @@ biome_name(.data, ...)
 called \code{ID_BIOME}) with values linked to a biome provided by the
 map created by
 \insertCite{hengl2018global1kmres;textual}{smpds}.
-(See \code{\link{smpds::pnv_classes}}).}
+(See \code{\link{pnv_classes}}).}
 
 \item{...}{Optional parameters (not used).}
 }
