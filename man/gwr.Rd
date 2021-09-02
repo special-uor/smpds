@@ -56,6 +56,7 @@ in \code{.data}.
 Geographically Weighted Regression
 }
 \examples{
+\dontrun{
 `\%>\%` <- magrittr::`\%>\%`
 data <- tibble::tibble(entity_name = "University of Reading",
                        latitude = 51.44140,
@@ -63,7 +64,8 @@ data <- tibble::tibble(entity_name = "University of Reading",
                        elevation = c(61, 161, 261, 361))
 data \%>\%
   smpds::gwr(varid = "tmp",
-             reference = "inst/extdata/cru_ts4.04-clim-1961-1990-daily_tmp_1-5.nc")
+             reference = "/path/to/reference-tmp.nc")
+}
 }
 \references{
 Peng, Y., Bloomfield, K.J. and Prentice, I.C., 2020. A theory of plant

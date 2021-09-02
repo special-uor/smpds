@@ -9,6 +9,16 @@
 Provides functions to facilitate the access to the Modern Pollen 
     Data for climate reconstructionS (SMPDS).
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/special-uor/smpds/}
+  \item \url{https://special-uor.github.io/smpds/}
+  \item \url{https://research.reading.ac.uk/palaeoclimate/}
+  \item Report bugs at \url{https://github.com/special-uor/smpds/issues/}
+}
+
+}
 \author{
 \strong{Maintainer}: Roberto Villegas-Diaz \email{r.villegas-diaz@reading.ac.uk} (\href{https://orcid.org/0000-0001-5036-8661}{ORCID})
 

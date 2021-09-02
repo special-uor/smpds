@@ -44,6 +44,7 @@ Pivot data obtained with the function \code{\link{gwr}}. Groups all the data
 points for each entity/row into a single list of elements.
 }
 \examples{
+\dontrun{
 `\%>\%` <- magrittr::`\%>\%`
 data <- tibble::tibble(entity_name = "University of Reading",
                        latitude = 51.44140,
@@ -51,6 +52,7 @@ data <- tibble::tibble(entity_name = "University of Reading",
                        elevation = 61)
 data \%>\%
   smpds::gwr(varid = "tmp",
-             reference = "inst/extdata/cru_ts4.04-clim-1961-1990-daily_tmp_1-5.nc") \%>\%
+             reference = "/path/to/reference-tmp.nc") \%>\%
   smpds::pivot_data(varname = "tmp")
+}
 }
