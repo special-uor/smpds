@@ -11,6 +11,8 @@
 #' @return List with a tibble for each of the raw data files
 #' @keywords internal
 process_apd <- function(path, ext = "ascii", delim = ";", comment = "#", ...) {
+  # Local bindings
+  . <- altitude <- latitude <- longitude <- publication <- NULL
   files <- list.files(path = path,
                       pattern = paste0(ext, "$"),
                       full.names = TRUE)

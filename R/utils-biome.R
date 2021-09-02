@@ -37,6 +37,8 @@ biome_name.tbl_df <- function(.data, ...) {
 #' @export
 #' @rdname biome_name
 biome_name.numeric <- function(.data, ...) {
+  # Local binding
+  ID_BIOME <- NULL
   PNV_classes %>% # Internal dataset
     dplyr::filter(ID_BIOME %in% !!.data)
 }
@@ -87,6 +89,8 @@ extract_biome.tbl_df <- function(.data,
                                  reference = smpds::PNV,
                                  buffer = 12000,
                                  all = FALSE) {
+  # Local bindings
+  . <- geometry <- longitude <- NULL
   if (!all(c("latitude", "longitude") %in% colnames(.data)))
     stop("The given data object does not contain a latitude and/or longitude.",
          call. = FALSE)
@@ -107,6 +111,8 @@ extract_biome.sf <- function(.data,
                              reference = smpds::PNV,
                              buffer = 12000,
                              all = FALSE) {
+  # Local bindings
+  ID_BIOME <- px <- NULL
   biomes <- raster::extract(reference, .data, buffer = buffer, na.rm = TRUE)
   biomes %>%
     purrr::map_df(function(bio) {
@@ -135,6 +141,8 @@ parallel_extract_biome <- function(.data,
                                    buffer = 12000,
                                    cpus = 2,
                                    all = FALSE) {
+  # Local bindings
+  . <- ID <- latitude <- longitude <- NULL
   oplan <- future::plan(future::multisession, workers = cpus)
   on.exit(future::plan(oplan), add = TRUE)
   {
@@ -179,6 +187,8 @@ parallel_extract_biome <- function(.data,
 #' @inheritParams ggplot2::coord_sf
 #' @inheritDotParams ggplot2::coord_sf -xlim -ylim
 #'
+#' @importFrom grDevices gray
+#'
 #' @return \code{ggplot} object with the plot.
 #' @export
 #' @family utils biome
@@ -188,6 +198,8 @@ plot_biome <- function(.data,
                        legend.position = "bottom",
                        xlim = c(-180, 180),
                        ylim = c(-60, 90), ...) {
+  # Local bindings
+  description <- ID_BIOME <- n <- latitude <- longitude <- NULL
   # create the breaks- and label vectors
   ewbrks <- seq(-180,180,30)
   nsbrks <- seq(-90,90,30)

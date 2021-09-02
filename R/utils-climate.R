@@ -49,6 +49,8 @@ gdd <- function(.data, ...) {
 #' @export
 #' @rdname gdd
 gdd.numeric <- function(.data, baseline = 0, pb = NULL, ...) {
+  # Local binding
+  tmp <- NULL
   output <- tibble::tibble(tmp = !!.data) %>%
     dplyr::filter(!is.na(tmp), tmp >= baseline) %>%
     dplyr::mutate(tmp = tmp - baseline) %>%
@@ -64,6 +66,8 @@ gdd.numeric <- function(.data, baseline = 0, pb = NULL, ...) {
 #' @export
 #' @rdname gdd
 gdd.tbl_df <- function(.data, baseline = 0, cpus = 1, ...) {
+  # Local bindings
+  . <- tmp <- NULL
   oplan <- future::plan(future::multisession, workers = cpus)
   {
     pb <- progressr::progressor(steps = nrow(.data))
@@ -110,6 +114,8 @@ mat <- function(.data, ...) {
 #' @export
 #' @rdname mat
 mat.numeric <- function(.data, pb = NULL, ...) {
+  # Local binding
+  tmp <- NULL
   output <- tibble::tibble(tmp = !!.data) %>%
     dplyr::summarise(tmp = mean(tmp,  na.rm = TRUE)) %>%
     purrr::flatten_dbl()
@@ -122,6 +128,8 @@ mat.numeric <- function(.data, pb = NULL, ...) {
 #' @export
 #' @rdname mat
 mat.tbl_df <- function(.data, cpus = 1, ...) {
+  # Local binding
+  tmp <- NULL
   oplan <- future::plan(future::multisession, workers = cpus)
   {
     pb <- progressr::progressor(steps = nrow(.data))
@@ -168,6 +176,8 @@ mi <- function(.data, ...) {
 #' @export
 #' @rdname mi
 mi.tbl_df <- function(.data, cpus = 1, ...) {
+  # Local bindings
+  elevation <- latitude <- pet_mm <- sf <- tmp <- NULL
   # orb_params <- .data$age_BP %>%
   #   as.double() %>%
   #   tidyr::replace_na(0) %>%
@@ -238,6 +248,8 @@ mtco <- function(.data, ...) {
 #' @export
 #' @rdname mtco
 mtco.numeric <- function(.data, pb = NULL, ...) {
+  # Local bindings
+  .date <- .month <- tmp <- NULL
   output <-
     tibble::tibble(tmp = !!.data,
                    .date = (seq_along(tmp) - 1) %>% lubridate::as_date(),
@@ -256,6 +268,8 @@ mtco.numeric <- function(.data, pb = NULL, ...) {
 #' @export
 #' @rdname mtco
 mtco.tbl_df <- function(.data, cpus = 1, ...) {
+  # Local binding
+  tmp <- NULL
   oplan <- future::plan(future::multisession, workers = cpus)
   {
     pb <- progressr::progressor(steps = nrow(.data))
@@ -298,6 +312,8 @@ mtwa <- function(.data, ...) {
 #' @export
 #' @rdname mtwa
 mtwa.numeric <- function(.data, pb = NULL, ...) {
+  # Local bindings
+  .date <- .month <- tmp <- NULL
   output <-
     tibble::tibble(tmp = !!.data,
                    .date = (seq_along(tmp) - 1) %>% lubridate::as_date(),
@@ -316,6 +332,8 @@ mtwa.numeric <- function(.data, pb = NULL, ...) {
 #' @export
 #' @rdname mtwa
 mtwa.tbl_df <- function(.data, cpus = 1, ...) {
+  # Local binding
+  tmp <- NULL
   oplan <- future::plan(future::multisession, workers = cpus)
   {
     pb <- progressr::progressor(steps = nrow(.data))

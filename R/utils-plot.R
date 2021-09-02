@@ -18,6 +18,8 @@
 #' @inheritParams ggplot2::coord_sf
 #' @inheritDotParams ggplot2::coord_sf -xlim -ylim
 #'
+#' @importFrom grDevices gray
+#'
 #' @return \code{ggplot} object with the plot.
 #' @rdname plot_climate
 #' @export
@@ -33,6 +35,8 @@ plot_climate <- function(.data,
                          xlim = c(-180, 180),
                          ylim = c(-60, 90),
                          ...) {
+  # Local bindings
+  latitude <- longitude <- NULL
   # Check for latitude, longitude and var
   idx <- c("latitude", "longitude", var) %in% colnames(.data)
   if (sum(!idx) != 0) {

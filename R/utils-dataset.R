@@ -15,6 +15,8 @@
 #' @return Table with records of \code{y} that exist in {x}.
 #' @export
 compare_latlon <- function(x, y, fx = tolerance, ...) {
+  # Local bindings
+  lat <- latitude <- lon <- longitude <- NULL
   x %>%
     dplyr::filter(fx(latitude, ...) %in% fx(y$latitude, ...),
                   fx(longitude, ...) %in% fx(y$longitude, ...)) %>%
@@ -45,6 +47,8 @@ compare_latlon <- function(x, y, fx = tolerance, ...) {
 #' @return Data frame with normalised taxa/columns counts.
 #' @export
 normalise_taxa <- function(.data, cols = 1, scale = 100) {
+  # Local bindings
+  value <- total <- NULL
   .data %>%
     tidyr::pivot_longer(-cols) %>%
     dplyr::group_by(dplyr::across(cols)) %>%
@@ -66,6 +70,8 @@ normalise_taxa <- function(.data, cols = 1, scale = 100) {
 #' @return Reduced data frame with non-missing taxa/columns.
 #' @export
 rm_na_taxa <- function(.data, cols = 1) {
+  # Local binding
+  value <- NULL
   .data %>%
     tidyr::pivot_longer(-cols) %>%
     dplyr::filter(!is.na(value)) %>%
@@ -82,6 +88,8 @@ rm_na_taxa <- function(.data, cols = 1) {
 #' @return Reduced data frame without taxa/columns of zeros.
 #' @export
 rm_zero_taxa <- function(.data, cols = 1) {
+  # Local binding
+  value <- NULL
   .data %>%
     tidyr::pivot_longer(-cols) %>%
     dplyr::filter(value != 0) %>%
@@ -99,6 +107,8 @@ rm_zero_taxa <- function(.data, cols = 1) {
 #' @return Data frame with taxa/columns alphabetically sorted.
 #' @export
 sort_taxa <- function(.data, cols = 1) {
+  # Local binding
+  . <- NULL
   .data %>%
     dplyr::select(cols, order(colnames(.)[-cols]) + length(cols))
 }

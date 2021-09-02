@@ -15,6 +15,8 @@
 #' @keywords internal
 cru_mask <- function(res = 0.5,
                      coordinates = smpds::CRU_coords) {
+  # Local bindings
+  elevation <- land <- NULL
   x <- seq(-180 + res / 2, 180 - res / 2, res)
   y <- seq(-90 + res / 2, 90 - res / 2, res)
   if (!all(c("latitude", "longitude", "elevation") %in%
@@ -86,6 +88,9 @@ gwr <- function(.data,
                 buffer = 1.5,
                 cpus = 1,
                 bandwidth = 1.06) {
+  # Local bindings
+  land <- sea <- NULL
+  # Load reference data from the NetCDF file
   ncin <- ncdf4::nc_open(reference)
   reference_tbl <- ncdf4::ncvar_get(ncin, varid) %>%
     mask_nc(mask = cru_mask(res = res, coordinates = coordinates)) %>%
@@ -205,7 +210,7 @@ pivot_data <- function(.data,
                        add = 0,
                        varname = "value") {
   # Local bindings
-  . <- .ID <- value <- NULL
+  . <- .ID <- name <- value <- NULL
 
   .data %>%
     dplyr::mutate(.ID = seq_len(nrow(.))) %>% # Create unique ID per row/entity
