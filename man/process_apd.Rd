@@ -116,3 +116,4 @@ List with a tibble for each of the raw data files
 This function loads all the raw data from the African Pollen Database into
 a single object.
 }
+\keyword{internal}
