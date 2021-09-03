@@ -13,3 +13,4 @@
 ^inst/images$
 ^inst/extdata$
 ^R\.ignore$
+^man/figures$
