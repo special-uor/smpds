@@ -13,8 +13,11 @@ Authors@R: c(
            email = "s.p.harrison@reading.ac.uk",
            comment = c(ORCID = "0000-0001-5687-1903")),
     person("SPECIAL Research Group @ University of Reading", role = c("cph")))
-Description: Provides functions to facilitate the access to the Modern Pollen 
-    Data for climate reconstructionS (SMPDS).
+Description: Provides functions to facilitate the access to the SPECIAL Modern 
+    Pollen DataSet (SMPDS) and to reconstruct climate variables, like Mean
+    Temperature of the COldest month (MTCO), Mean Temperature of the WArmest
+    month (MTWA) and Growing Degree Days (GDD). Also, it provides functions to
+    find the Potential Natural Vegetation (PNV) of a given site.
 License: MIT + file LICENSE
 Suggests: 
     covr,
@@ -53,7 +56,5 @@ Imports:
     tidyr
 Depends: 
     R (>= 2.10)
-Remotes: 
-    github::villegar/splash
 RdMacros: Rdpack
 VignetteBuilder: knitr
