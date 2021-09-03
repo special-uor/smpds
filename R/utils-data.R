@@ -9,15 +9,14 @@
 #' @inheritDotParams readr::read_delim -delim -comment
 #'
 #' @return List with a tibble for each of the raw data files
-#' @export
-#'
-# @examples
+#' @keywords internal
 process_apd <- function(path, ext = "ascii", delim = ";", comment = "#", ...) {
+  # Local bindings
+  . <- altitude <- latitude <- longitude <- publication <- NULL
   files <- list.files(path = path,
                       pattern = paste0(ext, "$"),
                       full.names = TRUE)
   files %>%
-    # .[1] %>%
     purrr::map(function(f) {
       header <- f %>%
         readr::read_lines() %>%
@@ -28,25 +27,26 @@ process_apd <- function(path, ext = "ascii", delim = ";", comment = "#", ...) {
         matrix(ncol = 2) %>%
         magrittr::set_colnames(c("key", "value")) %>%
         tibble::as_tibble() %>%
-        # magrittr::set_names(c("key", "value")) %>%
         tidyr::pivot_wider(names_from = "key", values_from = "value") %>%
         magrittr::set_names(colnames(.) %>% stringr::str_to_lower()) %>%
         dplyr::mutate(latitude = latitude %>%
-                        sp::char2dms(chd = "°", chm = "'", chs = "\"") %>%
+                        sp::char2dms(chd = "\u00B0", chm = "'", chs = "\"") %>%
                         as.double(),
                       longitude = longitude %>%
-                        sp::char2dms(chd = "°", chm = "'", chs = "\"") %>%
+                        sp::char2dms(chd = "\u00B0", chm = "'", chs = "\"") %>%
                         as.double(),
                       altitude = altitude %>%
                         stringr::str_extract("-*[0-9]*") %>%
                         as.double()) %>%
         dplyr::rename(elevation = altitude) %>%
         dplyr::rowwise() %>%
-        dplyr::mutate(publication = dplyr::across(dplyr::starts_with("reference")) %>% #c(reference1, reference2, reference3)
+        dplyr::mutate(publication =
+                        dplyr::across(dplyr::starts_with("reference")) %>%
                         .[!is.na(.)] %>%
                         unique() %>%
                         stringr::str_c(collapse = ";\n"),
-                      publication = ifelse(publication == "", NA, publication)) %>%
+                      publication =
+                        ifelse(publication == "", NA, publication)) %>%
         dplyr::select(-dplyr::starts_with("reference"))
 
       data <- f %>%

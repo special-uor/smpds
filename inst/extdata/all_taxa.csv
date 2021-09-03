@@ -2645,53 +2645,53 @@ Zizyphus,Ziziphus,update,,,,,
 Zizyphus lotus,Ziziphus lotus,update,,,,,
 Zygophyllaceae,Zygophyllaceae,update,,,,,
 Zygophyllum,Zygophyllum,update,,,,,
-Aegiceras,EXCLUDE,delete,Aegopodium type,Aegopodium,Aganosma,Aganosma,Apocynaceae
-Alisma t.,EXCLUDE,delete,Allium ursinum type,Allium ursinum,Alopecurus,Alopecurus,Poaceae
-Callitriche obtusangula,EXCLUDE,delete,Cardamine,Cardamine,Cercidiphyllum,Cercidiphyllum,Cercidiphyllum
-Caltha-type,EXCLUDE,delete,Carduoideae,Carduoideae,Cerinthe minor,Cerinthe,Boraginaceae
-Cannabis t.,EXCLUDE,delete,Carpinus orientalis/Ostrya carpinifolia type,Carpinus orientalis/Ostrya carpinifolia,Chimonobambusa,Chimonobambusa,Chimonobambusa
-Carallia,EXCLUDE,delete,Cassiope type,Cassiope,Cimicifuga foetida,Cimicifuga foetida,Cimicifuga
-Ceratophyllum: spines,EXCLUDE,delete,Cimicifuga,Cimicifuga,Cucurbitaceae,Cucurbitaceae,Cucurbitaceae
-Cerealia,EXCLUDE,delete,Cirsium,Cirsium,Cupressus/Juniperus,Cupressus/Juniperus,Cupressus/Juniperus
-Cerealia-type,EXCLUDE,delete,Cirsium type,Cirsium,Cuscuta,Cuscuta,Convolvulaceae
-Ceriops,EXCLUDE,delete,Cissus quadrangularis type,Cissus quadrangularis,Cycas,Cycas,Cycas
-Charcoal >10µm,EXCLUDE,delete,Cistus salviifolius,Cistus salviifolius,Cystopteris fragilis,Cystopteris,Polypodiales
-Cladium mariscus,EXCLUDE,delete,Cornus suecica,Cornus suecica,Dryopteris,Dryopteris,Polypodiales
-Counted exote,EXCLUDE,delete,Dacrydium,Dacrydium,Eucommiaceae,Eucommiaceae,Eucommiaceae
-DOI,EXCLUDE,delete,Epilobium,Epilobium,Halimium/Tuberaria,Cistaceae,Cistaceae
-Excoecaria,EXCLUDE,delete,Gentiana pneumonanthe type,Gentiana pneumonanthe,Larix gmelinii var gmelinii,Larix gmelinii var gmelinii,Larix
-Excoecaria agallocha,EXCLUDE,delete,Gentiana purpurea,Gentiana purpurea,Larix sibirica,Larix sibirica,Larix
-Glyceria,EXCLUDE,delete,Huperzia,Huperzia,Maianthemum,Maianthemum,Asparagaceae
-Hippuris vulgaris,EXCLUDE,delete,Koenigia,Koenigia,Myrtaceae,Myrtaceae,Myrtaceae
-Humulus lupulus,EXCLUDE,delete,Lagerstroemia,Lagerstroemia,Neonauclea,Neonauclea,Neonauclea
-Humulus-type,EXCLUDE,delete,Lamiaceae,Lamiaceae,Neottia,Neottia,Orchidaceae
-ID_CMPD,EXCLUDE,delete,Lauraceae,Lauraceae,Onagraceae,Onagraceae,Onagraceae
-ID_EMPDv2,EXCLUDE,delete,Laurembergia tetrandra,Laurembergia tetrandra,Onobrychis,Onobrychis,Fabaceae (herbs)
-ID_SSMPD,EXCLUDE,delete,Laurus,Laurus,Ononis,Ononis,Ononis
-Juniperus Stomata,EXCLUDE,delete,Litsea,Litsea,Parnassia,Parnassia,Celastraceae
-Lentibulariaceae,EXCLUDE,delete,Macaranga type,Macaranga,Pinus (Diploxylon),Pinus (Diploxylon),Pinus (diploxylon)
-Lumnitzera,EXCLUDE,delete,Polypodiales,Polypodiales,Polygaloides chamaebuxus,Polygaloides,Polygalaceae
-Lycopodium (counted) for charcoal,exclude,delete,Morus alba type,Morus alba,Polygonum cognatum,Polygonum,Polygonum
-Lycopodium (spores/tablet),exclude,delete,Morus nigra,Morus nigra,Polygonum convolvulus,Polygonum,Polygonum
-Lycopodium tablets (number),EXCLUDE,delete,Myricaria type,Myricaria,Populus tremula,Populus tremula,Populus
-Nelumbo,EXCLUDE,delete,Phegopteris connectilis,Phegopteris connectilis,Rubus chamaemorus,Rubus chamaemorus,Rubus
-Odontites-type,EXCLUDE,delete,Phyllanthus reticulatus type,Phyllanthus reticulatus,Rumex hydrolapathum,Oxyria/Rumex,Oxyria/Rumex
-Picea Stomata,exclude,delete,Polystichum,Polystichum,Stachys,Stachys,Lamiaceae
-Pinaceae,EXCLUDE,delete,Potentilla erecta,Potentilla erecta,Stellaria nemorum,Stellaria,Caryophyllaceae
-Potamogeton natans t.,EXCLUDE,delete,Rosa canina type,Rosa canina,Vicia lathyroides,Vicia,Fabaceae (herbs)
-Ranunculus aquatilis t.,EXCLUDE,delete,Saxifraga aizoides,Saxifraga aizoides,,,
-Ranunculus flammula type,exclude,delete,Saxifraga granulata type,Saxifraga granulata,,,
-Robinia pseudoacacia,EXCLUDE,delete,Sericostachys scandens type,Sericostachys scandens,,,
-Ruppia,EXCLUDE,delete,Stachys sylvestris,Stachys sylvestris,,,
-Sagittaria,EXCLUDE,delete,Stellaria type,Stellaria,,,
-Sample volume (ml),EXCLUDE,delete,Tamaricaceae,Tamaricaceae,,,
-Secale,EXCLUDE,delete,Tuberaria,Tuberaria,,,
-Sonneratia,EXCLUDE,delete,Veronica,Veronica,,,
-Sparganium t.,EXCLUDE,delete,Vicia faba,Vicia faba,,,
-Sparganium-type,EXCLUDE,delete,Vicia faba type,Vicia faba,,,
-total,EXCLUDE,delete,,,,,
-Typha latifolia-type,EXCLUDE,delete,,,,,
-Urtica/Morus,EXCLUDE,delete,,,,,
-Varia,EXCLUDE,delete,,,,,
-Vitis,EXCLUDE,delete,,,,,
-Zea mais,EXCLUDE,delete,,,,,
+Aegiceras,,delete,Aegopodium type,Aegopodium,Aganosma,Aganosma,Apocynaceae
+Alisma t.,,delete,Allium ursinum type,Allium ursinum,Alopecurus,Alopecurus,Poaceae
+Callitriche obtusangula,,delete,Cardamine,Cardamine,Cercidiphyllum,Cercidiphyllum,Cercidiphyllum
+Caltha-type,,delete,Carduoideae,Carduoideae,Cerinthe minor,Cerinthe,Boraginaceae
+Cannabis t.,,delete,Carpinus orientalis/Ostrya carpinifolia type,Carpinus orientalis/Ostrya carpinifolia,Chimonobambusa,Chimonobambusa,Chimonobambusa
+Carallia,,delete,Cassiope type,Cassiope,Cimicifuga foetida,Cimicifuga foetida,Cimicifuga
+Ceratophyllum: spines,,delete,Cimicifuga,Cimicifuga,Cucurbitaceae,Cucurbitaceae,Cucurbitaceae
+Cerealia,,delete,Cirsium,Cirsium,Cupressus/Juniperus,Cupressus/Juniperus,Cupressus/Juniperus
+Cerealia-type,,delete,Cirsium type,Cirsium,Cuscuta,Cuscuta,Convolvulaceae
+Ceriops,,delete,Cissus quadrangularis type,Cissus quadrangularis,Cycas,Cycas,Cycas
+Charcoal >10µm,,delete,Cistus salviifolius,Cistus salviifolius,Cystopteris fragilis,Cystopteris,Polypodiales
+Cladium mariscus,,delete,Cornus suecica,Cornus suecica,Dryopteris,Dryopteris,Polypodiales
+Counted exote,,delete,Dacrydium,Dacrydium,Eucommiaceae,Eucommiaceae,Eucommiaceae
+DOI,,delete,Epilobium,Epilobium,Halimium/Tuberaria,Cistaceae,Cistaceae
+Excoecaria,,delete,Gentiana pneumonanthe type,Gentiana pneumonanthe,Larix gmelinii var gmelinii,Larix gmelinii var gmelinii,Larix
+Excoecaria agallocha,,delete,Gentiana purpurea,Gentiana purpurea,Larix sibirica,Larix sibirica,Larix
+Glyceria,,delete,Huperzia,Huperzia,Maianthemum,Maianthemum,Asparagaceae
+Hippuris vulgaris,,delete,Koenigia,Koenigia,Myrtaceae,Myrtaceae,Myrtaceae
+Humulus lupulus,,delete,Lagerstroemia,Lagerstroemia,Neonauclea,Neonauclea,Neonauclea
+Humulus-type,,delete,Lamiaceae,Lamiaceae,Neottia,Neottia,Orchidaceae
+ID_CMPD,,delete,Lauraceae,Lauraceae,Onagraceae,Onagraceae,Onagraceae
+ID_EMPDv2,,delete,Laurembergia tetrandra,Laurembergia tetrandra,Onobrychis,Onobrychis,Fabaceae (herbs)
+ID_SSMPD,,delete,Laurus,Laurus,Ononis,Ononis,Ononis
+Juniperus Stomata,,delete,Litsea,Litsea,Parnassia,Parnassia,Celastraceae
+Lentibulariaceae,,delete,Macaranga type,Macaranga,Pinus (Diploxylon),Pinus (Diploxylon),Pinus (diploxylon)
+Lumnitzera,,delete,Polypodiales,Polypodiales,Polygaloides chamaebuxus,Polygaloides,Polygalaceae
+Lycopodium (counted) for charcoal,,delete,Morus alba type,Morus alba,Polygonum cognatum,Polygonum,Polygonum
+Lycopodium (spores/tablet),,delete,Morus nigra,Morus nigra,Polygonum convolvulus,Polygonum,Polygonum
+Lycopodium tablets (number),,delete,Myricaria type,Myricaria,Populus tremula,Populus tremula,Populus
+Nelumbo,,delete,Phegopteris connectilis,Phegopteris connectilis,Rubus chamaemorus,Rubus chamaemorus,Rubus
+Odontites-type,,delete,Phyllanthus reticulatus type,Phyllanthus reticulatus,Rumex hydrolapathum,Oxyria/Rumex,Oxyria/Rumex
+Picea Stomata,,delete,Polystichum,Polystichum,Stachys,Stachys,Lamiaceae
+Pinaceae,,delete,Potentilla erecta,Potentilla erecta,Stellaria nemorum,Stellaria,Caryophyllaceae
+Potamogeton natans t.,,delete,Rosa canina type,Rosa canina,Vicia lathyroides,Vicia,Fabaceae (herbs)
+Ranunculus aquatilis t.,,delete,Saxifraga aizoides,Saxifraga aizoides,,,
+Ranunculus flammula type,,delete,Saxifraga granulata type,Saxifraga granulata,,,
+Robinia pseudoacacia,,delete,Sericostachys scandens type,Sericostachys scandens,,,
+Ruppia,,delete,Stachys sylvestris,Stachys sylvestris,,,
+Sagittaria,,delete,Stellaria type,Stellaria,,,
+Sample volume (ml),,delete,Tamaricaceae,Tamaricaceae,,,
+Secale,,delete,Tuberaria,Tuberaria,,,
+Sonneratia,,delete,Veronica,Veronica,,,
+Sparganium t.,,delete,Vicia faba,Vicia faba,,,
+Sparganium-type,,delete,Vicia faba type,Vicia faba,,,
+total,,delete,,,,,
+Typha latifolia-type,,delete,,,,,
+Urtica/Morus,,delete,,,,,
+Varia,,delete,,,,,
+Vitis,,delete,,,,,
+Zea mais,,delete,,,,,

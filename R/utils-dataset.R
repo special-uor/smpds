@@ -1,36 +1,86 @@
 #' Compare two datasets using \code{latitude} and \code{longitude}
 #'
 #' Compare two datasets using \code{latitude} and \code{longitude}, the
-#' comparison is used by the function \code{fx}, this can be a custom function
-#' or an existing function like \code{round}, \code{trunc}, etc.
+#' comparison is done using the function \code{fx}, this can be a custom
+#' function or an existing function like \code{round}, \code{trunc}, etc.
 #'
 #' @param x Reference dataset.
 #' @param y Target dataset, this will be compared with \code{x}.
+#' @param join_method Function to be used as the joining method between
+#'     \code{x} and \code{y}. Default: \code{dplyr::inner_join}.
 #' @param fx Comparison function, it defaults to an internal function called
-#'     \code{tolerance} that drops decimals (using the parameter \code{digits})
-#'     without rounding the numbers. Suggested base functions are \code{round},
-#'     \code{trunc}, \code{floor}, \code{ceiling} and \code{signif}.
+#'     \code{tolerance} that the drops decimals (using the parameter
+#'     \code{digits}) without rounding the numbers. Suggested base functions
+#'     are \code{round}, \code{trunc}, \code{floor}, \code{ceiling} and
+#'     \code{signif}.
 #' @param ... Optional parameters passed to \code{fx}.
 #'
 #' @return Table with records of \code{y} that exist in {x}.
 #' @export
-compare_latlon <- function(x, y, fx = tolerance, ...) {
+compare_latlon <- function(x,
+                           y,
+                           join_method = dplyr::inner_join,
+                           fx = tolerance,
+                           ...) {
+  # Local bindings
+  lat <- latitude <- lon <- longitude <- NULL
   x %>%
     dplyr::filter(fx(latitude, ...) %in% fx(y$latitude, ...),
                   fx(longitude, ...) %in% fx(y$longitude, ...)) %>%
-    dplyr::select(1:latitude,
+    dplyr::select(1:latitude, # Select all the columns from position 1 to lat.
                   longitude,
-                  dplyr::starts_with("eleva")) %>%
+                  dplyr::starts_with("elev")) %>%
     dplyr::mutate(lat = fx(latitude, ...),
                   lon = fx(longitude, ...)) %>%
-    dplyr::inner_join(y %>%
-                        dplyr::select(1:latitude,
-                                      longitude,
-                                      dplyr::starts_with("eleva")) %>%
-                        dplyr::mutate(lat = fx(latitude, ...),
-                                      lon = fx(longitude, ...)),
-                      by = c("lat", "lon")) %>%
+    join_method(y %>%
+                  dplyr::select(1:latitude,
+                                longitude,
+                                dplyr::starts_with("elev")) %>%
+                  dplyr::mutate(lat = fx(latitude, ...),
+                                lon = fx(longitude, ...)),
+                by = c("lat","lon")) %>%
     dplyr::select(-lat, -lon)
+}
+
+#' Compare two datasets using \code{latitude}, \code{longitude}, and
+#' \code{elevation}
+#'
+#' Compare two datasets using \code{latitude}, \code{longitude}, and
+#' \code{elevation}, the
+#' comparison is done using the function \code{fx}, this can be a custom
+#' function or an existing function like \code{round}, \code{trunc}, etc.
+#'
+#'
+#' @inheritParams compare_latlon
+#'
+#' @return Table with records of \code{y} that exist in {x}.
+#' @export
+compare_latlonelv <- function(x,
+                              y,
+                              join_method = dplyr::inner_join,
+                              fx = tolerance,
+                              ...) {
+  # Local bindings
+  elv <- elevation <- lat <- latitude <- lon <- longitude <- NULL
+  x %>%
+    dplyr::filter(fx(latitude, ...) %in% fx(y$latitude, ...),
+                  fx(longitude, ...) %in% fx(y$longitude, ...),
+                  fx(elevation, ...) %in% fx(y$elevation, ...)) %>%
+    dplyr::select(1:latitude, # Select all the columns from position 1 to lat.
+                  longitude,
+                  elevation) %>%
+    dplyr::mutate(lat = fx(latitude, ...),
+                  lon = fx(longitude, ...),
+                  elv = fx(elevation, ...)) %>%
+    join_method(y %>%
+                  dplyr::select(1:latitude,
+                                longitude,
+                                elevation) %>%
+                  dplyr::mutate(lat = fx(latitude, ...),
+                                lon = fx(longitude, ...),
+                                elv = fx(elevation, ...)),
+                by = c("lat","lon","elv")) %>%
+    dplyr::select(-lat, -lon, -elv)
 }
 
 #' Normalise taxa/columns counts
@@ -45,6 +95,8 @@ compare_latlon <- function(x, y, fx = tolerance, ...) {
 #' @return Data frame with normalised taxa/columns counts.
 #' @export
 normalise_taxa <- function(.data, cols = 1, scale = 100) {
+  # Local bindings
+  value <- total <- NULL
   .data %>%
     tidyr::pivot_longer(-cols) %>%
     dplyr::group_by(dplyr::across(cols)) %>%
@@ -66,6 +118,8 @@ normalise_taxa <- function(.data, cols = 1, scale = 100) {
 #' @return Reduced data frame with non-missing taxa/columns.
 #' @export
 rm_na_taxa <- function(.data, cols = 1) {
+  # Local binding
+  value <- NULL
   .data %>%
     tidyr::pivot_longer(-cols) %>%
     dplyr::filter(!is.na(value)) %>%
@@ -82,6 +136,8 @@ rm_na_taxa <- function(.data, cols = 1) {
 #' @return Reduced data frame without taxa/columns of zeros.
 #' @export
 rm_zero_taxa <- function(.data, cols = 1) {
+  # Local binding
+  value <- NULL
   .data %>%
     tidyr::pivot_longer(-cols) %>%
     dplyr::filter(value != 0) %>%
@@ -99,6 +155,8 @@ rm_zero_taxa <- function(.data, cols = 1) {
 #' @return Data frame with taxa/columns alphabetically sorted.
 #' @export
 sort_taxa <- function(.data, cols = 1) {
+  # Local binding
+  . <- NULL
   .data %>%
     dplyr::select(cols, order(colnames(.)[-cols]) + length(cols))
 }

@@ -14,14 +14,20 @@ biome_name(.data, ...)
 }
 \arguments{
 \item{.data}{Numeric vector or data frame (\code{tibble} object with a column
-called \code{ID_BIOME}) with values linked to a Biome provided by
-Hengl et al., 2018. (See \code{\link{smpds:::PNV_classes}}).}
+called \code{ID_BIOME}) with values linked to a biome provided by the
+map created by
+\insertCite{hengl2018global1kmres;textual}{smpds}.
+(See \code{\link{pnv_classes}}).}
+
+\item{...}{Optional parameters (not used).}
 }
 \value{
 Table (\code{tibble} object) with biome metadata.
 }
 \description{
-Obtain biome names from the Hengl et al., 2018, using the \code{ID_BIOME}.
+Obtain biome names from the map created by
+\insertCite{hengl2018global;textual}{smpds},
+using the \code{ID_BIOME}.
 }
 \examples{
 `\%>\%` <- magrittr::`\%>\%`
@@ -33,6 +39,10 @@ data \%>\%
   biome_name()
 
 biome_name(1:10)
+
+}
+\references{
+\insertAllCited{}
 }
 \seealso{
 Other utils biome: 

@@ -2,7 +2,7 @@
 # Source
 # Mitchell, T.D. and Jones, P.D., 2005. An improved method of constructing a
 # database of monthly climate observations and associated high resolution grids.
-# RMetS, 25(6): pp. 693-712. doi: 10.1002/joc.1181
+# RMetS, 25(6): pp. 693-712. doi:10.1002/joc.1181
 # https://crudata.uea.ac.uk/~timm/grid/CRU_TS_2_1.html
 
 # Create temporal files

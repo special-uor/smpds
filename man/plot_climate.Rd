@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils-plot.R
 \name{plot_climate}
 \alias{plot_climate}
-\alias{plot_gdd0}
+\alias{plot_gdd}
 \alias{plot_mat}
 \alias{plot_mi}
 \alias{plot_mtco}
@@ -23,8 +23,9 @@ plot_climate(
   ...
 )
 
-plot_gdd0(
+plot_gdd(
   .data,
+  baseline = 0,
   size = 1,
   stroke = 0.1,
   legend.key.width = ggplot2::unit(3, "cm"),
@@ -197,6 +198,9 @@ limits are set via \code{xlim} and \code{ylim} and some data points fall outside
 limits, then those data points may show up in places such as the axes, the
 legend, the plot title, or the plot margins.}
   }}
+
+\item{baseline}{Numeric value to be used as the baseline for the calculation
+of the Growing Degree Days, default: \code{0}.}
 }
 \value{
 \code{ggplot} object with the plot.

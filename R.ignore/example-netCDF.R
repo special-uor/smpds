@@ -21,14 +21,20 @@ out2 <- #data %>%
 tictoc::toc()
 
 ncin <- ncdf4::nc_open(reference)
-reference_tbl <- ncdf4::ncvar_get(ncin, varid) %>%
-  mask_nc(mask = cru_mask(res = res, coordinates = coordinates)) %>%
+reference_tbl <- ncdf4::ncvar_get(ncin, "tmp") %>%
+  smpds:::mask_nc(mask = smpds:::cru_mask()) %>%
   dplyr::filter(land) %>%
   dplyr::select(-land, -sea)
 ncdf4::nc_close(ncin)
 
+res <- 0.5
 x <- seq(-180 + res / 2, 180 - res / 2, res)
 y <- seq(-90 + res / 2, 90 - res / 2, res)
+
+path <- "~/OneDrive - University of Reading/UoR/Data/CRU/4.04/"
+tmp <- codos:::nc_var_get(file.path(path, "cru_ts4.04.1901.2019.daily.tmp.nc"),
+                          "tmp")$data
+
 codos:::nc_save(filename = "inst/extdata/cru_ts4.04-clim-1961-1990-daily_tmp_1-5.nc",
                 var = list(id = "tmp",
                            longname = ncdf4::ncatt_get(ncin,

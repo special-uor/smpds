@@ -1,10 +1,15 @@
 #' Biome names
 #'
-#' Obtain biome names from the Hengl et al., 2018, using the \code{ID_BIOME}.
+#' Obtain biome names from the map created by
+#' \insertCite{hengl2018global;textual}{smpds},
+#' using the \code{ID_BIOME}.
 #'
 #' @param .data Numeric vector or data frame (\code{tibble} object with a column
-#'     called \code{ID_BIOME}) with values linked to a Biome provided by
-#'     Hengl et al., 2018. (See \code{\link{smpds:::PNV_classes}}).
+#'     called \code{ID_BIOME}) with values linked to a biome provided by the
+#'     map created by
+#'     \insertCite{hengl2018global1kmres;textual}{smpds}.
+#'     (See \code{\link{pnv_classes}}).
+#' @param ... Optional parameters (not used).
 #'
 #' @return Table (\code{tibble} object) with biome metadata.
 #' @export
@@ -20,6 +25,9 @@
 #'   biome_name()
 #'
 #' biome_name(1:10)
+#'
+#' @references
+#' \insertAllCited{}
 biome_name <- function(.data, ...) {
   UseMethod("biome_name", .data)
 }
@@ -36,7 +44,10 @@ biome_name.tbl_df <- function(.data, ...) {
 #' @export
 #' @rdname biome_name
 biome_name.numeric <- function(.data, ...) {
-  smpds:::PNV_classes %>%
+  # Local binding
+  ID_BIOME <- NULL
+  # PNV_classes %>% # Internal dataset
+  smpds::pnv_classes() %>%
     dplyr::filter(ID_BIOME %in% !!.data)
 }
 
@@ -86,11 +97,11 @@ extract_biome.tbl_df <- function(.data,
                                  reference = smpds::PNV,
                                  buffer = 12000,
                                  all = FALSE) {
+  # Local bindings
+  . <- geometry <- longitude <- NULL
   if (!all(c("latitude", "longitude") %in% colnames(.data)))
     stop("The given data object does not contain a latitude and/or longitude.",
          call. = FALSE)
-  # if (!("sf" %in% class(.data)))
-  #   .data <- .data %>% sf::st_as_sf(x = ., coords = c("longitude", "latitude"))
   .data %>%
     dplyr::mutate(geometry = NA, .after = longitude) %>%
     sf::st_as_sf(x = ., coords = c("longitude", "latitude")) %>%
@@ -108,6 +119,8 @@ extract_biome.sf <- function(.data,
                              reference = smpds::PNV,
                              buffer = 12000,
                              all = FALSE) {
+  # Local bindings
+  ID_BIOME <- px <- NULL
   biomes <- raster::extract(reference, .data, buffer = buffer, na.rm = TRUE)
   biomes %>%
     purrr::map_df(function(bio) {
@@ -136,109 +149,77 @@ parallel_extract_biome <- function(.data,
                                    buffer = 12000,
                                    cpus = 2,
                                    all = FALSE) {
+  # Local bindings
+  . <- ID <- latitude <- longitude <- NULL
   oplan <- future::plan(future::multisession, workers = cpus)
   on.exit(future::plan(oplan), add = TRUE)
-  output <- seq_len(nrow(.data)) %>%
-    furrr::future_map_dfr(function(i) {
-      if (.data %>% # Return NA if  latitude or longitude are missing (NA)
-          dplyr::slice(i) %>%
-          dplyr::mutate(LATLON = is.na(latitude) | is.na(longitude)) %>%
-          .$LATLON)
-        return(.data %>% dplyr::slice(i) %>% dplyr::mutate(ID = i, .before = 1))
+  {
+    pb <- progressr::progressor(steps = nrow(.data))
+    output <- seq_len(nrow(.data)) %>%
+      furrr::future_map_dfr(function(i) {
+        if (.data %>% # Return NA if  latitude or longitude are missing (NA)
+            dplyr::slice(i) %>%
+            dplyr::mutate(LATLON = is.na(latitude) | is.na(longitude)) %>%
+            .$LATLON)
+          return(.data %>%
+                   dplyr::slice(i) %>%
+                   dplyr::mutate(ID = i, .before = 1))
         # return(tibble::tibble(ID = i, ID_BIOME = NA, px = NA))
-      .data %>%
-        dplyr::slice(i) %>%
-        # sf::st_as_sf(x = ., coords = c("longitude", "latitude")) %>%
-        extract_biome(reference = reference, buffer = buffer, all = all) %>%
-        dplyr::mutate(ID = i, .before = 1)
-    },
-    .progress = TRUE,
-    .options = furrr::furrr_options(seed = TRUE))
-  if (!all)  # Remove the
+        tmp <- .data %>%
+          dplyr::slice(i) %>%
+          # sf::st_as_sf(x = ., coords = c("longitude", "latitude")) %>%
+          extract_biome(reference = reference, buffer = buffer, all = all) %>%
+          dplyr::mutate(ID = i, .before = 1)
+        pb()
+        tmp
+      },
+      .options = furrr::furrr_options(seed = TRUE))
+  }
+  if (!all)  # Remove the ID
     output <- output %>% dplyr::select(-ID)
   output
 }
 
-
-#' Plot biomes/entities
+#' PNV classes
 #'
-#' Plot biomes linked to entities/sites, in addition to \code{latitude} and
-#' \code{longitude}, a column with the \code{ID_BIOME} is required. This can
-#' be obtained using the function \code{\link{extract_biome}} or its faster
-#' version (for large datasets), \code{\link{parallel_extract_biome}}.
+#' Potential Natural Vegetation (PNV) classes based on the map created by
+#' \insertCite{hengl2018global1kmres;textual}{smpds}.
 #'
-#' @param .data Data frame with spatial data and biome classification.
-#' @param size Numeric value for the \code{size} aesthetic.
-#' @param stroke Numeric value for the \code{stroke} aesthetic.
-#' @inheritParams ggplot2::theme
-#' @inheritParams ggplot2::coord_sf
-#' @inheritDotParams ggplot2::coord_sf -xlim -ylim
-#'
-#' @return \code{ggplot} object with the plot.
+#' @return Data frame (\code{tibble} object) with three columns:
+#' \itemize{
+#'  \item \code{ID_BIOME}: an unique identification number for each biome.
+#'  \item \code{description}: string witha description of each biome.
+#'  \item \code{colour}: hexadecimal colour code used to represent each biome.
+#' }
 #' @export
-#' @family utils biome
-plot_biome <- function(.data,
-                       size = 1,
-                       stroke = 0.1,
-                       legend.position = "bottom",
-                       xlim = c(-180, 180),
-                       ylim = c(-60, 90), ...) {
-  # create the breaks- and label vectors
-  ewbrks <- seq(-180,180,30)
-  nsbrks <- seq(-90,90,30)
-  # ewlbls <- ewbrks %>%
-  #   purrr::map_chr(~ifelse(.x < 0,
-  #                          paste(.x, "\u00B0E"),
-  #                          ifelse(.x > 0, paste(.x, "\u00B0W"), "0")))
-  # nslbls <- nsbrks %>%
-  #   purrr::map_chr(~ifelse(.x < 0,
-  #                          paste(.x, "\u00B0S"),
-  #                          ifelse(.x > 0, paste(.x, "\u00B0N"), "0")))
-  # world <- rnaturalearth::ne_countries(scale = "small", returnclass = "sf")
-  basemap <- rnaturalearth::ne_countries(scale = "small", returnclass = "sf") %>%
-    ggplot2::ggplot() +
-    ggplot2::geom_sf(fill = "white", size = 0.25) +
-    ggplot2::coord_sf(xlim = xlim, ylim = ylim, ..., expand = FALSE)
-  .data_biome <- .data$ID_BIOME %>%
-    smpds::biome_name() %>%
-    dplyr::distinct(description, .keep_all = TRUE)
-  .data <- .data %>%
-    dplyr::mutate(ID_BIOME = ifelse(ID_BIOME %in% c(30:32),
-                                    28, # Amalgamate tundras
-                                    ID_BIOME)) %>%
-    dplyr::left_join(.data_biome,
-                     by = "ID_BIOME") %>%
-    dplyr::group_by(ID_BIOME) %>% # Reorder by ID_BIOME
-    dplyr::mutate(n = length(ID_BIOME)) %>%
-    dplyr::ungroup() %>%
-    dplyr::arrange(dplyr::desc(n))
-  p <- basemap +
-    ggplot2::geom_point(mapping = ggplot2::aes(x = longitude,
-                                               y = latitude,
-                                               fill = description
-                                               ),
-                        data = .data,
-                        size = size,
-                        shape = 21,
-                        stroke = stroke) +
-    ggplot2::scale_fill_manual(name =
-                                 "BIOME classification \n(Hengl et al., 2018)",
-                               breaks = .data_biome$description,
-                               values = .data_biome$colour) +
-    ggplot2::scale_x_continuous(breaks = ewbrks) +
-    ggplot2::labs(x = NULL, y = NULL) +
-    ggplot2::guides(fill = ggplot2::guide_legend(override.aes = list(size = 2))) +
-    ggplot2::theme(legend.position = legend.position,
-                   legend.background = ggplot2::element_rect(colour = "black",
-                                                             fill = "white"),
-                   legend.key = ggplot2::element_blank(),
-                   panel.grid.major = ggplot2::element_line(colour = gray(.8),
-                                                            linetype = "dashed",
-                                                            size = 0.4),
-                   panel.border = ggplot2::element_rect(colour = "black",
-                                                        fill = NA),
-                   # panel.background = ggplot2::element_rect(fill = "aliceblue"))
-                   panel.background = ggplot2::element_rect(fill = NA))
-  print(p)
-  return(invisible(p))
+#'
+#' @references
+#' \insertAllCited{}
+pnv_classes <- function() {
+  tibble::tribble(
+    ~ID_BIOME,                                   ~description,   ~colour,
+    1,                  "tropical evergreen broadleaf forest", "#1C5510",
+    2,             "tropical semi-evergreen broadleaf forest", "#659208",
+    3,     "tropical deciduous broadleaf forest and woodland", "#AE7D20",
+    4,  "warm-temperate evergreen broadleaf and mixed forest", "#000065",
+    7,                            "cool-temperate rainforest", "#BBCB35",
+    8,                     "cool evergreen needleleaf forest", "#009A18",
+    9,                                    "cool mixed forest", "#CAFFCA",
+    13,                "temperate deciduous broadleaf forest", "#55EB49",
+    14,                               "cold deciduous forest", "#65B2FF",
+    15,                    "cold evergreen needleleaf forest", "#0020CA",
+    16,        "temperate sclerophyll woodland and shrubland", "#8EA228",
+    17,        "temperate evergreen needleleaf open woodland", "#FF9ADF",
+    18,                                    "tropical savanna", "#BAFF35",
+    20,                              "xerophytic woods/scrub", "#FFBA9A",
+    22,                                              "steppe", "#FFBA35",
+    27,                                              "desert", "#F7FFCA",
+    28,                                              "tundra", "#BFC9CA",
+    30,                                              "tundra", "#BFC9CA",
+    31,                                              "tundra", "#BFC9CA",
+    32,                                              "tundra", "#BFC9CA",
+    NA,                                      "not applicable", "#CC0033",
+    -888888,                                 "not applicable", "#CC0033",
+    -999999,                                       "not known", "#FFFFFF"
+  )
 }

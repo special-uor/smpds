@@ -4,7 +4,9 @@
 \alias{gwr}
 \title{Geographically Weighted Regression}
 \source{
-https://github.com/yunkepeng/gwr
+This function was adapted from a code developed by Yunke Peng
+(\email{yunke.peng@usys.ethz.ch}) - ETH Zürich:
+\url{https://github.com/yunkepeng/gwr}
 }
 \usage{
 gwr(
@@ -29,7 +31,7 @@ loaded.}
 
 \item{coordinates}{Reference data set with columns for \code{latitude},
 \code{longitude} and \code{elevation}. Default:
-\code{\link{smpds::CRU_coords}}.}
+\code{\link{CRU_coords}}.}
 
 \item{res}{Numeric value for the mask resolution. Default: 0.5 degrees.}
 
@@ -54,6 +56,7 @@ in \code{.data}.
 Geographically Weighted Regression
 }
 \examples{
+\dontrun{
 `\%>\%` <- magrittr::`\%>\%`
 data <- tibble::tibble(entity_name = "University of Reading",
                        latitude = 51.44140,
@@ -61,10 +64,11 @@ data <- tibble::tibble(entity_name = "University of Reading",
                        elevation = c(61, 161, 261, 361))
 data \%>\%
   smpds::gwr(varid = "tmp",
-             reference = "inst/extdata/cru_ts4.04-clim-1961-1990-daily_tmp_1-5.nc")
+             reference = "/path/to/reference-tmp.nc")
+}
 }
 \references{
 Peng, Y., Bloomfield, K.J. and Prentice, I.C., 2020. A theory of plant
 function helps to explain leaf‐trait and productivity responses to elevation.
-New Phytologist, 226(5), pp.1274-1284. doi:10.1111/nph.16447
+New Phytologist, 226(5), pp.1274-1284. \doi{10.1111/nph.16447}
 }

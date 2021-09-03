@@ -106,7 +106,7 @@ empdv2_counts2 <- empdv2_counts %>%
                                     taxon_name)) %>%
   dplyr::distinct(entity_name, taxon_name, .keep_all = TRUE)
 
-# Create wide version of the unique counts
+# Create a wide version of the unique counts
 empdv2_counts_wide <- empdv2_counts2 %>%
   dplyr::distinct(entity_name, taxon_name, count, .keep_all = TRUE) %>%
   tidyr::pivot_wider(id_cols = entity_name, names_from = taxon_name, values_from = count) %>%
@@ -116,10 +116,14 @@ empdv2_counts_wide <- empdv2_counts2 %>%
 EMPDv2_all <- EMPD %>%
   dplyr::full_join(empdv2_counts_wide,
                    by = "entity_name") %>%
-  dplyr::mutate(ID_BIOME = tibble::tibble(latitude, longitude) %>%
-                  smpds::parallel_extract_biome(buffer = 12000, cpus = 6) %>%
-                  .$ID_BIOME,
-                .before = publication)
+  smpds::parallel_extract_biome(buffer = 12000, cpus = 5) %>%
+  dplyr::relocate(ID_BIOME, .before = publication) %>%
+  progressr::with_progress()
+
+  # dplyr::mutate(ID_BIOME = tibble::tibble(latitude, longitude) %>%
+  #                 smpds::parallel_extract_biome(buffer = 12000, cpus = 6) %>%
+  #                 .$ID_BIOME,
+  #               .before = publication)
 
 not_applicable_biome_pattern <-
   "Marine|marine|Sea|sea|Coastal|coastal|Open Water|Amur River|Continental slope|Samsun ridge"

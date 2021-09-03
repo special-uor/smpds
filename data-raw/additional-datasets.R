@@ -6,10 +6,10 @@
 epdcore_finsinger_taxa <- readr::read_csv("~/Downloads/SMPDSv2/epdcore_finsinger-taxon_names_2021-08-24_SPH.csv") %>%
   dplyr::distinct() %>%
   dplyr::mutate(action = ifelse(clean_name %>%
-                                  stringr::str_detect("EXCLUDE"),
+                                  stringr::str_detect("EXCLUDE|exclude"),
                                 "delete", "update"),
                 clean_name = ifelse(clean_name %>%
-                                      stringr::str_detect("EXCLUDE"),
+                                      stringr::str_detect("EXCLUDE|exclude"),
                                     NA, clean_name)) %>%
   dplyr::arrange(dplyr::desc(action), taxon_name) %>%
   dplyr::filter(!is.na(taxon_name))
@@ -51,10 +51,10 @@ epdcore_finsinger2 <- aux_rev %>%
                     by = "entity_name") %>%
   dplyr::select(-total)
 
-# Export list of taxon names for clean-up
-tibble::tibble(taxon_name = colnames(epdcore_finsinger2)[-c(1:14)],
-               clean_name = taxon_name) %>%
-  readr::write_excel_csv("~/Downloads/SMPDSv2/epdcore_finsinger-taxon_names_2021-08-24.csv", na = "")
+# # Export list of taxon names for clean-up
+# tibble::tibble(taxon_name = colnames(epdcore_finsinger2)[-c(1:14)],
+#                clean_name = taxon_name) %>%
+#   readr::write_excel_csv("~/Downloads/SMPDSv2/epdcore_finsinger-taxon_names_2021-08-24.csv", na = "")
 
 epdcore_finsinger2 %>%
   readr::write_excel_csv("inst/extdata/epdcore_finsinger.csv", na = "")
@@ -65,13 +65,13 @@ aux[1, ] %>%
 aux_rev[1, ] %>%
   smpds::rm_na_taxa(cols = 1:14)
 
-aux_rev %>%
-  dplyr::select(-1) %>%
-  dplyr::bind_rows(aux %>%
-                     dplyr::mutate(source = "epdcore_finsinger")) %>%
-  dplyr::arrange(entity_name) %>%
-  smpds::sort_taxa(cols = 1:12) %>%
-  readr::write_excel_csv("~/Downloads/SMPDSv2/EMPDv2-epdcore_finsinger.csv", na = "")
+# aux_rev %>%
+#   dplyr::select(-1) %>%
+#   dplyr::bind_rows(aux %>%
+#                      dplyr::mutate(source = "epdcore_finsinger")) %>%
+#   dplyr::arrange(entity_name) %>%
+#   smpds::sort_taxa(cols = 1:12) %>%
+#   readr::write_excel_csv("~/Downloads/SMPDSv2/EMPDv2-epdcore_finsinger.csv", na = "")
 
 
 # ______________________________________________________________________________
@@ -81,10 +81,10 @@ aux_rev %>%
 feurdeana3_epdcoretop_taxa <- readr::read_csv("~/Downloads/SMPDSv2/feurdeana3_epdcoretop-taxon_names_2021-08-24_SPH.csv") %>%
   dplyr::distinct() %>%
   dplyr::mutate(action = ifelse(clean_name %>%
-                                  stringr::str_detect("EXCLUDE"),
+                                  stringr::str_detect("EXCLUDE|exclude"),
                                 "delete", "update"),
                 clean_name = ifelse(clean_name %>%
-                                      stringr::str_detect("EXCLUDE"),
+                                      stringr::str_detect("EXCLUDE|exclude"),
                                     NA, clean_name)) %>%
   dplyr::arrange(dplyr::desc(action), taxon_name) %>%
   dplyr::filter(!is.na(taxon_name))
@@ -130,10 +130,10 @@ feurdeana3_epdcoretop2 <- aux_rev %>%
   smpds::rm_na_taxa(1:14) %>%
   smpds::sort_taxa(1:14)
 
-# Export list of taxon names for clean-up
-tibble::tibble(taxon_name = colnames(feurdeana3_epdcoretop2)[-c(1:14)],
-               clean_name = taxon_name) %>%
-  readr::write_excel_csv("~/Downloads/SMPDSv2/feurdeana3_epdcoretop-taxon_names_2021-08-24.csv", na = "")
+# # Export list of taxon names for clean-up
+# tibble::tibble(taxon_name = colnames(feurdeana3_epdcoretop2)[-c(1:14)],
+#                clean_name = taxon_name) %>%
+#   readr::write_excel_csv("~/Downloads/SMPDSv2/feurdeana3_epdcoretop-taxon_names_2021-08-24.csv", na = "")
 
 feurdeana3_epdcoretop2 %>%
   readr::write_excel_csv("inst/extdata/feurdeana3_epdcoretop.csv", na = "")
@@ -144,13 +144,13 @@ aux[1, ] %>%
 aux_rev[1, ] %>%
   smpds::rm_na_taxa(cols = 1:13)
 
-aux_rev %>%
-  dplyr::select(-1) %>%
-  dplyr::bind_rows(aux %>%
-                     dplyr::mutate(source = "feurdeana3_epdcoretop")) %>%
-  dplyr::arrange(entity_name) %>%
-  smpds::sort_taxa(cols = 1:12) %>%
-  readr::write_excel_csv("~/Downloads/SMPDSv2/EMPDv2-feurdeana3_epdcoretop.csv", na = "")
+# aux_rev %>%
+#   dplyr::select(-1) %>%
+#   dplyr::bind_rows(aux %>%
+#                      dplyr::mutate(source = "feurdeana3_epdcoretop")) %>%
+#   dplyr::arrange(entity_name) %>%
+#   smpds::sort_taxa(cols = 1:12) %>%
+#   readr::write_excel_csv("~/Downloads/SMPDSv2/EMPDv2-feurdeana3_epdcoretop.csv", na = "")
 
 
 # ______________________________________________________________________________
@@ -196,8 +196,10 @@ juodonys_clean_ups <- readxl::read_xlsx("~/Downloads/SMPDSv2/Juodonys clean up.x
                                         sheet = 1,
                                         col_names = c("taxon_name", "clean_name")) %>%
   dplyr::distinct() %>%
-  dplyr::mutate(action = ifelse(stringr::str_detect(clean_name, "EXC"), "delete", "update"),
-                clean_name = ifelse(stringr::str_detect(clean_name, "delete"), NA, clean_name)) %>%
+  dplyr::mutate(action = ifelse(stringr::str_detect(clean_name, "EXC|exc"),
+                                "delete", "update"),
+                clean_name = ifelse(stringr::str_detect(clean_name, "EXC|exc"),
+                                    NA, clean_name)) %>%
   dplyr::arrange(dplyr::desc(action), taxon_name) %>%
   dplyr::filter(!is.na(taxon_name))
 juodonys_clean_ups %>%
@@ -237,8 +239,9 @@ juodonys <- readxl::read_xls("~/Downloads/SMPDSv2/To check included/Juodonys pol
                 age_BP = "modern", #-83,
                 publication = paste0("Stančikaitė, M., Kisielienė, D., Strimaitienė, A., 2004. Vegetation response to the climatic and human impact changes during the Late Glacial and Holocene: case study of the marginal area of Baltija Upland, NE Lithuania. Baltica 17, 17–33.",
                                      "\n",
-                                     "Stančikaitė, M., Kisielienė, D., Moe, D., Vaikutienė, G., 2009. Lateglacial and early Holocene environmental changes in northeastern Lithuania. Quaternary International 207, 80–92. doi:10.1016/j.quaint.2008.10.009"
+                                     "Stančikaitė, M., Kisielienė, D., Moe, D., Vaikutienė, G., 2009. Lateglacial and early Holocene environmental changes in northeastern Lithuania. Quaternary International 207, 80–92."
                                      ),
+                DOI = paste0("\n10.1016/j.quaint.2008.10.009"),
                 source = "Stančikaitė et al., 2004 and 2009",
                 .after = 1)
 
@@ -256,7 +259,8 @@ novenko <- readxl::read_xlsx("~/Downloads/SMPDSv2/To check included/Novenko diag
                              sheet = 1,
                              col_names = FALSE) %>%
   dplyr::select(-c(4:6)) %>%
-  magrittr::set_names(c("entity_name", "X2", "X3", "X4"))
+  magrittr::set_names(c("entity_name", "X2", "X3", "X4")) %>%
+  dplyr::filter(!is.na(entity_name))
 
 aux <- novenko %>%
   dplyr::filter(entity_name %in% EMPDv2$entity_name)
@@ -279,8 +283,10 @@ petresiunai_clean_ups <- readxl::read_xlsx("~/Downloads/SMPDSv2/petrrasiunai cle
                                         sheet = 1,
                                         col_names = c("taxon_name", "clean_name")) %>%
   dplyr::distinct() %>%
-  dplyr::mutate(action = ifelse(stringr::str_detect(clean_name, "EXC"), "delete", "update"),
-                clean_name = ifelse(stringr::str_detect(clean_name, "delete"), NA, clean_name)) %>%
+  dplyr::mutate(action = ifelse(stringr::str_detect(clean_name, "EXC|exc"),
+                                "delete", "update"),
+                clean_name = ifelse(stringr::str_detect(clean_name, "EXC|exc"),
+                                    NA, clean_name)) %>%
   dplyr::arrange(dplyr::desc(action), taxon_name) %>%
   dplyr::filter(!is.na(taxon_name))
 petresiunai_clean_ups %>%
@@ -325,18 +331,17 @@ petresiunai <- readxl::read_xls("~/Downloads/SMPDSv2/To check included/Petrasiun
                         "Kazakauskas, V., Uogintas, D., 2019. Reconstruction of the mid-to",
                         "Late- Holocene history of vegetation and land-use in Petrešiūnai,",
                         "north-east Lithuania: implications from palaeobotanical and",
-                        "archaeological data. Quaternary International 516, 5–20.",
-                        "doi:10.1016/j.quaint.2018.09.029"),
+                        "archaeological data. Quaternary International 516, 5–20."),
+                DOI = "10.1016/j.quaint.2018.09.029",
                 source = "Stančikaitė et al., 2019",
                 .after = 1) %>%
-  smpds::rm_zero_taxa(1:10)
-
+  smpds::rm_zero_taxa(1:11)
 
 petresiunai %>%
   readr::write_excel_csv("inst/extdata/petresiunai.csv", na = "")
 
-petresiunai %>%
-  readr::write_excel_csv("~/Downloads/SMPDSv2/petresiunai-2021-08-18.csv", na = "")
+# petresiunai %>%
+#   readr::write_excel_csv("~/Downloads/SMPDSv2/petresiunai-2021-08-18.csv", na = "")
 
 
 # ______________________________________________________________________________
@@ -456,7 +461,7 @@ aux <- Spanish_sites %>%
   dplyr::filter(entity_name %in% IbMPD$entity_name)
 aux_rev <- EMPDv2 %>%
   dplyr::filter(site_name %in% aux$entity_name) %>%
-  smpds::rm_na_taxa(1:13)
+  smpds::rm_na_taxa(1:14)
 
 Spanish_sites %>%
   readr::write_excel_csv("inst/extdata/spanish_sites.csv", na = "")

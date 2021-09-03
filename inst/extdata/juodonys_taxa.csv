@@ -55,15 +55,15 @@ Tragopogon pratensis,Tragopogon pratensis,update
 Ulmus,Ulmus,update
 Urtica,Urtica,update
 Viburnum,Viburnum,update
-Caltha type,EXCLUDE,delete
-Cerealia,EXCLUDE,delete
-Charcoal,EXCLUDE,delete
-Humulus lupulus,EXCLUDE,delete
-Menyanthes trifoliata,EXCLUDE,delete
-Myriophyllum spicatum,EXCLUDE,delete
-Myriophyllum verticilatum,EXCLUDE,delete
-Secale cerealia,EXCLUDE,delete
-Selaginella selaginoides,EXCLUDE,delete
-Sphagnum,EXCLUDE,delete
-Typhaceae,EXCLUDE,delete
-Unidentifaid,EXCLUDE,delete
+Caltha type,,delete
+Cerealia,,delete
+Charcoal,,delete
+Humulus lupulus,,delete
+Menyanthes trifoliata,,delete
+Myriophyllum spicatum,,delete
+Myriophyllum verticilatum,,delete
+Secale cerealia,,delete
+Selaginella selaginoides,,delete
+Sphagnum,,delete
+Typhaceae,,delete
+Unidentifaid,,delete

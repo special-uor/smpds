@@ -4,17 +4,21 @@
 \alias{compare_latlon}
 \title{Compare two datasets using \code{latitude} and \code{longitude}}
 \usage{
-compare_latlon(x, y, fx = tolerance, ...)
+compare_latlon(x, y, join_method = dplyr::inner_join, fx = tolerance, ...)
 }
 \arguments{
 \item{x}{Reference dataset.}
 
 \item{y}{Target dataset, this will be compared with \code{x}.}
 
+\item{join_method}{Function to be used as the joining method between
+\code{x} and \code{y}. Default: \code{dplyr::inner_join}.}
+
 \item{fx}{Comparison function, it defaults to an internal function called
-\code{tolerance} that drops decimals (using the parameter \code{digits})
-without rounding the numbers. Suggested base functions are \code{round},
-\code{trunc}, \code{floor}, \code{ceiling} and \code{signif}.}
+\code{tolerance} that the drops decimals (using the parameter
+\code{digits}) without rounding the numbers. Suggested base functions
+are \code{round}, \code{trunc}, \code{floor}, \code{ceiling} and
+\code{signif}.}
 
 \item{...}{Optional parameters passed to \code{fx}.}
 }
@@ -23,6 +27,6 @@ Table with records of \code{y} that exist in {x}.
 }
 \description{
 Compare two datasets using \code{latitude} and \code{longitude}, the
-comparison is used by the function \code{fx}, this can be a custom function
-or an existing function like \code{round}, \code{trunc}, etc.
+comparison is done using the function \code{fx}, this can be a custom
+function or an existing function like \code{round}, \code{trunc}, etc.
 }

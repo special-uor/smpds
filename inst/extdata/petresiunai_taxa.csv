@@ -49,7 +49,6 @@ Pteridium,Pteridium,update
 Quercus,Quercus,update
 R. acris,Ranunculus acris,update
 Ranunculaceae,Ranunculaceae,update
-Ranunculus flammula,exclude,update
 Rhamnus,Rhamnus,update
 Rosaceae,Rosaceae,update
 Rumex acetosa/acetosella t.,Rumex acetosa/Rumex acetosella type,update
@@ -62,18 +61,19 @@ Tilia,Tilia,update
 Ulmus,Ulmus,update
 Urtica,Urtica,update
 Viburnum,Viburnum,update
-Cerealia,EXCLUDE,delete
-Charcoal,EXCLUDE,delete
-Humulus lupulus,EXCLUDE,delete
-Lycopodium added,EXCLUDE,delete
-Menyanthes trifoliata,EXCLUDE,delete
-Myriophyllum spicatum,EXCLUDE,delete
-Myriophyllum verticilatum,EXCLUDE,delete
-Nuphar,EXCLUDE,delete
-Nymphaea,EXCLUDE,delete
-Secale,EXCLUDE,delete
-Selaginella selaginoides,EXCLUDE,delete
-Sphagnum,EXCLUDE,delete
-Triticum t.,EXCLUDE,delete
-Typhaceae,EXCLUDE,delete
-Unidentifaid,EXCLUDE,delete
+Cerealia,,delete
+Charcoal,,delete
+Humulus lupulus,,delete
+Lycopodium added,,delete
+Menyanthes trifoliata,,delete
+Myriophyllum spicatum,,delete
+Myriophyllum verticilatum,,delete
+Nuphar,,delete
+Nymphaea,,delete
+Ranunculus flammula,,delete
+Secale,,delete
+Selaginella selaginoides,,delete
+Sphagnum,,delete
+Triticum t.,,delete
+Typhaceae,,delete
+Unidentifaid,,delete

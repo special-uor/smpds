@@ -11,7 +11,7 @@ cru_mask(res = 0.5, coordinates = smpds::CRU_coords)
 
 \item{coordinates}{Reference data set with columns for \code{latitude},
 \code{longitude} and \code{elevation}. Default:
-\code{\link{smpds::CRU_coords}}.}
+\code{\link{CRU_coords}}.}
 }
 \value{
 Table with land-sea mask:

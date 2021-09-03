@@ -3,7 +3,7 @@
 #' @param res Numeric value for the mask resolution. Default: 0.5 degrees.
 #' @param coordinates Reference data set with columns for \code{latitude},
 #'     \code{longitude} and \code{elevation}. Default:
-#'     \code{\link{smpds::CRU_coords}}.
+#'     \code{\link{CRU_coords}}.
 #'
 #' @return Table with land-sea mask:
 #' \itemize{
@@ -15,6 +15,8 @@
 #' @keywords internal
 cru_mask <- function(res = 0.5,
                      coordinates = smpds::CRU_coords) {
+  # Local bindings
+  elevation <- land <- NULL
   x <- seq(-180 + res / 2, 180 - res / 2, res)
   y <- seq(-90 + res / 2, 90 - res / 2, res)
   if (!all(c("latitude", "longitude", "elevation") %in%
@@ -52,7 +54,6 @@ cru_mask <- function(res = 0.5,
 #'     }
 #' @param cpus Number of CPUs to be used in parallel, default = 1.
 #' @inheritParams spgwr::gwr
-# @inheritDotParams spgwr::gwr -formula -data -bandwidth -fit.points -predictions -coords
 #'
 #' @return Table with interpolated values from \code{varid} for each record/row
 #'     in \code{.data}.
@@ -61,12 +62,15 @@ cru_mask <- function(res = 0.5,
 #' @references
 #' Peng, Y., Bloomfield, K.J. and Prentice, I.C., 2020. A theory of plant
 #' function helps to explain leaf‐trait and productivity responses to elevation.
-#' New Phytologist, 226(5), pp.1274-1284. doi:10.1111/nph.16447
+#' New Phytologist, 226(5), pp.1274-1284. \doi{10.1111/nph.16447}
 #'
 #' @source
-#' https://github.com/yunkepeng/gwr
+#' This function was adapted from a code developed by Yunke Peng
+#' (\email{yunke.peng@usys.ethz.ch}) - ETH Zürich:
+#' \url{https://github.com/yunkepeng/gwr}
 #'
 #' @examples
+#' \dontrun{
 #' `%>%` <- magrittr::`%>%`
 #' data <- tibble::tibble(entity_name = "University of Reading",
 #'                        latitude = 51.44140,
@@ -74,7 +78,8 @@ cru_mask <- function(res = 0.5,
 #'                        elevation = c(61, 161, 261, 361))
 #' data %>%
 #'   smpds::gwr(varid = "tmp",
-#'              reference = "inst/extdata/cru_ts4.04-clim-1961-1990-daily_tmp_1-5.nc")
+#'              reference = "/path/to/reference-tmp.nc")
+#' }
 gwr <- function(.data,
                 varid,
                 reference = NULL,
@@ -83,6 +88,9 @@ gwr <- function(.data,
                 buffer = 1.5,
                 cpus = 1,
                 bandwidth = 1.06) {
+  # Local bindings
+  land <- sea <- NULL
+  # Load reference data from the NetCDF file
   ncin <- ncdf4::nc_open(reference)
   reference_tbl <- ncdf4::ncvar_get(ncin, varid) %>%
     mask_nc(mask = cru_mask(res = res, coordinates = coordinates)) %>%
@@ -104,7 +112,7 @@ gwr <- function(.data,
   on.exit(future::plan(oplan), add = TRUE)
   fm_suffix <- " ~ elevation"
   output <- seq_len(nrow(.data)) %>%
-    furrr:::future_map_dfr(function(i) {
+    furrr::future_map_dfr(function(i) {
       climate_grid2 <- subset_coords(climate_grid,
                                      .data$latitude[i],
                                      .data$longitude[i],
@@ -128,7 +136,6 @@ gwr <- function(.data,
   .data %>%
     dplyr::bind_cols(output)
 }
-
 
 #' Mask NetCDF
 #'
@@ -156,6 +163,66 @@ mask_nc <- function(.data, mask = cru_mask()) {
                            magrittr::set_names(paste0("T", t))
                        })
     )
+}
+
+#' Pivot data
+#'
+#' Pivot data obtained with the function \code{\link{gwr}}. Groups all the data
+#' points for each entity/row into a single list of elements.
+#'
+#' @param .data Data frame (\code{tibble} object) obtained with
+#'     \code{\link{gwr}}.
+#' @param timestep String with the pattern used to name each data point at each
+#'     time-step. Default: \code{"^T[0-9]*"}.
+#' @param cols Metadata columns (\code{latitude}, \code{longitude}, etc.), to
+#'     be excluded from the data pivoting. Default: excluded columns matching
+#'     the \code{timestep} pattern, for the default pattern, ignores columns
+#'     with the prefix \code{T} and digits as suffix (e.g., \code{T1},
+#'     \code{T2}, ..., \code{Tt}, etc.).
+#' @param scale Numeric value to scale the data. Default: \code{1}, no scaling.
+#' @param add Numeric value to be added/subtracted from the data points.
+#'     Default: \code{0}, don't add anything.
+#' @param varname Output variable name. Default: \code{"value"}.
+#'
+#' @return Data frame (\code{tibble} object) with a new column named according
+#'     to the string passed with \code{value}, this new column contains a list
+#'     of the data points at each time step for each observation/row.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' `%>%` <- magrittr::`%>%`
+#' data <- tibble::tibble(entity_name = "University of Reading",
+#'                        latitude = 51.44140,
+#'                        longitude = -0.9418,
+#'                        elevation = 61)
+#' data %>%
+#'   smpds::gwr(varid = "tmp",
+#'              reference = "/path/to/reference-tmp.nc") %>%
+#'   smpds::pivot_data(varname = "tmp")
+#' }
+pivot_data <- function(.data,
+                       timestep = "^T[0-9]*",
+                       cols = colnames(.data) %>%
+                         stringr::str_detect(timestep, negate = TRUE) %>%
+                         which(),
+                       scale = 1,
+                       add = 0,
+                       varname = "value") {
+  # Local bindings
+  . <- .ID <- name <- value <- NULL
+
+  .data %>%
+    dplyr::mutate(.ID = seq_len(nrow(.))) %>% # Create unique ID per row/entity
+    tidyr::pivot_longer(c(-dplyr::all_of(cols),
+                          -.ID)) %>% # Pivot longer excluding cols and ID
+    dplyr::group_by(.ID) %>% # Group by the unique ID assigned to each entity
+    dplyr::mutate(value = list(value * scale + add)) %>%
+    dplyr::ungroup() %>%
+    magrittr::set_names(colnames(.) %>%
+                          stringr::str_replace_all("value", varname)) %>%
+    dplyr::distinct(.ID, .keep_all = TRUE) %>%
+    dplyr::select(-name, -.ID)
 }
 
 #' Subset data

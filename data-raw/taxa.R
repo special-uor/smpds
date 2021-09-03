@@ -16,7 +16,7 @@ taxa_all <-
                       stringr::str_to_lower() %>%
                       stringr::str_detect("excl"),
                     "delete", "update"),
-    # clean_name = ifelse(action == "delete", NA, clean_name),
+    clean_name = ifelse(action == "delete", NA, clean_name),
     .after = clean_name
   ) %>%
   dplyr::mutate(clean_name = clean_name %>%
@@ -25,4 +25,36 @@ taxa_all <-
 
 taxa_all %>%
   readr::write_excel_csv("inst/extdata/all_taxa.csv", na = "")
+
+taxa_cleanup_files <- list.files("inst/extdata/", "_taxa\\.csv$", full.names = TRUE)
+taxa_clean_all <- taxa_cleanup_files %>%
+  purrr::map_dfr(~.x %>%
+                   readr::read_csv() %>%
+                   dplyr::mutate(source = basename(.x), .after = 3)) %>%
+  dplyr::select(1:4) %>%
+  dplyr::arrange(dplyr::desc(action), taxon_name) %>%
+  dplyr::mutate(ID = seq_along(taxon_name)) %>%
+  dplyr::mutate(clean_name = ifelse(action == "delete", NA, clean_name))
+
+taxa_clean_all2 <- taxa_clean_all %>%
+  dplyr::distinct(taxon_name, clean_name, .keep_all = TRUE)
+taxa_clean_all3 <- taxa_clean_all %>%
+  dplyr::distinct(taxon_name, .keep_all = TRUE)
+taxa_clean_all4 <- taxa_clean_all2 %>%
+  dplyr::filter(!(ID %in% taxa_clean_all3$ID))
+
+discrepancies <- taxa_clean_all %>%
+  dplyr::filter(taxon_name %in% taxa_clean_all4$taxon_name) %>%
+  dplyr::distinct(taxon_name, clean_name, .keep_all = TRUE) %>%
+  dplyr::arrange(taxon_name, clean_name)
+discrepancies %>%
+  dplyr::select(-ID) %>%
+  dplyr::mutate(action = ifelse(!is.na(clean_name) & taxon_name == clean_name,
+                                "keep original name", action)) %>%
+  readr::write_excel_csv("~/Downloads/SMPDSv2/SMPDSv2_taxa_discrepancies_2021-09-02.csv", na = "EXCLUDE")
+
+    # taxa_clean %>%
+#   dplyr::distinct(taxon_name, clean_name, .keep_all = TRUE)
+#   readr::write_excel_csv("inst/extdata/taxa_clean.csv", na = "")
+taxa <- taxa_clean
 usethis::use_data(taxa, overwrite = TRUE)
