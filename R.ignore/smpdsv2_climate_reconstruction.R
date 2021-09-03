@@ -86,6 +86,26 @@ SMPDSv2_all_vars <- SMPDSv2_sf_rt2 %>%
   dplyr::left_join(SMPDSv2_pre_rt2) %>%
   dplyr::left_join(SMPDSv2_tmp_rt2) %>%
   dplyr::select(site_name:elevation, age_BP, sf, pre, tmp)
+SMPDSv2_all_vars %>%
+  dplyr::mutate(sf = sf %>% purrr::map(~.x[1:5]),
+                pre = pre %>% purrr::map(~.x[1:5]),
+                tmp = tmp %>% purrr::map(~.x[1:5])) %>%
+  dplyr::select(3:9) %>%
+  dplyr::slice(1:5) %>%
+  dplyr::mutate(site_name = stringr::str_c("Test site ", seq_along(latitude)),
+                .before = 1) %>%
+  readr::write_rds("inst/testdata/test_data_5days.Rds")
+
+SMPDSv2_all_vars %>%
+  dplyr::select(3:9) %>%
+  dplyr::slice(1:5) %>%
+  dplyr::mutate(site_name = stringr::str_c("Test site ", seq_along(latitude)),
+                .before = 1) %>%
+  smpds::parallel_extract_biome(cpus = 1) %>%
+  dplyr::relocate(ID_BIOME, .after = age_BP) %>%
+  readr::write_rds("inst/testdata/test_data_365days.Rds")
+
+  # datapasta::dpasta()
 
 orb_params <- SMPDSv2_all_vars$age_BP %>%
   as.double() %>%
