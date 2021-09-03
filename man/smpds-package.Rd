@@ -6,8 +6,11 @@
 \alias{smpds-package}
 \title{smpds: The SPECIAL Modern Pollen Data}
 \description{
-Provides functions to facilitate the access to the Modern Pollen 
-    Data for climate reconstructionS (SMPDS).
+Provides functions to facilitate the access to the SPECIAL Modern 
+    Pollen DataSet (SMPDS) and to reconstruct climate variables, like Mean
+    Temperature of the COldest month (MTCO), Mean Temperature of the WArmest
+    month (MTWA) and Growing Degree Days (GDD). Also, it provides functions to
+    find the Potential Natural Vegetation (PNV) of a given site.
 }
 \seealso{
 Useful links:
