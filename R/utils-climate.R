@@ -76,9 +76,10 @@ gdd.tbl_df <- function(.data, baseline = 0, cpus = 1, ...) {
                       furrr::future_map_dbl(gdd,
                                             baseline = baseline,
                                             pb = pb)) %>%
-      magrittr::set_names(colnames(.) %>%
-                            stringr::str_replace_all("gdd",
-                                                     paste0("gdd", baseline)))
+      magrittr::set_names(c(colnames(.)[-ncol(.)],
+                            colnames(.)[ncol(.)] %>%
+                              stringr::str_replace("gdd",
+                                                   paste0("gdd", baseline))))
   }
   future::plan(oplan)
   return(output)
