@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Pipe operator — %&gt;% • smpds</title>
+<title>PNV classes — pnv_classes • smpds</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,10 @@
 
 
 
-<meta property="og:title" content="Pipe operator — %&gt;%" />
-<meta property="og:description" content="See magrittr::%&amp;gt;% for details." />
+<meta property="og:title" content="PNV classes — pnv_classes" />
+<meta property="og:description" content="Potential Natural Vegetation (PNV) classes based on the map created by
+Hengl (2018)
+." />
 
 
 
@@ -108,18 +110,34 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Pipe operator</h1>
-    <small class="dont-index">Source: <a href='https://github.com/special-uor/smpds/blob/master/R/utils-pipe.R'><code>R/utils-pipe.R</code></a></small>
-    <div class="hidden name"><code>pipe.Rd</code></div>
+    <h1>PNV classes</h1>
+    <small class="dont-index">Source: <a href='https://github.com/special-uor/smpds/blob/master/R/utils-biome.R'><code>R/utils-biome.R</code></a></small>
+    <div class="hidden name"><code>pnv_classes.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>See <code>magrittr::%&gt;%</code> for details.</p>
+    <p>Potential Natural Vegetation (PNV) classes based on the map created by
+Hengl (2018)
+.</p>
     </div>
 
-    <pre class="usage"><span class='va'>lhs</span> <span class='op'>%&gt;%</span> <span class='va'>rhs</span></pre>
+    <pre class="usage"><span class='fu'>pnv_classes</span><span class='op'>(</span><span class='op'>)</span></pre>
 
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Data frame (<code>tibble</code> object) with three columns:</p><ul>
+<li><p><code>ID_BIOME</code>: an unique identification number for each biome.</p></li>
+<li><p><code>description</code>: string witha description of each biome.</p></li>
+<li><p><code>colour</code>: hexadecimal colour code used to represent each biome.</p></li>
+</ul>
+
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Hengl T (2018).
+&#8220;Global Maps of Potential Natural Vegetation at 1 km resolution.&#8221;
+doi: <a href='https://doi.org/10.7910/DVN/QQHCIK'>10.7910/DVN/QQHCIK</a>
+.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Pipe operator — %&gt;% • smpds</title>
+<title>Subset data — subset_coords • smpds</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,9 @@
 
 
 
-<meta property="og:title" content="Pipe operator — %&gt;%" />
-<meta property="og:description" content="See magrittr::%&amp;gt;% for details." />
+<meta property="og:title" content="Subset data — subset_coords" />
+<meta property="og:description" content="Subset data using coordinates (latitute and longitude) and
+buffer." />
 
 
 
@@ -108,18 +109,48 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Pipe operator</h1>
-    <small class="dont-index">Source: <a href='https://github.com/special-uor/smpds/blob/master/R/utils-pipe.R'><code>R/utils-pipe.R</code></a></small>
-    <div class="hidden name"><code>pipe.Rd</code></div>
+    <h1>Subset data</h1>
+    <small class="dont-index">Source: <a href='https://github.com/special-uor/smpds/blob/master/R/utils-interpolation.R'><code>R/utils-interpolation.R</code></a></small>
+    <div class="hidden name"><code>subset_coords.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>See <code>magrittr::%&gt;%</code> for details.</p>
+    <p>Subset data using coordinates (<code>latitute</code> and <code>longitude</code>) and
+<code>buffer</code>.</p>
     </div>
 
-    <pre class="usage"><span class='va'>lhs</span> <span class='op'>%&gt;%</span> <span class='va'>rhs</span></pre>
+    <pre class="usage"><span class='fu'>subset_coords</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>latitude</span>, <span class='va'>longitude</span>, <span class='va'>buffer</span><span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>.data</th>
+      <td><p>2D matrix with columns called <code>latitude</code> and
+<code>longitude</code>.</p></td>
+    </tr>
+    <tr>
+      <th>latitude</th>
+      <td><p>Numeric value for reference <code>latitude</code>.</p></td>
+    </tr>
+    <tr>
+      <th>longitude</th>
+      <td><p>Numeric value for reference <code>longitude</code>.</p></td>
+    </tr>
+    <tr>
+      <th>buffer</th>
+      <td><p>Numeric value to be used as the boundary for the search area:</p><ul>
+<li><p><code>latitude</code> &lt; <code>.data$latitude + buffer</code></p></li>
+<li><p><code>latitude</code> &gt; <code>.data$latitude - buffer</code></p></li>
+<li><p><code>longitude</code> &lt; <code>.data$longitude + buffer</code></p></li>
+<li><p><code>longitude</code> &gt; <code>.data$longitude - buffer</code></p></li>
+</ul></td>
+    </tr>
+    </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Filtered 2D matrix.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

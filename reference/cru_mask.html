@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Pipe operator — %&gt;% • smpds</title>
+<title>Create land-sea mask for the CRU TS dataset — cru_mask • smpds</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Pipe operator — %&gt;%" />
-<meta property="og:description" content="See magrittr::%&amp;gt;% for details." />
+<meta property="og:title" content="Create land-sea mask for the CRU TS dataset — cru_mask" />
+<meta property="og:description" content="Create land-sea mask for the CRU TS dataset" />
 
 
 
@@ -108,17 +108,39 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Pipe operator</h1>
-    <small class="dont-index">Source: <a href='https://github.com/special-uor/smpds/blob/master/R/utils-pipe.R'><code>R/utils-pipe.R</code></a></small>
-    <div class="hidden name"><code>pipe.Rd</code></div>
+    <h1>Create land-sea mask for the CRU TS dataset</h1>
+    <small class="dont-index">Source: <a href='https://github.com/special-uor/smpds/blob/master/R/utils-interpolation.R'><code>R/utils-interpolation.R</code></a></small>
+    <div class="hidden name"><code>cru_mask.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>See <code>magrittr::%&gt;%</code> for details.</p>
+    <p>Create land-sea mask for the CRU TS dataset</p>
     </div>
 
-    <pre class="usage"><span class='va'>lhs</span> <span class='op'>%&gt;%</span> <span class='va'>rhs</span></pre>
+    <pre class="usage"><span class='fu'>cru_mask</span><span class='op'>(</span>res <span class='op'>=</span> <span class='fl'>0.5</span>, coordinates <span class='op'>=</span> <span class='fu'>smpds</span><span class='fu'>::</span><span class='va'><a href='CRU_coords.html'>CRU_coords</a></span><span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>res</th>
+      <td><p>Numeric value for the mask resolution. Default: 0.5 degrees.</p></td>
+    </tr>
+    <tr>
+      <th>coordinates</th>
+      <td><p>Reference data set with columns for <code>latitude</code>,
+<code>longitude</code> and <code>elevation</code>. Default:
+<code><a href='CRU_coords.html'>CRU_coords</a></code>.</p></td>
+    </tr>
+    </table>
+
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Table with land-sea mask:</p><ul>
+<li><p><code>land = TRUE</code>  Grid cell with data provided by the CRU TS.</p></li>
+<li><p><code>land = FALSE</code>  Grid cell where data is not provided by the
+CRU TS.</p></li>
+</ul>
 
 
   </div>

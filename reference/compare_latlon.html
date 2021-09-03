@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Pipe operator — %&gt;% • smpds</title>
+<title>Compare two datasets using latitude and longitude — compare_latlon • smpds</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,10 @@
 
 
 
-<meta property="og:title" content="Pipe operator — %&gt;%" />
-<meta property="og:description" content="See magrittr::%&amp;gt;% for details." />
+<meta property="og:title" content="Compare two datasets using latitude and longitude — compare_latlon" />
+<meta property="og:description" content="Compare two datasets using latitude and longitude, the
+comparison is done using the function fx, this can be a custom
+function or an existing function like round, trunc, etc." />
 
 
 
@@ -108,18 +110,52 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Pipe operator</h1>
-    <small class="dont-index">Source: <a href='https://github.com/special-uor/smpds/blob/master/R/utils-pipe.R'><code>R/utils-pipe.R</code></a></small>
-    <div class="hidden name"><code>pipe.Rd</code></div>
+    <h1>Compare two datasets using <code>latitude</code> and <code>longitude</code></h1>
+    <small class="dont-index">Source: <a href='https://github.com/special-uor/smpds/blob/master/R/utils-dataset.R'><code>R/utils-dataset.R</code></a></small>
+    <div class="hidden name"><code>compare_latlon.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>See <code>magrittr::%&gt;%</code> for details.</p>
+    <p>Compare two datasets using <code>latitude</code> and <code>longitude</code>, the
+comparison is done using the function <code>fx</code>, this can be a custom
+function or an existing function like <code>round</code>, <code>trunc</code>, etc.</p>
     </div>
 
-    <pre class="usage"><span class='va'>lhs</span> <span class='op'>%&gt;%</span> <span class='va'>rhs</span></pre>
+    <pre class="usage"><span class='fu'>compare_latlon</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, join_method <span class='op'>=</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='va'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>inner_join</a></span>, fx <span class='op'>=</span> <span class='va'>tolerance</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>Reference dataset.</p></td>
+    </tr>
+    <tr>
+      <th>y</th>
+      <td><p>Target dataset, this will be compared with <code>x</code>.</p></td>
+    </tr>
+    <tr>
+      <th>join_method</th>
+      <td><p>Function to be used as the joining method between
+<code>x</code> and <code>y</code>. Default: <code><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>dplyr::inner_join</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>fx</th>
+      <td><p>Comparison function, it defaults to an internal function called
+<code>tolerance</code> that the drops decimals (using the parameter
+<code>digits</code>) without rounding the numbers. Suggested base functions
+are <code>round</code>, <code>trunc</code>, <code>floor</code>, <code>ceiling</code> and
+<code>signif</code>.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Optional parameters passed to <code>fx</code>.</p></td>
+    </tr>
+    </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Table with records of <code>y</code> that exist in x.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

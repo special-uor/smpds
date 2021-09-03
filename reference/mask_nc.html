@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Pipe operator — %&gt;% • smpds</title>
+<title>Mask NetCDF — mask_nc • smpds</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Pipe operator — %&gt;%" />
-<meta property="og:description" content="See magrittr::%&amp;gt;% for details." />
+<meta property="og:title" content="Mask NetCDF — mask_nc" />
+<meta property="og:description" content="Mask NetCDF variable." />
 
 
 
@@ -108,18 +108,41 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Pipe operator</h1>
-    <small class="dont-index">Source: <a href='https://github.com/special-uor/smpds/blob/master/R/utils-pipe.R'><code>R/utils-pipe.R</code></a></small>
-    <div class="hidden name"><code>pipe.Rd</code></div>
+    <h1>Mask NetCDF</h1>
+    <small class="dont-index">Source: <a href='https://github.com/special-uor/smpds/blob/master/R/utils-interpolation.R'><code>R/utils-interpolation.R</code></a></small>
+    <div class="hidden name"><code>mask_nc.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>See <code>magrittr::%&gt;%</code> for details.</p>
+    <p>Mask NetCDF variable.</p>
     </div>
 
-    <pre class="usage"><span class='va'>lhs</span> <span class='op'>%&gt;%</span> <span class='va'>rhs</span></pre>
+    <pre class="usage"><span class='fu'>mask_nc</span><span class='op'>(</span><span class='va'>.data</span>, mask <span class='op'>=</span> <span class='fu'><a href='cru_mask.html'>cru_mask</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>.data</th>
+      <td><p>3D matrix with <code>latitude</code>, <code>longitude</code> and
+<code>time</code>.</p></td>
+    </tr>
+    <tr>
+      <th>mask</th>
+      <td><p>2D matrix with all combinations of <code>latitude</code>,
+<code>longitude</code> and a third variable called <code>land</code> with logical
+values to indicated whether a grid cell should be used or ignored.</p><ul>
+<li><p><code>land = TRUE</code>  use this value.</p></li>
+<li><p><code>land = FALSE</code>  ignore this value.</p></li>
+</ul></td>
+    </tr>
+    </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>2D version of <code>.data</code>, including <code>latitute</code>,
+<code>longitude</code>, and variables with the format <code>T#</code>, for each
+time step in <code>.data</code>: <code>T1</code>, <code>T2</code>, ..., <code>Tk</code>.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
