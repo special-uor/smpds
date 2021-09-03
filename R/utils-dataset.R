@@ -42,13 +42,26 @@ compare_latlon <- function(x,
     dplyr::select(-lat, -lon)
 }
 
+#' Compare two datasets using \code{latitude}, \code{longitude}, and
+#' \code{elevation}
+#'
+#' Compare two datasets using \code{latitude}, \code{longitude}, and
+#' \code{elevation}, the
+#' comparison is done using the function \code{fx}, this can be a custom
+#' function or an existing function like \code{round}, \code{trunc}, etc.
+#'
+#'
+#' @inheritParams compare_latlon
+#'
+#' @return Table with records of \code{y} that exist in {x}.
+#' @export
 compare_latlonelv <- function(x,
                               y,
                               join_method = dplyr::inner_join,
                               fx = tolerance,
                               ...) {
   # Local bindings
-  elv <- lat <- latitude <- lon <- longitude <- NULL
+  elv <- elevation <- lat <- latitude <- lon <- longitude <- NULL
   x %>%
     dplyr::filter(fx(latitude, ...) %in% fx(y$latitude, ...),
                   fx(longitude, ...) %in% fx(y$longitude, ...),
