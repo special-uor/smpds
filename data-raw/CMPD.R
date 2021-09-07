@@ -47,8 +47,9 @@ cmpd_metadata <- readxl::read_xlsx("inst/extdata/cmpd_metadata.xlsx",
                 DOI = NA,
                 source = "CMPD") %>%
   dplyr::mutate(ID_BIOME = tibble::tibble(latitude, longitude) %>%
-                  smpds::parallel_extract_biome(buffer = 12000, cpus = 6) %>%
-                  .$ID_BIOME)
+                  smpds::parallel_extract_biome(buffer = 12000, cpus = 4) %>%
+                  .$ID_BIOME) %>%
+  progressr::with_progress()
 
 cmpd_metadata2 <- cmpd_metadata %>%
   dplyr::mutate(ID_BIOME =
@@ -130,12 +131,13 @@ cmpd_counts_long2 <- cmpd_counts_long %>%
         entities_with_low_perc_of_nonsense_taxon$entity_name) &
     !(taxon_name %in%
         cmpd_clean_taxon_names_nonsense$taxon_name)) %>%
-  # Filter irrelevant taxon
-  dplyr::filter(!(taxon_name %in%
+  dplyr::filter(!(taxon_name %in% # Filter irrelevant taxo
                     cmpd_clean_taxon_names_delete$taxon_name)) %>%
-  # Update taxon names
-  dplyr::left_join(cmpd_clean_taxon_names,
+  dplyr::left_join(smpds::clean_taxa() %>% # Update taxon names
+                     dplyr::bind_rows(cmpd_clean_taxon_names) %>%
+                     dplyr::distinct(),
                    by = "taxon_name") %>%
+  dplyr::filter(action != "delete") %>%
   dplyr::rename(taxon_name_original = taxon_name,
                 taxon_name = clean_name) %>%
   # Aggregate multiple records of entity_name - taxon_name pairs
