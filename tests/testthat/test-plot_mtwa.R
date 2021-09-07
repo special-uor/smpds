@@ -4,7 +4,7 @@ test_that("plot_mtwa works", {
                            package = "smpds") %>%
     readr::read_rds() %>%
     smpds::mtwa()
-  test_plot <- smpds::plot_mtwa(test_data)
+  test_plot <- smpds::plot_mtwa(test_data, show_plot = FALSE)
   expect_equal(test_plot$layers[[2]]$data, test_data %>%
                  dplyr::rename(var = mtwa))
 })

@@ -4,7 +4,7 @@ test_that("plot_mtco works", {
                            package = "smpds") %>%
     readr::read_rds() %>%
     smpds::mtco()
-  test_plot <- smpds::plot_mtco(test_data)
+  test_plot <- smpds::plot_mtco(test_data, show_plot = FALSE)
   expect_equal(test_plot$layers[[2]]$data, test_data %>%
                  dplyr::rename(var = mtco))
 })
