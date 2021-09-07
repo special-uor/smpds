@@ -16,10 +16,10 @@ subset_coords(.data, latitude, longitude, buffer)
 
 \item{buffer}{Numeric value to be used as the boundary for the search area:
 \itemize{
-\item \code{latitude} < \code{.data$latitude + buffer}
-\item \code{latitude} > \code{.data$latitude - buffer}
-\item \code{longitude} < \code{.data$longitude + buffer}
-\item \code{longitude} > \code{.data$longitude - buffer}
+\item \code{latitude} < \code{.tar$latitude + buffer}
+\item \code{latitude} > \code{.tar$latitude - buffer}
+\item \code{longitude} < \code{.tar$longitude + buffer}
+\item \code{longitude} > \code{.tar$longitude - buffer}
 }}
 }
 \value{

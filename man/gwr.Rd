@@ -2,6 +2,8 @@
 % Please edit documentation in R/utils-interpolation.R
 \name{gwr}
 \alias{gwr}
+\alias{gwr.character}
+\alias{gwr.numeric}
 \title{Geographically Weighted Regression}
 \source{
 This function was adapted from a code developed by Yunke Peng
@@ -9,10 +11,22 @@ This function was adapted from a code developed by Yunke Peng
 \url{https://github.com/yunkepeng/gwr}
 }
 \usage{
-gwr(
-  .data,
-  varid,
-  reference = NULL,
+gwr(.ref, ...)
+
+\method{gwr}{character}(
+  .ref,
+  .tar,
+  varid = NULL,
+  coordinates = smpds::CRU_coords,
+  res = 0.5,
+  buffer = 1.5,
+  cpus = 1,
+  bandwidth = 1.06
+)
+
+\method{gwr}{numeric}(
+  .ref,
+  .tar,
   coordinates = smpds::CRU_coords,
   res = 0.5,
   buffer = 1.5,
@@ -21,13 +35,16 @@ gwr(
 )
 }
 \arguments{
-\item{.data}{Table with geographical data, including: \code{latitude},
+\item{.ref}{Reference data from which the data will be interpolated (see the
+details section).}
+
+\item{...}{arguments to be passed to other functions}
+
+\item{.tar}{Table with geographical target data, including: \code{latitude},
 \code{longitude} and \code{elevation}.}
 
-\item{varid}{Main variable name for the NetCDF in \code{reference}}
-
-\item{reference}{Path to the NetCDF file from which \code{varid} will be
-loaded.}
+\item{varid}{String with the identifier of the main variable inside the
+NetCDF file pointed by \code{.ref} (if applicable).}
 
 \item{coordinates}{Reference data set with columns for \code{latitude},
 \code{longitude} and \code{elevation}. Default:
@@ -37,10 +54,10 @@ loaded.}
 
 \item{buffer}{Numeric value to be used as the boundary for the search area:
 \itemize{
-\item \code{latitude} < \code{.data$latitude + buffer}
-\item \code{latitude} > \code{.data$latitude - buffer}
-\item \code{longitude} < \code{.data$longitude + buffer}
-\item \code{longitude} > \code{.data$longitude - buffer}
+\item \code{latitude} < \code{.tar$latitude + buffer}
+\item \code{latitude} > \code{.tar$latitude - buffer}
+\item \code{longitude} < \code{.tar$longitude + buffer}
+\item \code{longitude} > \code{.tar$longitude - buffer}
 }}
 
 \item{cpus}{Number of CPUs to be used in parallel, default = 1.}
@@ -49,11 +66,23 @@ loaded.}
   calculated by \code{gwr.sel}}
 }
 \value{
-Table with interpolated values from \code{varid} for each record/row
-in \code{.data}.
+Table with interpolated values from the \code{.ref} data for each
+record/row in \code{.tar}.
 }
 \description{
 Geographically Weighted Regression
+}
+\details{
+The input reference data can be in any of the following formats:
+\itemize{
+\item \code{Matrix}: this should be a 3-dimensional object with spatial
+components (latitude and longitude) and a temporal component for
+representing each time step to be used for the extraction of the data.
+\item \code{String}: this should point to a valid path on disk where the
+reference NetCDF file is stored. Note that the parameter called \code{varid}
+should be used to indicate the identifier of the main variable inside the
+NetCDF file (e.g., \code{"tmp"},  \code{"pre"},  \code{"cld"}, etc.).
+}
 }
 \examples{
 \dontrun{
@@ -62,9 +91,15 @@ data <- tibble::tibble(entity_name = "University of Reading",
                        latitude = 51.44140,
                        longitude = -0.9418,
                        elevation = c(61, 161, 261, 361))
-data \%>\%
-  smpds::gwr(varid = "tmp",
-             reference = "/path/to/reference-tmp.nc")
+smpds::gwr(.ref = "/path/to/reference-tmp.nc",
+           .tar = data,
+           varid = "tmp")
+
+ncin <- ncdf4::nc_open("/path/to/reference-tmp.nc")
+reference_data <- ncdf4::ncvar_get(ncin, varid)
+ncdf4::nc_close(ncin)
+reference_data \%>\%
+  smpds::gwr(.tar = data)
 }
 }
 \references{
