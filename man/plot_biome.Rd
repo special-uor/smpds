@@ -11,6 +11,7 @@ plot_biome(
   legend.position = "bottom",
   xlim = c(-180, 180),
   ylim = c(-60, 90),
+  show_plot = TRUE,
   ...
 )
 }
@@ -47,6 +48,10 @@ limits along the other direction. Therefore, it is best to always specify limits
 for both x and y. Third, specifying limits via position scales or \code{xlim()}/\code{ylim()}
 is strongly discouraged, as it can result in data points being dropped from the plot even
 though they would be visible in the final plot region.}
+
+\item{show_plot}{Boolean flag to indicate whether or not the graphic should
+be displayed, if \code{FALSE}, it only returns the \code{ggplot2} object.
+Default: \code{TRUE}.}
 
 \item{...}{
   Arguments passed on to \code{\link[ggplot2:ggsf]{ggplot2::coord_sf}}
