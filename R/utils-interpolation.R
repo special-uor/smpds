@@ -244,9 +244,9 @@ mask_nc <- function(.data, mask = cru_mask()) {
 #'                        latitude = 51.44140,
 #'                        longitude = -0.9418,
 #'                        elevation = 61)
-#' data %>%
-#'   smpds::gwr(varid = "tmp",
-#'              reference = "/path/to/reference-tmp.nc") %>%
+#' smpds::gwr(.ref = "/path/to/reference-tmp.nc",
+#'            .tar = data,
+#'            varid = "tmp") %>%
 #'   smpds::pivot_data(varname = "tmp")
 #' }
 pivot_data <- function(.data,
