@@ -8,6 +8,9 @@
 #' @param .data Data frame with spatial data and biome classification.
 #' @param size Numeric value for the \code{size} aesthetic.
 #' @param stroke Numeric value for the \code{stroke} aesthetic.
+#' @param show_plot Boolean flag to indicate whether or not the graphic should
+#'     be displayed, if \code{FALSE}, it only returns the \code{ggplot2} object.
+#'     Default: \code{TRUE}.
 #' @inheritParams ggplot2::theme
 #' @inheritParams ggplot2::coord_sf
 #' @inheritDotParams ggplot2::coord_sf -xlim -ylim
@@ -22,7 +25,9 @@ plot_biome <- function(.data,
                        stroke = 0.1,
                        legend.position = "bottom",
                        xlim = c(-180, 180),
-                       ylim = c(-60, 90), ...) {
+                       ylim = c(-60, 90),
+                       show_plot = TRUE,
+                       ...) {
   # Local bindings
   description <- ID_BIOME <- n <- latitude <- longitude <- NULL
   # create the breaks- and label vectors
@@ -82,7 +87,8 @@ plot_biome <- function(.data,
                    panel.border = ggplot2::element_rect(colour = "black",
                                                         fill = NA),
                    panel.background = ggplot2::element_rect(fill = NA))
-  print(p)
+  if (show_plot)
+    print(p)
   return(invisible(p))
 }
 
@@ -100,8 +106,7 @@ plot_biome <- function(.data,
 #' @param fill_scale \code{ggplot2} compatible object with information on how to
 #'     fill the individual points for the climate variable. Default:
 #'     \code{ggplot2::scale_fill_viridis_c(name = toupper(var))}.
-#' @param size Numeric value for the \code{size} aesthetic.
-#' @param stroke Numeric value for the \code{stroke} aesthetic.
+#' @inheritParams plot_biome
 #' @inheritParams ggplot2::theme
 #' @inheritParams ggplot2::coord_sf
 #' @inheritDotParams ggplot2::coord_sf -xlim -ylim
@@ -122,6 +127,7 @@ plot_climate <- function(.data,
                          legend.position = "bottom",
                          xlim = c(-180, 180),
                          ylim = c(-60, 90),
+                         show_plot = TRUE,
                          ...) {
   # Local bindings
   latitude <- longitude <- NULL
@@ -170,7 +176,8 @@ plot_climate <- function(.data,
                    panel.border = ggplot2::element_rect(colour = "black",
                                                         fill = NA),
                    panel.background = ggplot2::element_rect(fill = NA))
-  print(p)
+  if (show_plot)
+    print(p)
   return(invisible(p))
 }
 
@@ -186,6 +193,7 @@ plot_gdd <- function(.data,
                      legend.position = "bottom",
                      xlim = c(-180, 180),
                      ylim = c(-60, 90),
+                     show_plot = TRUE,
                      ...) {
   legend_name <- paste0("GDD", baseline)
   .data %>%
@@ -200,6 +208,7 @@ plot_gdd <- function(.data,
                  legend.position = legend.position,
                  xlim = xlim,
                  ylim = ylim,
+                 show_plot = show_plot,
                  ...)
 }
 
@@ -212,6 +221,7 @@ plot_mat <- function(.data,
                      legend.position = "bottom",
                      xlim = c(-180, 180),
                      ylim = c(-60, 90),
+                     show_plot = TRUE,
                      ...) {
   .data %>%
     plot_climate(var = "mat",
@@ -226,6 +236,7 @@ plot_mat <- function(.data,
                  legend.position = legend.position,
                  xlim = xlim,
                  ylim = ylim,
+                 show_plot = show_plot,
                  ...)
 }
 
@@ -238,6 +249,7 @@ plot_mi <- function(.data,
                     legend.position = "bottom",
                     xlim = c(-180, 180),
                     ylim = c(-60, 90),
+                    show_plot = TRUE,
                     ...) {
   .data %>%
     plot_climate(var = "mi",
@@ -251,6 +263,7 @@ plot_mi <- function(.data,
                  legend.position = legend.position,
                  xlim = xlim,
                  ylim = ylim,
+                 show_plot = show_plot,
                  ...)
 }
 
@@ -263,6 +276,7 @@ plot_mtco <- function(.data,
                       legend.position = "bottom",
                       xlim = c(-180, 180),
                       ylim = c(-60, 90),
+                      show_plot = TRUE,
                       ...) {
   .data %>%
     plot_climate(var = "mtco",
@@ -275,6 +289,7 @@ plot_mtco <- function(.data,
                  legend.position = legend.position,
                  xlim = xlim,
                  ylim = ylim,
+                 show_plot = show_plot,
                  ...)
 }
 
@@ -287,6 +302,7 @@ plot_mtwa <- function(.data,
                       legend.position = "bottom",
                       xlim = c(-180, 180),
                       ylim = c(-60, 90),
+                      show_plot = TRUE,
                       ...) {
   .data %>%
     plot_climate(var = "mtwa",
@@ -300,5 +316,6 @@ plot_mtwa <- function(.data,
                  legend.position = legend.position,
                  xlim = xlim,
                  ylim = ylim,
+                 show_plot = show_plot,
                  ...)
 }
