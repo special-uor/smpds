@@ -108,7 +108,9 @@ taxa_clean_all <- taxa_cleanup_files %>%
   dplyr::mutate(clean_name = ifelse(action == "delete", NA, clean_name))
 
 taxa_clean_all2 <- taxa_clean_all %>%
-  dplyr::distinct(taxon_name, clean_name, .keep_all = TRUE)
+  dplyr::arrange(action) %>%
+  dplyr::distinct(taxon_name, .keep_all = TRUE)
+  # dplyr::distinct(taxon_name, clean_name, .keep_all = TRUE)
 taxa_clean_all3 <- taxa_clean_all %>%
   dplyr::distinct(taxon_name, .keep_all = TRUE)
 taxa_clean_all4 <- taxa_clean_all2 %>%
@@ -127,7 +129,8 @@ discrepancies %>%
     # taxa_clean %>%
 #   dplyr::distinct(taxon_name, clean_name, .keep_all = TRUE)
 #   readr::write_excel_csv("inst/extdata/taxa_clean.csv", na = "")
-taxa <- taxa_clean
+taxa_clean <- taxa_clean_all2 %>%
+  dplyr::select(-source, -ID)
 usethis::use_data(taxa_clean, taxa_amalgamation,
                   internal = TRUE,
                   overwrite = TRUE)
