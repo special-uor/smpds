@@ -1,3 +1,19 @@
+#' Taxa amalgamation
+#'
+#' @return Table with taxa amalgamations.
+#' @export
+amalgamate_taxa <- function() {
+  taxa_amalgamation # internal dataset
+}
+
+#' Taxa clean-ups
+#'
+#' @return Table with taxa clean-ups.
+#' @export
+clean_taxa <- function() {
+  taxa_clean # internal dataset
+}
+
 #' Compare two datasets using \code{latitude} and \code{longitude}
 #'
 #' Compare two datasets using \code{latitude} and \code{longitude}, the
