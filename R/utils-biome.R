@@ -151,21 +151,27 @@ parallel_extract_biome <- function(.data,
                                    all = FALSE) {
   # Local bindings
   . <- ID <- latitude <- longitude <- NULL
+  # Create data subset to improve performance
+  .data <- .data %>%
+    dplyr::mutate(.ID_PAR_BIO = seq_along(latitude))
+  .data_sub <- .data %>%
+    dplyr::select(latitude, longitude, .ID_PAR_BIO)
   oplan <- future::plan(future::multisession, workers = cpus)
   on.exit(future::plan(oplan), add = TRUE)
   {
-    pb <- progressr::progressor(steps = nrow(.data))
-    output <- seq_len(nrow(.data)) %>%
+    pb <- progressr::progressor(steps = nrow(.data_sub))
+    output <- seq_len(nrow(.data_sub)) %>%
       furrr::future_map_dfr(function(i) {
-        if (.data %>% # Return NA if  latitude or longitude are missing (NA)
+        if (.data_sub %>% # Return NA if  latitude or longitude are missing (NA)
             dplyr::slice(i) %>%
             dplyr::mutate(LATLON = is.na(latitude) | is.na(longitude)) %>%
-            .$LATLON)
-          return(.data %>%
+            .$LATLON) {
+          return(.data_sub %>%
                    dplyr::slice(i) %>%
                    dplyr::mutate(ID = i, .before = 1))
+        }
         # return(tibble::tibble(ID = i, ID_BIOME = NA, px = NA))
-        tmp <- .data %>%
+        tmp <- .data_sub %>%
           dplyr::slice(i) %>%
           # sf::st_as_sf(x = ., coords = c("longitude", "latitude")) %>%
           extract_biome(reference = reference, buffer = buffer, all = all) %>%
@@ -177,7 +183,14 @@ parallel_extract_biome <- function(.data,
   }
   if (!all)  # Remove the ID
     output <- output %>% dplyr::select(-ID)
-  output
+  # Combine the original data, .data, and the subset, .data_sub
+  if (any(!(colnames(.data) %in% colnames(.data_sub)))) {
+    output <- .data %>%
+      dplyr::left_join(output,
+                       by = c("latitude", "longitude", ".ID_PAR_BIO"))
+  }
+  output %>%
+    dplyr::select(-dplyr::contains(".ID_PAR_BIO"))
 }
 
 #' PNV classes
