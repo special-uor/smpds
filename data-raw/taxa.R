@@ -1,7 +1,7 @@
 ## code to prepare `taxa` dataset goes here
 `%>%` <- magrittr::`%>%`
 taxa_all <-
-  readxl::read_xlsx("~/Downloads/SMPDSv2/SMPDSv2-taxa-list_2021-09_SPH.xlsx",
+  readxl::read_xlsx("~/Downloads/SMPDSv2/SMPDSv2-taxa-list_2021-09-08_SPH.xlsx",
                     sheet = 1) %>%
   dplyr::select(-3, -6) %>%
   magrittr::set_names(c("taxon_name",
@@ -40,13 +40,13 @@ taxa_clean <- taxa_all %>%
   dplyr::bind_rows(tibble::tribble(
     ~taxon_name, ~clean_name, ~action,
     "Alisma", NA, "delete",
-    "Anthemis arvensis type", NA, NA, #"Anthemis arvensis type", "update", # PENDING
+    "Anthemis arvensis type", "Anthemis arvensis type", "update",
     "Caltha type", NA, "delete",
     "Cannabis", NA, "delete",
     "Charcoal", NA, "delete",
-    "Gelasinospora", NA, NA, # PENDING
+    "Gelasinospora", NA, "delete",
     "Humulus", NA, "delete",
-    "Menyanthes", NA, NA, # PENDING
+    "Menyanthes", NA, "delete",
     "Nymphaea", NA, "delete",
     "Pediastrum", NA, "delete",
     "Phyteuma-type", "Phyteuma type", "update",
@@ -57,7 +57,7 @@ taxa_clean <- taxa_all %>%
     "Quercus (evergreen)", "Quercus evergreen", "update",
     "Secale type", NA, "delete",
     "Sparganium", NA, "delete",
-    "Sphagnum", NA, NA, # "delete", # PENDING
+    "Sphagnum", NA, "delete",
     "Triticum type", NA, "delete",
     "Typha", NA, "delete",
     "Typha latifolia", NA, "delete",
@@ -89,9 +89,9 @@ taxa_clean %>%
   dplyr::mutate(comment = ifelse(is.na(action),
                                  "NEW: Species not found in the master sheet.",
                                  "Not found in the Unique Species Amalgamation (G) column.")) %>%
-  dplyr::select(-action) %>%
-  readr::write_csv(paste0("~/Downloads/SMPDSv2/SMPDSv2-missing-taxa-", Sys.Date(), ".csv"),
-                   na = "")
+  dplyr::select(-action) #%>%
+  # readr::write_csv(paste0("~/Downloads/SMPDSv2/SMPDSv2-missing-taxa-", Sys.Date(), ".csv"),
+  #                  na = "")
 
 
 taxa_all %>%
