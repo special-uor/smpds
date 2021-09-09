@@ -179,6 +179,11 @@ mi <- function(.data, ...) {
 mi.tbl_df <- function(.data, cpus = 1, ...) {
   # Local bindings
   elevation <- latitude <- pet_mm <- sf <- tmp <- NULL
+  # Create data subset to improve performance
+  .data <- .data %>%
+    dplyr::mutate(.ID_CLIM_VAR = seq_along(latitude))
+  .data_sub <- .data %>%
+    dplyr::select(latitude, elevation, sf, tmp, .ID_CLIM_VAR)
   # orb_params <- .data$age_BP %>%
   #   as.double() %>%
   #   tidyr::replace_na(0) %>%
@@ -190,12 +195,12 @@ mi.tbl_df <- function(.data, cpus = 1, ...) {
   year <- 1961 # This is only used to denote a non-leap year (365 days).
   oplan <- future::plan(future::multisession, workers = cpus)
   {
-    p <- progressr::progressor(steps = nrow(.data))
-    .pet <- seq_len(nrow(.data)) %>%
+    p <- progressr::progressor(steps = nrow(.data_sub))
+    .pet <- seq_len(nrow(.data_sub)) %>%
       furrr::future_map(function(k) {
         output <- seq_len(365) %>% # Daily values
           purrr::map_dbl(function(i) {
-            .data %>%
+            .data_sub %>%
               dplyr::slice(k) %$%
               splash::calc_daily_evap(lat = latitude,
                                       n = i,
@@ -215,7 +220,8 @@ mi.tbl_df <- function(.data, cpus = 1, ...) {
   .data %>%
     dplyr::mutate(mi = seq_along(tmp) %>%
                     purrr::map_dbl(~sum(pre[[.x]], na.rm = TRUE) /
-                                     sum(.pet[[.x]], na.rm = TRUE)))
+                                     sum(.pet[[.x]], na.rm = TRUE))) %>%
+    dplyr::select(-dplyr::contains(".ID_CLIM_VAR"))
 }
 
 #' Calculate MTCO
