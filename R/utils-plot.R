@@ -47,6 +47,8 @@ plot_biome <- function(.data,
     ggplot2::ggplot() +
     ggplot2::geom_sf(fill = "white", size = 0.25) +
     ggplot2::coord_sf(xlim = xlim, ylim = ylim, ..., expand = FALSE)
+  .data <- .data %>% # Change missing ID_BIOME to -888888
+    dplyr::mutate(ID_BIOME = ifelse(is.na(ID_BIOME), -888888, ID_BIOME))
   .data_biome <- .data$ID_BIOME %>%
     smpds::biome_name() %>%
     dplyr::distinct(description, .keep_all = TRUE)
