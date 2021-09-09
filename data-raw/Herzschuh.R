@@ -97,7 +97,7 @@ Herzschuh_clean_taxon_names <- readr::read_csv("inst/extdata/herzschuh_taxa.csv"
 
 Herzschuh_file1_long <- Herzschuh_file1 %>%
   tidyr::pivot_longer(-c(1:6), names_to = "taxon_name") %>%
-  dplyr::left_join(Herzschuh_clean_taxon_names,
+  dplyr::left_join(smpds::clean_taxa(), #Herzschuh_clean_taxon_names,
                    by = "taxon_name") %>%
   dplyr::filter(action != "delete") %>%
   dplyr::select(-action) %>%
@@ -175,7 +175,8 @@ Herzschuh <- Herzschuh_file1_long %>%
   dplyr::mutate(source = "Herzschuh et al., 2019",
                 site_name = entity_name %>%
                   stringr::str_remove_all("[-_0-9]*$"),
-                .before = 1)
+                .before = 1) %>%
+  progressr::with_progress()
 
 not_applicable_biome_pattern <-
   "Marine|marine|Sea|sea|Coastal|coastal|Open Water|Baikel Lake"
