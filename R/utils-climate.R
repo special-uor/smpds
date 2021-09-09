@@ -68,10 +68,15 @@ gdd.numeric <- function(.data, baseline = 0, pb = NULL, ...) {
 gdd.tbl_df <- function(.data, baseline = 0, cpus = 1, ...) {
   # Local bindings
   . <- tmp <- NULL
+  # Create data subset to improve performance
+  .data <- .data %>%
+    dplyr::mutate(.ID_CLIM_VAR = seq_along(latitude))
+  .data_sub <- .data %>%
+    dplyr::select(tmp, .ID_CLIM_VAR)
   oplan <- future::plan(future::multisession, workers = cpus)
   {
-    pb <- progressr::progressor(steps = nrow(.data))
-    output <- .data %>%
+    pb <- progressr::progressor(steps = nrow(.data_sub))
+    output <- .data_sub %>%
       dplyr::mutate(gdd = tmp %>%
                       furrr::future_map_dbl(gdd,
                                             baseline = baseline,
@@ -82,7 +87,11 @@ gdd.tbl_df <- function(.data, baseline = 0, cpus = 1, ...) {
                                                    paste0("gdd", baseline))))
   }
   future::plan(oplan)
-  return(output)
+  # Combine original data, .data, and the output
+  .data %>%
+    dplyr::left_join(output,
+                     by = c("tmp", ".ID_CLIM_VAR")) %>%
+    dplyr::select(-dplyr::contains(".ID_CLIM_VAR"))
 }
 
 #' Calculate MAT
@@ -131,15 +140,24 @@ mat.numeric <- function(.data, pb = NULL, ...) {
 mat.tbl_df <- function(.data, cpus = 1, ...) {
   # Local binding
   tmp <- NULL
+  # Create data subset to improve performance
+  .data <- .data %>%
+    dplyr::mutate(.ID_CLIM_VAR = seq_along(latitude))
+  .data_sub <- .data %>%
+    dplyr::select(tmp, .ID_CLIM_VAR)
   oplan <- future::plan(future::multisession, workers = cpus)
   {
-    pb <- progressr::progressor(steps = nrow(.data))
-    output <- .data %>%
+    pb <- progressr::progressor(steps = nrow(.data_sub))
+    output <- .data_sub %>%
       dplyr::mutate(mat = tmp %>%
                       furrr::future_map_dbl(mat, pb = pb))
   }
   future::plan(oplan)
-  return(output)
+  # Combine original data, .data, and the output
+  .data %>%
+    dplyr::left_join(output,
+                     by = c("tmp", ".ID_CLIM_VAR")) %>%
+    dplyr::select(-dplyr::contains(".ID_CLIM_VAR"))
 }
 
 #' Calculate MI
@@ -277,15 +295,24 @@ mtco.numeric <- function(.data, pb = NULL, ...) {
 mtco.tbl_df <- function(.data, cpus = 1, ...) {
   # Local binding
   tmp <- NULL
+  # Create data subset to improve performance
+  .data <- .data %>%
+    dplyr::mutate(.ID_CLIM_VAR = seq_along(latitude))
+  .data_sub <- .data %>%
+    dplyr::select(tmp, .ID_CLIM_VAR)
   oplan <- future::plan(future::multisession, workers = cpus)
   {
-    pb <- progressr::progressor(steps = nrow(.data))
-    output <- .data %>%
+    pb <- progressr::progressor(steps = nrow(.data_sub))
+    output <- .data_sub %>%
       dplyr::mutate(mtco = tmp %>%
                       furrr::future_map_dbl(mtco, pb = pb))
   }
   future::plan(oplan)
-  return(output)
+  # Combine original data, .data, and the output
+  .data %>%
+    dplyr::left_join(output,
+                     by = c("tmp", ".ID_CLIM_VAR")) %>%
+    dplyr::select(-dplyr::contains(".ID_CLIM_VAR"))
 }
 
 #' Calculate MTWA
@@ -341,13 +368,22 @@ mtwa.numeric <- function(.data, pb = NULL, ...) {
 mtwa.tbl_df <- function(.data, cpus = 1, ...) {
   # Local binding
   tmp <- NULL
+  # Create data subset to improve performance
+  .data <- .data %>%
+    dplyr::mutate(.ID_CLIM_VAR = seq_along(latitude))
+  .data_sub <- .data %>%
+    dplyr::select(tmp, .ID_CLIM_VAR)
   oplan <- future::plan(future::multisession, workers = cpus)
   {
-    pb <- progressr::progressor(steps = nrow(.data))
-    output <- .data %>%
+    pb <- progressr::progressor(steps = nrow(.data_sub))
+    output <- .data_sub %>%
       dplyr::mutate(mtwa = tmp %>%
                       furrr::future_map_dbl(mtwa, pb = pb))
   }
   future::plan(oplan)
-  return(output)
+  # Combine original data, .data, and the output
+  .data %>%
+    dplyr::left_join(output,
+                     by = c("tmp", ".ID_CLIM_VAR")) %>%
+    dplyr::select(-dplyr::contains(".ID_CLIM_VAR"))
 }
