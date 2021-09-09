@@ -30,17 +30,18 @@ ibmpd_all <- readr::read_csv("inst/extdata/iberia_pollen_records.csv",
   dplyr::ungroup() %>%
   dplyr::select(-`IPEage cal`, -INTCAL2020_mean)
 
-ibmpd_all %>%
-  dplyr::filter(age_BP < -72) %>%
-  smpds::rm_zero_taxa(1:9) %>%
-  readr::write_excel_csv("~/Downloads/SMPDSv2/IbMPD_future_records.csv", na = "")
+# ibmpd_all %>%
+#   dplyr::filter(age_BP < -72) %>%
+#   smpds::rm_zero_taxa(1:9) %>%
+#   readr::write_excel_csv("~/Downloads/SMPDSv2/IbMPD_future_records.csv", na = "")
 
 ibmpd_sites <- ibmpd_all %>%
   dplyr::distinct(site_name, .keep_all = TRUE) %>%
   dplyr::select(site_name, latitude, longitude) %>%
   dplyr::mutate(ID_BIOME = tibble::tibble(latitude, longitude) %>%
                   smpds::parallel_extract_biome(buffer = 12000, cpus = 4) %>%
-                  .$ID_BIOME)
+                  .$ID_BIOME) %>%
+  progressr::with_progress()
 
 # Extract metadata from the RPD
 sites_entities_rpd <- rpdata::site %>%
@@ -110,7 +111,7 @@ IbMPD <- ibmpd_all2 %>%
 
 dim(IbMPD)
 dim(smpds::IbMPD)
-IbMPD$entity_name
-smpds::IbMPD
+# IbMPD$entity_name
+# smpds::IbMPD
 
 usethis::use_data(IbMPD, overwrite = TRUE, compress = "xz")
