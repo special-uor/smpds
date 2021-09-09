@@ -71,12 +71,12 @@ cmpd_metadata2 %>%
 cmpd_metadata2 %>%
   dplyr::filter(is.na(ID_BIOME))
 
-cmpd_metadata2 %>% # Entities from marine/coastal sites with ID_BIOME
-  dplyr::filter(stringr::str_detect(entity_type,
-                                    "Marine|marine|Coastal|coastal")) %>%
-  dplyr::select(1:6, 8, 27) %>%
-  dplyr::filter(!is.na(ID_BIOME)) %>%
-  readr::write_excel_csv("~/Downloads/SMPDSv2/CMPD-marine-sites-with-biomes.csv", na = "")
+# cmpd_metadata2 %>% # Entities from marine/coastal sites with ID_BIOME
+#   dplyr::filter(stringr::str_detect(entity_type,
+#                                     "Marine|marine|Coastal|coastal")) %>%
+#   dplyr::select(1:6, 8, 27) %>%
+#   dplyr::filter(!is.na(ID_BIOME)) %>%
+#   readr::write_excel_csv("~/Downloads/SMPDSv2/CMPD-marine-sites-with-biomes.csv", na = "")
 
 # ------------------------------------------------------------------------------
 # |                                 Clean data                                 |
