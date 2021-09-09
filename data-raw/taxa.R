@@ -63,12 +63,40 @@ taxa_clean <- taxa_all %>%
     "Typha latifolia", NA, "delete",
     "Typha/Sparganium", NA, "delete"
     )) %>%
+  dplyr::bind_rows(tibble::tribble(
+    ~taxon_name,                            ~clean_name,  ~action,
+    "Allium p",                             "Allium", "update",
+    "Ancistrophyllum secundiflorum",        "Ancistrophyllum secundiflorum", "update",
+    "Arecaceae undiff.",                    "Arecaceae", "update",
+    "Boragiceae undiff.",                   "Boraginaceae", "update",
+    "Combretaceae/Melastomataceae undiff.", NA, "delete",
+    "Euphorbiaceae undif",                  "Euphorbiaceae", "update",
+    "Plumbagiceae undiff.",                 "Plumbaginaceae", "update",
+    "Pontederaceae",                        NA, "delete",
+    "Pontederia type",                      NA, "delete",
+    "Rhamceae undiff.",                     "Rhamnaceae", "update",
+    "Sorbus cf",                            "Sorbus type", "update"
+    )) %>%
+  # dplyr::bind_rows(tibble::tribble(
+  #   ~taxon_name,                            ~clean_name,  ~action,
+  #   "Ancistrophyllum secundiflorum",        "Ancistrophyllum secundiflorum", "update",
+  #   "Arecaceae undiff.",                    "Arecaceae undiff.", "update",
+  #   "Boragiceae undiff.",                   "Boragiceae undiff.", "update",
+  #   "Combretaceae/Melastomataceae undiff.", "Combretaceae/Melastomataceae undiff.", "update",
+  #   "Euphorbiaceae undif",                  "Euphorbiaceae undif", "update",
+  #   "Plumbagiceae undiff.",                 "Plumbagiceae undiff.", "update",
+  #   "Rhamceae undiff.",                     "Rhamceae undiff.", "update"
+  # ))
   dplyr::arrange(dplyr::desc(action), taxon_name) %>%
   dplyr::mutate(clean_name =
                   ifelse(clean_name %>%
                            stringr::str_detect("Caryophyllaceae subfam Silenoideae"),
                          "Caryophyllaceae subfam. Silenoideae",
-                         clean_name))
+                         clean_name) %>%
+                  stringr::str_replace_all("Mysine melanophloeos",
+                                           "Myrsine melanophloeos") %>%
+                  stringr::str_replace_all("Juniperus Excelsa",
+                                           "Juniperus excelsa"))
 
 taxa_amalgamation <- taxa_all %>%
   dplyr::select(-c(1:5)) %>%
@@ -94,7 +122,7 @@ taxa_clean %>%
   #                  na = "")
 
 
-taxa_all %>%
+taxa_clean %>%
   readr::write_excel_csv("inst/extdata/all_taxa.csv", na = "")
 
 taxa_cleanup_files <- list.files("inst/extdata/", "_taxa\\.csv$", full.names = TRUE)
