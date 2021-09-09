@@ -8,7 +8,7 @@
 # https://doi.org/10.5194/essd-12-2423-2020
 # https://doi.pangaea.de/10.1594/PANGAEA.909130?format=html#download
 # https://essd.copernicus.org/articles/12/2423/2020/
-sheets <- c("metadata", "climate", "ecosystems", "counts", "p_vars", "sampleContexts", "sampleTypes", "sampleMethods", "workerRoles", "countries", "ageUncertainties", "locationReliabilities", "groupID")
+# sheets <- c("metadata", "climate", "ecosystems", "counts", "p_vars", "sampleContexts", "sampleTypes", "sampleMethods", "workerRoles", "countries", "ageUncertainties", "locationReliabilities", "groupID")
 sheets <- c("metadata", "counts", "p_vars")
 `%>%` <- magrittr::`%>%`
 empdv2_workbook <- sheets %>%
@@ -92,7 +92,13 @@ empdv2_counts <- empdv2_workbook$counts %>%
 empdv2_clean_taxon_names <- readr::read_csv("inst/extdata/empdv2_taxa.csv")
 
 empdv2_counts2 <- empdv2_counts %>%
-  dplyr::left_join(empdv2_clean_taxon_names,
+  dplyr::mutate(taxon_name = taxon_name %>%
+                  stringr::str_replace_all("-type|-Typ", " type") %>%
+                  stringr::str_replace_all("-TYPE", " tyPE")) %>%
+  dplyr::left_join(smpds::clean_taxa(), #empdv2_clean_taxon_names %>%
+                     # dplyr::bind_rows(smpds::clean_taxa()) %>%
+                     # dplyr::distinct(taxon_name,
+                     #                 .keep_all = TRUE),
                    by = "taxon_name") %>%
   dplyr::filter(action != "delete") %>%
   dplyr::rename(taxon_name_original = taxon_name,
@@ -113,12 +119,31 @@ empdv2_counts_wide <- empdv2_counts2 %>%
   dplyr::select(1, order(colnames(.)[-1]) + 1) # Sort the taxon_names alphabetically
 
 # Attach counts to metadata
+
+# tictoc::tic("Mutate")
+# EMPDv2_all22 <- EMPD %>%
+#   dplyr::full_join(empdv2_counts_wide,
+#                    by = "entity_name") %>%
+#   dplyr::mutate(ID_BIOME = tibble::tibble(latitude, longitude) %>%
+#                   smpds::parallel_extract_biome(buffer = 12000, cpus = 6) %>%
+#                   .$ID_BIOME,
+#                 .before = publication) %>%
+#   # smpds::parallel_extract_biome(buffer = 12000, cpus = 6) %>%
+#   # dplyr::relocate(ID_BIOME, .before = publication) %>%
+#   progressr::with_progress()
+# tictoc::toc()
+tictoc::tic("Pipe")
 EMPDv2_all <- EMPD %>%
   dplyr::full_join(empdv2_counts_wide,
                    by = "entity_name") %>%
-  smpds::parallel_extract_biome(buffer = 12000, cpus = 5) %>%
+  # dplyr::mutate(ID_BIOME = tibble::tibble(latitude, longitude) %>%
+  #                 smpds::parallel_extract_biome(buffer = 12000, cpus = 6) %>%
+  #                 .$ID_BIOME,
+  #               .before = publication) %>%
+  smpds::parallel_extract_biome(buffer = 12000, cpus = 6) %>%
   dplyr::relocate(ID_BIOME, .before = publication) %>%
   progressr::with_progress()
+tictoc::toc()
 
   # dplyr::mutate(ID_BIOME = tibble::tibble(latitude, longitude) %>%
   #                 smpds::parallel_extract_biome(buffer = 12000, cpus = 6) %>%
@@ -171,7 +196,6 @@ EMPDv2 <- EMPDv2_all2 %>%
   # )
 
 usethis::use_data(EMPDv2, overwrite = TRUE, compress = "xz")
-
 
 # ------------------------------------------------------------------------------
 # |                                  Sandbox                                   |
