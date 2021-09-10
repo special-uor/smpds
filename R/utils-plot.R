@@ -121,8 +121,10 @@ plot_biome <- function(.data,
 plot_climate <- function(.data,
                          var = "mat",
                          units = NA,
+                         # colour_scale =
+                         #   ggplot2::scale_colour_viridis_d(name = ""),
                          fill_scale =
-                           ggplot2::scale_fill_viridis_c(name = toupper(var)),
+                           ggplot2::scale_fill_viridis_d(name = toupper(var)),
                          size = 1,
                          stroke = 0.1,
                          legend.key.width = ggplot2::unit(3, "cm"),
@@ -145,30 +147,64 @@ plot_climate <- function(.data,
 
   # create the breaks- and labels vector
   ewbrks <- seq(-180,180,30)
-  basemap <- rnaturalearth::ne_countries(scale = "small",
-                                         returnclass = "sf") %>%
-    ggplot2::ggplot() +
-    ggplot2::geom_sf(fill = "white", size = 0.25) +
-    ggplot2::coord_sf(xlim = xlim, ylim = ylim, ..., expand = FALSE)
-
   if (!is.na(units))
     fill_scale$name <- paste0(fill_scale$name, " [", units, "]")
-  p <- basemap +
-    ggplot2::geom_point(mapping = ggplot2::aes(x = longitude,
-                                               y = latitude,
-                                               fill = var
-    ),
-    data = .data %>%
-      dplyr::rename(var = !!var),
-    size = size,
-    shape = 21,
-    stroke = stroke) +
+  browser()
+  p <- .data %>%
+    dplyr::rename(var = !!var) %>%
+    dplyr::filter(!is.na(var)) %>%
+    dplyr::mutate(
+      # .min_var = min(var, na.rm = TRUE),
+      # .max_var = max(var, na.rm = TRUE),
+      # .step_var = floor((.max_var - min(var, na.rm = TRUE)) / 9),
+      var = var %>%
+        # ggplot2::cut_interval(n = 9)) %>%
+        cut(include.lowest = TRUE,
+            .,
+            breaks = c(
+              seq(
+                from = min(., na.rm = TRUE),
+                to = max(., na.rm = TRUE) -
+                  floor((max(., na.rm = TRUE) - min(., na.rm = TRUE)) / 9),
+                by = floor((max(., na.rm = TRUE) - min(., na.rm = TRUE)) / 9)),
+              Inf),
+            labels =
+              seq(
+                from = min(., na.rm = TRUE),
+                to = max(., na.rm = TRUE) -
+                  floor((max(., na.rm = TRUE) - min(., na.rm = TRUE)) / 9),
+                by = floor((max(., na.rm = TRUE) - min(., na.rm = TRUE)) / 9))
+        )
+      ) %>%
+    ggplot2::ggplot(mapping = ggplot2::aes(x = longitude,
+                                           y = latitude,
+                                           fill = var)) +
+    ggplot2::geom_sf(data = rnaturalearth::ne_countries(scale = "small",
+                                                        returnclass = "sf"),
+                     fill = "white", size = 0.25) +
+    ggplot2::coord_sf(xlim = xlim, ylim = ylim, ..., expand = FALSE) +
+    ggplot2::geom_point(mapping = ggplot2::aes(fill = var),
+                        size = size,
+                        shape = 21,
+                        stroke = stroke) +
+    ggplot2::geom_col(alpha = 0) +
     ggplot2::scale_x_continuous(breaks = ewbrks) +
     fill_scale +
     ggplot2::labs(x = NULL, y = NULL) +
+    # colour_scale +
+    ggplot2::guides(
+      fill = ggplot2::guide_legend(
+        nrow = 1,
+        override.aes = list(alpha = 1),
+        label.position = "bottom",
+        label.hjust = 0.5
+      )
+    ) +
+    # ggplot2::guides(fill = ggplot2::guide_legend(override.aes = list(size = 3))) +
     ggplot2::theme(legend.position = legend.position,
                    # legend.key.width = ggplot2::unit(0.05, "npc"),
                    legend.key.width = legend.key.width,
+                   legend.key.height = ggplot2::unit(1, "cm"),
                    legend.background = ggplot2::element_rect(colour = "black",
                                                              fill = "white"),
                    legend.key = ggplot2::element_blank(),
