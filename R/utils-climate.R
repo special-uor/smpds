@@ -51,6 +51,8 @@ gdd <- function(.data, ...) {
 gdd.numeric <- function(.data, baseline = 0, pb = NULL, ...) {
   # Local binding
   tmp <- NULL
+  if (all(is.na(.data)))
+    return(NA_real_)
   output <- tibble::tibble(tmp = !!.data) %>%
     dplyr::filter(!is.na(tmp), tmp >= baseline) %>%
     dplyr::mutate(tmp = tmp - baseline) %>%
@@ -126,6 +128,8 @@ mat <- function(.data, ...) {
 mat.numeric <- function(.data, pb = NULL, ...) {
   # Local binding
   tmp <- NULL
+  if (all(is.na(.data)))
+    return(NA_real_)
   output <- tibble::tibble(tmp = !!.data) %>%
     dplyr::summarise(tmp = mean(tmp,  na.rm = TRUE)) %>%
     purrr::flatten_dbl()
@@ -243,6 +247,7 @@ mi.tbl_df <- function(.data, cpus = 1, ...) {
     dplyr::mutate(mi = seq_along(tmp) %>%
                     purrr::map_dbl(~sum(pre[[.x]], na.rm = TRUE) /
                                      sum(.pet[[.x]], na.rm = TRUE))) %>%
+    dplyr::mutate(mi = ifelse(is.nan(mi), NA_real_, mi)) %>%
     dplyr::select(-dplyr::contains(".ID_CLIM_VAR"))
 }
 
@@ -279,6 +284,8 @@ mtco <- function(.data, ...) {
 mtco.numeric <- function(.data, pb = NULL, ...) {
   # Local bindings
   .date <- .month <- tmp <- NULL
+  if (all(is.na(.data)))
+    return(NA_real_)
   output <-
     tibble::tibble(tmp = !!.data,
                    .date = (seq_along(tmp) - 1) %>% lubridate::as_date(),
@@ -352,6 +359,8 @@ mtwa <- function(.data, ...) {
 mtwa.numeric <- function(.data, pb = NULL, ...) {
   # Local bindings
   .date <- .month <- tmp <- NULL
+  if (all(is.na(.data)))
+    return(NA_real_)
   output <-
     tibble::tibble(tmp = !!.data,
                    .date = (seq_along(tmp) - 1) %>% lubridate::as_date(),
