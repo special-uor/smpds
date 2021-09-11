@@ -130,3 +130,20 @@ ggplot2::ggsave(file.path("~/Downloads/SMPDSv2/Maarten/",
                 width = width,
                 height = 8,
                 units = "in")
+
+p_biome <- plot_biome(maartenv4, #%>%
+                         # dplyr::mutate(ID_BIOME = smpds::pnv_classes()$ID_BIOME %>%
+                         #                 sample(size = length(ID_BIOME), replace = TRUE)),
+                      size = size,
+                      stroke = stroke,
+                      xlim = xlim,
+                      ylim = ylim,
+                      legend.key.width = ggplot2::unit(1.3, "cm"),
+                      show_plot = show_plot)
+ggplot2::ggsave(file.path("~/Downloads/SMPDSv2/Maarten/",
+                          paste0("maarten_PNV_", Sys.Date(), ".pdf")),
+                plot = p_biome,
+                device = "pdf",
+                width = width,
+                height = 8,
+                units = "in")
