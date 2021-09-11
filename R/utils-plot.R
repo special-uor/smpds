@@ -121,8 +121,6 @@ plot_biome <- function(.data,
 plot_climate <- function(.data,
                          var = "mat",
                          units = NA,
-                         # colour_scale =
-                         #   ggplot2::scale_colour_viridis_d(name = ""),
                          fill_scale =
                            ggplot2::scale_fill_viridis_d(name = toupper(var)),
                          size = 1,
@@ -145,35 +143,36 @@ plot_climate <- function(.data,
          call. = FALSE)
   }
 
-  # create the breaks- and labels vector
-  ewbrks <- seq(-180,180,30)
   if (!is.na(units))
     fill_scale$name <- paste0(fill_scale$name, " [", units, "]")
-  browser()
   p <- .data %>%
     dplyr::rename(var = !!var) %>%
     dplyr::filter(!is.na(var)) %>%
     dplyr::mutate(
-      # .min_var = min(var, na.rm = TRUE),
-      # .max_var = max(var, na.rm = TRUE),
-      # .step_var = floor((.max_var - min(var, na.rm = TRUE)) / 9),
       var = var %>%
-        # ggplot2::cut_interval(n = 9)) %>%
         cut(include.lowest = TRUE,
             .,
             breaks = c(
+              -Inf,
               seq(
                 from = min(., na.rm = TRUE),
+                # from = signif(min(., na.rm = TRUE) * 0.99999, digits = 5),
                 to = max(., na.rm = TRUE) -
-                  floor((max(., na.rm = TRUE) - min(., na.rm = TRUE)) / 9),
-                by = floor((max(., na.rm = TRUE) - min(., na.rm = TRUE)) / 9)),
+                  round((max(., na.rm = TRUE) - min(., na.rm = TRUE)) / 9,
+                        digits = 4),
+                by = round((max(., na.rm = TRUE) - min(., na.rm = TRUE)) / 9,
+                           digits = 4))[-1] %>%
+                round(digits = 4),
               Inf),
             labels =
               seq(
                 from = min(., na.rm = TRUE),
                 to = max(., na.rm = TRUE) -
-                  floor((max(., na.rm = TRUE) - min(., na.rm = TRUE)) / 9),
-                by = floor((max(., na.rm = TRUE) - min(., na.rm = TRUE)) / 9))
+                  round((max(., na.rm = TRUE) - min(., na.rm = TRUE)) / 9,
+                        digits = 4),
+                by = round((max(., na.rm = TRUE) - min(., na.rm = TRUE)) / 9,
+                           digits = 4)) %>%
+              round(digits = 4)
         )
       ) %>%
     ggplot2::ggplot(mapping = ggplot2::aes(x = longitude,
@@ -188,21 +187,17 @@ plot_climate <- function(.data,
                         shape = 21,
                         stroke = stroke) +
     ggplot2::geom_col(alpha = 0) +
-    ggplot2::scale_x_continuous(breaks = ewbrks) +
     fill_scale +
     ggplot2::labs(x = NULL, y = NULL) +
-    # colour_scale +
     ggplot2::guides(
       fill = ggplot2::guide_legend(
         nrow = 1,
         override.aes = list(alpha = 1),
         label.position = "bottom",
-        label.hjust = 0.5
+        label.hjust = 0
       )
     ) +
-    # ggplot2::guides(fill = ggplot2::guide_legend(override.aes = list(size = 3))) +
     ggplot2::theme(legend.position = legend.position,
-                   # legend.key.width = ggplot2::unit(0.05, "npc"),
                    legend.key.width = legend.key.width,
                    legend.key.height = ggplot2::unit(1, "cm"),
                    legend.background = ggplot2::element_rect(colour = "black",
@@ -237,9 +232,9 @@ plot_gdd <- function(.data,
   .data %>%
     plot_climate(var = paste0("gdd", baseline),
                  units = "\u00B0C days",
-                 fill_scale = ggplot2::scale_fill_distiller(name = legend_name,
-                                                            palette = "Greens",
-                                                            direction = 1),
+                 fill_scale = ggplot2::scale_fill_brewer(name = legend_name,
+                                                         palette = "Spectral",
+                                                         direction = -1),
                  size = size,
                  stroke = stroke,
                  legend.key.width = legend.key.width,
@@ -264,10 +259,9 @@ plot_mat <- function(.data,
   .data %>%
     plot_climate(var = "mat",
                  units = "\u00B0C",
-                 fill_scale =
-                   ggplot2::scale_fill_distiller(name = "MAT",
-                                                 palette = "Spectral",
-                                                 direction = -1),
+                 fill_scale = ggplot2::scale_fill_brewer(name = "MAT",
+                                                         palette = "Spectral",
+                                                         direction = -1),
                  size = size,
                  stroke = stroke,
                  legend.key.width = legend.key.width,
@@ -292,9 +286,8 @@ plot_mi <- function(.data,
   .data %>%
     plot_climate(var = "mi",
                  units = "unitless",
-                 fill_scale = ggplot2::scale_fill_distiller(name = "MI",
-                                                            palette = "YlGnBu",
-                                                            direction = 1),
+                 fill_scale = ggplot2::scale_fill_brewer(name = "MI",
+                                                         palette = "YlGnBu"),
                  size = size,
                  stroke = stroke,
                  legend.key.width = legend.key.width,
@@ -319,8 +312,8 @@ plot_mtco <- function(.data,
   .data %>%
     plot_climate(var = "mtco",
                  units = "\u00B0C",
-                 fill_scale = ggplot2::scale_fill_distiller(name = "MTCO",
-                                                            palette = "Blues"),
+                 fill_scale = ggplot2::scale_fill_brewer(name = "MTCO",
+                                                         palette = "Blues"),
                  size = size,
                  stroke = stroke,
                  legend.key.width = legend.key.width,
@@ -345,9 +338,9 @@ plot_mtwa <- function(.data,
   .data %>%
     plot_climate(var = "mtwa",
                  units = "\u00B0C",
-                 fill_scale = ggplot2::scale_fill_distiller(name = "MTWA",
-                                                            palette = "Reds",
-                                                            direction = 1),
+                 fill_scale = ggplot2::scale_fill_brewer(name = "MTWA",
+                                                         palette = "Reds",
+                                                         direction = 1),
                  size = size,
                  stroke = stroke,
                  legend.key.width = legend.key.width,
