@@ -13,7 +13,7 @@ plot_climate(
   .data,
   var = "mat",
   units = NA,
-  fill_scale = ggplot2::scale_fill_viridis_c(name = toupper(var)),
+  fill_scale = ggplot2::scale_fill_viridis_d(name = toupper(var)),
   size = 1,
   stroke = 0.1,
   legend.key.width = ggplot2::unit(3, "cm"),
