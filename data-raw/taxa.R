@@ -77,6 +77,33 @@ taxa_clean <- taxa_all %>%
     "Rhamceae undiff.",                     "Rhamnaceae", "update",
     "Sorbus cf",                            "Sorbus type", "update"
     )) %>%
+  dplyr::bind_rows(tibble::tribble(
+    ~taxon_name,                            ~clean_name,  ~action,
+    "Aristolochiaceae", "Aristolochiaceae", "update", # INSPECT
+    "Berberis hispanica", "Berberis hispanica", "update", # INSPECT
+    "Carpinusbetulus", "Carpinus betulus", "update", # NEW
+    "CarpinusorientalisOstrya", "Carpinus orientalis/Ostrya", "update", # NEW
+    "Cytinaceae", "Cytinaceae", "update", # INSPECT
+    "Dennstaedtiaceae", "Dennstaedtiaceae", "update", # INSPECT
+    "Fabaceae herbs", "Fabaceae (herbs)", "update", # INSPECT
+    "Grossulariaceae", "Grossulariaceae", "update", # INSPECT
+    "Hymenophyllaceae", "Hymenophyllaceae", "update", # INSPECT
+    "Juncaginaceae", "Juncaginaceae", "update", # INSPECT
+    "Lavandula", "Lavandula", "update", # NEW
+    "Melanthiaceae", "Melanthiaceae", "update", # NEW
+    "Montiaceae", "Montiaceae", "update", # INSPECT
+    "Nartheciaceae", "Nartheciaceae", "update", # INSPECT
+    "OxyriaRumex", "Oxyria/Rumex", "update", # NEW
+    "Parrotia", "Parrotia", "update", # INSPECT
+    "Quercusdeciduous", "Quercus deciduous", "update", # NEW
+    "Quercusevergreen", "Quercus evergreen", "update", # NEW
+    "Quercusintermediate", "Quercus intermediate", "update", # INSPECT
+    "Retama", "Retama", "update", # INSPECT
+    "Sanguisorbagroup", "Sanguisorba type", "update", # INSPECT
+    "Sciadopityaceae", "Sciadopityaceae", "update", # INSPECT
+    "Transeauina", NA, "delete", # NEW
+    "UlmusZelkova", "Ulmus/Zelkova", "update" # NEW
+  )) %>%
   # dplyr::bind_rows(tibble::tribble(
   #   ~taxon_name,                            ~clean_name,  ~action,
   #   "Ancistrophyllum secundiflorum",        "Ancistrophyllum secundiflorum", "update",
