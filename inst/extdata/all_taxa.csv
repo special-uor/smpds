@@ -275,6 +275,7 @@ Argemone,Argemone,update
 Argostemma,Argostemma,update
 Arisaema,Arisaema,update
 Aristolochia,Aristolochia,update
+Aristolochiaceae,Aristolochiaceae,update
 Armeria,Armeria,update
 Armeria Limonium,Armeria/Limonium,update
 Armeria maritima,Armeria maritima,update
@@ -373,6 +374,7 @@ Bellis,Bellis,update
 Bellis type,Bellis type,update
 Berberidaceae,Berberidaceae,update
 Berberis,Berberis,update
+Berberis hispanica,Berberis hispanica,update
 Berberis vulgaris,Berberis vulgaris,update
 Bergenia crassifolia,Bergenia crassifolia,update
 Berlinia,Berlinia,update
@@ -556,6 +558,8 @@ Carpinus orientalis/Ostrya carpinifolia type,Carpinus orientalis/Ostrya carpinif
 Carpinus orientalis/Ostrya type,Carpinus orientalis/Ostrya type,update
 Carpinus type,Carpinus type,update
 Carpinus/Ostrya,Carpinus/Ostrya,update
+Carpinusbetulus,Carpinus betulus,update
+CarpinusorientalisOstrya,Carpinus orientalis/Ostrya,update
 Carpobrotus,Carpobrotus,update
 Carthamus,Carthamus,update
 Carum carvi,Carum carvi,update
@@ -936,6 +940,7 @@ Cyphostemma type,Cyphostemma type,update
 Cystopteris,Cystopteris,update
 Cystopteris fragilis,Cystopteris fragilis,update
 Cystopteris type,Cystopteris type,update
+Cytinaceae,Cytinaceae,update
 Cytinus hypocistis type,Cytinus hypocistis type,update
 Cytisus,Cytisus,update
 Cytisus scoparius,Cytisus scoparius,update
@@ -970,6 +975,7 @@ Delphinium elatum,Delphinium elatum,update
 Delphinium type,Delphinium type,update
 Dendropanax,Dendropanax,update
 Dendrosenecio,Dendrosenecio,update
+Dennstaedtiaceae,Dennstaedtiaceae,update
 Deschampsia,Deschampsia,update
 Descurainia,Descurainia,update
 Desmodium,Desmodium,update
@@ -1180,6 +1186,7 @@ Eurya,Eurya,update
 Evax,Evax,update
 Exbucklandia,Exbucklandia,update
 Fabaceae,Fabaceae,update
+Fabaceae herbs,Fabaceae (herbs),update
 Fabaceae indet.,Fabaceae,update
 Fabaceae_herb,Fabaceae (herbs),update
 Fabaceae_shrub,Fabaceae (shrubs),update
@@ -1331,6 +1338,7 @@ Grammitis,Grammitis,update
 Gratiola officinalis,Gratiola officinalis,update
 Grewia,Grewia,update
 Grewia type,Grewia type,update
+Grossulariaceae,Grossulariaceae,update
 Gundelia type,Gundelia type,update
 Gunnera,Gunnera,update
 Gunnera perpensa,Gunnera perpensa,update
@@ -1437,6 +1445,7 @@ Hydrangea,Hydrangea,update
 Hymenocardia,Hymenocardia,update
 Hymenodictyon,Hymenodictyon,update
 Hymenodictyon floribundum type,Hymenodictyon floribundum type,update
+Hymenophyllaceae,Hymenophyllaceae,update
 Hymenophyllum,Hymenophyllum,update
 Hymenophyllum tunbrigense,Hymenophyllum tunbrigense,update
 Hymenophyllum wilsonii,Hymenophyllum wilsonii,update
@@ -1511,6 +1520,7 @@ Juglans regia type,Juglans regia type,update
 Juglans/Pterocarya,Juglans/Pterocarya,update
 Julberrdia-type2,Julbernardia,update
 Juncaceae,Juncaceae,update
+Juncaginaceae,Juncaginaceae,update
 Juncus,Juncus,update
 Juncus type,Juncus type,update
 Juniperus,Juniperus,update
@@ -1594,6 +1604,7 @@ Laurembergia,Laurembergia,update
 Laurembergia tetrandra,Laurembergia tetrandra,update
 Laurembergia villosa,Laurembergia repens,update
 Laurus,Laurus,update
+Lavandula,Lavandula,update
 Lavandula stoechas type,Lavandula stoechas type,update
 Lecokia,Lecokia,update
 Lecythis,Lecythis,update
@@ -1789,6 +1800,7 @@ Medicago sativa,Medicago sativa,update
 Medicago type,Medicago type,update
 Melampyrum,Melampyrum,update
 Melampyrum pratense,Melampyrum pratense,update
+Melanthiaceae,Melanthiaceae,update
 Melastoma,Melastoma,update
 Melastomataceae,Melastomataceae,update
 Melia,Melia,update
@@ -1864,6 +1876,7 @@ Monotes sp,Monotes,update
 Monotropa,Monotropa,update
 Montia,Montia,update
 Montia fontana,Montia fontana,update
+Montiaceae,Montiaceae,update
 Moraceae,Moraceae,update
 Morella,Myrica,update
 Morina,Morina,update
@@ -1903,6 +1916,7 @@ Nandina,Nandina,update
 Nanophyton,Nanophyton,update
 Narcissus,Narcissus,update
 Nardus,Nardus,update
+Nartheciaceae,Nartheciaceae,update
 Narthecium,Narthecium,update
 Narthecium ossifragum,Narthecium ossifragum,update
 Narthecium type,Narthecium type,update
@@ -2006,6 +2020,7 @@ Oxyria digyna,Oxyria digyna,update
 Oxyria type,Oxyria type,update
 Oxyria/Rumex,Oxyria/Rumex,update
 Oxyria/Rumex type,Oxyria/Rumex type,update
+OxyriaRumex,Oxyria/Rumex,update
 Oxyspora,Oxyspora,update
 Oxytropis,Oxytropis,update
 Oxytropis aciphylla,Oxytropis aciphylla,update
@@ -2046,6 +2061,7 @@ Paronychia,Paronychia,update
 Paronychia t.,Paronychia type,update
 Paronychia type,Paronychia type,update
 Paronychia-type,Paronychia type,update
+Parrotia,Parrotia,update
 Parrotia persica,Parrotia persica,update
 Parrotia persica type,Parrotia persica type,update
 Passeri,Passerina,update
@@ -2470,6 +2486,9 @@ Quercus semecarpifolia,Quercus semecarpifolia,update
 Quercus semecarpifolia type,Quercus semecarpifolia type,update
 Quercus suber,Quercus suber,update
 Quercus suber type,Quercus suber type,update
+Quercusdeciduous,Quercus deciduous,update
+Quercusevergreen,Quercus evergreen,update
+Quercusintermediate,Quercus intermediate,update
 Radiola linoides,Radiola linoides,update
 Ranculus oreophytus-type,Ranunculus oreophytus type,update
 Randia,Randia,update
@@ -2516,6 +2535,7 @@ Resedaceae,Resedaceae,update
 Restio,Restio,update
 Restioceae,Restionaceae,update
 Restionaceae,Restionaceae,update
+Retama,Retama,update
 Reynoutria,Reynoutria,update
 Rhamceae,Rhamnaceae,update
 Rhamceae undiff.,Rhamnaceae,update
@@ -2687,6 +2707,7 @@ Sanguisorba minor/Poterium,Sanguisorba minor,update
 Sanguisorba officinalis,Sanguisorba officinalis,update
 Sanguisorba officinalis type,Sanguisorba officinalis type,update
 Sanguisorba type,Sanguisorba type,update
+Sanguisorbagroup,Sanguisorba type,update
 Sanicula,Sanicula,update
 Sanicula europaea,Sanicula europaea,update
 Sanicula type,Sanicula type,update
@@ -2752,6 +2773,7 @@ Schoenus,Schoenus,update
 Schoenus type,Schoenus type,update
 Schoepfia,Schoepfia,update
 Schulzia,Schulzia,update
+Sciadopityaceae,Sciadopityaceae,update
 Sciadopitys,Sciadopitys,update
 Scilla type,Scilla type,update
 Scirpus,Scirpus,update
@@ -3094,6 +3116,7 @@ Ulmus glabra type,Ulmus glabra type,update
 Ulmus laevis,Ulmus laevis,update
 Ulmus minor,Ulmus minor,update
 Ulmus/Zelkova,Ulmus/Zelkova,update
+UlmusZelkova,Ulmus/Zelkova,update
 Umbelliferae,Apiaceae,update
 Umbilicus,Umbilicus,update
 Umbilicus rupestris type,Umbilicus rupestris type,update
@@ -3432,6 +3455,7 @@ Spores triletes,,delete
 Sporomorphes  total ,,delete
 Sporormiella,,delete
 total,,delete
+Transeauina,,delete
 Trees,,delete
 Tricolporate,,delete
 Trilete psilate,,delete
