@@ -47,16 +47,36 @@ devtools::install_github("special-uor/smpds")
 library(smpds)
 ## basic example code
 smpds::SMPDSv2 %>%
-  dplyr::relocate(reference, DOI, .after = publication) %>%
+  dplyr::relocate(DOI, .after = publication) %>%
   dplyr::slice(1:20) %>%
-  smpds::rm_na_taxa(cols = 1:16) %>% # Filter taxa without counts
-  dplyr::select(1:66) %>% # Select only the metadata (16) + the 50 first taxa
+  smpds::rm_na_taxa(cols = 1:120) %>% # Filter taxa without counts
+  dplyr::select(1:70) %>% # Select only the metadata (16) + the 50 first taxa
   knitr::kable()
 ```
 
+#### Plots 
+##### Potential Natural Vegetation (PNV)
 ```{r example-plot, eval =  TRUE, fig.width = 14, fig.height = 8, dpi = 300}
 smpds::SMPDSv2 %>%
   smpds::plot_biome()
+```
+
+##### Growing Degree Days aboce 0 deg Celsius (`gdd0`)
+```{r example-plot-gdd0, eval =  TRUE, fig.width = 14, fig.height = 8, dpi = 300}
+smpds::SMPDSv2 %>%
+  smpds::plot_gdd()
+```
+
+##### Mean Temperature of the COldest month (`mtco`)
+```{r example-plot-mtco, eval =  TRUE, fig.width = 14, fig.height = 8, dpi = 300}
+smpds::SMPDSv2 %>%
+  smpds::plot_mtco()
+```
+
+##### Moisture Index (`mi`)
+```{r example-plot-mi, eval =  TRUE, fig.width = 14, fig.height = 8, dpi = 300}
+smpds::SMPDSv2 %>%
+  smpds::plot_mi()
 ```
 
 ## Code of Conduct
