@@ -32,9 +32,9 @@
 #'                        latitude = 51.44140,
 #'                        longitude = -0.9418,
 #'                        elevation = 61)
-#' data %>%
-#'   smpds::gwr(varid = "tmp",
-#'              reference = "/path/to/reference-tmp.nc") %>%
+#' smpds::gwr(.ref = "/path/to/reference-tmp.nc",
+#'            .tar = data,
+#'            varid = "tmp") %>%
 #'   smpds::pivot_data(varname = "tmp") %>%
 #'   smpds::gdd()
 #' }
@@ -51,6 +51,8 @@ gdd <- function(.data, ...) {
 gdd.numeric <- function(.data, baseline = 0, pb = NULL, ...) {
   # Local binding
   tmp <- NULL
+  if (all(is.na(.data)))
+    return(NA_real_)
   output <- tibble::tibble(tmp = !!.data) %>%
     dplyr::filter(!is.na(tmp), tmp >= baseline) %>%
     dplyr::mutate(tmp = tmp - baseline) %>%
@@ -68,10 +70,15 @@ gdd.numeric <- function(.data, baseline = 0, pb = NULL, ...) {
 gdd.tbl_df <- function(.data, baseline = 0, cpus = 1, ...) {
   # Local bindings
   . <- tmp <- NULL
+  # Create data subset to improve performance
+  .data <- .data %>%
+    dplyr::mutate(.ID_CLIM_VAR = seq_along(latitude))
+  .data_sub <- .data %>%
+    dplyr::select(tmp, .ID_CLIM_VAR)
   oplan <- future::plan(future::multisession, workers = cpus)
   {
-    pb <- progressr::progressor(steps = nrow(.data))
-    output <- .data %>%
+    pb <- progressr::progressor(steps = nrow(.data_sub))
+    output <- .data_sub %>%
       dplyr::mutate(gdd = tmp %>%
                       furrr::future_map_dbl(gdd,
                                             baseline = baseline,
@@ -82,7 +89,11 @@ gdd.tbl_df <- function(.data, baseline = 0, cpus = 1, ...) {
                                                    paste0("gdd", baseline))))
   }
   future::plan(oplan)
-  return(output)
+  # Combine original data, .data, and the output
+  .data %>%
+    dplyr::left_join(output,
+                     by = c("tmp", ".ID_CLIM_VAR")) %>%
+    dplyr::select(-dplyr::contains(".ID_CLIM_VAR"))
 }
 
 #' Calculate MAT
@@ -117,6 +128,8 @@ mat <- function(.data, ...) {
 mat.numeric <- function(.data, pb = NULL, ...) {
   # Local binding
   tmp <- NULL
+  if (all(is.na(.data)))
+    return(NA_real_)
   output <- tibble::tibble(tmp = !!.data) %>%
     dplyr::summarise(tmp = mean(tmp,  na.rm = TRUE)) %>%
     purrr::flatten_dbl()
@@ -131,15 +144,24 @@ mat.numeric <- function(.data, pb = NULL, ...) {
 mat.tbl_df <- function(.data, cpus = 1, ...) {
   # Local binding
   tmp <- NULL
+  # Create data subset to improve performance
+  .data <- .data %>%
+    dplyr::mutate(.ID_CLIM_VAR = seq_along(latitude))
+  .data_sub <- .data %>%
+    dplyr::select(tmp, .ID_CLIM_VAR)
   oplan <- future::plan(future::multisession, workers = cpus)
   {
-    pb <- progressr::progressor(steps = nrow(.data))
-    output <- .data %>%
+    pb <- progressr::progressor(steps = nrow(.data_sub))
+    output <- .data_sub %>%
       dplyr::mutate(mat = tmp %>%
                       furrr::future_map_dbl(mat, pb = pb))
   }
   future::plan(oplan)
-  return(output)
+  # Combine original data, .data, and the output
+  .data %>%
+    dplyr::left_join(output,
+                     by = c("tmp", ".ID_CLIM_VAR")) %>%
+    dplyr::select(-dplyr::contains(".ID_CLIM_VAR"))
 }
 
 #' Calculate MI
@@ -179,6 +201,11 @@ mi <- function(.data, ...) {
 mi.tbl_df <- function(.data, cpus = 1, ...) {
   # Local bindings
   elevation <- latitude <- pet_mm <- sf <- tmp <- NULL
+  # Create data subset to improve performance
+  .data <- .data %>%
+    dplyr::mutate(.ID_CLIM_VAR = seq_along(latitude))
+  .data_sub <- .data %>%
+    dplyr::select(latitude, elevation, sf, tmp, .ID_CLIM_VAR)
   # orb_params <- .data$age_BP %>%
   #   as.double() %>%
   #   tidyr::replace_na(0) %>%
@@ -190,12 +217,16 @@ mi.tbl_df <- function(.data, cpus = 1, ...) {
   year <- 1961 # This is only used to denote a non-leap year (365 days).
   oplan <- future::plan(future::multisession, workers = cpus)
   {
-    p <- progressr::progressor(steps = nrow(.data))
-    .pet <- seq_len(nrow(.data)) %>%
+    p <- progressr::progressor(steps = nrow(.data_sub))
+    .pet <- seq_len(nrow(.data_sub)) %>%
       furrr::future_map(function(k) {
         output <- seq_len(365) %>% # Daily values
           purrr::map_dbl(function(i) {
-            .data %>%
+            if (any(is.na(.data_sub$sf[k][[1]][i]), # Avoid error inside SPLASH
+                    is.na(.data_sub$tmp[k][[1]][i]))) {
+              return(NA_real_)
+            }
+            .data_sub %>%
               dplyr::slice(k) %$%
               splash::calc_daily_evap(lat = latitude,
                                       n = i,
@@ -215,7 +246,9 @@ mi.tbl_df <- function(.data, cpus = 1, ...) {
   .data %>%
     dplyr::mutate(mi = seq_along(tmp) %>%
                     purrr::map_dbl(~sum(pre[[.x]], na.rm = TRUE) /
-                                     sum(.pet[[.x]], na.rm = TRUE)))
+                                     sum(.pet[[.x]], na.rm = TRUE))) %>%
+    dplyr::mutate(mi = ifelse(is.nan(mi), NA_real_, mi)) %>%
+    dplyr::select(-dplyr::contains(".ID_CLIM_VAR"))
 }
 
 #' Calculate MTCO
@@ -251,6 +284,8 @@ mtco <- function(.data, ...) {
 mtco.numeric <- function(.data, pb = NULL, ...) {
   # Local bindings
   .date <- .month <- tmp <- NULL
+  if (all(is.na(.data)))
+    return(NA_real_)
   output <-
     tibble::tibble(tmp = !!.data,
                    .date = (seq_along(tmp) - 1) %>% lubridate::as_date(),
@@ -271,15 +306,24 @@ mtco.numeric <- function(.data, pb = NULL, ...) {
 mtco.tbl_df <- function(.data, cpus = 1, ...) {
   # Local binding
   tmp <- NULL
+  # Create data subset to improve performance
+  .data <- .data %>%
+    dplyr::mutate(.ID_CLIM_VAR = seq_along(latitude))
+  .data_sub <- .data %>%
+    dplyr::select(tmp, .ID_CLIM_VAR)
   oplan <- future::plan(future::multisession, workers = cpus)
   {
-    pb <- progressr::progressor(steps = nrow(.data))
-    output <- .data %>%
+    pb <- progressr::progressor(steps = nrow(.data_sub))
+    output <- .data_sub %>%
       dplyr::mutate(mtco = tmp %>%
                       furrr::future_map_dbl(mtco, pb = pb))
   }
   future::plan(oplan)
-  return(output)
+  # Combine original data, .data, and the output
+  .data %>%
+    dplyr::left_join(output,
+                     by = c("tmp", ".ID_CLIM_VAR")) %>%
+    dplyr::select(-dplyr::contains(".ID_CLIM_VAR"))
 }
 
 #' Calculate MTWA
@@ -315,6 +359,8 @@ mtwa <- function(.data, ...) {
 mtwa.numeric <- function(.data, pb = NULL, ...) {
   # Local bindings
   .date <- .month <- tmp <- NULL
+  if (all(is.na(.data)))
+    return(NA_real_)
   output <-
     tibble::tibble(tmp = !!.data,
                    .date = (seq_along(tmp) - 1) %>% lubridate::as_date(),
@@ -335,13 +381,22 @@ mtwa.numeric <- function(.data, pb = NULL, ...) {
 mtwa.tbl_df <- function(.data, cpus = 1, ...) {
   # Local binding
   tmp <- NULL
+  # Create data subset to improve performance
+  .data <- .data %>%
+    dplyr::mutate(.ID_CLIM_VAR = seq_along(latitude))
+  .data_sub <- .data %>%
+    dplyr::select(tmp, .ID_CLIM_VAR)
   oplan <- future::plan(future::multisession, workers = cpus)
   {
-    pb <- progressr::progressor(steps = nrow(.data))
-    output <- .data %>%
+    pb <- progressr::progressor(steps = nrow(.data_sub))
+    output <- .data_sub %>%
       dplyr::mutate(mtwa = tmp %>%
                       furrr::future_map_dbl(mtwa, pb = pb))
   }
   future::plan(oplan)
-  return(output)
+  # Combine original data, .data, and the output
+  .data %>%
+    dplyr::left_join(output,
+                     by = c("tmp", ".ID_CLIM_VAR")) %>%
+    dplyr::select(-dplyr::contains(".ID_CLIM_VAR"))
 }

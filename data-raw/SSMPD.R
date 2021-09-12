@@ -32,7 +32,8 @@ ssmpd_metadata <- readr::read_csv("inst/extdata/ssmpd_metadata.csv") %>%
                         "land-uses and cultural landscapes: an example from",
                         "south Sweden. Vegetation history and archaeobotany,",
                         "1(1), pp.3-17."),
-                DOI = "10.1007/BF00190697")
+                DOI = "10.1007/BF00190697") %>%
+  progressr::with_progress()
 
 ssmpd_taxon_names_clean <- readr::read_csv("inst/extdata/ssmpd_taxa.csv")
 
@@ -41,7 +42,7 @@ ssmpd_counts_long <- ssmpd_counts %>%
   dplyr::mutate(taxon_name = taxon_name %>%
                   stringr::str_extract("[a-zA-Z\\s]*"),
                 ID_SSMPD = seq_along(ID_SSMPD)) %>%
-  dplyr::left_join(ssmpd_taxon_names_clean,
+  dplyr::left_join(smpds::clean_taxa(),#ssmpd_taxon_names_clean,
                    by = "taxon_name") %>%
   dplyr::filter(action != "delete") %>%
   dplyr::select(-action) %>%

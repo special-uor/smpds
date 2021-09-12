@@ -5,7 +5,7 @@
 \alias{EMBSeCBIO}
 \title{\code{EMBSeCBIO} dataset}
 \format{
-A data frame (\code{tibble} object) with 1258 rows and 662 variables:
+A data frame (\code{tibble} object) with 9 rows and 88 variables:
 \describe{
 \item{...}{int ...}
 }

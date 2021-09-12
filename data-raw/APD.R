@@ -23,8 +23,9 @@ APD_all <- APD_SPH2 %>%
   dplyr::group_by(site_name) %>% # Add suffix based on site_name and depth
   # dplyr::mutate(entity_name = paste0(sigle, "_", depth_in_m, "_", age_BP))
   dplyr::mutate(n = length(unique(depth_in_m)),
-                entity_name = ifelse(n > 1,
-                                     paste0(sigle, "_", depth_in_m), sigle),
+                entity_name = paste0(sigle, "_", depth_in_m),
+                # entity_name = ifelse(n > 1,
+                #                      paste0(sigle, "_", depth_in_m), sigle),
                 .after = site_name) %>%
   dplyr::group_by(entity_name) %>% # Add suffix based on entity_name and age_BP
   dplyr::mutate(n = length(unique(age_BP)),
@@ -45,7 +46,8 @@ APD_all_wide <- APD_all %>%
   dplyr::ungroup() %>%
   tidyr::pivot_wider(2:10, names_from = "taxon_name", values_from = "count") %>%
   smpds::parallel_extract_biome(buffer = 12000, cpus = 6) %>%
-  dplyr::relocate(ID_BIOME, .after = age_BP)
+  dplyr::relocate(ID_BIOME, .after = age_BP) %>%
+  progressr::with_progress()
 
 APD_all_wide %>%
   dplyr::filter(is.na(ID_BIOME))

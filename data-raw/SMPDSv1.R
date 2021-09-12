@@ -25,11 +25,18 @@ SMPDSv1 <- readxl::read_xlsx("~/Downloads/SMPDSv2/Sandy_s MPDS_20_October_expand
                   smpds::parallel_extract_biome(buffer = 12000, cpus = 6) %>%
                   .$ID_BIOME,
                 publication =
-                  paste("Harrison, Sandy P., 2019. Modern pollen data for",
-                        "climate reconstructions, version 1 (SMPDS). University",
-                        "of Reading. Dataset."),
-                DOI = "10.17864/1947.194",
-                .after = age_BP)
+                  ifelse(is.na(publication),
+                         paste("Harrison, Sandy P., 2019. Modern pollen data",
+                               "for climate reconstructions, version 1 (SMPDS).",
+                               "University of Reading. Dataset."),
+                         publication),
+                DOI =
+                  ifelse(publication %>%
+                           stringr::str_starts("Harrison, Sandy P., 2019. Modern pollen data"),
+                         "10.17864/1947.194",
+                         DOI),
+                .after = age_BP) %>%
+  progressr::with_progress()
 SMPDSv12 <- SMPDSv1 %>%
   dplyr::mutate(ID_BIOME = ifelse(entity_name %>%
                                     stringr::str_detect("Barboni") &

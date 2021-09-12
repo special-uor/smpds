@@ -444,7 +444,7 @@ Spanish_sites <- readxl::read_xlsx("~/Downloads/SMPDSv2/To check included/Spanis
                         "latitude",
                         "longitude",
                         "elevation",
-                        "basin_size_km2",
+                        "basin_size",
                         "site_type",
                         "entity_type",
                         "age_BP",
@@ -455,7 +455,8 @@ Spanish_sites <- readxl::read_xlsx("~/Downloads/SMPDSv2/To check included/Spanis
                                     "charcoal data of the Iberian Peninsula.",
                                     "University of Reading. Dataset."),
                 DOI = "10.17864/1947.294",
-                source = "Harrison et al., 2021")
+                source = "Harrison et al., 2021",
+                .after = age_BP)
 
 aux <- Spanish_sites %>%
   dplyr::filter(entity_name %in% IbMPD$entity_name)

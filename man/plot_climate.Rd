@@ -13,13 +13,14 @@ plot_climate(
   .data,
   var = "mat",
   units = NA,
-  fill_scale = ggplot2::scale_fill_viridis_c(name = toupper(var)),
+  fill_scale = ggplot2::scale_fill_viridis_d(name = toupper(var)),
   size = 1,
   stroke = 0.1,
-  legend.key.width = ggplot2::unit(3, "cm"),
+  legend.key.width = ggplot2::unit(1, "cm"),
   legend.position = "bottom",
   xlim = c(-180, 180),
   ylim = c(-60, 90),
+  show_plot = TRUE,
   ...
 )
 
@@ -28,10 +29,11 @@ plot_gdd(
   baseline = 0,
   size = 1,
   stroke = 0.1,
-  legend.key.width = ggplot2::unit(3, "cm"),
+  legend.key.width = ggplot2::unit(1, "cm"),
   legend.position = "bottom",
   xlim = c(-180, 180),
   ylim = c(-60, 90),
+  show_plot = TRUE,
   ...
 )
 
@@ -39,10 +41,11 @@ plot_mat(
   .data,
   size = 1,
   stroke = 0.1,
-  legend.key.width = ggplot2::unit(3, "cm"),
+  legend.key.width = ggplot2::unit(1, "cm"),
   legend.position = "bottom",
   xlim = c(-180, 180),
   ylim = c(-60, 90),
+  show_plot = TRUE,
   ...
 )
 
@@ -50,10 +53,11 @@ plot_mi(
   .data,
   size = 1,
   stroke = 0.1,
-  legend.key.width = ggplot2::unit(3, "cm"),
+  legend.key.width = ggplot2::unit(1, "cm"),
   legend.position = "bottom",
   xlim = c(-180, 180),
   ylim = c(-60, 90),
+  show_plot = TRUE,
   ...
 )
 
@@ -61,10 +65,11 @@ plot_mtco(
   .data,
   size = 1,
   stroke = 0.1,
-  legend.key.width = ggplot2::unit(3, "cm"),
+  legend.key.width = ggplot2::unit(1, "cm"),
   legend.position = "bottom",
   xlim = c(-180, 180),
   ylim = c(-60, 90),
+  show_plot = TRUE,
   ...
 )
 
@@ -72,10 +77,11 @@ plot_mtwa(
   .data,
   size = 1,
   stroke = 0.1,
-  legend.key.width = ggplot2::unit(3, "cm"),
+  legend.key.width = ggplot2::unit(1, "cm"),
   legend.position = "bottom",
   xlim = c(-180, 180),
   ylim = c(-60, 90),
+  show_plot = TRUE,
   ...
 )
 }
@@ -125,6 +131,10 @@ limits along the other direction. Therefore, it is best to always specify limits
 for both x and y. Third, specifying limits via position scales or \code{xlim()}/\code{ylim()}
 is strongly discouraged, as it can result in data points being dropped from the plot even
 though they would be visible in the final plot region.}
+
+\item{show_plot}{Boolean flag to indicate whether or not the graphic should
+be displayed, if \code{FALSE}, it only returns the \code{ggplot2} object.
+Default: \code{TRUE}.}
 
 \item{...}{
   Arguments passed on to \code{\link[ggplot2:ggsf]{ggplot2::coord_sf}}

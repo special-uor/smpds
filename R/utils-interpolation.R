@@ -39,24 +39,35 @@ cru_mask <- function(res = 0.5,
 
 #' Geographically Weighted Regression
 #'
-#' @param .data Table with geographical data, including: \code{latitude},
+#' @details The input reference data can be in any of the following formats:
+#' \itemize{
+#'  \item \code{Matrix}: this should be a 3-dimensional object with spatial
+#'  components (latitude and longitude) and a temporal component for
+#'  representing each time step to be used for the extraction of the data.
+#'  \item \code{String}: this should point to a valid path on disk where the
+#'  reference NetCDF file is stored. Note that the parameter called \code{varid}
+#'  should be used to indicate the identifier of the main variable inside the
+#'  NetCDF file (e.g., \code{"tmp"},  \code{"pre"},  \code{"cld"}, etc.).
+#' }
+#' @param .ref Reference data from which the data will be interpolated (see the
+#'     details section).
+#' @param .tar Table with geographical target data, including: \code{latitude},
 #'     \code{longitude} and \code{elevation}.
-#' @param varid Main variable name for the NetCDF in \code{reference}
-#' @param reference Path to the NetCDF file from which \code{varid} will be
-#'     loaded.
+#' @param varid String with the identifier of the main variable inside the
+#'     NetCDF file pointed by \code{.ref} (if applicable).
 #' @inheritParams cru_mask
 #' @param buffer Numeric value to be used as the boundary for the search area:
 #'     \itemize{
-#'      \item \code{latitude} < \code{.data$latitude + buffer}
-#'      \item \code{latitude} > \code{.data$latitude - buffer}
-#'      \item \code{longitude} < \code{.data$longitude + buffer}
-#'      \item \code{longitude} > \code{.data$longitude - buffer}
+#'      \item \code{latitude} < \code{.tar$latitude + buffer}
+#'      \item \code{latitude} > \code{.tar$latitude - buffer}
+#'      \item \code{longitude} < \code{.tar$longitude + buffer}
+#'      \item \code{longitude} > \code{.tar$longitude - buffer}
 #'     }
 #' @param cpus Number of CPUs to be used in parallel, default = 1.
 #' @inheritParams spgwr::gwr
 #'
-#' @return Table with interpolated values from \code{varid} for each record/row
-#'     in \code{.data}.
+#' @return Table with interpolated values from the \code{.ref} data for each
+#'     record/row in \code{.tar}.
 #' @export
 #'
 #' @references
@@ -76,46 +87,83 @@ cru_mask <- function(res = 0.5,
 #'                        latitude = 51.44140,
 #'                        longitude = -0.9418,
 #'                        elevation = c(61, 161, 261, 361))
-#' data %>%
-#'   smpds::gwr(varid = "tmp",
-#'              reference = "/path/to/reference-tmp.nc")
+#' smpds::gwr(.ref = "/path/to/reference-tmp.nc",
+#'            .tar = data,
+#'            varid = "tmp")
+#'
+#' ncin <- ncdf4::nc_open("/path/to/reference-tmp.nc")
+#' reference_data <- ncdf4::ncvar_get(ncin, varid)
+#' ncdf4::nc_close(ncin)
+#' reference_data %>%
+#'   smpds::gwr(.tar = data)
 #' }
-gwr <- function(.data,
-                varid,
-                reference = NULL,
-                coordinates = smpds::CRU_coords,
-                res = 0.5,
-                buffer = 1.5,
-                cpus = 1,
-                bandwidth = 1.06) {
+gwr <- function(.ref, ...) {
+  UseMethod("gwr", .ref)
+}
+
+#' @export
+#' @rdname gwr
+gwr.character <- function(.ref,
+                          .tar,
+                          varid = NULL,
+                          coordinates = smpds::CRU_coords,
+                          res = 0.5,
+                          buffer = 1.5,
+                          cpus = 1,
+                          bandwidth = 1.06) {
+  if(is.null(varid))
+    stop("When `.ref` is a string/path, `varid` cannot be NULL.",
+         call. = FALSE)
   # Local bindings
   land <- sea <- NULL
   # Load reference data from the NetCDF file
-  ncin <- ncdf4::nc_open(reference)
-  reference_tbl <- ncdf4::ncvar_get(ncin, varid) %>%
+  ncin <- ncdf4::nc_open(.ref)
+  .ref_data <- ncdf4::ncvar_get(ncin, varid)
+  ncdf4::nc_close(ncin) # Close connection to the NetCDF
+  .ref_data %>%
+    gwr(.tar = .tar,
+        coordinates = coordinates,
+        res = res,
+        buffer = buffer,
+        cpus = cpus,
+        bandwidth = bandwidth)
+}
+
+#' @export
+#' @rdname gwr
+gwr.numeric <- function(.ref,
+                        .tar,
+                        coordinates = smpds::CRU_coords,
+                        res = 0.5,
+                        buffer = 1.5,
+                        cpus = 1,
+                        bandwidth = 1.06) {
+  if (length(dim(.ref)) != 3)
+    stop("Invalid reference object, `.ref`, expecting a 3-dimensional array.",
+         call. = FALSE)
+  .ref_tbl <- .ref %>%
     mask_nc(mask = cru_mask(res = res, coordinates = coordinates)) %>%
     dplyr::filter(land) %>%
     dplyr::select(-land, -sea)
-  ncdf4::nc_close(ncin)
 
   # Combine the daily gridded data with coordinates
   climate_grid <- coordinates %>%
-    dplyr::right_join(reference_tbl,
+    dplyr::right_join(.ref_tbl,
                       by = c("latitude", "longitude"))
 
   # Start implementing Geographically Weighted Regression
-  .data_coords <- .data
-  sp::coordinates(.data_coords) <- c("longitude", "latitude")
+  .tar_coords <- .tar
+  sp::coordinates(.tar_coords) <- c("longitude", "latitude")
   # sp::gridded(climate_grid2) <- TRUE
 
   oplan <- future::plan(future::multisession, workers = cpus)
   on.exit(future::plan(oplan), add = TRUE)
   fm_suffix <- " ~ elevation"
-  output <- seq_len(nrow(.data)) %>%
+  output <- seq_len(nrow(.tar)) %>%
     furrr::future_map_dfr(function(i) {
       climate_grid2 <- subset_coords(climate_grid,
-                                     .data$latitude[i],
-                                     .data$longitude[i],
+                                     .tar$latitude[i],
+                                     .tar$longitude[i],
                                      buffer)
       fms <-  names(climate_grid2) %>%
         stringr::str_subset("^T[0-9]*$") %>%
@@ -124,7 +172,7 @@ gwr <- function(.data,
         purrr::map_dfc(~spgwr::gwr(formula = .x,
                                    data = climate_grid2,
                                    bandwidth = bandwidth,
-                                   fit.points = .data_coords[i, ],
+                                   fit.points = .tar_coords[i, ],
                                    predictions = TRUE)$SDF$pred %>%
                          list() %>%
                          magrittr::set_names(.x %>%
@@ -133,7 +181,7 @@ gwr <- function(.data,
     .progress = TRUE,
     .options = furrr::furrr_options(seed = TRUE))
 
-  .data %>%
+  .tar %>%
     dplyr::bind_cols(output)
 }
 
@@ -196,9 +244,9 @@ mask_nc <- function(.data, mask = cru_mask()) {
 #'                        latitude = 51.44140,
 #'                        longitude = -0.9418,
 #'                        elevation = 61)
-#' data %>%
-#'   smpds::gwr(varid = "tmp",
-#'              reference = "/path/to/reference-tmp.nc") %>%
+#' smpds::gwr(.ref = "/path/to/reference-tmp.nc",
+#'            .tar = data,
+#'            varid = "tmp") %>%
 #'   smpds::pivot_data(varname = "tmp")
 #' }
 pivot_data <- function(.data,

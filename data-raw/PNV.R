@@ -32,4 +32,4 @@ PNV_classes <- readxl::read_xlsx("./inst/extdata/pnv_basic_info.xlsx") %>%
 
 # PNV_old <- smpds::PNV
 usethis::use_data(PNV, overwrite = TRUE, compress = "xz")
-usethis::use_data(PNV_classes, overwrite = TRUE, compress = "xz", internal = TRUE)
+# usethis::use_data(PNV_classes, overwrite = TRUE, compress = "xz", internal = TRUE)

@@ -3,7 +3,7 @@ test_that("plot_biome works", {
   test_data <- system.file("testdata/test_data_365days.Rds",
                            package = "smpds") %>%
     readr::read_rds()
-  test_plot <- smpds::plot_biome(test_data)
+  test_plot <- smpds::plot_biome(test_data, show_plot = FALSE)
   expected_data <- test_data %>%
     dplyr::bind_cols(tibble::tribble(
       ~description,   ~colour, ~n,

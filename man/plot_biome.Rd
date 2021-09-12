@@ -8,9 +8,13 @@ plot_biome(
   .data,
   size = 1,
   stroke = 0.1,
+  legend.key.height = ggplot2::unit(1, "cm"),
+  legend.key.width = ggplot2::unit(1, "cm"),
   legend.position = "bottom",
   xlim = c(-180, 180),
   ylim = c(-60, 90),
+  show_plot = TRUE,
+  tiled_legend = TRUE,
   ...
 )
 }
@@ -20,6 +24,12 @@ plot_biome(
 \item{size}{Numeric value for the \code{size} aesthetic.}
 
 \item{stroke}{Numeric value for the \code{stroke} aesthetic.}
+
+\item{legend.key.height}{size of legend keys (\code{unit}); key background height & width inherit from
+\code{legend.key.size} or can be specified separately}
+
+\item{legend.key.width}{size of legend keys (\code{unit}); key background height & width inherit from
+\code{legend.key.size} or can be specified separately}
 
 \item{legend.position}{the position of legends ("none", "left", "right",
 "bottom", "top", or two-element numeric vector)}
@@ -47,6 +57,14 @@ limits along the other direction. Therefore, it is best to always specify limits
 for both x and y. Third, specifying limits via position scales or \code{xlim()}/\code{ylim()}
 is strongly discouraged, as it can result in data points being dropped from the plot even
 though they would be visible in the final plot region.}
+
+\item{show_plot}{Boolean flag to indicate whether or not the graphic should
+be displayed, if \code{FALSE}, it only returns the \code{ggplot2} object.
+Default: \code{TRUE}.}
+
+\item{tiled_legend}{Boolean flag to indicate whether or not the legend should
+be shown as tiles, if \code{TRUE}, or points, \code{FALSE}.
+Default: \code{TRUE}.}
 
 \item{...}{
   Arguments passed on to \code{\link[ggplot2:ggsf]{ggplot2::coord_sf}}

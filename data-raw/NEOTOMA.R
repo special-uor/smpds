@@ -10,7 +10,7 @@ NEOTOMA <- neotoma_metadata %>%
                       names_to = "taxon_name",
                       values_to = "count") %>%
   dplyr::filter(!is.na(count)) %>%
-  dplyr::left_join(neotoma_taxa,
+  dplyr::left_join(smpds::clean_taxa(), #neotoma_taxa,
                    by = "taxon_name") %>%
   dplyr::filter(action != "delete") %>%
   dplyr::select(-action) %>%
@@ -27,7 +27,8 @@ NEOTOMA <- neotoma_metadata %>%
   tidyr::pivot_wider(1:13,
                      names_from = "taxon_name",
                      values_from = "count") %>%
-  smpds::sort_taxa(cols = 1:13)
+  smpds::sort_taxa(cols = 1:13) %>%
+  progressr::with_progress()
 
 aux <- NEOTOMA %>%
   dplyr::filter(entity_name %in% EMPDv2$entity_name)
