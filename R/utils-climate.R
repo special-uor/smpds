@@ -222,7 +222,7 @@ mi.tbl_df <- function(.data, cpus = 1, ...) {
       furrr::future_map(function(k) {
         output <- seq_len(365) %>% # Daily values
           purrr::map_dbl(function(i) {
-            if (any(is.na(.data_sub$sf[k][[1]][i]), # Prevent error inside SPLASH
+            if (any(is.na(.data_sub$sf[k][[1]][i]), # Avoid error inside SPLASH
                     is.na(.data_sub$tmp[k][[1]][i]))) {
               return(NA_real_)
             }
