@@ -186,9 +186,9 @@ the value of the <code>baseline</code>; e.g., <code>gdd0</code> when
                        latitude <span class='op'>=</span> <span class='fl'>51.44140</span>,
                        longitude <span class='op'>=</span> <span class='op'>-</span><span class='fl'>0.9418</span>,
                        elevation <span class='op'>=</span> <span class='fl'>61</span><span class='op'>)</span>
-<span class='va'>data</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>smpds</span><span class='fu'>::</span><span class='fu'><a href='gwr.html'>gwr</a></span><span class='op'>(</span>varid <span class='op'>=</span> <span class='st'>"tmp"</span>,
-             reference <span class='op'>=</span> <span class='st'>"/path/to/reference-tmp.nc"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+<span class='fu'>smpds</span><span class='fu'>::</span><span class='fu'><a href='gwr.html'>gwr</a></span><span class='op'>(</span>.ref <span class='op'>=</span> <span class='st'>"/path/to/reference-tmp.nc"</span>,
+           .tar <span class='op'>=</span> <span class='va'>data</span>,
+           varid <span class='op'>=</span> <span class='st'>"tmp"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>smpds</span><span class='fu'>::</span><span class='fu'><a href='pivot_data.html'>pivot_data</a></span><span class='op'>(</span>varname <span class='op'>=</span> <span class='st'>"tmp"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>smpds</span><span class='fu'>::</span><span class='fu'>gdd</span><span class='op'>(</span><span class='op'>)</span>
 <span class='op'>}</span>

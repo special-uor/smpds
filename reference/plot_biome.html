@@ -127,9 +127,13 @@ version (for large datasets), <code><a href='extract_biome.html'>parallel_extrac
   <span class='va'>.data</span>,
   size <span class='op'>=</span> <span class='fl'>1</span>,
   stroke <span class='op'>=</span> <span class='fl'>0.1</span>,
+  legend.key.height <span class='op'>=</span> <span class='fu'>ggplot2</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/grid/unit.html'>unit</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='st'>"cm"</span><span class='op'>)</span>,
+  legend.key.width <span class='op'>=</span> <span class='fu'>ggplot2</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/grid/unit.html'>unit</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='st'>"cm"</span><span class='op'>)</span>,
   legend.position <span class='op'>=</span> <span class='st'>"bottom"</span>,
   xlim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>180</span>, <span class='fl'>180</span><span class='op'>)</span>,
   ylim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>60</span>, <span class='fl'>90</span><span class='op'>)</span>,
+  show_plot <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  tiled_legend <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -147,6 +151,16 @@ version (for large datasets), <code><a href='extract_biome.html'>parallel_extrac
     <tr>
       <th>stroke</th>
       <td><p>Numeric value for the <code>stroke</code> aesthetic.</p></td>
+    </tr>
+    <tr>
+      <th>legend.key.height</th>
+      <td><p>size of legend keys (<code>unit</code>); key background height &amp; width inherit from
+<code>legend.key.size</code> or can be specified separately</p></td>
+    </tr>
+    <tr>
+      <th>legend.key.width</th>
+      <td><p>size of legend keys (<code>unit</code>); key background height &amp; width inherit from
+<code>legend.key.size</code> or can be specified separately</p></td>
     </tr>
     <tr>
       <th>legend.position</th>
@@ -180,6 +194,18 @@ limits along the other direction. Therefore, it is best to always specify limits
 for both x and y. Third, specifying limits via position scales or <code><a href='https://rdrr.io/r/graphics/plot.window.html'>xlim()</a></code>/<code><a href='https://rdrr.io/r/graphics/plot.window.html'>ylim()</a></code>
 is strongly discouraged, as it can result in data points being dropped from the plot even
 though they would be visible in the final plot region.</p></td>
+    </tr>
+    <tr>
+      <th>show_plot</th>
+      <td><p>Boolean flag to indicate whether or not the graphic should
+be displayed, if <code>FALSE</code>, it only returns the <code>ggplot2</code> object.
+Default: <code>TRUE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>tiled_legend</th>
+      <td><p>Boolean flag to indicate whether or not the legend should
+be shown as tiles, if <code>TRUE</code>, or points, <code>FALSE</code>.
+Default: <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>

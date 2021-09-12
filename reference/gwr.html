@@ -117,10 +117,24 @@
     <p>Geographically Weighted Regression</p>
     </div>
 
-    <pre class="usage"><span class='fu'>gwr</span><span class='op'>(</span>
-  <span class='va'>.data</span>,
-  <span class='va'>varid</span>,
-  reference <span class='op'>=</span> <span class='cn'>NULL</span>,
+    <pre class="usage"><span class='fu'>gwr</span><span class='op'>(</span><span class='va'>.ref</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for character</span>
+<span class='fu'>gwr</span><span class='op'>(</span>
+  <span class='va'>.ref</span>,
+  <span class='va'>.tar</span>,
+  varid <span class='op'>=</span> <span class='cn'>NULL</span>,
+  coordinates <span class='op'>=</span> <span class='fu'>smpds</span><span class='fu'>::</span><span class='va'><a href='CRU_coords.html'>CRU_coords</a></span>,
+  res <span class='op'>=</span> <span class='fl'>0.5</span>,
+  buffer <span class='op'>=</span> <span class='fl'>1.5</span>,
+  cpus <span class='op'>=</span> <span class='fl'>1</span>,
+  bandwidth <span class='op'>=</span> <span class='fl'>1.06</span>
+<span class='op'>)</span>
+
+<span class='co'># S3 method for numeric</span>
+<span class='fu'>gwr</span><span class='op'>(</span>
+  <span class='va'>.ref</span>,
+  <span class='va'>.tar</span>,
   coordinates <span class='op'>=</span> <span class='fu'>smpds</span><span class='fu'>::</span><span class='va'><a href='CRU_coords.html'>CRU_coords</a></span>,
   res <span class='op'>=</span> <span class='fl'>0.5</span>,
   buffer <span class='op'>=</span> <span class='fl'>1.5</span>,
@@ -132,18 +146,23 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.data</th>
-      <td><p>Table with geographical data, including: <code>latitude</code>,
+      <th>.ref</th>
+      <td><p>Reference data from which the data will be interpolated (see the
+details section).</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>arguments to be passed to other functions</p></td>
+    </tr>
+    <tr>
+      <th>.tar</th>
+      <td><p>Table with geographical target data, including: <code>latitude</code>,
 <code>longitude</code> and <code>elevation</code>.</p></td>
     </tr>
     <tr>
       <th>varid</th>
-      <td><p>Main variable name for the NetCDF in <code>reference</code></p></td>
-    </tr>
-    <tr>
-      <th>reference</th>
-      <td><p>Path to the NetCDF file from which <code>varid</code> will be
-loaded.</p></td>
+      <td><p>String with the identifier of the main variable inside the
+NetCDF file pointed by <code>.ref</code> (if applicable).</p></td>
     </tr>
     <tr>
       <th>coordinates</th>
@@ -158,10 +177,10 @@ loaded.</p></td>
     <tr>
       <th>buffer</th>
       <td><p>Numeric value to be used as the boundary for the search area:</p><ul>
-<li><p><code>latitude</code> &lt; <code>.data$latitude + buffer</code></p></li>
-<li><p><code>latitude</code> &gt; <code>.data$latitude - buffer</code></p></li>
-<li><p><code>longitude</code> &lt; <code>.data$longitude + buffer</code></p></li>
-<li><p><code>longitude</code> &gt; <code>.data$longitude - buffer</code></p></li>
+<li><p><code>latitude</code> &lt; <code>.tar$latitude + buffer</code></p></li>
+<li><p><code>latitude</code> &gt; <code>.tar$latitude - buffer</code></p></li>
+<li><p><code>longitude</code> &lt; <code>.tar$longitude + buffer</code></p></li>
+<li><p><code>longitude</code> &gt; <code>.tar$longitude - buffer</code></p></li>
 </ul></td>
     </tr>
     <tr>
@@ -182,8 +201,20 @@ loaded.</p></td>
 <a href='https://github.com/yunkepeng/gwr'>https://github.com/yunkepeng/gwr</a></p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Table with interpolated values from <code>varid</code> for each record/row
-in <code>.data</code>.</p>
+    <p>Table with interpolated values from the <code>.ref</code> data for each
+record/row in <code>.tar</code>.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The input reference data can be in any of the following formats:</p><ul>
+<li><p><code>Matrix</code>: this should be a 3-dimensional object with spatial
+components (latitude and longitude) and a temporal component for
+representing each time step to be used for the extraction of the data.</p></li>
+<li><p><code>String</code>: this should point to a valid path on disk where the
+reference NetCDF file is stored. Note that the parameter called <code>varid</code>
+should be used to indicate the identifier of the main variable inside the
+NetCDF file (e.g., <code>"tmp"</code>,  <code>"pre"</code>,  <code>"cld"</code>, etc.).</p></li>
+</ul>
+
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Peng, Y., Bloomfield, K.J. and Prentice, I.C., 2020. A theory of plant
@@ -197,9 +228,15 @@ New Phytologist, 226(5), pp.1274-1284. doi: <a href='https://doi.org/10.1111/nph
                        latitude <span class='op'>=</span> <span class='fl'>51.44140</span>,
                        longitude <span class='op'>=</span> <span class='op'>-</span><span class='fl'>0.9418</span>,
                        elevation <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>61</span>, <span class='fl'>161</span>, <span class='fl'>261</span>, <span class='fl'>361</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>data</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>smpds</span><span class='fu'>::</span><span class='fu'>gwr</span><span class='op'>(</span>varid <span class='op'>=</span> <span class='st'>"tmp"</span>,
-             reference <span class='op'>=</span> <span class='st'>"/path/to/reference-tmp.nc"</span><span class='op'>)</span>
+<span class='fu'>smpds</span><span class='fu'>::</span><span class='fu'>gwr</span><span class='op'>(</span>.ref <span class='op'>=</span> <span class='st'>"/path/to/reference-tmp.nc"</span>,
+           .tar <span class='op'>=</span> <span class='va'>data</span>,
+           varid <span class='op'>=</span> <span class='st'>"tmp"</span><span class='op'>)</span>
+
+<span class='va'>ncin</span> <span class='op'>&lt;-</span> <span class='fu'>ncdf4</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ncdf4/man/nc_open.html'>nc_open</a></span><span class='op'>(</span><span class='st'>"/path/to/reference-tmp.nc"</span><span class='op'>)</span>
+<span class='va'>reference_data</span> <span class='op'>&lt;-</span> <span class='fu'>ncdf4</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ncdf4/man/ncvar_get.html'>ncvar_get</a></span><span class='op'>(</span><span class='va'>ncin</span>, <span class='va'>varid</span><span class='op'>)</span>
+<span class='fu'>ncdf4</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ncdf4/man/nc_close.html'>nc_close</a></span><span class='op'>(</span><span class='va'>ncin</span><span class='op'>)</span>
+<span class='va'>reference_data</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>smpds</span><span class='fu'>::</span><span class='fu'>gwr</span><span class='op'>(</span>.tar <span class='op'>=</span> <span class='va'>data</span><span class='op'>)</span>
 <span class='op'>}</span>
 </div></pre>
   </div>
