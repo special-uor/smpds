@@ -5,7 +5,7 @@
 \alias{NEOTOMA}
 \title{\code{NEOTOMA} dataset}
 \format{
-A data frame (\code{tibble} object) with 54 rows and 227 variables:
+A data frame (\code{tibble} object) with 54 rows and 225 variables:
 \describe{
 \item{...}{int ...}
 }

@@ -9,7 +9,7 @@ plot_biome(
   size = 1,
   stroke = 0.1,
   legend.key.height = ggplot2::unit(1, "cm"),
-  legend.key.width = ggplot2::unit(2, "cm"),
+  legend.key.width = ggplot2::unit(1, "cm"),
   legend.position = "bottom",
   xlim = c(-180, 180),
   ylim = c(-60, 90),
