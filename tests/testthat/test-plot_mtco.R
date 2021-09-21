@@ -5,6 +5,10 @@ test_that("plot_mtco works", {
     readr::read_rds() %>%
     smpds::mtco()
   test_plot <- smpds::plot_mtco(test_data, show_plot = FALSE)
-  expect_equal(test_plot$layers[[2]]$data, test_data %>%
-                 dplyr::rename(var = mtco))
+  expect_equal(test_plot$data %>%
+                 dplyr::select(-var),
+               test_data %>%
+                 dplyr::rename(var = mtco) %>%
+                 dplyr::select(-var)
+               )
 })

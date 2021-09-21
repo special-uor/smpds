@@ -5,6 +5,10 @@ test_that("plot_gdd works", {
     readr::read_rds() %>%
     smpds::gdd()
   test_plot <- smpds::plot_gdd(test_data, show_plot = FALSE)
-  expect_equal(test_plot$layers[[2]]$data, test_data %>%
-                 dplyr::rename(var = gdd0))
+  expect_equal(test_plot$data %>%
+                 dplyr::select(-var),
+               test_data %>%
+                 dplyr::rename(var = gdd0) %>%
+                 dplyr::select(-var)
+  )
 })

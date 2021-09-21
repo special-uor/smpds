@@ -5,6 +5,10 @@ test_that("plot_mi works", {
     readr::read_rds() %>%
     smpds::mi()
   test_plot <- smpds::plot_mi(test_data, show_plot = FALSE)
-  expect_equal(test_plot$layers[[2]]$data, test_data %>%
-                 dplyr::rename(var = mi))
+  expect_equal(test_plot$data %>%
+                 dplyr::select(-var),
+               test_data %>%
+                 dplyr::rename(var = mi) %>%
+                 dplyr::select(-var)
+  )
 })

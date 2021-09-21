@@ -43,4 +43,12 @@ test_that("gdd works", {
   expect_equal(test_data %>%
                  smpds::gdd(baseline = 0) %>%
                  smpds::gdd(baseline = 10), expected_t4)
+
+  # Missing values for the temperature
+  test_data2 <- test_data %>%
+    dplyr::slice(1) %>%
+    dplyr::mutate(tmp = list(NA_real_))
+  expected_t5 <- test_data2 %>%
+    dplyr::mutate(gdd0 = NA_real_)
+  expect_equal(smpds::gdd(test_data2), expected_t5)
 })

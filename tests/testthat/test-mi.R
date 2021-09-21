@@ -14,4 +14,12 @@ test_that("mi works", {
 
   # Invalid input, list
   expect_error(smpds::mi(test_data$tmp))
+
+  # Missing values for the temperature
+  test_data2 <- test_data %>%
+    dplyr::slice(1) %>%
+    dplyr::mutate(tmp = list(NA_real_))
+  expected_t2 <- test_data2 %>%
+    dplyr::mutate(mi = Inf)
+  expect_equal(smpds::mi(test_data2), expected_t2)
 })

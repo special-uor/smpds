@@ -18,4 +18,12 @@ test_that("mtco works", {
 
   # Invalid input, list
   expect_error(smpds::mtco(test_data$tmp))
+
+  # Missing values for the temperature
+  test_data2 <- test_data %>%
+    dplyr::slice(1) %>%
+    dplyr::mutate(tmp = list(NA_real_))
+  expected_t3 <- test_data2 %>%
+    dplyr::mutate(mtco = NA_real_)
+  expect_equal(smpds::mtco(test_data2), expected_t3)
 })
