@@ -237,6 +237,7 @@ juodonys <- readxl::read_xls("~/Downloads/SMPDSv2/To check included/Juodonys pol
                 entity_type = "core top",
                 basin_size = "small (0.01-1 km2)",
                 age_BP = "modern", #-83,
+                ID_BIOME = 9,
                 publication = paste0("Stančikaitė, M., Kisielienė, D., Strimaitienė, A., 2004. Vegetation response to the climatic and human impact changes during the Late Glacial and Holocene: case study of the marginal area of Baltija Upland, NE Lithuania. Baltica 17, 17–33.",
                                      "\n",
                                      "Stančikaitė, M., Kisielienė, D., Moe, D., Vaikutienė, G., 2009. Lateglacial and early Holocene environmental changes in northeastern Lithuania. Quaternary International 207, 80–92."
@@ -326,6 +327,7 @@ petresiunai <- readxl::read_xls("~/Downloads/SMPDSv2/To check included/Petrasiun
                 entity_type = "core top",
                 basin_size = "0.02",
                 age_BP = "20",
+                ID_BIOME = 9,
                 publication =
                   paste("Stančikaitė, M., Simniškytė, A., Skuratovič, Gedminienė, L.,",
                         "Kazakauskas, V., Uogintas, D., 2019. Reconstruction of the mid-to",
@@ -335,7 +337,7 @@ petresiunai <- readxl::read_xls("~/Downloads/SMPDSv2/To check included/Petrasiun
                 DOI = "10.1016/j.quaint.2018.09.029",
                 source = "Stančikaitė et al., 2019",
                 .after = 1) %>%
-  smpds::rm_zero_taxa(1:11)
+  smpds::rm_zero_taxa(1:12)
 
 petresiunai %>%
   readr::write_excel_csv("inst/extdata/petresiunai.csv", na = "")
@@ -456,7 +458,9 @@ Spanish_sites <- readxl::read_xlsx("~/Downloads/SMPDSv2/To check included/Spanis
                                     "University of Reading. Dataset."),
                 DOI = "10.17864/1947.294",
                 source = "Harrison et al., 2021",
-                .after = age_BP)
+                .after = age_BP) %>%
+  smpds::parallel_extract_biome() %>%
+  dplyr::relocate(ID_BIOME, .after = age_BP)
 
 aux <- Spanish_sites %>%
   dplyr::filter(entity_name %in% IbMPD$entity_name)
