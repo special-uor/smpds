@@ -4,18 +4,57 @@
 apd_clean_taxon_names <- readr::read_csv("inst/extdata/apd_taxa.csv")
 apd_publications <- readr::read_csv("inst/extdata/APD_publications.csv")
 
+APD_SPH_50_m72 <- readxl::read_xlsx("~/Downloads/SMPDSv2/APD-modern-records_diagnosed/APD-modern-records_50_-72_SPH.xlsx",
+                                    sheet = 1) %>%
+  dplyr::mutate(age_BP2 = age_BP %>%
+                  stringr::str_replace_all("modern", "0") %>%
+                  as.double()) %>%
+  dplyr::filter(age_BP2 >= -72, age_BP2 <= 50) %>%
+  dplyr::mutate(ID_APD = seq_along(sigle)) %>%
+  dplyr::select(-age_BP2) %>%
+  dplyr::filter(!(sigle %in% c("LT98-37M")))
+APD_SPH_over_m72 <- readxl::read_xlsx("~/Downloads/SMPDSv2/APD-modern-records_diagnosed/APD-modern-records_over_-72_SPH.xlsx",
+                                      sheet = 1) %>%
+  dplyr::mutate(age_BP2 = age_BP %>%
+                  stringr::str_replace_all("modern", "0") %>%
+                  as.double()) %>%
+  dplyr::filter(age_BP2 >= -72, age_BP2 <= 50) %>%
+  dplyr::mutate(ID_APD = seq_along(sigle)) %>%
+  dplyr::select(-age_BP2)
 APD_SPH <- readxl::read_xlsx("~/Downloads/SMPDSv2/APD-modern-records_diagnosed/APD-modern-records_all_SPH_diagnosed.xlsx",
                              sheet = 1) %>%
   dplyr::rename(SPH_comment = ...14) %>%
-  dplyr::mutate(ID_APD = seq_along(sigle))
+  # dplyr::filter(!is.na(age_BP)) %>%
+  dplyr::mutate(age_BP2 = age_BP %>%
+                  stringr::str_replace_all("modern", "0") %>%
+                  as.double()) %>%
+  dplyr::filter(age_BP2 >= -72, age_BP2 <= 50) %>%
+  dplyr::mutate(ID_APD = seq_along(sigle)) %>%
+  dplyr::select(-age_BP2)
+
+a <- unique(APD_SPH_50_m72$sigle)
+b <- unique(APD_SPH_over_m72$sigle)
+d <- unique(APD_SPH$sigle)
+a %in% b
+a %in% d
+
 APD_SPH2 <- APD_SPH %>%
+  dplyr::bind_rows(APD_SPH_50_m72) %>%
+  dplyr::bind_rows(APD_SPH_over_m72 %>%
+                     dplyr::mutate(age_BP = as.character(age_BP))) %>%
+  dplyr::mutate(ID_APD = seq_along(sigle)) %>%
   dplyr::filter(!is.na(age_BP))
+
 APD_SPH_unused2 <- APD_SPH %>%
+  dplyr::bind_rows(APD_SPH_50_m72) %>%
+  dplyr::bind_rows(APD_SPH_over_m72 %>%
+                     dplyr::mutate(age_BP = as.character(age_BP))) %>%
+  dplyr::mutate(ID_APD = seq_along(sigle)) %>%
   dplyr::filter(!(ID_APD %in% APD_SPH2$ID_APD)) %>%
   dplyr::arrange(sigle)
 
-
 APD_all <- APD_SPH2 %>%
+  dplyr::filter(taxon_name != "Podocarpus") %>%
   dplyr::mutate(taxon_name = taxon_name %>%
                   stringr::str_squish()) %>%
   dplyr::filter(taxon_name != "[ODD taxon]") %>%
@@ -59,27 +98,30 @@ APD <- APD_all_wide %>%
   dplyr::rename(publication_old = publication) %>%
   dplyr::left_join(apd_publications,
                    by = "site_name") %>%
-  dplyr::relocate(publication, DOI, .after = publication_old) %>%
-  dplyr::select(-publication_old, -publicationv2)
+  dplyr::relocate(publication, .after = publication_old) %>%
+  dplyr::select(-publication_old)
+  # dplyr::relocate(publication, DOI, .after = publication_old) %>%
+  # dplyr::select(-publication_old, -publicationv2)
 
 usethis::use_data(APD, overwrite = TRUE, compress = "xz")
 
+# RAW DATA ----
 # ------------------------------------------------------------------------------
 # |                             Raw data (.ASCII)                              |
 # ------------------------------------------------------------------------------
-output <- smpds::process_apd("~/Downloads/SMPDSv2/APD/",
-                             col_names = c("Taxon Name [APD]",
-                                           "Taxon Name [Author]",
-                                           "Depth [m]",
-                                           "Radiocarbon Chronology [yrs BP]",
-                                           "Calendar Chronology [yrs BP]",
-                                           "Count"),
-                             col_types = c(readr::col_character(),
-                                           readr::col_character(),
-                                           readr::col_double(),
-                                           readr::col_double(),
-                                           readr::col_double(),
-                                           readr::col_double()))
+output <- smpds:::process_apd("~/Downloads/SMPDSv2/APD/",
+                              col_names = c("Taxon Name [APD]",
+                                            "Taxon Name [Author]",
+                                            "Depth [m]",
+                                            "Radiocarbon Chronology [yrs BP]",
+                                            "Calendar Chronology [yrs BP]",
+                                            "Count"),
+                              col_types = c(readr::col_character(),
+                                            readr::col_character(),
+                                            readr::col_double(),
+                                            readr::col_double(),
+                                            readr::col_double(),
+                                            readr::col_double()))
 
 APD_old <- output %>%
   purrr::map_df(~.x) %>%
@@ -131,6 +173,7 @@ apd_paradox_files <- apd_paradox_files_txt %>%
   purrr::map(~.x %>% readr::read_delim(delim = ";", col_names = FALSE) # %>%
                # magrittr::set_attr("name", basename(.x))
              )
+# SANDBOX ----
 # ------------------------------------------------------------------------------
 # |                                  Sandbox                                   |
 # ------------------------------------------------------------------------------
