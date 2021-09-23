@@ -81,12 +81,35 @@ embsecbio_pubs <-
                 -ID_PUB,
                 -citation)
 
+# Note: Both Ispani sites seem to have different elevations
+# 1783, 6100
+# Replace this in the SMPDSv1: 6272
+
+ID_SAMPLES_IN_SMPDSv1 <- c(3086, 3087, 3088, 3114, # Sakhare
+                           3089, 3090, 3091, # Kumisi
+                           3092, 3093, 3094, 3095, # Tsavkisi
+                           3103, 3104, 3105, 3106, # Imera
+                           9901, 9902, 9903, # Aligol
+                           428, 429, # Ispani
+                           467, 468, 469, 470, 471, #Anzali
+                           472, # Aral Sea,
+                           473 # Caspian Sea I
+                           )
+embsecbio_metadata %>%
+  dplyr::filter(!(ID_SAMPLE %in% ID_SAMPLES_IN_SMPDSv1)) %>%
+  dplyr::slice(-seq_len(20)) %>%
+  dplyr::select(-ID_SITE, -basin_size, -source) %>%
+  dplyr::slice(1:20)
 
 embsecbio_unused <- embsecbio_metadata %>%
   dplyr::filter(age_BP < -72)
 
 embsecbio_metadata2 <- embsecbio_metadata %>%
   dplyr::filter(ID_ENTITY >= 2115)
+
+# Filter entities/samples already in the SMPDSv1
+embsecbio_metadata2 <- embsecbio_metadata %>%
+  dplyr::filter(!(ID_SAMPLE %in% ID_SAMPLES_IN_SMPDSv1))
   # dplyr::filter(ID_ENTITY %in% ID_ENTITY_ECS)
   # dplyr::filter(ID_SAMPLE %in% embsecbio_counts$ID_SAMPLE)
 embsecbio_counts2 <- embsecbio_counts %>%
@@ -163,7 +186,40 @@ usethis::use_data(EMBSeCBIO, overwrite = TRUE)
 # Find records in the SMPDSv1 from the EMBSeCBIO
 count_decimals <- function(x) {
   as.character(x) %>%
-    purrr::map_dbl(~.x %>% stringr::str_split_fixed("\\.", 2) %>% .[2] %>% nchar())
+    purrr::map_dbl(~.x %>%
+                     stringr::str_split_fixed("\\.", 2) %>%
+                     .[2] %>%
+                     nchar())
+}
+
+# Find matching records by location
+find_near_sites <- function(reference, target, buffer) {
+  target %>%
+    dplyr::mutate(.ID_NEAR_SITES = seq_along(latitude)) %>%
+    purrr::pmap_df(function(latitude, longitude, .ID_NEAR_SITES, ...) {
+      reference %>%
+        dplyr::filter(latitude > min(!!latitude - buffer),
+                      latitude < max(!!latitude + buffer),
+                      longitude > min(!!longitude - buffer),
+                      longitude < max(!!longitude + buffer)) %>%
+        dplyr::mutate(.ID_NEAR_SITES = .ID_NEAR_SITES, .before = 1)
+    })
+}
+
+# Find matching records by location and elevation
+find_near_sites2 <- function(reference, target, buffer = 0.5, elv_buffer = 100) {
+  target %>%
+    dplyr::mutate(.ID_NEAR_SITES = seq_along(latitude)) %>%
+    purrr::pmap_df(function(latitude, longitude, elevation, .ID_NEAR_SITES, ...) {
+      reference %>%
+        dplyr::filter(latitude > min(!!latitude - buffer),
+                      latitude < max(!!latitude + buffer),
+                      longitude > min(!!longitude - buffer),
+                      longitude < max(!!longitude + buffer),
+                      elevation > min(!!elevation - elv_buffer),
+                      elevation < max(!!elevation + elv_buffer)) %>%
+        dplyr::mutate(.ID_NEAR_SITES = .ID_NEAR_SITES, .before = 1)
+    })
 }
 
 # Esmeralda's updates to the EMBSeCBIO
@@ -241,6 +297,9 @@ aux_db2 <- aux_db %>%
                 count_decimals(longitude.x) >= digits,
                 count_decimals(longitude.x) >= digits)
 
+aux_db <- find_near_sites(smpdsv1_embsecbio, unmatched_by_entity_name_ECS, 0.5)
+aux_db <- find_near_sites2(smpdsv1_embsecbio, unmatched_by_entity_name_ECS, 0.5, 50)
+
 ## Subset
 matched_by_entity_name_sub <- embsecbio_metadata %>%
   dplyr::filter(entity_name %in% smpds::SMPDSv1$entity_name)
@@ -269,10 +328,12 @@ aux2 <- aux_sub2 %>%
   dplyr::filter(ID_ENTITY %in% names(counts[idx]))
 
 
-# ------------------------------------------------------------------------------
+# Sandbox ----
+# ______________________________________________________________________________
 # |                                  Sandbox                                   |
-# ------------------------------------------------------------------------------
-embsecbio_taxa <- readxl::read_xlsx("~/Downloads/SMPDSv2/EMBSeCBIO/EMBSECBIO_clean taxon names.xlsx",
+# ______________________________________________________________________________
+embsecbio_taxa <-
+  readxl::read_xlsx("~/Downloads/SMPDSv2/EMBSeCBIO/EMBSECBIO_clean taxon names.xlsx",
                                     sheet = 1) %>%
   magrittr::set_names(c("taxon_name", "clean_name")) %>%
   dplyr::mutate(action = ifelse(stringr::str_detect(tolower(clean_name),
