@@ -53,11 +53,17 @@ maartenv3 <- maartenv2 %>%
 ## Reconstruct potential natural vegetation (PNV)
 maartenv4 <- maartenv3 %>%
   smpds::parallel_extract_biome() %>%
-  smpds::biome_name()
+  smpds::biome_name() %>%
+  progressr::with_progress()
 
-maartenv4 %>%
+maartenv5 <- maartenv4 %>%
+  dplyr::mutate(map = pre %>%
+                  purrr::map_dbl(~sum(.x, na.rm = TRUE)),
+                .before = ID_BIOME) # Calculate MAP
+
+maartenv5 %>%
   dplyr::select(-sf, -tmp, -pre) %>%
-  readr::write_excel_csv("~/Downloads/SMPDSv2/Maarten/maarten_reconstructions.csv")
+  readr::write_excel_csv("~/Downloads/SMPDSv2/Maarten/maarten_reconstructions_2021-09-27.csv")
 
 ## Plots
 show_plot <- FALSE
@@ -66,12 +72,12 @@ stroke <- 0.1
 width <- 16
 xlim <- c(60, 120)
 ylim <- c(45, 60)
-p_gdd0 <- plot_gdd(maartenv4,
-                   size = size,
-                   stroke = stroke,
-                   xlim = xlim,
-                   ylim = ylim,
-                   show_plot = show_plot)
+p_gdd0 <- maartenv5 %>%
+  plot_gdd(size = size,
+           stroke = stroke,
+           xlim = xlim,
+           ylim = ylim,
+           show_plot = show_plot)
 ggplot2::ggsave(file.path("~/Downloads/SMPDSv2/Maarten/",
                           paste0("maarten_gdd0_", Sys.Date(), ".pdf")),
                 plot = p_gdd0,
@@ -79,11 +85,25 @@ ggplot2::ggsave(file.path("~/Downloads/SMPDSv2/Maarten/",
                 width = width,
                 height = 8,
                 units = "in")
-p_mat <- plot_mat(maartenv4,
-                  size = size,
-                  stroke = stroke,
-                  xlim = xlim,
-                  ylim = ylim,show_plot = show_plot)
+p_map <- maartenv5 %>%
+  plot_climate(var = "map",
+               units = "mm/year",
+               size = size,
+               stroke = stroke,
+               xlim = xlim,
+               ylim = ylim,show_plot = show_plot)
+ggplot2::ggsave(file.path("~/Downloads/SMPDSv2/Maarten/",
+                          paste0("maarten_map_", Sys.Date(), ".pdf")),
+                plot = p_map,
+                device = "pdf",
+                width = width,
+                height = 8,
+                units = "in")
+p_mat <- maartenv5 %>%
+  plot_mat(size = size,
+           stroke = stroke,
+           xlim = xlim,
+           ylim = ylim,show_plot = show_plot)
 ggplot2::ggsave(file.path("~/Downloads/SMPDSv2/Maarten/",
                           paste0("maarten_mat_", Sys.Date(), ".pdf")),
                 plot = p_mat,
@@ -91,12 +111,12 @@ ggplot2::ggsave(file.path("~/Downloads/SMPDSv2/Maarten/",
                 width = width,
                 height = 8,
                 units = "in")
-p_mi <- plot_mi(maartenv4,
-                size = size,
-                stroke = stroke,
-                xlim = xlim,
-                ylim = ylim,
-                show_plot = show_plot)
+p_mi <- maartenv5 %>%
+  plot_mi(size = size,
+          stroke = stroke,
+          xlim = xlim,
+          ylim = ylim,
+          show_plot = show_plot)
 ggplot2::ggsave(file.path("~/Downloads/SMPDSv2/Maarten/",
                           paste0("maarten_mi_", Sys.Date(), ".pdf")),
                 plot = p_mi,
@@ -104,12 +124,12 @@ ggplot2::ggsave(file.path("~/Downloads/SMPDSv2/Maarten/",
                 width = width,
                 height = 8,
                 units = "in")
-p_mtco <- plot_mtco(maartenv4,
-                    size = size,
-                    stroke = stroke,
-                    xlim = xlim,
-                    ylim = ylim,
-                    show_plot = show_plot)
+p_mtco <- maartenv5 %>%
+  plot_mtco(size = size,
+            stroke = stroke,
+            xlim = xlim,
+            ylim = ylim,
+            show_plot = show_plot)
 ggplot2::ggsave(file.path("~/Downloads/SMPDSv2/Maarten/",
                           paste0("maarten_mtco_", Sys.Date(), ".pdf")),
                 plot = p_mtco,
@@ -117,12 +137,12 @@ ggplot2::ggsave(file.path("~/Downloads/SMPDSv2/Maarten/",
                 width = width,
                 height = 8,
                 units = "in")
-p_mtwa <- plot_mtwa(maartenv4,
-                    size = size,
-                    stroke = stroke,
-                    xlim = xlim,
-                    ylim = ylim,
-                    show_plot = show_plot)
+p_mtwa <- maartenv5 %>%
+  plot_mtwa(size = size,
+            stroke = stroke,
+            xlim = xlim,
+            ylim = ylim,
+            show_plot = show_plot)
 ggplot2::ggsave(file.path("~/Downloads/SMPDSv2/Maarten/",
                           paste0("maarten_mtwa_", Sys.Date(), ".pdf")),
                 plot = p_mtwa,
@@ -131,15 +151,15 @@ ggplot2::ggsave(file.path("~/Downloads/SMPDSv2/Maarten/",
                 height = 8,
                 units = "in")
 
-p_biome <- plot_biome(maartenv4, #%>%
-                         # dplyr::mutate(ID_BIOME = smpds::pnv_classes()$ID_BIOME %>%
-                         #                 sample(size = length(ID_BIOME), replace = TRUE)),
-                      size = size,
-                      stroke = stroke,
-                      xlim = xlim,
-                      ylim = ylim,
-                      legend.key.width = ggplot2::unit(1.3, "cm"),
-                      show_plot = show_plot)
+p_biome <- maartenv5 %>%#%>%
+  # dplyr::mutate(ID_BIOME = smpds::pnv_classes()$ID_BIOME %>%
+  #                 sample(size = length(ID_BIOME), replace = TRUE)),
+  plot_biome(size = size,
+             stroke = stroke,
+             xlim = xlim,
+             ylim = ylim,
+             legend.key.width = ggplot2::unit(1.3, "cm"),
+             show_plot = show_plot)
 ggplot2::ggsave(file.path("~/Downloads/SMPDSv2/Maarten/",
                           paste0("maarten_PNV_", Sys.Date(), ".pdf")),
                 plot = p_biome,
