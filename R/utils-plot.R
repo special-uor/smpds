@@ -64,7 +64,7 @@ plot_biome <- function(.data,
                                            fill = description)) +
     ggplot2::geom_sf(data = rnaturalearth::ne_countries(scale = "small",
                                                         returnclass = "sf"),
-                     fill = "white",
+                     fill = NA,
                      size = 0.25) +
     ggplot2::coord_sf(xlim = xlim, ylim = ylim, ..., expand = FALSE) +
     ggplot2::geom_point(mapping = ggplot2::aes(fill = description),
@@ -206,7 +206,8 @@ plot_climate <- function(.data,
                                            fill = var)) +
     ggplot2::geom_sf(data = rnaturalearth::ne_countries(scale = "small",
                                                         returnclass = "sf"),
-                     fill = "white", size = 0.25) +
+                     fill = NA,
+                     size = 0.25) +
     ggplot2::coord_sf(xlim = xlim, ylim = ylim, ..., expand = FALSE) +
     ggplot2::geom_point(mapping = ggplot2::aes(fill = var),
                         size = size,
