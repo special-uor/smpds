@@ -2,6 +2,7 @@
 % Please edit documentation in R/utils-plot.R
 \name{plot_climate}
 \alias{plot_climate}
+\alias{plot_climate_countour}
 \alias{plot_gdd}
 \alias{plot_mat}
 \alias{plot_mi}
@@ -21,6 +22,24 @@ plot_climate(
   xlim = c(-180, 180),
   ylim = c(-60, 90),
   show_plot = TRUE,
+  elevation_cut = NULL,
+  contour = FALSE,
+  ...
+)
+
+plot_climate_countour(
+  .data,
+  var = "mat",
+  units = NA,
+  fill_scale = ggplot2::scale_fill_fermenter(name = toupper(var), palette = "Spectral"),
+  size = 1,
+  stroke = 0.5,
+  legend.key.width = ggplot2::unit(2, "cm"),
+  legend.position = "bottom",
+  xlim = c(-180, 180),
+  ylim = c(-60, 90),
+  show_plot = TRUE,
+  elevation_cut = NULL,
   ...
 )
 
@@ -34,6 +53,8 @@ plot_gdd(
   xlim = c(-180, 180),
   ylim = c(-60, 90),
   show_plot = TRUE,
+  elevation_cut = NULL,
+  contour = FALSE,
   ...
 )
 
@@ -46,6 +67,8 @@ plot_mat(
   xlim = c(-180, 180),
   ylim = c(-60, 90),
   show_plot = TRUE,
+  elevation_cut = NULL,
+  contour = FALSE,
   ...
 )
 
@@ -58,6 +81,8 @@ plot_mi(
   xlim = c(-180, 180),
   ylim = c(-60, 90),
   show_plot = TRUE,
+  elevation_cut = NULL,
+  contour = FALSE,
   ...
 )
 
@@ -70,6 +95,8 @@ plot_mtco(
   xlim = c(-180, 180),
   ylim = c(-60, 90),
   show_plot = TRUE,
+  elevation_cut = NULL,
+  contour = FALSE,
   ...
 )
 
@@ -82,6 +109,8 @@ plot_mtwa(
   xlim = c(-180, 180),
   ylim = c(-60, 90),
   show_plot = TRUE,
+  elevation_cut = NULL,
+  contour = FALSE,
   ...
 )
 }
@@ -135,6 +164,13 @@ though they would be visible in the final plot region.}
 \item{show_plot}{Boolean flag to indicate whether or not the graphic should
 be displayed, if \code{FALSE}, it only returns the \code{ggplot2} object.
 Default: \code{TRUE}.}
+
+\item{elevation_cut}{Numeric value to use as the threshold of the elevation
+at which the sites will be represented with different shapes.}
+
+\item{contour}{Boolean flag to indicate if a contour should be overlaid
+on the individual sites/points. It uses the function \code{\link[akima:interp]{akima::interp()}}
+to interpolate values from the nearest available points.}
 
 \item{...}{
   Arguments passed on to \code{\link[ggplot2:ggsf]{ggplot2::coord_sf}}
