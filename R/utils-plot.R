@@ -128,6 +128,8 @@ plot_biome <- function(.data,
 #' @param fill_scale \code{ggplot2} compatible object with information on how to
 #'     fill the individual points for the climate variable. Default:
 #'     \code{ggplot2::scale_fill_viridis_c(name = toupper(var))}.
+#' @param elevation_cut Numeric value to use as the threshold of the elevation
+#'     at which the sites will be represented with different shapes.
 #' @inheritParams plot_biome
 #' @inheritParams ggplot2::theme
 #' @inheritParams ggplot2::coord_sf
@@ -150,6 +152,7 @@ plot_climate <- function(.data,
                          xlim = c(-180, 180),
                          ylim = c(-60, 90),
                          show_plot = TRUE,
+                         elevation_cut = NULL,
                          ...) {
   # Local bindings
   latitude <- longitude <- NULL
@@ -161,6 +164,18 @@ plot_climate <- function(.data,
          "not found in the `.data` object:",
          paste0("\n  - ", c("latitude", "longitude", var)[!idx]),
          call. = FALSE)
+  }
+
+  # Use different shapes if elevation_cut is given by the user
+  caption <- NULL
+  shape <- rep(21, nrow(.data))
+  if (!is.null(elevation_cut) & "elevation" %in% colnames(.data)) {
+    caption <- paste0("Circles: elevation < ",
+                      elevation_cut,
+                      "m -- Triangles: elevation >= ",
+                      elevation_cut,
+                      "m")
+    shape <- ifelse(.data$elevation >= elevation_cut, 24, 21)
   }
 
   if (!is.na(units))
@@ -211,7 +226,7 @@ plot_climate <- function(.data,
     ggplot2::coord_sf(xlim = xlim, ylim = ylim, ..., expand = FALSE) +
     ggplot2::geom_point(mapping = ggplot2::aes(fill = var),
                         size = size,
-                        shape = 21,
+                        shape = shape,
                         stroke = stroke) +
     ggplot2::geom_col(alpha = 0) +
     fill_scale +
