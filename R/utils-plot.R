@@ -130,6 +130,9 @@ plot_biome <- function(.data,
 #'     \code{ggplot2::scale_fill_viridis_c(name = toupper(var))}.
 #' @param elevation_cut Numeric value to use as the threshold of the elevation
 #'     at which the sites will be represented with different shapes.
+#' @param contour Boolean flag to indicate if a contour should be overlaid
+#'     on the individual sites/points. It uses the function [akima::interp()]
+#'     to interpolate values from the nearest available points.
 #' @inheritParams plot_biome
 #' @inheritParams ggplot2::theme
 #' @inheritParams ggplot2::coord_sf
@@ -153,7 +156,32 @@ plot_climate <- function(.data,
                          ylim = c(-60, 90),
                          show_plot = TRUE,
                          elevation_cut = NULL,
+                         contour = FALSE,
                          ...) {
+  if (contour) {
+    if (fill_scale$is_discrete) {
+      warning("Changing fill_scale to a Spectral continuous scale ...")
+      fill_scale =
+        ggplot2::scale_fill_fermenter(name = toupper(var),
+                                      palette = "Spectral")
+    }
+    plot_climate_countour(.data = .data,
+                          var = var,
+                          units = units,
+                          fill_scale = fill_scale,
+                          size = size,
+                          stroke = stroke,
+                          legend.key.width = legend.key.width,
+                          legend.position = legend.position,
+                          xlim = xlim,
+                          ylim = ylim,
+                          show_plot = show_plot,
+                          elevation_cut = elevation_cut,
+                          ...) %>%
+      return()
+
+  }
+
   # Local bindings
   latitude <- longitude <- NULL
   # Check for latitude, longitude and var
@@ -230,7 +258,9 @@ plot_climate <- function(.data,
                         stroke = stroke) +
     ggplot2::geom_col(alpha = 0) +
     fill_scale +
-    ggplot2::labs(x = NULL, y = NULL) +
+    ggplot2::labs(x = NULL,
+                  y = NULL,
+                  caption = caption) +
     ggplot2::guides(
       fill = ggplot2::guide_legend(
         nrow = 1,
@@ -256,6 +286,105 @@ plot_climate <- function(.data,
   return(invisible(p))
 }
 
+#' @importFrom magrittr `%$%`
+#' @rdname plot_climate
+#' @export
+plot_climate_countour <-
+  function(.data,
+           var = "mat",
+           units = NA,
+           fill_scale =
+             ggplot2::scale_fill_fermenter(name = toupper(var),
+                                           palette = "Spectral"),
+           size = 1,
+           stroke = 0.5,
+           legend.key.width = ggplot2::unit(2, "cm"),
+           legend.position = "bottom",
+           xlim = c(-180, 180),
+           ylim = c(-60, 90),
+           show_plot = TRUE,
+           elevation_cut = NULL,
+           ...) {
+  # Local bindings
+  latitude <- longitude <- NULL
+  # Check for latitude, longitude and var
+  idx <- c("latitude", "longitude", var) %in% colnames(.data)
+  if (sum(!idx) != 0) {
+    stop("The following variable",
+         ifelse(sum(!idx) == 1, " was ", "s were "),
+         "not found in the `.data` object:",
+         paste0("\n  - ", c("latitude", "longitude", var)[!idx]),
+         call. = FALSE)
+  }
+
+  # Use different shapes if elevation_cut is given by the user
+  caption <- NULL
+  shape <- rep(21, nrow(.data))
+  if (!is.null(elevation_cut) & "elevation" %in% colnames(.data)) {
+    caption <- paste0("Circles: elevation < ",
+                      elevation_cut,
+                      "m -- Triangles: elevation >= ",
+                      elevation_cut,
+                      "m")
+    shape <- ifelse(.data$elevation >= elevation_cut, 24, 21)
+  }
+
+  if (!is.na(units))
+    fill_scale$name <- paste0(fill_scale$name, " [", units, "]")
+  .datav2 <- .data %>%
+    dplyr::rename(var = !!var) %>%
+    dplyr::filter(!is.na(var)) %>%
+    dplyr::distinct(longitude, latitude, .keep_all = TRUE) %>%
+    with(akima::interp(x = longitude, y = latitude, z = var))
+  # prepare data in long format
+  .datav3 <- .datav2 %$%
+    tibble::tibble(longitude = rep(x, length(y)),
+                   latitude = rep(y, each = length(x)),
+                   var = as.double(z)) %>%
+    dplyr::filter(!is.na(var))
+  # create plot
+  p <- .datav3 %>%
+    ggplot2::ggplot(mapping = ggplot2::aes(x = longitude,
+                                           y = latitude,
+                                           fill = var)) +
+    ggplot2::geom_tile(ggplot2::aes(fill = var)) +
+    ggplot2::geom_sf(data = rnaturalearth::ne_countries(scale = "small",
+                                                        returnclass = "sf"),
+                     fill = NA, size = 0.25) +
+    ggplot2::coord_sf(xlim = xlim, ylim = ylim, ..., expand = FALSE) +
+    ggplot2::geom_point(mapping = ggplot2::aes(longitude,
+                                               latitude,
+                                               fill = var),
+                        data = .data %>%
+                          dplyr::rename(var = !!var) %>%
+                          dplyr::filter(!is.na(var)),
+                        size = size,
+                        shape = shape,
+                        stroke = stroke,
+                        position = "jitter") +
+    ggplot2::scale_shape_identity() +
+    fill_scale +
+    ggplot2::labs(x = NULL,
+                  y = NULL,
+                  caption = caption) +
+
+  ggplot2::theme(legend.position = legend.position,
+                 legend.key.width = legend.key.width,
+                 legend.key.height = ggplot2::unit(1, "cm"),
+                 legend.background = ggplot2::element_rect(colour = "black",
+                                                           fill = "white"),
+                 legend.key = ggplot2::element_blank(),
+                 panel.grid.major = ggplot2::element_line(colour = gray(.8),
+                                                          linetype = "dashed",
+                                                          size = 0.4),
+                 panel.border = ggplot2::element_rect(colour = "black",
+                                                      fill = NA),
+                 panel.background = ggplot2::element_rect(fill = NA))
+  if (show_plot)
+    print(p)
+  return(invisible(p))
+}
+
 #' @param baseline Numeric value to be used as the baseline for the calculation
 #'     of the Growing Degree Days, default: \code{0}.
 #' @rdname plot_climate
@@ -269,6 +398,8 @@ plot_gdd <- function(.data,
                      xlim = c(-180, 180),
                      ylim = c(-60, 90),
                      show_plot = TRUE,
+                     elevation_cut = NULL,
+                     contour = FALSE,
                      ...) {
   legend_name <- paste0("GDD", baseline)
   .data %>%
@@ -284,6 +415,8 @@ plot_gdd <- function(.data,
                  xlim = xlim,
                  ylim = ylim,
                  show_plot = show_plot,
+                 elevation_cut = elevation_cut,
+                 contour = contour,
                  ...)
 }
 
@@ -297,6 +430,8 @@ plot_mat <- function(.data,
                      xlim = c(-180, 180),
                      ylim = c(-60, 90),
                      show_plot = TRUE,
+                     elevation_cut = NULL,
+                     contour = FALSE,
                      ...) {
   .data %>%
     plot_climate(var = "mat",
@@ -311,6 +446,8 @@ plot_mat <- function(.data,
                  xlim = xlim,
                  ylim = ylim,
                  show_plot = show_plot,
+                 elevation_cut = elevation_cut,
+                 contour = contour,
                  ...)
 }
 
@@ -324,6 +461,8 @@ plot_mi <- function(.data,
                     xlim = c(-180, 180),
                     ylim = c(-60, 90),
                     show_plot = TRUE,
+                    elevation_cut = NULL,
+                    contour = FALSE,
                     ...) {
   .data %>%
     plot_climate(var = "mi",
@@ -337,6 +476,8 @@ plot_mi <- function(.data,
                  xlim = xlim,
                  ylim = ylim,
                  show_plot = show_plot,
+                 elevation_cut = elevation_cut,
+                 contour = contour,
                  ...)
 }
 
@@ -350,6 +491,8 @@ plot_mtco <- function(.data,
                       xlim = c(-180, 180),
                       ylim = c(-60, 90),
                       show_plot = TRUE,
+                      elevation_cut = NULL,
+                      contour = FALSE,
                       ...) {
   .data %>%
     plot_climate(var = "mtco",
@@ -363,6 +506,8 @@ plot_mtco <- function(.data,
                  xlim = xlim,
                  ylim = ylim,
                  show_plot = show_plot,
+                 elevation_cut = elevation_cut,
+                 contour = contour,
                  ...)
 }
 
@@ -376,6 +521,8 @@ plot_mtwa <- function(.data,
                       xlim = c(-180, 180),
                       ylim = c(-60, 90),
                       show_plot = TRUE,
+                      elevation_cut = NULL,
+                      contour = FALSE,
                       ...) {
   .data %>%
     plot_climate(var = "mtwa",
@@ -390,5 +537,7 @@ plot_mtwa <- function(.data,
                  xlim = xlim,
                  ylim = ylim,
                  show_plot = show_plot,
+                 elevation_cut = elevation_cut,
+                 contour = contour,
                  ...)
 }
