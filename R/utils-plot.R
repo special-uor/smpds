@@ -159,27 +159,27 @@ plot_climate <- function(.data,
                          contour = FALSE,
                          ...) {
   if (contour) {
-    if (fill_scale$is_discrete) {
-      warning("Changing fill_scale to a Spectral continuous scale ...")
-      fill_scale =
-        ggplot2::scale_fill_fermenter(name = toupper(var),
-                                      palette = "Spectral")
+    aux <- .data %>% dplyr::rename(var = !!var) %>% dplyr::select(var)
+    if (is.factor(aux$var) |
+        !(typeof(aux$var) %in% c("double", "integer", "numeric"))) {
+      warning("The target variable, `", var, "`, must be numeric. ",
+              "Plotting simple climate map.", call. = FALSE)
+    } else {
+      output <- plot_climate_countour(.data = .data,
+                                      var = var,
+                                      units = units,
+                                      fill_scale = fill_scale,
+                                      size = size,
+                                      stroke = max(0.3, stroke),
+                                      legend.key.width = legend.key.width,
+                                      legend.position = legend.position,
+                                      xlim = xlim,
+                                      ylim = ylim,
+                                      show_plot = show_plot,
+                                      elevation_cut = elevation_cut,
+                                      ...)
+      return(output)
     }
-    plot_climate_countour(.data = .data,
-                          var = var,
-                          units = units,
-                          fill_scale = fill_scale,
-                          size = size,
-                          stroke = stroke,
-                          legend.key.width = legend.key.width,
-                          legend.position = legend.position,
-                          xlim = xlim,
-                          ylim = ylim,
-                          show_plot = show_plot,
-                          elevation_cut = elevation_cut,
-                          ...) %>%
-      return()
-
   }
 
   # Local bindings
@@ -315,6 +315,15 @@ plot_climate_countour <-
          "not found in the `.data` object:",
          paste0("\n  - ", c("latitude", "longitude", var)[!idx]),
          call. = FALSE)
+  }
+
+  # Check the fill_scale
+  if (fill_scale$is_discrete()) {
+    warning("Changing fill_scale to a Spectral continuous scale ...",
+            call. = FALSE)
+    fill_scale =
+      ggplot2::scale_fill_fermenter(name = toupper(var),
+                                    palette = "Spectral")
   }
 
   # Use different shapes if elevation_cut is given by the user
