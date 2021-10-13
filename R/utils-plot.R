@@ -165,36 +165,42 @@ plot_climate <- function(.data,
 
   if (!is.na(units))
     fill_scale$name <- paste0(fill_scale$name, " [", units, "]")
-  p <- .data %>%
+  .datav2 <- .data %>%
     dplyr::rename(var = !!var) %>%
-    dplyr::filter(!is.na(var)) %>%
-    dplyr::mutate(
-      var = var %>%
-        cut(include.lowest = TRUE,
-            .,
-            breaks = c(
-              -Inf,
-              seq(
-                from = min(., na.rm = TRUE),
-                # from = signif(min(., na.rm = TRUE) * 0.99999, digits = 5),
-                to = max(., na.rm = TRUE) -
-                  round((max(., na.rm = TRUE) - min(., na.rm = TRUE)) / 9,
-                        digits = 4),
-                by = round((max(., na.rm = TRUE) - min(., na.rm = TRUE)) / 9,
-                           digits = 4))[-1] %>%
-                round(digits = 4),
-              Inf),
-            labels =
-              seq(
-                from = min(., na.rm = TRUE),
-                to = max(., na.rm = TRUE) -
-                  round((max(., na.rm = TRUE) - min(., na.rm = TRUE)) / 9,
-                        digits = 4),
-                by = round((max(., na.rm = TRUE) - min(., na.rm = TRUE)) / 9,
-                           digits = 4)) %>%
-              round(digits = 4)
-        )
-      ) %>%
+    dplyr::filter(!is.na(var))
+
+  # Create arbitrary factor for the input variable
+  if (!is.factor(.datav2$var) |
+      (!is.factor(.datav2$var) & !is.character(.datav2$var))) {
+    .datav2 <- .datav2 %>%
+      dplyr::mutate(
+        var = var %>%
+          cut(include.lowest = TRUE,
+              .,
+              breaks = c(
+                -Inf,
+                seq(
+                  from = min(., na.rm = TRUE),
+                  to = max(., na.rm = TRUE) -
+                    round((max(., na.rm = TRUE) - min(., na.rm = TRUE)) / 9,
+                          digits = 4),
+                  by = round((max(., na.rm = TRUE) - min(., na.rm = TRUE)) / 9,
+                             digits = 4))[-1] %>%
+                  round(digits = 4),
+                Inf),
+              labels =
+                seq(
+                  from = min(., na.rm = TRUE),
+                  to = max(., na.rm = TRUE) -
+                    round((max(., na.rm = TRUE) - min(., na.rm = TRUE)) / 9,
+                          digits = 4),
+                  by = round((max(., na.rm = TRUE) - min(., na.rm = TRUE)) / 9,
+                             digits = 4)) %>%
+                round(digits = 4)
+          )
+      )
+  }
+  p <- .datav2 %>%
     ggplot2::ggplot(mapping = ggplot2::aes(x = longitude,
                                            y = latitude,
                                            fill = var)) +
