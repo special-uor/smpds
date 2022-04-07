@@ -16,6 +16,17 @@
 #' http://fpd.sedoo.fr/fpd/bibli.do
 "APD"
 
+#' \code{australia_pollen} dataset
+#'
+#' The Australian Pollen Dataset.
+#'
+#' @format A data frame (\code{tibble} object) with `r nrow(smpds::australia_pollen)` rows and `r ncol(smpds::australia_pollen)` variables:
+#' \describe{
+#'   \item{...}{int ...}
+#' }
+#'
+"australia_pollen"
+
 #' \code{CMPD} dataset
 #'
 #' The Chinese Modern Pollen Dataset by Ni Jian.
