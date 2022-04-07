@@ -5,8 +5,9 @@
 #'
 #' @param path Path to where the raw data files are located.
 #' @param ext Extension of the raw data files.
+#' @param ... Additional parametres to be used by `readr::read_delim`
 #' @inheritParams readr::read_delim
-#' @inheritDotParams readr::read_delim -delim -comment
+# @inheritDotParams readr::read_delim -delim -comment
 #'
 #' @return List with a tibble for each of the raw data files
 #' @keywords internal

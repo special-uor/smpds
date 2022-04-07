@@ -150,7 +150,6 @@ gwr.numeric <- function(.ref,
   climate_grid <- coordinates %>%
     dplyr::right_join(.ref_tbl,
                       by = c("latitude", "longitude"))
-
   # Start implementing Geographically Weighted Regression
   .tar_coords <- .tar
   sp::coordinates(.tar_coords) <- c("longitude", "latitude")

@@ -23,6 +23,6 @@ The African Pollen Dataset.
 Vincens A, Lézine A, Buchet G, Lewden D, Le Thomas A (2007).
 \dQuote{African pollen database inventory of tree and shrub pollen types.}
 \emph{Review of Palaeobotany and Palynology}, \bold{145}(1-2), 135--141.
-\doi{10.1016/j.revpalbo.2006.09.004}, \url{https://doi.org/10.1016/j.revpalbo.2006.09.004}.
+\doi{10.1016/j.revpalbo.2006.09.004}.
 }
 \keyword{datasets}
