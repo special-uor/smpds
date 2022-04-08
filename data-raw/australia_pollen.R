@@ -159,6 +159,7 @@ australia_pollen %>%
 australia_pollen_biomes <- australia_pollen %>%
   dplyr::distinct(sample_name, latitude, longitude) %>%
   smpds::parallel_extract_biome(cpus = 12) %>%
+  # smpds::biome_name() %>%
   smpds::pb()
 
 australia_pollen_biomes %>%
@@ -210,34 +211,38 @@ australia_pollen_amalgamated <- australia_pollen_with_pnv %>%
 
 # Climate reconstructions ----
 path_to_cru_ts <- "~/OneDrive - University of Reading/UoR/Data/CRU/4.04/"
-CPUS <- 1
+CPUS <- 6
 australia_pollen_base <- australia_pollen_clean %>%
   dplyr::select(site_name:sample_name)
 ## Interpolate climate from the CRU TS dataset
 ## Cloud coverage ----
-# ncin <- file.path(path_to_cru_ts,
-#                   "cru_ts4.04.1901.2019.cld.dat-clim-1961-1990-int.nc") %>%
-#   ncdf4::nc_open()
-# cld_ref_nc <- ncdf4::ncvar_get(ncin, varid = "cld")
-# ncdf4::nc_close(ncin)
 australia_pollen_base_cld <- australia_pollen_base %>%
   dplyr::slice(1:10) %>%
-  smpds::gwr(.ref = cld_ref_nc,
-             cpus = 1) %>%
-  progressr::with_progress()
+  smpds::gwr(.ref = file.path(path_to_cru_ts,
+                              "cru_ts4.04.1901.2019.cld.dat-clim-1961-1990-int.nc"),
+             varid = "cld",
+             cpus = CPUS) %>%
+  smpds::pb()
 
+## Precipitation ----
+# tictoc::tic()
 australia_pollen_base_pre <- australia_pollen_base %>%
   dplyr::slice(1:10) %>%
   smpds::gwr(varid = "pre",
              .ref = file.path(path_to_cru_ts,
                               "cru_ts4.04.1901.2019.pre.dat-new-clim-1961-1990-int.nc"),
-             cpus = CPUS)
+             cpus = CPUS) %>%
+  smpds::pb()
+# tictoc::toc()
 
+## Temperature ----
 australia_pollen_base_tmp <- australia_pollen_base %>%
+  dplyr::slice(1:10) %>%
   smpds::gwr(varid = "tmp",
              .ref = file.path(path_to_cru_ts,
                               "cru_ts4.04-clim-1961-1990-daily.tmp.nc"),
-             cpus = CPUS)
+             cpus = CPUS) %>%
+  smpds::pb()
 
 ## Transform climate reconstructions
 australia_pollen_base_cld2 <- australia_pollen_base_cld %>%
@@ -251,8 +256,8 @@ australia_pollen_base_tmp2 <- australia_pollen_base_tmp %>%
   smpds::pivot_data(varname = "tmp")
 
 australia_pollen_basev2 <- australia_pollen_base_sf %>%
-  dplyr::left_join(australia_pollen_base_pre2) %>%
-  dplyr::left_join(australia_pollen_base_tmp2)
+  dplyr::bind_cols(australia_pollen_base_pre2 %>% dplyr::select(pre),
+                   australia_pollen_base_tmp2 %>% dplyr::select(tmp))
 
 ## Reconstruct climate variables
 australia_pollen_basev3 <- australia_pollen_basev2 %>%
@@ -261,7 +266,44 @@ australia_pollen_basev3 <- australia_pollen_basev2 %>%
   smpds::mat() %>%
   smpds::mtco() %>%
   smpds::mtwa() %>%
-  progressr::with_progress()
+  smpds::pb()
+
+### Plots ----
+show_plot <- FALSE
+size <- 1.5
+stroke <- 0.1
+width <- 16
+xlim <- c(105, 160)
+ylim <- c(-51, 0)
+p_gdd0 <- smpds::plot_gdd(australia_pollen_basev3,
+                          size = size,
+                          stroke = stroke,
+                          xlim = xlim,
+                          ylim = ylim,
+                          show_plot = show_plot, fill_countries = "white")
+ggplot2::ggsave(file.path("~/Downloads/",
+                          paste0("australia_pollen_gdd0_", Sys.Date(), ".pdf")),
+                plot = p_gdd0,
+                device = "pdf",
+                width = width,
+                height = 8,
+                units = "in")
+p_mat <- smpds::plot_mat(australia_pollen_basev3,
+                         size = size,
+                         stroke = stroke,
+                         xlim = xlim,
+                         ylim = ylim,
+                         show_plot = show_plot)
+ggplot2::ggsave(file.path("~/Downloads",
+                          paste0("australia_pollen_mat_", Sys.Date(), ".pdf")),
+                plot = p_mat,
+                device = "pdf",
+                width = width,
+                height = 8,
+                units = "in")
+
+australia_pollen_basev3 %>%
+  smpds::plot_climate()
 
 # Store subsets ----
 australia_pollen <- australia_pollen_clean %>%
