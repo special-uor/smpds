@@ -158,27 +158,59 @@ gwr.numeric <- function(.ref,
   oplan <- future::plan(future::multisession, workers = cpus)
   on.exit(future::plan(oplan), add = TRUE)
   fm_suffix <- " ~ elevation"
-  output <- seq_len(nrow(.tar)) %>%
-    furrr::future_map_dfr(function(i) {
-      climate_grid2 <- subset_coords(climate_grid,
-                                     .tar$latitude[i],
-                                     .tar$longitude[i],
-                                     buffer)
-      fms <-  names(climate_grid2) %>%
-        stringr::str_subset("^T[0-9]*$") %>%
-        stringr::str_c(fm_suffix)
-      fms %>%
-        purrr::map_dfc(~spgwr::gwr(formula = .x,
-                                   data = climate_grid2,
-                                   bandwidth = bandwidth,
-                                   fit.points = .tar_coords[i, ],
-                                   predictions = TRUE)$SDF$pred %>%
-                         list() %>%
-                         magrittr::set_names(.x %>%
-                                               stringr::str_remove(fm_suffix)))
+  {
+    pb <- progressr::progressor(steps = nrow(.tar))
+    output <- seq_len(nrow(.tar)) %>%
+      furrr::future_map_dfr(function(i) {
+        climate_grid2 <- intermediate_output <- NULL
+        climate_grid2 <- tryCatch({
+          subset_coords(.data = climate_grid,
+                        latitude = .tar$latitude[i],
+                        longitude = .tar$longitude[i],
+                        buffer = buffer)
+        }, error = function(e) {
+          warning("A valid interpolation zone was not found (row ", i,"), ",
+                  "this core is likely to be in an area without obsevations ",
+                  "in the reference dataset (e.g. marine core)",
+                  call. = FALSE)
+          NULL
+        })
+        if (is.null(climate_grid2)) {
+          # Extract the number of days in the reference dataset
+          ndays <- climate_grid %>%
+            dplyr::select(dplyr::starts_with("T")) %>%
+            ncol()
+          # create an empty data frame to return as the default
+          default_output <- tibble::tibble(
+            name = stringr::str_c("T", seq_len(ndays)),
+            value = NA
+          ) %>%
+            tidyr::pivot_wider()
+          # pb()
+          # return(default_output)
+          intermediate_output <- default_output
+        } else {
+          fms <-  names(climate_grid2) %>%
+            stringr::str_subset("^T[0-9]*$") %>%
+            stringr::str_c(fm_suffix)
+          intermediate_output <- fms %>%
+            furrr::future_map_dfc(~spgwr::gwr(formula = .x,
+            # purrr::map_dfc(~spgwr::gwr(formula = .x,
+                                       data = climate_grid2,
+                                       bandwidth = bandwidth,
+                                       fit.points = .tar_coords[i, ],
+                                       predictions = TRUE)$SDF$pred %>%
+                             list() %>%
+                             magrittr::set_names(
+                               .x %>% stringr::str_remove(fm_suffix)
+                             )
+            )
+        }
+        pb()
+        intermediate_output
     },
-    .progress = TRUE,
     .options = furrr::furrr_options(seed = TRUE))
+  }
 
   .tar %>%
     dplyr::bind_cols(output)
