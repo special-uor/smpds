@@ -128,6 +128,14 @@ plot_biome <- function(.data,
 #' @param fill_scale \code{ggplot2} compatible object with information on how to
 #'     fill the individual points for the climate variable. Default:
 #'     \code{ggplot2::scale_fill_viridis_c(name = toupper(var))}.
+#' @param elevation_cut Numeric value to use as the threshold of the elevation
+#'     at which the sites will be represented with different shapes.
+#' @param fill_countries String containing a colour code (HEX value) or colour
+#'     name, to be used as filling for the countries.
+#'     Default: `NA` (transparent).
+#' @param contour Boolean flag to indicate if a contour should be overlaid
+#'     on the individual sites/points. It uses the function [akima::interp()]
+#'     to interpolate values from the nearest available points.
 #' @inheritParams plot_biome
 #' @inheritParams ggplot2::theme
 #' @inheritParams ggplot2::coord_sf
@@ -150,9 +158,39 @@ plot_climate <- function(.data,
                          xlim = c(-180, 180),
                          ylim = c(-60, 90),
                          show_plot = TRUE,
+                         elevation_cut = NULL,
+                         fill_countries = NA,
+                         contour = FALSE,
                          ...) {
   # Local bindings
-  latitude <- longitude <- NULL
+  caption <- latitude <- longitude <- NULL
+
+  # Check if the map requested is a contour
+  if (contour) {
+    aux <- .data %>% dplyr::rename(var = !!var) %>% dplyr::select(var)
+    if (is.factor(aux$var) |
+        !(typeof(aux$var) %in% c("double", "integer", "numeric"))) {
+      warning("The target variable, `", var, "`, must be numeric. ",
+              "Plotting simple climate map.", call. = FALSE)
+    } else {
+      output <- plot_climate_countour(.data = .data,
+                                      var = var,
+                                      units = units,
+                                      fill_scale = fill_scale,
+                                      size = size,
+                                      stroke = max(0.3, stroke),
+                                      legend.key.width = legend.key.width,
+                                      legend.position = legend.position,
+                                      xlim = xlim,
+                                      ylim = ylim,
+                                      show_plot = show_plot,
+                                      elevation_cut = elevation_cut,
+                                      fill_countries = fill_countries,
+                                      ...)
+      return(output)
+    }
+  }
+
   # Check for latitude, longitude and var
   idx <- c("latitude", "longitude", var) %in% colnames(.data)
   if (sum(!idx) != 0) {
@@ -163,52 +201,77 @@ plot_climate <- function(.data,
          call. = FALSE)
   }
 
+  # Check if the units were provided
   if (!is.na(units))
     fill_scale$name <- paste0(fill_scale$name, " [", units, "]")
-  p <- .data %>%
+
+  # Create clean version of the original dataset
+  .datav2 <- .data %>%
     dplyr::rename(var = !!var) %>%
-    dplyr::filter(!is.na(var)) %>%
-    dplyr::mutate(
-      var = var %>%
-        cut(include.lowest = TRUE,
-            .,
-            breaks = c(
-              -Inf,
-              seq(
-                from = min(., na.rm = TRUE),
-                # from = signif(min(., na.rm = TRUE) * 0.99999, digits = 5),
-                to = max(., na.rm = TRUE) -
-                  round((max(., na.rm = TRUE) - min(., na.rm = TRUE)) / 9,
-                        digits = 4),
-                by = round((max(., na.rm = TRUE) - min(., na.rm = TRUE)) / 9,
-                           digits = 4))[-1] %>%
-                round(digits = 4),
-              Inf),
-            labels =
-              seq(
-                from = min(., na.rm = TRUE),
-                to = max(., na.rm = TRUE) -
-                  round((max(., na.rm = TRUE) - min(., na.rm = TRUE)) / 9,
-                        digits = 4),
-                by = round((max(., na.rm = TRUE) - min(., na.rm = TRUE)) / 9,
-                           digits = 4)) %>%
-              round(digits = 4)
-        )
-      ) %>%
+    dplyr::filter(!is.na(var))
+
+  # Use different shapes if elevation_cut is given by the user
+  shape <- rep(21, nrow(.datav2))
+  if (!is.null(elevation_cut) & "elevation" %in% colnames(.datav2)) {
+    caption <- paste0("Circles: elevation < ",
+                      elevation_cut,
+                      "m -- Triangles: elevation >= ",
+                      elevation_cut,
+                      "m")
+    shape <- ifelse(.datav2$elevation >= elevation_cut, 24, 21)
+  }
+
+  # Create arbitrary factor for the input variable
+  if (!is.factor(.datav2$var) |
+      (!is.factor(.datav2$var) & !is.character(.datav2$var))) {
+    .datav2 <- .datav2 %>%
+      dplyr::mutate(
+        var = var %>%
+          cut(include.lowest = TRUE,
+              .,
+              breaks = c(
+                -Inf,
+                seq(
+                  from = min(., na.rm = TRUE),
+                  to = max(., na.rm = TRUE) -
+                    round((max(., na.rm = TRUE) - min(., na.rm = TRUE)) / 9,
+                          digits = 4),
+                  by = round((max(., na.rm = TRUE) - min(., na.rm = TRUE)) / 9,
+                             digits = 4))[-1] %>%
+                  round(digits = 4),
+                Inf),
+              labels =
+                seq(
+                  from = min(., na.rm = TRUE),
+                  to = max(., na.rm = TRUE) -
+                    round((max(., na.rm = TRUE) - min(., na.rm = TRUE)) / 9,
+                          digits = 4),
+                  by = round((max(., na.rm = TRUE) - min(., na.rm = TRUE)) / 9,
+                             digits = 4)) %>%
+                round(digits = 4)
+          )
+      )
+  }
+
+  # Create plot
+  p <- .datav2 %>%
     ggplot2::ggplot(mapping = ggplot2::aes(x = longitude,
                                            y = latitude,
                                            fill = var)) +
     ggplot2::geom_sf(data = rnaturalearth::ne_countries(scale = "small",
                                                         returnclass = "sf"),
-                     fill = "white", size = 0.25) +
+                     fill = fill_countries,
+                     size = 0.25) +
     ggplot2::coord_sf(xlim = xlim, ylim = ylim, ..., expand = FALSE) +
     ggplot2::geom_point(mapping = ggplot2::aes(fill = var),
                         size = size,
-                        shape = 21,
+                        shape = shape,
                         stroke = stroke) +
     ggplot2::geom_col(alpha = 0) +
     fill_scale +
-    ggplot2::labs(x = NULL, y = NULL) +
+    ggplot2::labs(x = NULL,
+                  y = NULL,
+                  caption = caption) +
     ggplot2::guides(
       fill = ggplot2::guide_legend(
         nrow = 1,
@@ -233,6 +296,119 @@ plot_climate <- function(.data,
     print(p)
   return(invisible(p))
 }
+
+#' @importFrom magrittr `%$%`
+#' @rdname plot_climate
+#' @export
+plot_climate_countour <-
+  function(.data,
+           var = "mat",
+           units = NA,
+           fill_scale =
+             ggplot2::scale_fill_fermenter(name = toupper(var),
+                                           palette = "Spectral"),
+           size = 1,
+           stroke = 0.5,
+           legend.key.width = ggplot2::unit(2, "cm"),
+           legend.position = "bottom",
+           xlim = c(-180, 180),
+           ylim = c(-60, 90),
+           show_plot = TRUE,
+           elevation_cut = NULL,
+           fill_countries = NA,
+           ...) {
+    # Local bindings
+    caption <- latitude <- longitude <- NULL
+    # Check for latitude, longitude and var
+    idx <- c("latitude", "longitude", var) %in% colnames(.data)
+    if (sum(!idx) != 0) {
+      stop("The following variable",
+           ifelse(sum(!idx) == 1, " was ", "s were "),
+           "not found in the `.data` object:",
+           paste0("\n  - ", c("latitude", "longitude", var)[!idx]),
+           call. = FALSE)
+    }
+
+    # Check the fill_scale
+    if (fill_scale$is_discrete()) {
+      warning("Changing fill_scale to a Spectral continuous scale ...",
+              call. = FALSE)
+      fill_scale =
+        ggplot2::scale_fill_fermenter(name = toupper(var),
+                                      palette = "Spectral")
+    }
+
+    # Check if the units were provided
+    if (!is.na(units))
+      fill_scale$name <- paste0(fill_scale$name, " [", units, "]")
+
+    # Create clean version of the dataset, including interpolated values.
+    .datav2 <- .data %>%
+      dplyr::rename(var = !!var) %>%
+      dplyr::filter(!is.na(var))
+    .datav2_interp <- .datav2 %>%
+      dplyr::distinct(longitude, latitude, .keep_all = TRUE) %>%
+      with(akima::interp(x = longitude, y = latitude, z = var))
+    # Use different shapes if elevation_cut is given by the user
+    shape <- rep(21, nrow(.datav2))
+    if (!is.null(elevation_cut) & "elevation" %in% colnames(.datav2)) {
+      caption <- paste0("Circles: elevation < ",
+                        elevation_cut,
+                        "m -- Triangles: elevation >= ",
+                        elevation_cut,
+                        "m")
+      shape <- ifelse(.datav2$elevation >= elevation_cut, 24, 21)
+    }
+
+    # Prepare data in long format
+    .datav3 <- .datav2_interp %$%
+      tibble::tibble(longitude = rep(x, length(y)),
+                     latitude = rep(y, each = length(x)),
+                     var = as.double(z)) %>%
+      dplyr::filter(!is.na(var))
+    # Create plot
+    p <- .datav3 %>%
+      ggplot2::ggplot(mapping = ggplot2::aes(x = longitude,
+                                             y = latitude,
+                                             fill = var)) +
+      ggplot2::geom_tile(ggplot2::aes(fill = var)) +
+      ggplot2::geom_sf(data = rnaturalearth::ne_countries(scale = "small",
+                                                          returnclass = "sf"),
+                       fill = fill_countries,
+                       size = 0.25) +
+      ggplot2::coord_sf(xlim = xlim, ylim = ylim, ..., expand = FALSE) +
+      ggplot2::geom_point(mapping = ggplot2::aes(longitude,
+                                                 latitude,
+                                                 fill = var),
+                          data = .datav2,
+                          size = size,
+                          shape = shape,
+                          stroke = stroke,
+                          position = "jitter") +
+      ggplot2::scale_shape_identity() +
+      fill_scale +
+      ggplot2::labs(x = NULL,
+                    y = NULL,
+                    caption = caption) +
+
+      ggplot2::theme(legend.position = legend.position,
+                     legend.key.width = legend.key.width,
+                     legend.key.height = ggplot2::unit(1, "cm"),
+                     legend.background =
+                       ggplot2::element_rect(colour = "black",
+                                             fill = "white"),
+                     legend.key = ggplot2::element_blank(),
+                     panel.grid.major =
+                       ggplot2::element_line(colour = gray(.8),
+                                             linetype = "dashed",
+                                             size = 0.4),
+                     panel.border = ggplot2::element_rect(colour = "black",
+                                                          fill = NA),
+                     panel.background = ggplot2::element_rect(fill = NA))
+    if (show_plot)
+      print(p)
+    return(invisible(p))
+  }
 
 #' @param baseline Numeric value to be used as the baseline for the calculation
 #'     of the Growing Degree Days, default: \code{0}.
