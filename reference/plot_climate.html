@@ -66,6 +66,26 @@ is required.</p>
   xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">180</span>, <span class="fl">180</span><span class="op">)</span>,
   ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">60</span>, <span class="fl">90</span><span class="op">)</span>,
   show_plot <span class="op">=</span> <span class="cn">TRUE</span>,
+  elevation_cut <span class="op">=</span> <span class="cn">NULL</span>,
+  fill_countries <span class="op">=</span> <span class="cn">NA</span>,
+  contour <span class="op">=</span> <span class="cn">FALSE</span>,
+  <span class="va">...</span>
+<span class="op">)</span>
+
+<span class="fu">plot_climate_countour</span><span class="op">(</span>
+  <span class="va">.data</span>,
+  var <span class="op">=</span> <span class="st">"mat"</span>,
+  units <span class="op">=</span> <span class="cn">NA</span>,
+  fill_scale <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_fermenter</a></span><span class="op">(</span>name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">toupper</a></span><span class="op">(</span><span class="va">var</span><span class="op">)</span>, palette <span class="op">=</span> <span class="st">"Spectral"</span><span class="op">)</span>,
+  size <span class="op">=</span> <span class="fl">1</span>,
+  stroke <span class="op">=</span> <span class="fl">0.5</span>,
+  legend.key.width <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">2</span>, <span class="st">"cm"</span><span class="op">)</span>,
+  legend.position <span class="op">=</span> <span class="st">"bottom"</span>,
+  xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">180</span>, <span class="fl">180</span><span class="op">)</span>,
+  ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">60</span>, <span class="fl">90</span><span class="op">)</span>,
+  show_plot <span class="op">=</span> <span class="cn">TRUE</span>,
+  elevation_cut <span class="op">=</span> <span class="cn">NULL</span>,
+  fill_countries <span class="op">=</span> <span class="cn">NA</span>,
   <span class="va">...</span>
 <span class="op">)</span>
 
@@ -183,6 +203,17 @@ though they would be visible in the final plot region.</p></dd>
 <dd><p>Boolean flag to indicate whether or not the graphic should
 be displayed, if <code>FALSE</code>, it only returns the <code>ggplot2</code> object.
 Default: <code>TRUE</code>.</p></dd>
+<dt>elevation_cut</dt>
+<dd><p>Numeric value to use as the threshold of the elevation
+at which the sites will be represented with different shapes.</p></dd>
+<dt>fill_countries</dt>
+<dd><p>String containing a colour code (HEX value) or colour
+name, to be used as filling for the countries.
+Default: <code>NA</code> (transparent).</p></dd>
+<dt>contour</dt>
+<dd><p>Boolean flag to indicate if a contour should be overlaid
+on the individual sites/points. It uses the function <code>akima::interp()</code>
+to interpolate values from the nearest available points.</p></dd>
 <dt>...</dt>
 <dd><p>Arguments passed on to <code><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">ggplot2::coord_sf</a></code></p><dl><dt><code>expand</code></dt>
 <dd><p>If <code>TRUE</code>, the default, adds a small expansion factor to
