@@ -26,6 +26,26 @@ australia_pollen_1_s2
 # Check the age_BP
 australia_pollen_1_s2$age_BP %>% unique() %>% sort()
 
+### Missing counts ----
+australia_pollen_1_missing_counts <-
+  readxl::read_excel("data-raw/GLOBAL/AUSTRALIA/Missing counts_Australia.xlsx",
+                     sheet = 1) %>%
+  dplyr::select(1:5) %>%
+  magrittr::set_names(c(
+    "entity_name", "clean", "intermediate", "amalgamated", "counts"
+    )) %>%
+  dplyr::left_join(
+    tibble::tribble(
+      ~entity_name, ~ID_SAMPLE,
+      "Alexander Morrison NP",    4,
+      "Cave Bay Cave_1",        133,
+      "Rotten Swamp_8",        7576,
+      "Mueller's Rock",        7433
+    ),
+    by = "entity_name"
+  ) %>%
+  dplyr::select(-entity_name)
+
 ## File 2 ----
 australia_pollen_2_s1 <-
   readxl::read_excel("data-raw/GLOBAL/AUSTRALIA/Post 1900_Australia2.xlsx",
@@ -88,14 +108,16 @@ australia_pollen_2_s2$age_BP %>% unique() %>% sort()
 # Combine metadata with counts ----
 ## File 1 ----
 australia_pollen_1_all <- australia_pollen_1_s2 %>%
-  dplyr::full_join(australia_pollen_1_s1,
-                   by = "ID_SAMPLE")
+  dplyr::full_join(
+    australia_pollen_1_s1 %>%
+      dplyr::bind_rows(australia_pollen_1_missing_counts), # Add missing counts
+    by = "ID_SAMPLE")
 australia_pollen_1_all %>%
   dplyr::filter(is.na(clean) | is.na(intermediate) | is.na(amalgamated))
 australia_pollen_1_all %>%
   dplyr::filter(is.na(entity_name))
-australia_pollen_1_s1 %>%
-  dplyr::filter(ID_SAMPLE %in% c(4, 133, 7433, 7576))
+australia_pollen_1_all %>%
+  dplyr::filter(ID_SAMPLE %in% c(133, 7433, 7576))
 
 ## File 2 ----
 australia_pollen_2_all <- australia_pollen_2_s2 %>%
@@ -131,20 +153,13 @@ dplyr::bind_rows(
   dplyr::filter(n > 1) %>%
   View()
 # Note: there are entities for the site 'Fitzerald River National Park FRNP'
-# in to separate files, all have age_BP = 'modern'. To distinguish across them,
+# in two separate files, all have age_BP = 'modern'. To distinguish across them,
 # the sample_name values in australia_pollen_2_s2 were updated (see above).
 
 # Combine all the files ----
 australia_pollen <- australia_pollen_1_all %>%
   dplyr::filter(!is.na(clean), !is.na(entity_name)) %>%
   dplyr::bind_rows(australia_pollen_2_all, australia_pollen_3_all) %>%
-  # dplyr::group_by(entity_name, ID_SAMPLE) %>%
-  # dplyr::mutate(sample_name = stringr::str_c(
-  #   entity_name,
-  #   "_",
-  #   seq_along(entity_name)
-  # )) %>%
-  # dplyr::ungroup() %>%
   dplyr::mutate(site_name = site_name %>%
                   stringr::str_squish(),
                 entity_name = entity_name %>%
@@ -217,7 +232,7 @@ australia_pollen_base <- australia_pollen_clean %>%
 ## Interpolate climate from the CRU TS dataset
 ## Cloud coverage ----
 australia_pollen_base_cld <- australia_pollen_base %>%
-  dplyr::slice(1:10) %>%
+  # dplyr::slice(1:10) %>%
   smpds::gwr(.ref = file.path(path_to_cru_ts,
                               "cru_ts4.04.1901.2019.cld.dat-clim-1961-1990-int.nc"),
              varid = "cld",
