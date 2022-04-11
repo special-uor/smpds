@@ -20,11 +20,16 @@ australia_pollen_1_s2 <-
     "_",
     seq_along(entity_name)
   )) %>%
-  dplyr::ungroup()
+  dplyr::ungroup() %>%
+  dplyr::mutate(doi = doi %>%
+                  stringr::str_remove_all("https://|http://|www\\.") %>%
+                  stringr::str_remove_all("dx\\.|do\\i.org/"))
 australia_pollen_1_s1
 australia_pollen_1_s2
 # Check the age_BP
 australia_pollen_1_s2$age_BP %>% unique() %>% sort()
+# Check DOIs
+australia_pollen_1_s2$doi %>% unique()
 
 ### Missing counts ----
 australia_pollen_1_missing_counts <-
@@ -65,11 +70,16 @@ australia_pollen_2_s2 <-
     "_",
     seq_along(entity_name)
   )) %>%
-  dplyr::ungroup()
+  dplyr::ungroup() %>%
+  dplyr::mutate(doi = doi %>%
+                  stringr::str_remove_all("https://|http://|www\\.") %>%
+                  stringr::str_remove_all("dx\\.|do\\i.org/"))
 australia_pollen_2_s1
 australia_pollen_2_s2
 # Check the age_BP
 australia_pollen_2_s2$age_BP %>% unique() %>% sort()
+# Check DOIs
+australia_pollen_2_s2$doi %>% unique()
 
 ## File 3 ----
 australia_pollen_3_s1 <-
@@ -92,18 +102,23 @@ australia_pollen_3_s2 <-
                 age_BP = as.character(age_BP)) %>%
   dplyr::group_by(entity_name) %>%
   dplyr::mutate(publication = publication %>%
-                  stringr::str_c(collapse = ";\n"),
-                sample_name = stringr::str_c(
+                  stringr::str_c(collapse = ";\n")) %>%
+  dplyr::distinct() %>%
+  dplyr::mutate(sample_name = stringr::str_c(
                   entity_name,
                   "_",
                   seq_along(entity_name)
                 )) %>%
   dplyr::ungroup() %>%
-  dplyr::distinct()
+  dplyr::mutate(doi = doi %>%
+                  stringr::str_remove_all("https://|http://|www\\.") %>%
+                  stringr::str_remove_all("dx\\.|do\\i.org/"))
 australia_pollen_3_s1
 australia_pollen_3_s2
 # Check the age_BP
 australia_pollen_2_s2$age_BP %>% unique() %>% sort()
+# Check DOIs
+australia_pollen_3_s2$doi %>% unique()
 
 # Combine metadata with counts ----
 ## File 1 ----
@@ -166,6 +181,7 @@ australia_pollen <- australia_pollen_1_all %>%
                   stringr::str_squish()) %>%
   dplyr::arrange(site_name, entity_name) %>%
   dplyr::select(-ID_SAMPLE)
+
 australia_pollen %>%
   dplyr::distinct(sample_name, .keep_all = TRUE) %>%
   smpds::plot_climate(var = "elevation")
@@ -184,7 +200,11 @@ australia_pollen_with_pnv <- australia_pollen %>%
   dplyr::left_join(australia_pollen_biomes %>%
                      dplyr::select(sample_name, ID_BIOME),
                    by = c("sample_name")) %>%
-  dplyr::relocate(notes, ID_BIOME, .after = doi)
+  dplyr::relocate(notes, ID_BIOME, .after = doi) #%>%
+  # dplyr::group_by(sample_name) %>%
+  # dplyr::mutate(ID_SAMPLE = seq_along(sample_name)) %>%
+  # dplyr::relocate(ID_SAMPLE, .before = sample_name) %>%
+  # dplyr::ungroup()
 
 # Create count tables ----
 ## Clean ----
@@ -228,7 +248,8 @@ australia_pollen_amalgamated <- australia_pollen_with_pnv %>%
 path_to_cru_ts <- "~/OneDrive - University of Reading/UoR/Data/CRU/4.04/"
 CPUS <- 6
 australia_pollen_base <- australia_pollen_clean %>%
-  dplyr::select(site_name:sample_name)
+  dplyr::select(site_name:sample_name) %>%
+  dplyr::mutate(ID_SAMPLE = seq_along(sample_name), .before = sample_name)
 ## Interpolate climate from the CRU TS dataset
 ## Cloud coverage ----
 australia_pollen_base_cld <- australia_pollen_base %>%
@@ -321,8 +342,10 @@ australia_pollen_basev3 %>%
   smpds::plot_climate()
 
 # Store subsets ----
-australia_pollen <- australia_pollen_clean %>%
-  dplyr::select(site_name:sample_name) %>%
+australia_pollen <-
+  australia_pollen_base %>%
+  # australia_pollen_clean %>%
+  # dplyr::select(site_name:sample_name) %>%
   dplyr::mutate(
     clean = australia_pollen_clean %>%
       dplyr::select(-c(site_name:sample_name)),
@@ -366,3 +389,29 @@ australia_pollen$site_type %>%
 australia_pollen$entity_type %>%
   unique() %>%
   sort()
+
+# Export Excel workbook ----
+wb <- openxlsx::createWorkbook()
+openxlsx::addWorksheet(wb, "metadata")
+openxlsx::writeData(wb, "metadata",
+                    australia_pollen %>%
+                      dplyr::select(site_name:sample_name))
+openxlsx::addWorksheet(wb, "clean")
+openxlsx::writeData(wb, "clean",
+                    australia_pollen %>%
+                      dplyr::select(ID_SAMPLE, clean) %>%
+                      tidyr::unnest(clean))
+openxlsx::addWorksheet(wb, "intermediate")
+openxlsx::writeData(wb, "intermediate",
+                    australia_pollen %>%
+                      dplyr::select(ID_SAMPLE, intermediate) %>%
+                      tidyr::unnest(intermediate))
+openxlsx::addWorksheet(wb, "amalgamated")
+openxlsx::writeData(wb, "amalgamated",
+                    australia_pollen %>%
+                      dplyr::select(ID_SAMPLE, amalgamated) %>%
+                      tidyr::unnest(amalgamated))
+openxlsx::saveWorkbook(wb,
+                       paste0("data-raw/GLOBAL/AUSTRALIA/australia_pollen_",
+                              Sys.Date(),
+                              ".xlsx"))
