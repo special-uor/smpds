@@ -231,7 +231,7 @@ australia_pollen_intermediate <- australia_pollen_with_pnv %>%
                      names_from = taxon_name,
                      values_from = taxon_count,
                      names_sort = TRUE)
-## Amalgamated
+## Amalgamated ----
 australia_pollen_amalgamated <- australia_pollen_with_pnv %>%
   dplyr::select(-clean, -intermediate) %>%
   dplyr::rename(taxon_name = amalgamated) %>%
@@ -253,7 +253,7 @@ australia_pollen_base <- australia_pollen_clean %>%
 ## Interpolate climate from the CRU TS dataset
 ## Cloud coverage ----
 australia_pollen_base_cld <- australia_pollen_base %>%
-  # dplyr::slice(1:10) %>%
+  dplyr::slice(1:10) %>%
   smpds::gwr(.ref = file.path(path_to_cru_ts,
                               "cru_ts4.04.1901.2019.cld.dat-clim-1961-1990-int.nc"),
              varid = "cld",
@@ -316,7 +316,20 @@ p_gdd0 <- smpds::plot_gdd(australia_pollen_basev3,
                           stroke = stroke,
                           xlim = xlim,
                           ylim = ylim,
-                          show_plot = show_plot, fill_countries = "white")
+                          show_plot = show_plot,
+                          # fill_countries = "white",
+                          fill_countries = NA,
+                          contour = T)
+# smpds::plot_mat(smpds::SMPDSv2,
+#                 size = size,
+#                 stroke = stroke,
+#                 # xlim = xlim,
+#                 # ylim = ylim,
+#                 show_plot = TRUE,
+#                 # fill_countries = "white",
+#                 fill_countries = NA,
+#                 contour = T)
+
 ggplot2::ggsave(file.path("~/Downloads/",
                           paste0("australia_pollen_gdd0_", Sys.Date(), ".pdf")),
                 plot = p_gdd0,
