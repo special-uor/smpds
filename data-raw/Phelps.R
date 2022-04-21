@@ -6,6 +6,7 @@
 # climate variability across the African Humid Period: influenced by
 # anthropogenic disturbance?. Ecography, 43(8), pp.1118-1142.
 # doi:10.1111/ecog.04990
+# Original ----
 phelps_a1 <- readr::read_csv("~/Downloads/SMPDSv2/Phelps_Appendix1-9/APPENDIX_1_sites-1.csv")
 phelps_a2 <- readr::read_csv("~/Downloads/SMPDSv2/Phelps_Appendix1-9/APPENDIX_2_entities-1.csv")
 phelps_a3 <- readr::read_csv("~/Downloads/SMPDSv2/Phelps_Appendix1-9/APPENDIX_3_citations-1.csv") %>%
@@ -202,3 +203,221 @@ phelps_taxa <- readxl::read_xlsx("~/Downloads/SMPDSv2/phelps-taxon_names_2021-08
 phelps_taxa %>%
   readr::write_excel_csv("inst/extdata/phelps_taxa.csv", na = "")
 
+# SPH revisions ----
+"The entities and their counts were manually inspected by SPH"
+
+`%>%` <- magrittr::`%>%`
+## Load data ----
+Phelps_all <-
+  "data-raw/GLOBAL/Phelps_2021-09-24_version 2_clean_SPH.xlsx" %>%
+  readxl::read_excel(sheet = 1) %>%
+  dplyr::mutate(ID_SAMPLE = seq_along(entity_name), .after = doi)
+
+### Metadata ----
+Phelps_metadata <-
+  Phelps_all %>%
+  dplyr::select(site_name:ID_SAMPLE)
+
+### Polen counts ----
+Phelps_counts <-
+  Phelps_all %>%
+  dplyr::select(ID_SAMPLE) %>%
+  dplyr::bind_cols(
+    Phelps_all %>% # Convert columns with counts to numeric type
+      dplyr::select(-c(source:ID_SAMPLE)) %>%
+      purrr::map_dfc(~.x %>% as.numeric)
+  ) %>%
+  magrittr::set_names(
+    colnames(.) %>%
+      stringr::str_replace_all("\\.\\.\\.", "#")
+  ) %>%
+  tidyr::pivot_longer(-ID_SAMPLE,
+                      names_to = "clean",
+                      values_to = "taxon_count") %>%
+  dplyr::mutate(clean = clean %>%
+                  stringr::str_remove_all("\\#[0-9]+$") %>%
+                  stringr::str_squish()) %>%
+  dplyr::group_by(ID_SAMPLE, clean) %>%
+  dplyr::mutate(taxon_count = sum(taxon_count, na.rm = TRUE)) %>%
+  dplyr::distinct() %>%
+  dplyr::ungroup() %>%
+  dplyr::mutate(clean = clean %>% stringr::str_squish())
+
+### Amalgamations ----
+Phelps_taxa_amalgamation <-
+  "data-raw/GLOBAL/Phelps_2021-09-24_version 2_clean_SPH.xlsx" %>%
+  readxl::read_excel(sheet = 2) %>%
+  magrittr::set_names(c(
+    "clean", "intermediate", "amalgamated"
+  )) %>%
+  dplyr::distinct() %>%
+  dplyr::mutate(clean = clean %>% stringr::str_squish(),
+                intermediate = intermediate %>% stringr::str_squish(),
+                amalgamated = amalgamated %>% stringr::str_squish())
+
+### Combine counts and amalgamation ----
+Phelps_taxa_counts_amalgamation <-
+  Phelps_counts %>%
+  dplyr::left_join(Phelps_taxa_amalgamation,
+                   by = c("clean")) %>%
+  dplyr::relocate(taxon_count, .after = amalgamated) %>%
+  # dplyr::left_join(Phelps_metadata %>%
+  #                    dplyr::select(entity_name, ID_SAMPLE),
+  #                  by = "entity_name") %>%
+  # dplyr::select(-entity_name, -taxon_name) %>%
+  dplyr::relocate(ID_SAMPLE, .before = 1)
+
+Phelps_taxa_counts_amalgamation %>%
+  dplyr::filter(is.na(clean) | is.na(intermediate) | is.na(amalgamated))
+
+## Find DOIs ----
+Phelps_metadata_pubs <-
+  Phelps_metadata %>%
+  dplyr::distinct(publication) %>%
+  dplyr::arrange(publication) %>%
+  dplyr::mutate(DOI = publication %>%
+                  stringr::str_extract_all("\\[DOI\\s*(.*?)\\s*\\](;|$)") %>%
+                  purrr::map_chr(~.x %>%
+                                   stringr::str_remove_all("^\\[DOI:|\\]$") %>%
+                                   stringr::str_squish() %>%
+                                   stringr::str_c(collapse = ";\n"))
+  ) %>%
+  dplyr::mutate(ID_PUB = seq_along(publication))
+# Phelps_metadata_pubs %>%
+#   readr::write_excel_csv("data-raw/GLOBAL/Phelps_modern-references.csv")
+
+### Load cleaned publications list ----
+Phelps_clean_publications <-
+  "data-raw/GLOBAL/Phelps_modern-references_clean.csv" %>%
+  readr::read_csv() %>%
+  dplyr::select(-DOI)
+
+## Append clean publications ----
+Phelps_metadata_2 <-
+  Phelps_metadata %>%
+  dplyr::left_join(Phelps_metadata_pubs %>%
+                     dplyr::select(-DOI),
+                   by = "publication") %>%
+  dplyr::left_join(Phelps_clean_publications,
+                   by = "ID_PUB") %>%
+  dplyr::select(-publication.x, -publication.y, -doi, -ID_PUB) %>%
+  dplyr::rename(doi = updated_DOI,
+                publication = updated_publication)
+
+## Extract PNV/BIOME ----
+Phelps_metadata_3 <-
+  Phelps_metadata_2 %>%
+  dplyr::select(-dplyr::starts_with("ID_BIOME")) %>%
+  smpds::parallel_extract_biome(cpus = 12) %>%
+  # smpds::biome_name() %>%
+  dplyr::relocate(ID_BIOME, .after = doi) %>%
+  smpds::pb()
+
+Phelps_metadata_2 %>%
+  smpds::plot_biome()
+
+## Create count tables ----
+### Clean ----
+Phelps_clean <-
+  Phelps_taxa_counts_amalgamation %>%
+  dplyr::select(-intermediate, -amalgamated) %>%
+  dplyr::rename(taxon_name = clean) %>%
+  dplyr::group_by(ID_SAMPLE, taxon_name) %>%
+  dplyr::mutate(taxon_count = sum(taxon_count, na.rm = TRUE)) %>%
+  dplyr::ungroup() %>%
+  dplyr::distinct() %>%
+  tidyr::pivot_wider(ID_SAMPLE,
+                     names_from = taxon_name,
+                     values_from = taxon_count,
+                     names_sort = TRUE)
+### Intermediate ----
+Phelps_intermediate <-
+  Phelps_taxa_counts_amalgamation %>%
+  dplyr::select(-clean, -amalgamated) %>%
+  dplyr::rename(taxon_name = intermediate) %>%
+  dplyr::group_by(ID_SAMPLE, taxon_name) %>%
+  dplyr::mutate(taxon_count = sum(taxon_count, na.rm = TRUE)) %>%
+  dplyr::ungroup() %>%
+  dplyr::distinct() %>%
+  tidyr::pivot_wider(ID_SAMPLE,
+                     names_from = taxon_name,
+                     values_from = taxon_count,
+                     names_sort = TRUE)
+
+### Amalgamated ----
+Phelps_amalgamated <-
+  Phelps_taxa_counts_amalgamation %>%
+  dplyr::select(-clean, -intermediate) %>%
+  dplyr::rename(taxon_name = amalgamated) %>%
+  dplyr::group_by(ID_SAMPLE, taxon_name) %>%
+  dplyr::mutate(taxon_count = sum(taxon_count, na.rm = TRUE)) %>%
+  dplyr::ungroup() %>%
+  dplyr::distinct() %>%
+  tidyr::pivot_wider(ID_SAMPLE,
+                     names_from = taxon_name,
+                     values_from = taxon_count,
+                     names_sort = TRUE)
+
+# Store subsets ----
+Phelps <-
+  Phelps_metadata_3 %>%
+  dplyr::mutate(
+    clean = Phelps_clean %>%
+      dplyr::select(-c(ID_SAMPLE)),
+    intermediate = Phelps_intermediate %>%
+      dplyr::select(-c(ID_SAMPLE)),
+    amalgamated = Phelps_amalgamated %>%
+      dplyr::select(-c(ID_SAMPLE))
+  ) %>%
+  dplyr::mutate(
+    basin_size = basin_size %>%
+      stringr::str_replace_all("unknown", "not known"),
+    entity_type = entity_type %>%
+      stringr::str_replace_all("unknown", "not known"),
+    site_type = site_type %>%
+      stringr::str_replace_all("unknown", "not known") %>%
+      stringr::str_replace_all("terrestrial, soil", "soil") %>%
+      stringr::str_replace_all("Drained/dry lake", "lacustrine, drained lake")
+  ) %>%
+  dplyr::relocate(ID_SAMPLE, .before = clean)
+
+usethis::use_data(Phelps, overwrite = TRUE, compress = "xz")
+
+## Inspect enumerates ----
+### basin_size -----
+Phelps$basin_size %>%
+  unique() %>% sort()
+
+### site_type ----
+Phelps$site_type %>%
+  unique() %>% sort()
+
+### entity_type ----
+Phelps$entity_type %>%
+  unique() %>% sort()
+
+# Export Excel workbook ----
+wb <- openxlsx::createWorkbook()
+openxlsx::addWorksheet(wb, "metadata")
+openxlsx::writeData(wb, "metadata",
+                    Phelps %>%
+                      dplyr::select(site_name:ID_SAMPLE))
+openxlsx::addWorksheet(wb, "clean")
+openxlsx::writeData(wb, "clean",
+                    Phelps %>%
+                      dplyr::select(ID_SAMPLE, clean) %>%
+                      tidyr::unnest(clean))
+openxlsx::addWorksheet(wb, "intermediate")
+openxlsx::writeData(wb, "intermediate",
+                    Phelps %>%
+                      dplyr::select(ID_SAMPLE, intermediate) %>%
+                      tidyr::unnest(intermediate))
+openxlsx::addWorksheet(wb, "amalgamated")
+openxlsx::writeData(wb, "amalgamated",
+                    Phelps %>%
+                      dplyr::select(ID_SAMPLE, amalgamated) %>%
+                      tidyr::unnest(amalgamated))
+openxlsx::saveWorkbook(wb,
+                       paste0("data-raw/GLOBAL/Phelps_",
+                              Sys.Date(),
+                              ".xlsx"))
