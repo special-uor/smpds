@@ -366,3 +366,35 @@ embsecbio_counts <- embsecbio_metadata %>%
   dplyr::select(-ID_SAMPLE_TAXA, -sample_name, -sample_type) %>%
   dplyr::rename(taxon_name = taxon_clean) %>%
   dplyr::filter(!is.na(taxon_name))
+
+
+# Export Excel workbook ----
+wb <- openxlsx::createWorkbook()
+openxlsx::addWorksheet(wb, "metadata")
+openxlsx::writeData(wb, "metadata",
+                    EMBSeCBIO %>%
+                      dplyr::select(source:publication))
+openxlsx::addWorksheet(wb, "amalgamated")
+openxlsx::writeData(wb, "amalgamated",
+                    EMBSeCBIO %>%
+                      dplyr::select(-c(source:publication)) #%>%
+                    # tidyr::unnest(clean)
+)
+# openxlsx::addWorksheet(wb, "intermediate")
+# openxlsx::writeData(wb, "intermediate",
+#                     EMPDv2 %>%
+#                       dplyr::select(ID_EMPDv2, intermediate) %>%
+#                       tidyr::unnest(intermediate))
+# openxlsx::addWorksheet(wb, "amalgamated")
+# openxlsx::writeData(wb, "amalgamated",
+#                     EMPDv2 %>%
+#                       dplyr::select(ID_EMPDv2, amalgamated) %>%
+#                       tidyr::unnest(amalgamated))
+openxlsx::addWorksheet(wb, "taxon_list")
+openxlsx::writeData(wb, "taxon_list",
+                    "inst/extdata/embsecbio_taxa.csv" %>%
+                    readr::read_csv())
+openxlsx::saveWorkbook(wb,
+                       paste0("data-raw/EMBSeCBIO_",
+                              Sys.Date(),
+                              ".xlsx"))
