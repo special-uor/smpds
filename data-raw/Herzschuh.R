@@ -5,6 +5,7 @@
 # orientation of the westerly jet determined Holocene rainfall patterns in China.
 # Nature communications, 10(1), pp.1-8.
 # https://doi.org/10.1038/s41467-019-09866-8
+# Original ----
 `%>%` <- magrittr::`%>%`
 # "modern" -> when age_BP missing
 Herzschuh_file1 <- readr::read_csv("~/Downloads/SMPDSv2/SourceData_China_Herschuh/SourceDataFile1.csv") %>%
@@ -362,4 +363,229 @@ tmp31 <- tmp30 %>%
 tmp31 %>%
   dplyr::select(1:6, 8, 7) %>%
   readr::write_excel_csv("~/Downloads/SMPDSv2/Herzschuh-multiple-records-same-taxon-entity.csv", na = "")
+
+# SPH revisions ----
+"The entities and their counts were manually inspected by SPH"
+
+`%>%` <- magrittr::`%>%`
+## Load data ----
+Herzschuh_all <-
+  "data-raw/GLOBAL/Herzschuh_clean_no dups_SPH.xlsx" %>%
+  readxl::read_excel(sheet = 1) %>%
+  dplyr::rename(doi = DOI) %>%
+  dplyr::mutate(ID_SAMPLE = seq_along(entity_name), .after = doi) %>%
+  dplyr::relocate(age_BP, .before = ID_BIOME) %>%
+  dplyr::rename(basin_size = `basin_size (km2)`)
+
+### Metadata ----
+Herzschuh_metadata <-
+  Herzschuh_all %>%
+  dplyr::select(site_name:ID_SAMPLE)
+
+### Polen counts ----
+Herzschuh_counts <-
+  Herzschuh_all %>%
+  dplyr::select(ID_SAMPLE) %>%
+  dplyr::bind_cols(
+    Herzschuh_all %>% # Convert columns with counts to numeric type
+      dplyr::select(-c(source:ID_SAMPLE)) %>%
+      purrr::map_dfc(~.x %>% as.numeric)
+  ) %>%
+  magrittr::set_names(
+    colnames(.) %>%
+      stringr::str_replace_all("\\.\\.\\.", "#")
+  ) %>%
+  tidyr::pivot_longer(-ID_SAMPLE,
+                      names_to = "clean",
+                      values_to = "taxon_count") %>%
+  dplyr::mutate(clean = clean %>%
+                  stringr::str_remove_all("\\#[0-9]+$") %>%
+                  stringr::str_squish()) %>%
+  dplyr::group_by(ID_SAMPLE, clean) %>%
+  dplyr::mutate(taxon_count = sum(taxon_count, na.rm = TRUE)) %>%
+  dplyr::distinct() %>%
+  dplyr::ungroup()
+
+### Amalgamations ----
+Herzschuh_taxa_amalgamation <-
+  "data-raw/GLOBAL/Herzschuh_clean_no dups_SPH.xlsx" %>%
+  readxl::read_excel(sheet = 2) %>%
+  magrittr::set_names(c(
+    "clean", "intermediate", "amalgamated"
+  )) %>%
+  dplyr::distinct() %>%
+  dplyr::mutate(clean = clean %>% stringr::str_squish(),
+                intermediate = intermediate %>% stringr::str_squish(),
+                amalgamated = amalgamated %>% stringr::str_squish())
+
+### Combine counts and amalgamation ----
+Herzschuh_taxa_counts_amalgamation <-
+  Herzschuh_counts %>%
+  dplyr::left_join(Herzschuh_taxa_amalgamation,
+                   by = c("clean")) %>%
+  dplyr::relocate(taxon_count, .after = amalgamated) %>%
+  dplyr::relocate(ID_SAMPLE, .before = 1)
+
+Herzschuh_taxa_counts_amalgamation %>%
+  dplyr::filter(is.na(clean) | is.na(intermediate) | is.na(amalgamated)) %>%
+  dplyr::distinct(clean, intermediate, amalgamated)
+
+## Find DOIs ----
+Herzschuh_metadata_pubs <-
+  Herzschuh_metadata %>%
+  dplyr::distinct(publication, doi) %>%
+  dplyr::arrange(publication) %>%
+  dplyr::mutate(DOI = publication %>%
+                  stringr::str_extract_all("\\[DOI\\s*(.*?)\\s*\\](;|$)") %>%
+                  purrr::map_chr(~.x %>%
+                                   stringr::str_remove_all("^\\[DOI:") %>%
+                                   stringr::str_remove_all("\\]\\s*;\\s*$") %>%
+                                   stringr::str_remove_all("\\]$") %>%
+                                   stringr::str_remove_all("doi:") %>%
+                                   stringr::str_squish() %>%
+                                   stringr::str_c(collapse = ";\n"))
+  ) %>%
+  dplyr::mutate(ID_PUB = seq_along(publication)) %>%
+  dplyr::mutate(updated_publication = NA, .before = publication) %>%
+  dplyr::mutate(updated_DOI = NA, .before = DOI)
+# Herzschuh_metadata_pubs %>%
+#   readr::write_excel_csv("data-raw/GLOBAL/Herzschuh_modern-references.csv")
+
+### Load cleaned publications list ----
+Herzschuh_clean_publications <-
+  "data-raw/GLOBAL/Herzschuh_modern-references_clean.csv" %>%
+  readr::read_csv() %>%
+  dplyr::select(-DOI)
+
+## Append clean publications ----
+Herzschuh_metadata_2 <-
+  Herzschuh_metadata %>%
+  dplyr::left_join(Herzschuh_metadata_pubs %>%
+                     dplyr::select(-DOI, -doi, -dplyr::contains("updated")),
+                   by = "publication") %>%
+  dplyr::left_join(Herzschuh_clean_publications,
+                   by = "ID_PUB") %>%
+  dplyr::select(-publication.x, -publication.y, -doi, -ID_PUB) %>%
+  dplyr::rename(doi = updated_DOI,
+                publication = updated_publication)
+
+## Extract PNV/BIOME ----
+Herzschuh_metadata_3 <-
+  Herzschuh_metadata_2 #%>%
+# dplyr::select(-dplyr::starts_with("ID_BIOME")) %>%
+# smpds::parallel_extract_biome(cpus = 12) %>%
+# # smpds::biome_name() %>%
+# dplyr::relocate(ID_BIOME, .after = doi) %>%
+# smpds::pb()
+
+Herzschuh_metadata_3 %>%
+  smpds::plot_biome(xlim = range(.$longitude, na.rm = TRUE),
+                    ylim = range(.$latitude, na.rm = TRUE))
+
+## Create count tables ----
+### Clean ----
+Herzschuh_clean <-
+  Herzschuh_taxa_counts_amalgamation %>%
+  dplyr::select(-intermediate, -amalgamated) %>%
+  dplyr::rename(taxon_name = clean) %>%
+  dplyr::group_by(ID_SAMPLE, taxon_name) %>%
+  dplyr::mutate(taxon_count = sum(taxon_count, na.rm = TRUE)) %>%
+  dplyr::ungroup() %>%
+  dplyr::distinct() %>%
+  tidyr::pivot_wider(ID_SAMPLE,
+                     names_from = taxon_name,
+                     values_from = taxon_count,
+                     names_sort = TRUE)
+### Intermediate ----
+Herzschuh_intermediate <-
+  Herzschuh_taxa_counts_amalgamation %>%
+  dplyr::select(-clean, -amalgamated) %>%
+  dplyr::rename(taxon_name = intermediate) %>%
+  dplyr::group_by(ID_SAMPLE, taxon_name) %>%
+  dplyr::mutate(taxon_count = sum(taxon_count, na.rm = TRUE)) %>%
+  dplyr::ungroup() %>%
+  dplyr::distinct() %>%
+  tidyr::pivot_wider(ID_SAMPLE,
+                     names_from = taxon_name,
+                     values_from = taxon_count,
+                     names_sort = TRUE)
+
+### Amalgamated ----
+Herzschuh_amalgamated <-
+  Herzschuh_taxa_counts_amalgamation %>%
+  dplyr::select(-clean, -intermediate) %>%
+  dplyr::rename(taxon_name = amalgamated) %>%
+  dplyr::group_by(ID_SAMPLE, taxon_name) %>%
+  dplyr::mutate(taxon_count = sum(taxon_count, na.rm = TRUE)) %>%
+  dplyr::ungroup() %>%
+  dplyr::distinct() %>%
+  tidyr::pivot_wider(ID_SAMPLE,
+                     names_from = taxon_name,
+                     values_from = taxon_count,
+                     names_sort = TRUE)
+
+# Store subsets ----
+Herzschuh <-
+  Herzschuh_metadata_3 %>%
+  dplyr::mutate(
+    clean = Herzschuh_clean %>%
+      dplyr::select(-c(ID_SAMPLE)),
+    intermediate = Herzschuh_intermediate %>%
+      dplyr::select(-c(ID_SAMPLE)),
+    amalgamated = Herzschuh_amalgamated %>%
+      dplyr::select(-c(ID_SAMPLE))
+  ) %>%
+  dplyr::mutate(
+    basin_size = basin_size %>%
+      stringr::str_replace_all("unknown", "not known"),
+    entity_type = entity_type %>%
+      stringr::str_replace_all("unknown", "not known") %>%
+      stringr::str_to_lower(),
+    site_type = site_type %>%
+      stringr::str_replace_all("estuarine", "coastal, estuarine") %>%
+      stringr::str_replace_all("terrestrial, soil", "soil") %>%
+      stringr::str_replace_all("unknown", "not known")
+  ) %>%
+  dplyr::relocate(ID_SAMPLE, .before = clean)
+
+usethis::use_data(Herzschuh, overwrite = TRUE, compress = "xz")
+
+## Inspect enumerates ----
+### basin_size -----
+Herzschuh$basin_size %>%
+  unique() %>% sort()
+
+### site_type ----
+Herzschuh$site_type %>%
+  unique() %>% sort()
+
+### entity_type ----
+Herzschuh$entity_type %>%
+  unique() %>% sort()
+
+# Export Excel workbook ----
+wb <- openxlsx::createWorkbook()
+openxlsx::addWorksheet(wb, "metadata")
+openxlsx::writeData(wb, "metadata",
+                    Herzschuh %>%
+                      dplyr::select(site_name:ID_SAMPLE))
+openxlsx::addWorksheet(wb, "clean")
+openxlsx::writeData(wb, "clean",
+                    Herzschuh %>%
+                      dplyr::select(ID_SAMPLE, clean) %>%
+                      tidyr::unnest(clean))
+openxlsx::addWorksheet(wb, "intermediate")
+openxlsx::writeData(wb, "intermediate",
+                    Herzschuh %>%
+                      dplyr::select(ID_SAMPLE, intermediate) %>%
+                      tidyr::unnest(intermediate))
+openxlsx::addWorksheet(wb, "amalgamated")
+openxlsx::writeData(wb, "amalgamated",
+                    Herzschuh %>%
+                      dplyr::select(ID_SAMPLE, amalgamated) %>%
+                      tidyr::unnest(amalgamated))
+openxlsx::saveWorkbook(wb,
+                       paste0("data-raw/GLOBAL/Herzschuh_",
+                              Sys.Date(),
+                              ".xlsx"))
 
