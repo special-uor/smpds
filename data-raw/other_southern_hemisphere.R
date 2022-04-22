@@ -79,7 +79,6 @@ other_southern_hemisphere_metadata_2 <-
   dplyr::rename(doi = updated_DOI,
                 publication = updated_publication)
 
-
 ## Extract PNV/BIOME ----
 other_southern_hemisphere_metadata_3 <-
   other_southern_hemisphere_metadata_2 %>%
@@ -89,7 +88,8 @@ other_southern_hemisphere_metadata_3 <-
   smpds::pb()
 
 other_southern_hemisphere_metadata_3 %>%
-  smpds::plot_biome()
+  smpds::plot_biome(xlim = range(.$longitude, na.rm = TRUE) * 1.1,
+                    ylim = range(.$latitude, na.rm = TRUE) * 1.1)
 
 ## Create count tables ----
 ### Clean ----
