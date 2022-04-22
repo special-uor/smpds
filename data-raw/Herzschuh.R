@@ -380,7 +380,7 @@ Herzschuh_all <-
 ### Metadata ----
 Herzschuh_metadata <-
   Herzschuh_all %>%
-  dplyr::select(site_name:ID_SAMPLE)
+  dplyr::select(source:ID_SAMPLE)
 
 ### Polen counts ----
 Herzschuh_counts <-
@@ -568,7 +568,7 @@ wb <- openxlsx::createWorkbook()
 openxlsx::addWorksheet(wb, "metadata")
 openxlsx::writeData(wb, "metadata",
                     Herzschuh %>%
-                      dplyr::select(site_name:ID_SAMPLE))
+                      dplyr::select(source:ID_SAMPLE))
 openxlsx::addWorksheet(wb, "clean")
 openxlsx::writeData(wb, "clean",
                     Herzschuh %>%

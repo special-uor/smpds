@@ -782,7 +782,7 @@ CMPD_all <-
 ### Metadata ----
 CMPD_metadata <-
   CMPD_all %>%
-  dplyr::select(site_name:ID_SAMPLE)
+  dplyr::select(source:ID_SAMPLE)
 
 ### Polen counts ----
 CMPD_counts <-
@@ -807,7 +807,6 @@ CMPD_counts <-
   dplyr::mutate(taxon_count = sum(taxon_count, na.rm = TRUE)) %>%
   dplyr::distinct() %>%
   dplyr::ungroup()
-
 
 ### Amalgamations ----
 CMPD_taxa_amalgamation <-
@@ -846,9 +845,7 @@ CMPD_metadata_pubs <-
                                    stringr::str_remove_all("\\]$") %>%
                                    stringr::str_remove_all("doi:") %>%
                                    stringr::str_squish() %>%
-                                   stringr::str_c(collapse = ";\n")) #%>%
-                # stringr::str_replace_all("$\\s*\n0.1139/e80-122",
-                #                          "10.1139/e80-122")
+                                   stringr::str_c(collapse = ";\n"))
   ) %>%
   dplyr::mutate(ID_PUB = seq_along(publication)) %>%
   dplyr::mutate(updated_publication = NA, .before = publication) %>%
@@ -884,8 +881,8 @@ CMPD_metadata_3 <-
   # smpds::pb()
 
 CMPD_metadata_3 %>%
-  smpds::plot_biome(xlim = range(.$longitude, na.rm = TRUE),
-                    ylim = range(.$latitude, na.rm = TRUE))
+  smpds::plot_biome(xlim = range(.$longitude, na.rm = TRUE) * c(0.9, 1.1),
+                    ylim = range(.$latitude, na.rm = TRUE) * c(0.9, 1.1))
 
 ## Create count tables ----
 ### Clean ----
@@ -900,7 +897,9 @@ CMPD_clean <-
   tidyr::pivot_wider(ID_SAMPLE,
                      names_from = taxon_name,
                      values_from = taxon_count,
-                     names_sort = TRUE)
+                     names_sort = TRUE) %>%
+  dplyr::arrange(ID_SAMPLE)
+
 ### Intermediate ----
 CMPD_intermediate <-
   CMPD_taxa_counts_amalgamation %>%
@@ -913,7 +912,8 @@ CMPD_intermediate <-
   tidyr::pivot_wider(ID_SAMPLE,
                      names_from = taxon_name,
                      values_from = taxon_count,
-                     names_sort = TRUE)
+                     names_sort = TRUE) %>%
+  dplyr::arrange(ID_SAMPLE)
 
 ### Amalgamated ----
 CMPD_amalgamated <-
@@ -927,7 +927,8 @@ CMPD_amalgamated <-
   tidyr::pivot_wider(ID_SAMPLE,
                      names_from = taxon_name,
                      values_from = taxon_count,
-                     names_sort = TRUE)
+                     names_sort = TRUE) %>%
+  dplyr::arrange(ID_SAMPLE)
 
 # Store subsets ----
 CMPD <-
@@ -973,7 +974,7 @@ wb <- openxlsx::createWorkbook()
 openxlsx::addWorksheet(wb, "metadata")
 openxlsx::writeData(wb, "metadata",
                     CMPD %>%
-                      dplyr::select(site_name:ID_SAMPLE))
+                      dplyr::select(source:ID_SAMPLE))
 openxlsx::addWorksheet(wb, "clean")
 openxlsx::writeData(wb, "clean",
                     CMPD %>%
