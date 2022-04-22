@@ -227,7 +227,6 @@ APD_counts <-
   dplyr::distinct() %>%
   dplyr::ungroup()
 
-
 ### Amalgamations ----
 APD_taxa_amalgamation <-
   "data-raw/GLOBAL/APD_clean_SPH.xlsx" %>%
@@ -246,10 +245,6 @@ APD_taxa_counts_amalgamation <-
   dplyr::left_join(APD_taxa_amalgamation,
                    by = c("clean")) %>%
   dplyr::relocate(taxon_count, .after = amalgamated) %>%
-  # dplyr::left_join(APD_metadata %>%
-  #                    dplyr::select(entity_name, ID_SAMPLE),
-  #                  by = "entity_name") %>%
-  # dplyr::select(-entity_name, -taxon_name) %>%
   dplyr::relocate(ID_SAMPLE, .before = 1)
 
 APD_taxa_counts_amalgamation %>%
@@ -298,8 +293,9 @@ APD_metadata_3 <-
   dplyr::relocate(ID_BIOME, .after = doi) %>%
   smpds::pb()
 
-APD_metadata_2 %>%
-  smpds::plot_biome()
+APD_metadata_3 %>%
+  smpds::plot_biome(xlim = range(.$longitude, na.rm = TRUE) * 1.1,
+                    ylim = range(.$latitude, na.rm = TRUE) * 1.1)
 
 ## Create count tables ----
 ### Clean ----
@@ -314,7 +310,9 @@ APD_clean <-
   tidyr::pivot_wider(ID_SAMPLE,
                      names_from = taxon_name,
                      values_from = taxon_count,
-                     names_sort = TRUE)
+                     names_sort = TRUE) %>%
+  dplyr::arrange(ID_SAMPLE)
+
 ### Intermediate ----
 APD_intermediate <-
   APD_taxa_counts_amalgamation %>%
@@ -327,7 +325,8 @@ APD_intermediate <-
   tidyr::pivot_wider(ID_SAMPLE,
                      names_from = taxon_name,
                      values_from = taxon_count,
-                     names_sort = TRUE)
+                     names_sort = TRUE) %>%
+  dplyr::arrange(ID_SAMPLE)
 
 ### Amalgamated ----
 APD_amalgamated <-
@@ -341,7 +340,8 @@ APD_amalgamated <-
   tidyr::pivot_wider(ID_SAMPLE,
                      names_from = taxon_name,
                      values_from = taxon_count,
-                     names_sort = TRUE)
+                     names_sort = TRUE) %>%
+  dplyr::arrange(ID_SAMPLE)
 
 # Store subsets ----
 APD <-
@@ -362,7 +362,8 @@ APD <-
     site_type = site_type %>%
       stringr::str_replace_all("unknown", "not known")
   ) %>%
-  dplyr::relocate(ID_SAMPLE, .before = clean)
+  dplyr::relocate(ID_SAMPLE, .before = clean) %>%
+  dplyr::mutate(source = "APD", .before = 1)
 
 usethis::use_data(APD, overwrite = TRUE, compress = "xz")
 
@@ -384,7 +385,7 @@ wb <- openxlsx::createWorkbook()
 openxlsx::addWorksheet(wb, "metadata")
 openxlsx::writeData(wb, "metadata",
                     APD %>%
-                      dplyr::select(site_name:ID_SAMPLE))
+                      dplyr::select(source:ID_SAMPLE))
 openxlsx::addWorksheet(wb, "clean")
 openxlsx::writeData(wb, "clean",
                     APD %>%
