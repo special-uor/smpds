@@ -326,3 +326,69 @@ subset_coords <- function(.data, latitude, longitude, buffer) {
   sp::coordinates(.data_coords) <- c("longitude", "latitude")
   return(.data_coords)
 }
+
+#' Thin plate spline regression
+#'
+#' @inheritDotParams fields::Tps
+#' @param .data Data frame with spatial and climate data. The following are
+#'     expected:
+#'     \itemize{
+#'         \item **Latitude**, named: \code{latitude}, \code{lat} or \code{y}.
+#'         \item **Longitude**, named: \code{longitude}, \code{long}, \code{lon}
+#'         or \code{y}.
+#'         \item **Main variable**, named: value of \code{var}.
+#'     }
+#' @param var String with the name of the climate variable to interpolate.
+#' @param resolution Numeric value with the resolution (degrees) to interpolate.
+#' @param land_borders Data frame with polygons to represent land borders
+#'     (e.g. continents, countries, counties, etc.).
+#'     Default: `rnaturalearth::ne_countries`.
+#' @param ... Additional parametres for the interpolation.
+#'
+#' @return `tibble` object with interpolated values.
+#'
+#' @export
+tps <- function(.data,
+                var,
+                resolution = 0.5,
+                land_borders =
+                  rnaturalearth::ne_countries(scale = "small",
+                                              returnclass = "sf"),
+                ...) {
+  crs_raster_format <-
+    "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0 +units=m +no_defs"
+  .data2 <- .data %>%
+    check_coords(var)
+  .data2_interp <- .data2 %>%
+    dplyr::mutate(geometry = NA, .after = longitude) %>%
+    sf::st_as_sf(
+      coords = c("longitude", "latitude"),
+      crs = "+proj=longlat +datum=WGS84 +no_defs"
+    )
+
+  alt_grd_template_sf <- .data2_interp %>%
+    sf::st_bbox() %>%
+    sf::st_as_sfc() %>%
+    sf::st_make_grid(
+      cellsize = c(resolution, resolution),
+      what = "centers"
+    ) %>%
+    sf::st_as_sf() %>%
+    cbind(., sf::st_coordinates(.)) %>%
+    sf::st_drop_geometry() %>%
+    dplyr:::mutate(Z = 0)
+
+  alt_grd_template_raster <- alt_grd_template_sf %>%
+    raster::rasterFromXYZ(
+      crs = crs_raster_format
+    )
+
+  fit_tps <- fields::Tps(x, y, lon.lat = TRUE, ...)
+  interp_tps <- raster::interpolate(alt_grd_template_raster, fit_tps)
+
+  interp_tps %>%
+    raster::mask(mask = land_borders) %>%
+    raster::rasterToPoints() %>%
+    tibble::as_tibble() %>%
+    magrittr::set_names(c("longitude", "latitude", var))
+}
