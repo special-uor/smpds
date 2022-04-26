@@ -3,6 +3,7 @@
 \name{plot_climate}
 \alias{plot_climate}
 \alias{plot_climate_countour}
+\alias{plot_climate_tiles}
 \alias{plot_gdd}
 \alias{plot_mat}
 \alias{plot_mi}
@@ -23,7 +24,11 @@ plot_climate(
   ylim = c(-60, 90),
   show_plot = TRUE,
   elevation_cut = NULL,
-  fill_countries = NA,
+  land_borders = rnaturalearth::ne_countries(scale = "small", returnclass = "sf"),
+  land_borders_colour = "black",
+  land_borders_size = 0.25,
+  fill_land = "white",
+  fill_sea = "#CFE2F3",
   contour = FALSE,
   ...
 )
@@ -32,7 +37,8 @@ plot_climate_countour(
   .data,
   var = "mat",
   units = NA,
-  fill_scale = ggplot2::scale_fill_fermenter(name = toupper(var), palette = "Spectral"),
+  fill_scale = ggplot2::scale_fill_gradientn(name = toupper(var), colours =
+    wesanderson::wes_palette("Zissou1", 100, type = "continuous")),
   size = 1,
   stroke = 0.5,
   legend.key.width = ggplot2::unit(2, "cm"),
@@ -41,7 +47,33 @@ plot_climate_countour(
   ylim = c(-60, 90),
   show_plot = TRUE,
   elevation_cut = NULL,
-  fill_countries = NA,
+  land_borders = rnaturalearth::ne_countries(scale = "small", returnclass = "sf"),
+  land_borders_colour = "black",
+  land_borders_size = 0.25,
+  fill_land = "white",
+  fill_sea = "#CFE2F3",
+  ...
+)
+
+plot_climate_tiles(
+  .data,
+  var = "mat",
+  units = NA,
+  fill_scale = ggplot2::scale_fill_viridis_d(name = toupper(var)),
+  size = 1,
+  stroke = 0.1,
+  legend.key.width = ggplot2::unit(1, "cm"),
+  legend.position = "bottom",
+  xlim = c(-180, 180),
+  ylim = c(-60, 90),
+  show_plot = TRUE,
+  elevation_cut = NULL,
+  land_borders = rnaturalearth::ne_countries(scale = "small", returnclass = "sf"),
+  land_borders_colour = "black",
+  land_borders_size = 0.25,
+  fill_land = "white",
+  fill_sea = "#CFE2F3",
+  contour = FALSE,
   ...
 )
 
@@ -107,7 +139,14 @@ plot_mtwa(
 )
 }
 \arguments{
-\item{.data}{Data frame with spatial and climate data.}
+\item{.data}{Data frame with spatial and climate data. The following are
+expected:
+\itemize{
+\item \strong{Latitude}, named: \code{latitude}, \code{lat} or \code{y}.
+\item \strong{Longitude}, named: \code{longitude}, \code{long}, \code{lon}
+or \code{y}.
+\item \strong{Main variable}, named: value of \code{var}.
+}}
 
 \item{var}{String with the name of the climate variable to plot. Default:
 \code{"mat"} (Mean Annual Temperature).}
@@ -160,8 +199,23 @@ Default: \code{TRUE}.}
 \item{elevation_cut}{Numeric value to use as the threshold of the elevation
 at which the sites will be represented with different shapes.}
 
-\item{fill_countries}{String containing a colour code (HEX value) or colour
+\item{land_borders}{Data frame with polygons to represent land borders
+(e.g. continents, countries, counties, etc.).
+Default: \code{rnaturalearth::ne_countries}.}
+
+\item{land_borders_colour}{String containing a colour code (HEX value) or
+colour name, to be used as colour for the land borders.
+Default: \code{"black"}.}
+
+\item{land_borders_size}{Numeric value of the line size to draw the land
+borders. Default: \code{0.25}}
+
+\item{fill_land}{String containing a colour code (HEX value) or colour
 name, to be used as filling for the countries.
+Default: \code{NA} (transparent).}
+
+\item{fill_sea}{String containing a colour code (HEX value) or colour
+name, to be used as filling for the seas
 Default: \code{NA} (transparent).}
 
 \item{contour}{Boolean flag to indicate if a contour should be overlaid
