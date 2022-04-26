@@ -1,3 +1,33 @@
+#' @keywords internal
+create_sq_grid <- function(.data, resolution = 0.5) {
+  crs_raster_format <-
+    "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0 +no_defs"
+  # "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0 +units=m +no_defs"
+  .data_interp <- .data %>%
+    dplyr::mutate(geometry = NA, .after = longitude) %>%
+    sf::st_as_sf(
+      coords = c("longitude", "latitude"),
+      crs = "+proj=longlat +datum=WGS84 +no_defs"
+    )
+
+  alt_grd_template_sf <- .data_interp %>%
+    sf::st_bbox() %>%
+    sf::st_as_sfc() %>%
+    sf::st_make_grid(
+      cellsize = c(resolution, resolution),
+      what = "centers"
+    ) %>%
+    sf::st_as_sf() %>%
+    cbind(., sf::st_coordinates(.)) %>%
+    sf::st_drop_geometry() %>%
+    dplyr:::mutate(Z = 0)
+
+  alt_grd_template_sf %>%
+    raster::rasterFromXYZ(
+      crs = crs_raster_format
+    )
+}
+
 #' Create land-sea mask for the CRU TS dataset
 #'
 #' @param res Numeric value for the mask resolution. Default: 0.5 degrees.
@@ -329,7 +359,7 @@ subset_coords <- function(.data, latitude, longitude, buffer) {
 
 #' Thin plate spline regression
 #'
-#' @inheritDotParams fields::Tps
+#' @inheritDotParams fields::Tps -x -Y
 #' @param .data Data frame with spatial and climate data. The following are
 #'     expected:
 #'     \itemize{
@@ -343,6 +373,9 @@ subset_coords <- function(.data, latitude, longitude, buffer) {
 #' @param land_borders Data frame with polygons to represent land borders
 #'     (e.g. continents, countries, counties, etc.).
 #'     Default: `rnaturalearth::ne_countries`.
+#' @param check_data Boolean flag to indicate whether `.data` should be checked
+#'     or not (i.e. validate coordinates and main variable).
+#'     Default: `TRUE`
 #' @param ... Additional parametres for the interpolation.
 #'
 #' @return `tibble` object with interpolated values.
@@ -354,37 +387,22 @@ tps <- function(.data,
                 land_borders =
                   rnaturalearth::ne_countries(scale = "small",
                                               returnclass = "sf"),
+                check_data = TRUE,
                 ...) {
-  crs_raster_format <-
-    "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0 +units=m +no_defs"
+  # Check coordinates
   .data2 <- .data %>%
-    check_coords(var)
-  .data2_interp <- .data2 %>%
-    dplyr::mutate(geometry = NA, .after = longitude) %>%
-    sf::st_as_sf(
-      coords = c("longitude", "latitude"),
-      crs = "+proj=longlat +datum=WGS84 +no_defs"
-    )
-
-  alt_grd_template_sf <- .data2_interp %>%
-    sf::st_bbox() %>%
-    sf::st_as_sfc() %>%
-    sf::st_make_grid(
-      cellsize = c(resolution, resolution),
-      what = "centers"
-    ) %>%
-    sf::st_as_sf() %>%
-    cbind(., sf::st_coordinates(.)) %>%
-    sf::st_drop_geometry() %>%
-    dplyr:::mutate(Z = 0)
-
-  alt_grd_template_raster <- alt_grd_template_sf %>%
-    raster::rasterFromXYZ(
-      crs = crs_raster_format
-    )
-
-  fit_tps <- fields::Tps(x, y, lon.lat = TRUE, ...)
-  interp_tps <- raster::interpolate(alt_grd_template_raster, fit_tps)
+    check_coords(var = var, skip = !check_data)
+  # Create squared grid
+  sq_grid <- .data2 %>%
+    create_sq_grid(resolution = resolution)
+  # Create regression
+  fit_tps <- fields::Tps(.data %>%
+                           dplyr::select(longitude, latitude),
+                         .data %>%
+                           dplyr::select(var),
+                         lon.lat = TRUE,
+                         ...)
+  interp_tps <- raster::interpolate(sq_grid, fit_tps)
 
   interp_tps %>%
     raster::mask(mask = land_borders) %>%
