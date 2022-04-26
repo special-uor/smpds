@@ -67,7 +67,11 @@ is required.</p>
   ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">60</span>, <span class="fl">90</span><span class="op">)</span>,
   show_plot <span class="op">=</span> <span class="cn">TRUE</span>,
   elevation_cut <span class="op">=</span> <span class="cn">NULL</span>,
-  fill_countries <span class="op">=</span> <span class="cn">NA</span>,
+  land_borders <span class="op">=</span> <span class="fu">rnaturalearth</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rnaturalearth/man/ne_countries.html" class="external-link">ne_countries</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="st">"small"</span>, returnclass <span class="op">=</span> <span class="st">"sf"</span><span class="op">)</span>,
+  land_borders_colour <span class="op">=</span> <span class="st">"black"</span>,
+  land_borders_size <span class="op">=</span> <span class="fl">0.25</span>,
+  fill_land <span class="op">=</span> <span class="st">"white"</span>,
+  fill_sea <span class="op">=</span> <span class="st">"#CFE2F3"</span>,
   contour <span class="op">=</span> <span class="cn">FALSE</span>,
   <span class="va">...</span>
 <span class="op">)</span>
@@ -76,7 +80,8 @@ is required.</p>
   <span class="va">.data</span>,
   var <span class="op">=</span> <span class="st">"mat"</span>,
   units <span class="op">=</span> <span class="cn">NA</span>,
-  fill_scale <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_fermenter</a></span><span class="op">(</span>name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">toupper</a></span><span class="op">(</span><span class="va">var</span><span class="op">)</span>, palette <span class="op">=</span> <span class="st">"Spectral"</span><span class="op">)</span>,
+  fill_scale <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_fill_gradientn</a></span><span class="op">(</span>name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">toupper</a></span><span class="op">(</span><span class="va">var</span><span class="op">)</span>, colours <span class="op">=</span>
+    <span class="fu">wesanderson</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/wesanderson/man/wes_palette.html" class="external-link">wes_palette</a></span><span class="op">(</span><span class="st">"Zissou1"</span>, <span class="fl">100</span>, type <span class="op">=</span> <span class="st">"continuous"</span><span class="op">)</span><span class="op">)</span>,
   size <span class="op">=</span> <span class="fl">1</span>,
   stroke <span class="op">=</span> <span class="fl">0.5</span>,
   legend.key.width <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">2</span>, <span class="st">"cm"</span><span class="op">)</span>,
@@ -85,7 +90,33 @@ is required.</p>
   ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">60</span>, <span class="fl">90</span><span class="op">)</span>,
   show_plot <span class="op">=</span> <span class="cn">TRUE</span>,
   elevation_cut <span class="op">=</span> <span class="cn">NULL</span>,
-  fill_countries <span class="op">=</span> <span class="cn">NA</span>,
+  land_borders <span class="op">=</span> <span class="fu">rnaturalearth</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rnaturalearth/man/ne_countries.html" class="external-link">ne_countries</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="st">"small"</span>, returnclass <span class="op">=</span> <span class="st">"sf"</span><span class="op">)</span>,
+  land_borders_colour <span class="op">=</span> <span class="st">"black"</span>,
+  land_borders_size <span class="op">=</span> <span class="fl">0.25</span>,
+  fill_land <span class="op">=</span> <span class="st">"white"</span>,
+  fill_sea <span class="op">=</span> <span class="st">"#CFE2F3"</span>,
+  <span class="va">...</span>
+<span class="op">)</span>
+
+<span class="fu">plot_climate_tiles</span><span class="op">(</span>
+  <span class="va">.data</span>,
+  var <span class="op">=</span> <span class="st">"mat"</span>,
+  units <span class="op">=</span> <span class="cn">NA</span>,
+  fill_scale <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_fill_viridis_d</a></span><span class="op">(</span>name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">toupper</a></span><span class="op">(</span><span class="va">var</span><span class="op">)</span><span class="op">)</span>,
+  size <span class="op">=</span> <span class="fl">1</span>,
+  stroke <span class="op">=</span> <span class="fl">0.1</span>,
+  legend.key.width <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"cm"</span><span class="op">)</span>,
+  legend.position <span class="op">=</span> <span class="st">"bottom"</span>,
+  xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">180</span>, <span class="fl">180</span><span class="op">)</span>,
+  ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">60</span>, <span class="fl">90</span><span class="op">)</span>,
+  show_plot <span class="op">=</span> <span class="cn">TRUE</span>,
+  elevation_cut <span class="op">=</span> <span class="cn">NULL</span>,
+  land_borders <span class="op">=</span> <span class="fu">rnaturalearth</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rnaturalearth/man/ne_countries.html" class="external-link">ne_countries</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="st">"small"</span>, returnclass <span class="op">=</span> <span class="st">"sf"</span><span class="op">)</span>,
+  land_borders_colour <span class="op">=</span> <span class="st">"black"</span>,
+  land_borders_size <span class="op">=</span> <span class="fl">0.25</span>,
+  fill_land <span class="op">=</span> <span class="st">"white"</span>,
+  fill_sea <span class="op">=</span> <span class="st">"#CFE2F3"</span>,
+  contour <span class="op">=</span> <span class="cn">FALSE</span>,
   <span class="va">...</span>
 <span class="op">)</span>
 
@@ -154,7 +185,12 @@ is required.</p>
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>.data</dt>
-<dd><p>Data frame with spatial and climate data.</p></dd>
+<dd><p>Data frame with spatial and climate data. The following are
+expected:</p><ul><li><p><strong>Latitude</strong>, named: <code>latitude</code>, <code>lat</code> or <code>y</code>.</p></li>
+<li><p><strong>Longitude</strong>, named: <code>longitude</code>, <code>long</code>, <code>lon</code>
+or <code>y</code>.</p></li>
+<li><p><strong>Main variable</strong>, named: value of <code>var</code>.</p></li>
+</ul></dd>
 <dt>var</dt>
 <dd><p>String with the name of the climate variable to plot. Default:
 <code>"mat"</code> (Mean Annual Temperature).</p></dd>
@@ -206,9 +242,24 @@ Default: <code>TRUE</code>.</p></dd>
 <dt>elevation_cut</dt>
 <dd><p>Numeric value to use as the threshold of the elevation
 at which the sites will be represented with different shapes.</p></dd>
-<dt>fill_countries</dt>
+<dt>land_borders</dt>
+<dd><p>Data frame with polygons to represent land borders
+(e.g. continents, countries, counties, etc.).
+Default: <code><a href="https://rdrr.io/pkg/rnaturalearth/man/ne_countries.html" class="external-link">rnaturalearth::ne_countries</a></code>.</p></dd>
+<dt>land_borders_colour</dt>
+<dd><p>String containing a colour code (HEX value) or
+colour name, to be used as colour for the land borders.
+Default: <code>"black"</code>.</p></dd>
+<dt>land_borders_size</dt>
+<dd><p>Numeric value of the line size to draw the land
+borders. Default: <code>0.25</code></p></dd>
+<dt>fill_land</dt>
 <dd><p>String containing a colour code (HEX value) or colour
 name, to be used as filling for the countries.
+Default: <code>NA</code> (transparent).</p></dd>
+<dt>fill_sea</dt>
+<dd><p>String containing a colour code (HEX value) or colour
+name, to be used as filling for the seas
 Default: <code>NA</code> (transparent).</p></dd>
 <dt>contour</dt>
 <dd><p>Boolean flag to indicate if a contour should be overlaid
