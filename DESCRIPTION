@@ -36,6 +36,7 @@ BugReports: https://github.com/special-uor/smpds/issues/
 Imports: 
     akima,
     dplyr,
+    fields,
     furrr,
     future,
     ggplot2,
@@ -55,7 +56,8 @@ Imports:
     splash,
     stringr,
     tibble,
-    tidyr
+    tidyr,
+    wesanderson
 Depends: 
     R (>= 2.10)
 RdMacros: Rdpack
