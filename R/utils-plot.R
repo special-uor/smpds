@@ -222,6 +222,7 @@ plot_biome <- function(.data,
     ggplot2::geom_sf(data = land_borders,
                      colour = land_borders_colour,
                      fill = fill_land,
+                     inherit.aes = FALSE,
                      size = land_borders_size) +
     ggplot2::coord_sf(xlim = xlim, ylim = ylim, ..., expand = FALSE) +
     ggplot2::geom_point(mapping = ggplot2::aes(fill = description),
@@ -300,7 +301,7 @@ plot_climate <- function(.data,
                            ggplot2::scale_fill_viridis_d(name = toupper(var)),
                          size = 1,
                          stroke = 0.1,
-                         legend.key.width = ggplot2::unit(2, "cm"),
+                         legend.key.width = ggplot2::unit(1, "cm"),
                          legend.position = "bottom",
                          xlim = c(-180, 180),
                          ylim = c(-60, 90),
@@ -381,6 +382,7 @@ plot_climate <- function(.data,
     ggplot2::geom_sf(data = land_borders,
                      colour = land_borders_colour,
                      fill = fill_land,
+                     inherit.aes = FALSE,
                      size = land_borders_size) +
     ggplot2::coord_sf(xlim = xlim, ylim = ylim, ..., expand = FALSE) +
     ggplot2::geom_point(mapping = ggplot2::aes(fill = var),
@@ -486,13 +488,14 @@ plot_climate_countour <-
                                              fill = var)) +
       ggplot2::geom_sf(data = land_borders,
                        fill = fill_land,
+                       inherit.aes = FALSE,
                        size = 0) +
       ggplot2::geom_tile() +
       # ggplot2::geom_raster(interpolate = FALSE) +
-      # ggplot2::geom_tile(ggplot2::aes(fill = var)) +
       ggplot2::geom_sf(data = land_borders,
                        colour = land_borders_colour,
                        fill = NA,
+                       inherit.aes = FALSE,
                        size = land_borders_size) +
       ggplot2::coord_sf(xlim = xlim, ylim = ylim, ..., expand = FALSE) +
       ggplot2::geom_point(mapping = ggplot2::aes(longitude,
@@ -511,6 +514,122 @@ plot_climate_countour <-
       print(p)
     return(invisible(p))
   }
+
+#' @rdname plot_climate
+#' @export
+plot_climate_tiles <- function(.data,
+                         var = "mat",
+                         units = NA,
+                         fill_scale =
+                           ggplot2::scale_fill_viridis_d(name = toupper(var)),
+                         size = 1,
+                         stroke = 0.1,
+                         legend.key.width = ggplot2::unit(1, "cm"),
+                         legend.position = "bottom",
+                         xlim = c(-180, 180),
+                         ylim = c(-60, 90),
+                         show_plot = TRUE,
+                         elevation_cut = NULL,
+                         land_borders =
+                           rnaturalearth::ne_countries(scale = "small",
+                                                       returnclass = "sf"),
+                         land_borders_colour = "black",
+                         land_borders_size = 0.25,
+                         fill_land = "white",
+                         fill_sea = "#CFE2F3",
+                         contour = FALSE,
+                         ...) {
+  # Local bindings
+  caption <- latitude <- longitude <- NULL
+
+  # Check if the map requested is a contour
+  if (contour) {
+    aux <- .data %>% dplyr::rename(var = !!var) %>% dplyr::select(var)
+    if (is.factor(aux$var) |
+        !(typeof(aux$var) %in% c("double", "integer", "numeric"))) {
+      warning("The target variable, `", var, "`, must be numeric. ",
+              "Plotting simple climate map.", call. = FALSE)
+    } else {
+      output <- plot_climate_countour(.data = .data,
+                                      var = var,
+                                      units = units,
+                                      fill_scale = fill_scale,
+                                      size = size,
+                                      stroke = max(0.3, stroke),
+                                      legend.key.width = legend.key.width,
+                                      legend.position = legend.position,
+                                      xlim = xlim,
+                                      ylim = ylim,
+                                      show_plot = show_plot,
+                                      elevation_cut = elevation_cut,
+                                      land_borders = land_borders,
+                                      fill_land = fill_land,
+                                      fill_sea = fill_sea,
+                                      ...)
+      return(output)
+    }
+  }
+
+  # Check for latitude, longitude and var (one of each expected)
+  .data <- .data %>%
+    check_coords(var)
+
+  # Check if the units were provided
+  if (!is.na(units))
+    fill_scale$name <- paste0(fill_scale$name, " [", units, "]")
+
+  # Create clean version of the original dataset
+  .datav2 <- .data %>%
+    dplyr::filter(!is.na(var))
+
+  # Use different shapes if elevation_cut is given by the user
+  shape <- rep(21, nrow(.datav2))
+  if (!is.null(elevation_cut) & "elevation" %in% colnames(.datav2)) {
+    caption <- paste0("Circles: elevation < ",
+                      elevation_cut,
+                      "m -- Triangles: elevation >= ",
+                      elevation_cut,
+                      "m")
+    shape <- ifelse(.datav2$elevation >= elevation_cut, 24, 21)
+  }
+
+  # Create arbitrary factor for the input variable
+  .datav2 <- .data %>%
+    create_factor()
+
+  # Create plot
+  p <- .datav2 %>%
+    ggplot2::ggplot(mapping = ggplot2::aes(x = longitude,
+                                           y = latitude,
+                                           fill = var)) +
+    ggplot2::geom_sf(data = land_borders,
+                     fill = fill_land,
+                     inherit.aes = FALSE,
+                     size = 0) +
+    ggplot2::geom_tile(mapping = ggplot2::aes(fill = var)) +
+    ggplot2::geom_sf(data = land_borders,
+                     colour = land_borders_colour,
+                     fill = NA,
+                     inherit.aes = FALSE,
+                     size = land_borders_size) +
+    ggplot2::coord_sf(xlim = xlim, ylim = ylim, ..., expand = FALSE) +
+    ggplot2::geom_col(alpha = 0) +
+    fill_scale +
+    ggplot2::guides(
+      fill = ggplot2::guide_legend(
+        nrow = 1,
+        override.aes = list(alpha = 1),
+        label.position = "bottom",
+        label.hjust = 0
+      )
+    ) +
+    ggplot2::labs(x = NULL, y = NULL, caption = caption) +
+    climate_theme(fill_sea, legend.key.width, legend.position)
+
+  if (show_plot)
+    print(p)
+  return(invisible(p))
+}
 
 #' @param baseline Numeric value to be used as the baseline for the calculation
 #'     of the Growing Degree Days, default: \code{0}.
