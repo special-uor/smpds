@@ -396,9 +396,9 @@ tps <- function(.data,
   sq_grid <- .data2 %>%
     create_sq_grid(resolution = resolution)
   # Create regression
-  fit_tps <- fields::Tps(.data %>%
+  fit_tps <- fields::Tps(.data2 %>%
                            dplyr::select(longitude, latitude),
-                         .data %>%
+                         .data2 %>%
                            dplyr::select(var),
                          lon.lat = TRUE,
                          ...)
