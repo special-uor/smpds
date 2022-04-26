@@ -1,5 +1,7 @@
 #' @keywords internal
-check_coords <- function(.data, var) {
+check_coords <- function(.data, var, skip = FALSE) {
+  if (skip) # Avoid double checking data
+    return(.data)
   lat_var_names <- c("latitude", "lat", "y")
   lon_var_names <- c("longitude", "long", "lon", "x")
   main_var_names <- var
@@ -298,7 +300,7 @@ plot_climate <- function(.data,
                            ggplot2::scale_fill_viridis_d(name = toupper(var)),
                          size = 1,
                          stroke = 0.1,
-                         legend.key.width = ggplot2::unit(1, "cm"),
+                         legend.key.width = ggplot2::unit(2, "cm"),
                          legend.position = "bottom",
                          xlim = c(-180, 180),
                          ylim = c(-60, 90),
@@ -459,48 +461,12 @@ plot_climate_countour <-
       dplyr::filter(!is.na(var))
 
     # Create interpolated subset
-    crs_raster_format <-
-      "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0 +units=m +no_defs"
-    .datav2_interp <- .datav2 %>%
-      dplyr::mutate(geometry = NA, .after = longitude) %>%
-      sf::st_as_sf(
-        coords = c("longitude", "latitude"),
-        crs = "+proj=longlat +datum=WGS84 +no_defs"
-        # crs = crs_raster_format
-      )
-    ## Nearest Neighbour
-    fit_NN <- gstat::gstat(
-      formula = var ~ 1,
-      data = as(.datav2_interp, "Spatial"),
-      nmax = 10, # Number of neighbouring observations used for the fit
-      nmin = 3,
-      maxdist = 1000
-    )
-
-    alt_grd_template_sf <- .datav2_interp %>%
-      sf::st_bbox() %>%
-      sf::st_as_sfc() %>%
-      sf::st_make_grid(
-        cellsize = c(0.25, 0.25),
-        what = "centers"
-      ) %>%
-      sf::st_as_sf() %>%
-      cbind(., sf::st_coordinates(.)) %>%
-      sf::st_drop_geometry() %>%
-      dplyr:::mutate(Z = 0)
-
-    alt_grd_template_raster <- alt_grd_template_sf %>%
-      raster::rasterFromXYZ(
-        crs = crs_raster_format
-      )
-
-    interp_NN <- raster::interpolate(alt_grd_template_raster, fit_NN)
-
-    .datav3 <- interp_NN %>%
-      raster::mask(mask = land_borders) %>%
-      raster::rasterToPoints() %>%
-      tibble::as_tibble() %>%
-      magrittr::set_names(c("longitude", "latitude", "var"))
+    .datav3 <- .datav2 %>%
+      smpds::tps(var = var,
+                 resolution = 0.5,
+                 land_borders =  land_borders,
+                 check_data = FALSE) %>%
+      dplyr::rename(var = !!var)
 
     # Use different shapes if elevation_cut is given by the user
     shape <- rep(21, nrow(.datav2))
