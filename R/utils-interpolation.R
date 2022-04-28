@@ -359,7 +359,7 @@ subset_coords <- function(.data, latitude, longitude, buffer) {
 
 #' Thin plate spline regression
 #'
-#' @inheritDotParams fields::Tps -x -Y
+#' @inheritDotParams fields::Tps -x -Y -lon.lat
 #' @param .data Data frame with spatial and climate data. The following are
 #'     expected:
 #'     \itemize{
