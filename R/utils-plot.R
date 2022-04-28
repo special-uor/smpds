@@ -121,8 +121,10 @@ create_factor <- function(.data) {
                           digits = 4),
                   by = round((max(., na.rm = TRUE) - min(., na.rm = TRUE)) / 9,
                              digits = 4)) %>%
-                round(digits = 4)
-          )
+                round(digits = 4) %>%
+                sort()
+          ) %>%
+          factor(levels = unique(sort(.)))
       )
   }
   invisible(.data)
@@ -444,7 +446,7 @@ plot_climate_countour <-
 
     # Check the fill_scale
     if (fill_scale$is_discrete()) {
-      warning("Changing fill_scale to a Spectral continuous scale ...",
+      warning("Changing fill_scale to a continuous scale ...",
               call. = FALSE)
       fill_scale  <-
         ggplot2::scale_fill_gradientn(
@@ -515,64 +517,58 @@ plot_climate_countour <-
     return(invisible(p))
   }
 
+#' @param .overlay_data (Optional) Data frame with original observations, to be
+#'     to be overlaid on top of the tiles in `.data`.
+#' @param continuous (Optional) Boolean flag to indicate whether or not to use
+#'     a continuous (`TRUE`) fill scale. Default: `FALSE`.
 #' @rdname plot_climate
 #' @export
-plot_climate_tiles <- function(.data,
-                         var = "mat",
-                         units = NA,
-                         fill_scale =
-                           ggplot2::scale_fill_viridis_d(name = toupper(var)),
-                         size = 1,
-                         stroke = 0.1,
-                         legend.key.width = ggplot2::unit(1, "cm"),
-                         legend.position = "bottom",
-                         xlim = c(-180, 180),
-                         ylim = c(-60, 90),
-                         show_plot = TRUE,
-                         elevation_cut = NULL,
-                         land_borders =
-                           rnaturalearth::ne_countries(scale = "small",
-                                                       returnclass = "sf"),
-                         land_borders_colour = "black",
-                         land_borders_size = 0.25,
-                         fill_land = "white",
-                         fill_sea = "#CFE2F3",
-                         contour = FALSE,
-                         ...) {
+plot_climate_tiles <-
+  function(.data,
+           var = "mat",
+           units = NA,
+           fill_scale =
+             ggplot2::scale_fill_manual(
+               name = toupper(var),
+               values =
+                 wesanderson::wes_palette("Zissou1", 9, type = "continuous")
+             ),
+           size = 1,
+           stroke = 0.1,
+           legend.key.width = ggplot2::unit(1, "cm"),
+           legend.position = "bottom",
+           xlim = c(-180, 180),
+           ylim = c(-60, 90),
+           show_plot = TRUE,
+           elevation_cut = NULL,
+           land_borders =
+             rnaturalearth::ne_countries(scale = "small",
+                                         returnclass = "sf"),
+           land_borders_colour = "black",
+           land_borders_size = 0.25,
+           fill_land = "white",
+           fill_sea = "#CFE2F3",
+           .overlay_data = NULL,
+           continuous = FALSE,
+           ...) {
   # Local bindings
   caption <- latitude <- longitude <- NULL
-
-  # Check if the map requested is a contour
-  if (contour) {
-    aux <- .data %>% dplyr::rename(var = !!var) %>% dplyr::select(var)
-    if (is.factor(aux$var) |
-        !(typeof(aux$var) %in% c("double", "integer", "numeric"))) {
-      warning("The target variable, `", var, "`, must be numeric. ",
-              "Plotting simple climate map.", call. = FALSE)
-    } else {
-      output <- plot_climate_countour(.data = .data,
-                                      var = var,
-                                      units = units,
-                                      fill_scale = fill_scale,
-                                      size = size,
-                                      stroke = max(0.3, stroke),
-                                      legend.key.width = legend.key.width,
-                                      legend.position = legend.position,
-                                      xlim = xlim,
-                                      ylim = ylim,
-                                      show_plot = show_plot,
-                                      elevation_cut = elevation_cut,
-                                      land_borders = land_borders,
-                                      fill_land = fill_land,
-                                      fill_sea = fill_sea,
-                                      ...)
-      return(output)
-    }
-  }
 
   # Check for latitude, longitude and var (one of each expected)
   .data <- .data %>%
     check_coords(var)
+
+  # Check the fill_scale
+  if (fill_scale$is_discrete() & continuous) {
+    warning("Changing fill_scale to a continuous scale ...",
+            call. = FALSE)
+    fill_scale  <-
+      ggplot2::scale_fill_gradientn(
+        name = toupper(var),
+        colours =
+          wesanderson::wes_palette("Zissou1", 100, type = "continuous")
+      )
+  }
 
   # Check if the units were provided
   if (!is.na(units))
@@ -594,8 +590,29 @@ plot_climate_tiles <- function(.data,
   }
 
   # Create arbitrary factor for the input variable
-  .datav2 <- .data %>%
-    create_factor()
+  if (!missing(.overlay_data) && !continuous) {
+    .overlay_data <- .overlay_data %>%
+      check_coords(var) %>%
+      dplyr::filter(!is.na(var)) %>%
+      dplyr::mutate(.is_tile = FALSE)
+
+    .data_all <- .data %>%
+      dplyr::mutate(.is_tile = TRUE) %>%
+      dplyr::bind_rows(.overlay_data) %>%
+      create_factor()
+
+    .overlay_data <- .data_all %>%
+      dplyr::filter(!.is_tile) %>%
+      dplyr::select(-.is_tile) %>%
+      dplyr::arrange(var)
+    .datav2 <- .data_all %>%
+      dplyr::filter(.is_tile) %>%
+      dplyr::select(-.is_tile) %>%
+      dplyr::arrange(var)
+  } else if (!continuous) {
+    .datav2 <- .data %>%
+      create_factor()
+  }
 
   # Create plot
   p <- .datav2 %>%
@@ -606,13 +623,37 @@ plot_climate_tiles <- function(.data,
                      fill = fill_land,
                      inherit.aes = FALSE,
                      size = 0) +
-    ggplot2::geom_tile(mapping = ggplot2::aes(fill = var)) +
+    ggplot2::geom_tile() +
     ggplot2::geom_sf(data = land_borders,
                      colour = land_borders_colour,
                      fill = NA,
                      inherit.aes = FALSE,
                      size = land_borders_size) +
-    ggplot2::coord_sf(xlim = xlim, ylim = ylim, ..., expand = FALSE) +
+    ggplot2::coord_sf(xlim = xlim, ylim = ylim, ..., expand = FALSE)
+  if (!missing(.overlay_data)) {
+    # Use different shapes if elevation_cut is given by the user
+    shape <- rep(21, nrow(.overlay_data))
+    if (!is.null(elevation_cut) & "elevation" %in% colnames(.overlay_data)) {
+      caption <- paste0("Circles: elevation < ",
+                        elevation_cut,
+                        "m -- Triangles: elevation >= ",
+                        elevation_cut,
+                        "m")
+      shape <- ifelse(.overlay_data$elevation >= elevation_cut, 24, 21)
+    }
+
+    p <- p +
+      ggplot2::geom_point(mapping = ggplot2::aes(x = longitude,
+                                                 y = latitude,
+                                                 fill = var),
+                          data = .overlay_data,
+                          size = size,
+                          shape = shape,
+                          stroke = stroke,
+                          position = "jitter")
+  }
+
+  p <- p +
     ggplot2::geom_col(alpha = 0) +
     fill_scale +
     ggplot2::guides(
