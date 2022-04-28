@@ -67,6 +67,11 @@ version (for large datasets), <code><a href="extract_biome.html">parallel_extrac
   ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">60</span>, <span class="fl">90</span><span class="op">)</span>,
   show_plot <span class="op">=</span> <span class="cn">TRUE</span>,
   tiled_legend <span class="op">=</span> <span class="cn">TRUE</span>,
+  land_borders <span class="op">=</span> <span class="fu">rnaturalearth</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rnaturalearth/man/ne_countries.html" class="external-link">ne_countries</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="st">"small"</span>, returnclass <span class="op">=</span> <span class="st">"sf"</span><span class="op">)</span>,
+  land_borders_colour <span class="op">=</span> <span class="st">"black"</span>,
+  land_borders_size <span class="op">=</span> <span class="fl">0.25</span>,
+  fill_land <span class="op">=</span> <span class="st">"white"</span>,
+  fill_sea <span class="op">=</span> <span class="st">"#CFE2F3"</span>,
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
     </div>
@@ -120,6 +125,25 @@ Default: <code>TRUE</code>.</p></dd>
 <dd><p>Boolean flag to indicate whether or not the legend should
 be shown as tiles, if <code>TRUE</code>, or points, <code>FALSE</code>.
 Default: <code>TRUE</code>.</p></dd>
+<dt>land_borders</dt>
+<dd><p>Data frame with polygons to represent land borders
+(e.g. continents, countries, counties, etc.).
+Default: <code><a href="https://rdrr.io/pkg/rnaturalearth/man/ne_countries.html" class="external-link">rnaturalearth::ne_countries</a></code>.</p></dd>
+<dt>land_borders_colour</dt>
+<dd><p>String containing a colour code (HEX value) or
+colour name, to be used as colour for the land borders.
+Default: <code>"black"</code>.</p></dd>
+<dt>land_borders_size</dt>
+<dd><p>Numeric value of the line size to draw the land
+borders. Default: <code>0.25</code></p></dd>
+<dt>fill_land</dt>
+<dd><p>String containing a colour code (HEX value) or colour
+name, to be used as filling for the countries.
+Default: <code>NA</code> (transparent).</p></dd>
+<dt>fill_sea</dt>
+<dd><p>String containing a colour code (HEX value) or colour
+name, to be used as filling for the seas
+Default: <code>NA</code> (transparent).</p></dd>
 <dt>...</dt>
 <dd><p>Arguments passed on to <code><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">ggplot2::coord_sf</a></code></p><dl><dt><code>expand</code></dt>
 <dd><p>If <code>TRUE</code>, the default, adds a small expansion factor to

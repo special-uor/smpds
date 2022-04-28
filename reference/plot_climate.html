@@ -102,7 +102,8 @@ is required.</p>
   <span class="va">.data</span>,
   var <span class="op">=</span> <span class="st">"mat"</span>,
   units <span class="op">=</span> <span class="cn">NA</span>,
-  fill_scale <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_fill_viridis_d</a></span><span class="op">(</span>name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">toupper</a></span><span class="op">(</span><span class="va">var</span><span class="op">)</span><span class="op">)</span>,
+  fill_scale <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">toupper</a></span><span class="op">(</span><span class="va">var</span><span class="op">)</span>, values <span class="op">=</span>
+    <span class="fu">wesanderson</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/wesanderson/man/wes_palette.html" class="external-link">wes_palette</a></span><span class="op">(</span><span class="st">"Zissou1"</span>, <span class="fl">9</span>, type <span class="op">=</span> <span class="st">"continuous"</span><span class="op">)</span><span class="op">)</span>,
   size <span class="op">=</span> <span class="fl">1</span>,
   stroke <span class="op">=</span> <span class="fl">0.1</span>,
   legend.key.width <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"cm"</span><span class="op">)</span>,
@@ -116,7 +117,8 @@ is required.</p>
   land_borders_size <span class="op">=</span> <span class="fl">0.25</span>,
   fill_land <span class="op">=</span> <span class="st">"white"</span>,
   fill_sea <span class="op">=</span> <span class="st">"#CFE2F3"</span>,
-  contour <span class="op">=</span> <span class="cn">FALSE</span>,
+  .overlay_data <span class="op">=</span> <span class="cn">NULL</span>,
+  continuous <span class="op">=</span> <span class="cn">FALSE</span>,
   <span class="va">...</span>
 <span class="op">)</span>
 
@@ -354,6 +356,12 @@ legend, the plot title, or the plot margins.</p></dd>
 
   
 </dl></dd>
+<dt>.overlay_data</dt>
+<dd><p>(Optional) Data frame with original observations, to be
+to be overlaid on top of the tiles in <code>.data</code>.</p></dd>
+<dt>continuous</dt>
+<dd><p>(Optional) Boolean flag to indicate whether or not to use
+a continuous (<code>TRUE</code>) fill scale. Default: <code>FALSE</code>.</p></dd>
 <dt>baseline</dt>
 <dd><p>Numeric value to be used as the baseline for the calculation
 of the Growing Degree Days, default: <code>0</code>.</p></dd>
