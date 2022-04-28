@@ -59,7 +59,8 @@ plot_climate_tiles(
   .data,
   var = "mat",
   units = NA,
-  fill_scale = ggplot2::scale_fill_viridis_d(name = toupper(var)),
+  fill_scale = ggplot2::scale_fill_manual(name = toupper(var), values =
+    wesanderson::wes_palette("Zissou1", 9, type = "continuous")),
   size = 1,
   stroke = 0.1,
   legend.key.width = ggplot2::unit(1, "cm"),
@@ -73,7 +74,8 @@ plot_climate_tiles(
   land_borders_size = 0.25,
   fill_land = "white",
   fill_sea = "#CFE2F3",
-  contour = FALSE,
+  .overlay_data = NULL,
+  continuous = FALSE,
   ...
 )
 
@@ -294,6 +296,12 @@ limits are set via \code{xlim} and \code{ylim} and some data points fall outside
 limits, then those data points may show up in places such as the axes, the
 legend, the plot title, or the plot margins.}
   }}
+
+\item{.overlay_data}{(Optional) Data frame with original observations, to be
+to be overlaid on top of the tiles in \code{.data}.}
+
+\item{continuous}{(Optional) Boolean flag to indicate whether or not to use
+a continuous (\code{TRUE}) fill scale. Default: \code{FALSE}.}
 
 \item{baseline}{Numeric value to be used as the baseline for the calculation
 of the Growing Degree Days, default: \code{0}.}

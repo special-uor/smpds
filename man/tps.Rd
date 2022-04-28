@@ -59,11 +59,6 @@ x.scale by the
 user. The default for "user" is mean 0 and standard deviation 1. Scale 
 type of "unscaled" does not scale the data.  
 }
-    \item{\code{lon.lat}}{If TRUE locations are interpreted as lognitude and
-latitude and great circle distance is used to find distances among
-locations. The aRange scale parameter for \code{fast.Tps} (setting the
-compact support of the Wendland function) in this case is in units of
-miles (see example and caution below). }
     \item{\code{method}}{ Determines what "smoothing" parameter should be
      used. The default is to estimate standard GCV Other choices are:
      GCV.model, GCV.one, RMSE, pure error and REML. The differences

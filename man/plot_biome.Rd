@@ -15,6 +15,11 @@ plot_biome(
   ylim = c(-60, 90),
   show_plot = TRUE,
   tiled_legend = TRUE,
+  land_borders = rnaturalearth::ne_countries(scale = "small", returnclass = "sf"),
+  land_borders_colour = "black",
+  land_borders_size = 0.25,
+  fill_land = "white",
+  fill_sea = "#CFE2F3",
   ...
 )
 }
@@ -65,6 +70,25 @@ Default: \code{TRUE}.}
 \item{tiled_legend}{Boolean flag to indicate whether or not the legend should
 be shown as tiles, if \code{TRUE}, or points, \code{FALSE}.
 Default: \code{TRUE}.}
+
+\item{land_borders}{Data frame with polygons to represent land borders
+(e.g. continents, countries, counties, etc.).
+Default: \code{rnaturalearth::ne_countries}.}
+
+\item{land_borders_colour}{String containing a colour code (HEX value) or
+colour name, to be used as colour for the land borders.
+Default: \code{"black"}.}
+
+\item{land_borders_size}{Numeric value of the line size to draw the land
+borders. Default: \code{0.25}}
+
+\item{fill_land}{String containing a colour code (HEX value) or colour
+name, to be used as filling for the countries.
+Default: \code{NA} (transparent).}
+
+\item{fill_sea}{String containing a colour code (HEX value) or colour
+name, to be used as filling for the seas
+Default: \code{NA} (transparent).}
 
 \item{...}{
   Arguments passed on to \code{\link[ggplot2:ggsf]{ggplot2::coord_sf}}

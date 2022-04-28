@@ -5,7 +5,7 @@
 \alias{CMPD}
 \title{\code{CMPD} dataset}
 \format{
-A data frame (\code{tibble} object) with 2273 rows and 697 variables:
+A data frame (\code{tibble} object) with 4208 rows and 17 variables:
 \describe{
 \item{...}{int ...}
 }
