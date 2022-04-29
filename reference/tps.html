@@ -56,6 +56,9 @@
   resolution <span class="op">=</span> <span class="fl">0.5</span>,
   land_borders <span class="op">=</span> <span class="fu">rnaturalearth</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rnaturalearth/man/ne_countries.html" class="external-link">ne_countries</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="st">"small"</span>, returnclass <span class="op">=</span> <span class="st">"sf"</span><span class="op">)</span>,
   check_data <span class="op">=</span> <span class="cn">TRUE</span>,
+  z_var <span class="op">=</span> <span class="cn">NULL</span>,
+  z_mode <span class="op">=</span> <span class="st">"independent"</span>,
+  cpus <span class="op">=</span> <span class="fl">1</span>,
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
     </div>
@@ -81,6 +84,19 @@ Default: <code><a href="https://rdrr.io/pkg/rnaturalearth/man/ne_countries.html"
 <dd><p>Boolean flag to indicate whether <code>.data</code> should be checked
 or not (i.e. validate coordinates and main variable).
 Default: <code>TRUE</code></p></dd>
+<dt>z_var</dt>
+<dd><p>String with the name of the variable containing information for
+elevation. If this is given, then the elevation is used for the
+interpolation.</p></dd>
+<dt>z_mode</dt>
+<dd><p>String with the mode in which the elevation should be used:</p><ul><li><p><code>z_mode = "independent"</code> (Default), use the elevation as
+another independent variable to predict <code>var</code>.</p></li>
+<li><p><code>z_mode = "covariate"</code>, use the elevation as a linear
+covariate to predict <code>var</code>.</p></li>
+</ul></dd>
+<dt>cpus</dt>
+<dd><p>Numeric value with the number of CPUs to use in the computation
+of the elevations for the interpolation grid.</p></dd>
 <dt>...</dt>
 <dd><p>Arguments passed on to <code><a href="https://rdrr.io/pkg/fields/man/Tps.html" class="external-link">fields::Tps</a></code></p><dl><dt><code>m</code></dt>
 <dd><p>A polynomial function of degree (m-1) will be  
