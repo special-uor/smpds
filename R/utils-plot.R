@@ -409,6 +409,7 @@ plot_climate <- function(.data,
   return(invisible(p))
 }
 
+#' @param resolution Numeric value for the grid resolution.
 #' @rdname plot_climate
 #' @export
 plot_climate_countour <-
@@ -436,6 +437,7 @@ plot_climate_countour <-
            land_borders_size = 0.25,
            fill_land = "white",
            fill_sea = "#CFE2F3",
+           resolution = 0.5,
            ...) {
     # Local bindings
     caption <- latitude <- longitude <- NULL
@@ -467,7 +469,7 @@ plot_climate_countour <-
     # Create interpolated subset
     .datav3 <- .datav2 %>%
       smpds::tps(var = var,
-                 resolution = 0.5,
+                 resolution = resolution,
                  land_borders =  land_borders,
                  check_data = FALSE) %>%
       dplyr::rename(var = !!var)
