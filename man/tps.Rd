@@ -10,6 +10,9 @@ tps(
   resolution = 0.5,
   land_borders = rnaturalearth::ne_countries(scale = "small", returnclass = "sf"),
   check_data = TRUE,
+  z_var = NULL,
+  z_mode = "independent",
+  cpus = 1,
   ...
 )
 }
@@ -34,6 +37,21 @@ Default: \code{rnaturalearth::ne_countries}.}
 \item{check_data}{Boolean flag to indicate whether \code{.data} should be checked
 or not (i.e. validate coordinates and main variable).
 Default: \code{TRUE}}
+
+\item{z_var}{String with the name of the variable containing information for
+elevation. If this is given, then the elevation is used for the
+interpolation.}
+
+\item{z_mode}{String with the mode in which the elevation should be used:
+\itemize{
+\item \code{z_mode = "independent"} (Default), use the elevation as
+another independent variable to predict \code{var}.
+\item \code{z_mode = "covariate"}, use the elevation as a linear
+covariate to predict \code{var}.
+}}
+
+\item{cpus}{Numeric value with the number of CPUs to use in the computation
+of the elevations for the interpolation grid.}
 
 \item{...}{
   Arguments passed on to \code{\link[fields:Tps]{fields::Tps}}

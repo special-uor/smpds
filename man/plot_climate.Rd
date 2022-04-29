@@ -52,6 +52,7 @@ plot_climate_countour(
   land_borders_size = 0.25,
   fill_land = "white",
   fill_sea = "#CFE2F3",
+  resolution = 0.5,
   ...
 )
 
@@ -296,6 +297,8 @@ limits are set via \code{xlim} and \code{ylim} and some data points fall outside
 limits, then those data points may show up in places such as the axes, the
 legend, the plot title, or the plot margins.}
   }}
+
+\item{resolution}{Numeric value for the grid resolution.}
 
 \item{.overlay_data}{(Optional) Data frame with original observations, to be
 to be overlaid on top of the tiles in \code{.data}.}
