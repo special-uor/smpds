@@ -94,6 +94,40 @@ cru_mask <- function(res = 0.5,
     dplyr::select(-elevation)
 }
 
+#' @keywords internal
+get_elevation <- function(.data, cpus = 1, missing = -999999) {
+  latlon_proj <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+  oplan <- future::plan(future::multisession, workers = cpus)
+  on.exit(future::plan(oplan), add = TRUE)
+  output <- NULL
+  {
+    pb <- progressr::progressor(steps = nrow(.data))
+    output <-
+      .data %>%
+      dplyr::mutate(elevation = list(latitude, longitude) %>%
+                      furrr::future_pmap_dbl(function(latitude, longitude) {
+                        suppressMessages({
+                          tryCatch({
+                            elv <- tibble::tibble(x = longitude,
+                                                  y = latitude) %>%
+                              sp::SpatialPoints(proj4string =
+                                                  sp::CRS(latlon_proj)) %>%
+                              elevatr::get_elev_point(prj = latlon_proj,
+                                                      src = "aws")
+                            pb()
+                            return(elv$elevation[1])
+                          }, error = function(e) {
+                            print(e)
+                            return(missing)
+                          })
+                        })
+                      },
+                      .options = furrr::furrr_options(seed = TRUE)))
+  } %>%
+    smpds::pb()
+  return(output)
+}
+
 #' Geographically Weighted Regression
 #'
 #' @details The input reference data can be in any of the following formats:
@@ -403,7 +437,19 @@ subset_coords <- function(.data, latitude, longitude, buffer) {
 #' @param check_data Boolean flag to indicate whether `.data` should be checked
 #'     or not (i.e. validate coordinates and main variable).
 #'     Default: `TRUE`
-#' @param ... Additional parametres for the interpolation.
+#' @param z_var String with the name of the variable containing information for
+#'     elevation. If this is given, then the elevation is used for the
+#'     interpolation.
+#' @param z_mode String with the mode in which the elevation should be used:
+#'     \itemize{
+#'         \item \code{z_mode = "independent"} (Default), use the elevation as
+#'         another independent variable to predict `var`.
+#'         \item \code{z_mode = "covariate"}, use the elevation as a linear
+#'         covariate to predict `var`.
+#'     }
+#' @param cpus Numeric value with the number of CPUs to use in the computation
+#'     of the elevations for the interpolation grid.
+#' @param ... Additional parameters for the interpolation.
 #'
 #' @return `tibble` object with interpolated values.
 #'
@@ -415,25 +461,88 @@ tps <- function(.data,
                   rnaturalearth::ne_countries(scale = "small",
                                               returnclass = "sf"),
                 check_data = TRUE,
+                z_var = NULL,
+                z_mode = "independent",
+                cpus = 1,
                 ...) {
   # Check coordinates
   .data2 <- .data %>%
     check_coords(var = var, skip = !check_data)
-  # Create squared grid
-  sq_grid <- .data2 %>%
-    create_sq_grid(resolution = resolution)
-  # Create regression
-  fit_tps <- fields::Tps(.data2 %>%
-                           dplyr::select(longitude, latitude),
-                         .data2 %>%
-                           dplyr::select(var),
-                         lon.lat = TRUE,
-                         ...)
-  interp_tps <- raster::interpolate(sq_grid, fit_tps)
 
-  interp_tps %>%
-    raster::mask(mask = land_borders) %>%
-    raster::rasterToPoints() %>%
-    tibble::as_tibble() %>%
-    magrittr::set_names(c("longitude", "latitude", var))
+  if (!missing(z_var)) {
+    .data2 <- .data2 %>%
+      dplyr::rename(Z = !!z_var)
+
+    # Create rectangular grid
+    sq_grid <- .data2 %>%
+      create_sq_grid(resolution = resolution,
+                     get_elevation = get_elevation,
+                     cpus = cpus,
+                     land_borders = land_borders)
+
+    if (z_mode == "independent") {
+      message("Using the elevation as an independent variable...")
+      fit_tps <- fields::Tps(x = .data2 %>%
+                               dplyr::select(longitude,
+                                             latitude,
+                                             Z),
+                             Y = .data2$var,
+                             lon.lat = TRUE,
+                             ...)
+      interp_tps <- raster::interpolate(sq_grid,
+                                        fit_tps,
+                                        xyOnly = FALSE)
+      interp_tps %>%
+        raster::rasterToPoints() %>%
+        tibble::as_tibble() %>%
+        magrittr::set_names(c("longitude", "latitude", var))
+
+    } else {
+      message("Using the elevation as a linear covariate...")
+      fit_tps <- fields::Tps(x = .data2 %>%
+                               dplyr::select(longitude, latitude),
+                             Y = .data2$var,
+                             lon.lat = TRUE,
+                             Z = .data2$Z,
+                             ...)
+      pfun <- function(model, x, ...) {
+        predict(model, x[, 1:2], Z = x[, 3], ...)
+      }
+
+      interp_tps <- raster::interpolate(sq_grid,
+                                        fit_tps,
+                                        xyOnly = FALSE,
+                                        fun = pfun)
+      # if (!missing(land_borders)) {
+      #   interp_tps <- interp_tps %>%
+      #     raster::mask(mask = land_borders)
+      # }
+
+      interp_tps %>%
+        raster::rasterToPoints() %>%
+        tibble::as_tibble() %>%
+        magrittr::set_names(c("longitude", "latitude", var))
+    }
+  } else {
+    # Create rectangular grid
+    sq_grid <- .data2 %>%
+      create_sq_grid(resolution = resolution,
+                     land_borders = land_borders)
+
+    fit_tps <- fields::Tps(.data2 %>%
+                             dplyr::select(longitude, latitude),
+                           .data2 %>%
+                             dplyr::select(var),
+                           lon.lat = TRUE,
+                           ...)
+
+    interp_tps <- raster::interpolate(sq_grid, fit_tps)
+
+    interp_tps %>%
+      raster::mask(mask = land_borders) %>%
+      raster::rasterToPoints() %>%
+      tibble::as_tibble() %>%
+      magrittr::set_names(c("longitude", "latitude", var))
+
+  }
 }
