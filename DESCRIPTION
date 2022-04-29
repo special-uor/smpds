@@ -36,6 +36,7 @@ BugReports: https://github.com/special-uor/smpds/issues/
 Imports: 
     akima,
     dplyr,
+    elevatr,
     fields,
     furrr,
     future,
