@@ -373,7 +373,7 @@ plot_climate <- function(.data,
   }
 
   # Create arbitrary factor for the input variable
-  .datav2 <- .data %>%
+  .datav2 <- .datav2 %>%
     create_factor()
 
   # Create plot
@@ -598,7 +598,7 @@ plot_climate_tiles <-
       dplyr::filter(!is.na(var)) %>%
       dplyr::mutate(.is_tile = FALSE)
 
-    .data_all <- .data %>%
+    .data_all <- .datav2 %>%
       dplyr::mutate(.is_tile = TRUE) %>%
       dplyr::bind_rows(.overlay_data) %>%
       create_factor()
@@ -612,7 +612,7 @@ plot_climate_tiles <-
       dplyr::select(-.is_tile) %>%
       dplyr::arrange(var)
   } else if (!continuous) {
-    .datav2 <- .data %>%
+    .datav2 <- .datav2 %>%
       create_factor()
   }
 
