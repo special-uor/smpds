@@ -5,7 +5,7 @@
 \alias{Phelps}
 \title{\code{Phelps} dataset}
 \format{
-A data frame (\code{tibble} object) with 106 rows and 16 variables:
+A data frame (\code{tibble} object) with 106 rows and 21 variables:
 \describe{
 \item{...}{int ...}
 }
