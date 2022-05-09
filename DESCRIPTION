@@ -48,7 +48,6 @@ Imports:
     progressr,
     purrr,
     raster,
-    Rdpack (>= 0.8),
     readr,
     rnaturalearth,
     sf,
@@ -61,5 +60,4 @@ Imports:
     wesanderson
 Depends: 
     R (>= 2.10)
-RdMacros: Rdpack
 VignetteBuilder: knitr
