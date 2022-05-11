@@ -297,7 +297,7 @@ embsecbio_counts <- embsecbio::pollen_data %>%
   dplyr::filter(ID_SAMPLE %in% embsecbio_samples$ID_SAMPLE)
 
 
-# ---- Extract data ------------------------------------------------------------
+# Extract data ------------------------------------------------------------
 embsecbio_metadata <- embsecbio::age_model %>%
   dplyr::mutate(age_BP = dplyr::coalesce(est_age_bacon_intcal20_mean,
                                          est_age_original,
@@ -396,5 +396,317 @@ openxlsx::writeData(wb, "taxon_list",
                     readr::read_csv())
 openxlsx::saveWorkbook(wb,
                        paste0("data-raw/EMBSeCBIO_",
+                              Sys.Date(),
+                              ".xlsx"))
+
+# SPH revisions ----
+"The entities and their counts were manually inspected by SPH"
+
+`%>%` <- magrittr::`%>%`
+## Load data ----
+EMBSeCBIO_all <-
+  "data-raw/GLOBAL/D_embsecbio_records_additions_SPH.xlsx" %>%
+  readxl::read_excel(sheet = 1) %>%
+  dplyr::rename(basin_size = `basin_size (km)`) %>%
+  dplyr::mutate(
+    publication = "Harrison, S.P., Marinova, E. and Cruz-Silva, E., 2021. EMBSeCBIO pollen database. University of Reading. Dataset.",
+    doi = "10.17864/1947.309",
+    .after = Publication,
+  ) %>%
+  dplyr::mutate(ID_SAMPLE = seq_along(entity_name), .after = doi) %>%
+  dplyr::select(-Publication)
+
+### Metadata ----
+EMBSeCBIO_metadata <-
+  EMBSeCBIO_all %>%
+  dplyr::select(source:ID_SAMPLE)
+
+### Polen counts ----
+EMBSeCBIO_counts <-
+  EMBSeCBIO_all %>%
+  dplyr::select(ID_SAMPLE) %>%
+  dplyr::bind_cols(
+    EMBSeCBIO_all %>% # Convert columns with counts to numeric type
+      dplyr::select(-c(source:ID_SAMPLE)) %>%
+      purrr::map_dfc(~.x %>% as.numeric)
+  ) %>%
+  magrittr::set_names(
+    colnames(.) %>%
+      stringr::str_replace_all("\\.\\.\\.", "#")
+  ) %>%
+  tidyr::pivot_longer(-ID_SAMPLE,
+                      names_to = "taxon_name",
+                      values_to = "taxon_count") %>%
+  dplyr::mutate(taxon_name = taxon_name %>%
+                  stringr::str_remove_all("\\#[0-9]+$") %>%
+                  stringr::str_squish()) %>%
+  dplyr::group_by(ID_SAMPLE, taxon_name) %>%
+  dplyr::mutate(taxon_count = sum(taxon_count, na.rm = TRUE)) %>%
+  dplyr::distinct() %>%
+  dplyr::ungroup()
+
+### Amalgamations ----
+EMBSeCBIO_taxa_amalgamation <-
+  "data-raw/GLOBAL/D_embsecbio_records_additions_SPH.xlsx" %>%
+  readxl::read_excel(sheet = 2) %>%
+  magrittr::set_names(c(
+    "clean", "intermediate", "amalgamated"
+  )) %>%
+  dplyr::distinct() %>%
+  purrr::map_df(stringr::str_squish)
+
+### Combine counts and amalgamation ----
+EMBSeCBIO_taxa_counts_amalgamation <-
+  EMBSeCBIO_counts %>%
+  dplyr::left_join(EMBSeCBIO_taxa_amalgamation,
+                   by = c("taxon_name" = "clean")) %>%
+  dplyr::relocate(taxon_count, .after = amalgamated) %>%
+  dplyr::relocate(ID_SAMPLE, .before = 1) %>%
+  dplyr::rename(clean = taxon_name)
+# dplyr::select(-taxon_name)
+
+EMBSeCBIO_taxa_counts_amalgamation %>%
+  dplyr::filter(is.na(clean) | is.na(intermediate) | is.na(amalgamated)) %>%
+  dplyr::distinct(clean, intermediate, amalgamated)
+
+## Find DOIs ----
+EMBSeCBIO_metadata_pubs <-
+  EMBSeCBIO_metadata %>%
+  dplyr::distinct(publication, doi) %>%
+  dplyr::arrange(publication) %>%
+  dplyr::mutate(DOI = publication %>%
+                  stringr::str_extract_all("\\[DOI\\s*(.*?)\\s*\\](;|$)") %>%
+                  purrr::map_chr(~.x %>%
+                                   stringr::str_remove_all("^\\[DOI:") %>%
+                                   stringr::str_remove_all("\\]\\s*;\\s*$") %>%
+                                   stringr::str_remove_all("\\]$") %>%
+                                   stringr::str_remove_all("doi:") %>%
+                                   stringr::str_squish() %>%
+                                   stringr::str_c(collapse = ";\n"))
+  ) %>%
+  dplyr::mutate(ID_PUB = seq_along(publication)) %>%
+  dplyr::mutate(updated_publication = NA, .before = publication) %>%
+  dplyr::mutate(updated_DOI = NA, .before = DOI)
+# EMBSeCBIO_metadata_pubs %>%
+#   readr::write_excel_csv("data-raw/GLOBAL/EMBSeCBIO_modern-references.csv")
+
+### Load cleaned publications list ----
+EMBSeCBIO_clean_publications <-
+  "data-raw/GLOBAL/EMBSeCBIO_modern-references_clean.csv" %>%
+  readr::read_csv() %>%
+  dplyr::select(-DOI)
+
+## Append clean publications ----
+EMBSeCBIO_metadata_2 <-
+  EMBSeCBIO_metadata %>%
+  dplyr::left_join(EMBSeCBIO_metadata_pubs %>%
+                     dplyr::select(-DOI, -doi, -dplyr::contains("updated")),
+                   by = "publication") %>%
+  dplyr::left_join(EMBSeCBIO_clean_publications,
+                   by = "ID_PUB") %>%
+  dplyr::select(-publication.x, -publication.y, -doi, -ID_PUB) %>%
+  dplyr::rename(doi = updated_DOI,
+                publication = updated_publication)
+
+## Extract PNV/BIOME ----
+EMBSeCBIO_metadata_3 <-
+  EMBSeCBIO_metadata_2 %>%
+  dplyr::select(-dplyr::starts_with("ID_BIOME")) %>%
+  smpds::parallel_extract_biome(cpus = 10) %>%
+  # smpds::biome_name() %>%
+  dplyr::relocate(ID_BIOME, .after = doi) %>%
+  smpds::pb()
+
+EMBSeCBIO_metadata_3 %>%
+  smpds::plot_biome(xlim = range(.$longitude, na.rm = TRUE) * c(0.9, 1.1),
+                    ylim = range(.$latitude, na.rm = TRUE) * c(0.9, 1.1))
+
+## Create count tables ----
+### Clean ----
+EMBSeCBIO_clean <-
+  EMBSeCBIO_taxa_counts_amalgamation %>%
+  dplyr::select(-intermediate, -amalgamated) %>%
+  dplyr::rename(taxon_name = clean) %>%
+  dplyr::group_by(ID_SAMPLE, taxon_name) %>%
+  dplyr::mutate(taxon_count = sum(taxon_count, na.rm = TRUE)) %>%
+  dplyr::ungroup() %>%
+  dplyr::distinct() %>%
+  tidyr::pivot_wider(ID_SAMPLE,
+                     names_from = taxon_name,
+                     values_from = taxon_count,
+                     names_sort = TRUE) %>%
+  dplyr::arrange(ID_SAMPLE)
+
+### Intermediate ----
+EMBSeCBIO_intermediate <-
+  EMBSeCBIO_taxa_counts_amalgamation %>%
+  dplyr::select(-clean, -amalgamated) %>%
+  dplyr::rename(taxon_name = intermediate) %>%
+  dplyr::group_by(ID_SAMPLE, taxon_name) %>%
+  dplyr::mutate(taxon_count = sum(taxon_count, na.rm = TRUE)) %>%
+  dplyr::ungroup() %>%
+  dplyr::distinct() %>%
+  tidyr::pivot_wider(ID_SAMPLE,
+                     names_from = taxon_name,
+                     values_from = taxon_count,
+                     names_sort = TRUE) %>%
+  dplyr::arrange(ID_SAMPLE)
+
+### Amalgamated ----
+EMBSeCBIO_amalgamated <-
+  EMBSeCBIO_taxa_counts_amalgamation %>%
+  dplyr::select(-clean, -intermediate) %>%
+  dplyr::rename(taxon_name = amalgamated) %>%
+  dplyr::group_by(ID_SAMPLE, taxon_name) %>%
+  dplyr::mutate(taxon_count = sum(taxon_count, na.rm = TRUE)) %>%
+  dplyr::ungroup() %>%
+  dplyr::distinct() %>%
+  tidyr::pivot_wider(ID_SAMPLE,
+                     names_from = taxon_name,
+                     values_from = taxon_count,
+                     names_sort = TRUE) %>%
+  dplyr::arrange(ID_SAMPLE)
+
+# Extract missing elevations ----
+# EMBSeCBIO_metadata_4 <-
+#   EMBSeCBIO_metadata_3 %>%
+#   dplyr::rename(elevation_original = elevation) %>%
+#   smpds:::get_elevation(cpus = 12)
+#
+# EMBSeCBIO_metadata_4 %>%
+#   dplyr::select(ID_SAMPLE, entity_name, latitude, longitude, elevation_new = elevation, elevation_original) %>%
+#   dplyr::mutate(diff =
+#                   abs(elevation_new - elevation_original) / elevation_original) %>%
+#   # readr::write_csv("data-raw/GLOBAL/EMBSeCBIO_elevations_only.csv", na = "")
+#   dplyr::filter(diff >= 0.5)
+# dplyr::mutate(within_90p =
+#                 dplyr::between(elevation,
+#                                min(c(0.9, 1.1) * elevation_original),
+#                                max(c(0.9, 1.1) * elevation_original)),
+#               within_95p =
+#                 dplyr::between(elevation,
+#                                min(c(0.95, 1.05) * elevation_original),
+#                                max(c(0.95, 1.05) * elevation_original)),
+#               within_975p =
+#                 dplyr::between(elevation,
+#                                min(c(0.975, 1.025) * elevation_original),
+#                                max(c(0.975, 1.025) * elevation_original))
+# ) %>%
+#   dplyr::filter(!within_975p)
+
+# Store subsets ----
+EMBSeCBIO <-
+  EMBSeCBIO_metadata_3 %>%
+  dplyr::mutate(
+    clean = EMBSeCBIO_clean %>%
+      dplyr::select(-c(ID_SAMPLE)),
+    intermediate = EMBSeCBIO_intermediate %>%
+      dplyr::select(-c(ID_SAMPLE)),
+    amalgamated = EMBSeCBIO_amalgamated %>%
+      dplyr::select(-c(ID_SAMPLE))
+  ) %>%
+  dplyr::mutate(
+    basin_size_old = basin_size,
+    basin_size_num = basin_size %>%
+      as.numeric() %>%
+      round(digits = 6) %>%
+      as.character(),
+    basin_size = dplyr::coalesce(
+      basin_size_num,
+      basin_size
+    ),
+    basin_size = basin_size %>%
+      stringr::str_to_lower() %>%
+      stringr::str_squish() %>%
+      stringr::str_replace_all("unknown|Unknown", "not known"),
+    entity_type = entity_type %>%
+      stringr::str_to_lower() %>%
+      stringr::str_squish() %>%
+      stringr::str_replace_all("unknown|Unknown", "not known") %>%
+      stringr::str_to_lower(),
+    site_type = site_type %>%
+      stringr::str_to_lower() %>%
+      stringr::str_squish() %>%
+      stringr::str_replace_all("estuarine", "coastal, estuarine") %>%
+      stringr::str_replace_all("drained/dry lake", "lacustrine, drained lake") %>%
+      stringr::str_replace_all("terrestrial, other sediments", "terrestrial") %>%
+      stringr::str_replace_all("terrestrial, soil", "soil") %>%
+      stringr::str_replace_all("unknown", "not known")
+  ) %>%
+  dplyr::relocate(ID_SAMPLE, .before = clean) %>%
+  # dplyr::relocate(basin_size_old, .after = basin_size) %>%
+  dplyr::select(-basin_size_num, -basin_size_old)
+
+usethis::use_data(EMBSeCBIO, overwrite = TRUE, compress = "xz")
+
+# Load climate reconstructions ----
+climate_reconstructions <-
+  "data-raw/reconstructions/EMBSeCBIO_climate_reconstructions_2022-04-30.csv" %>%
+  readr::read_csv()
+
+climate_reconstructions_with_counts <- smpds::EMBSeCBIO %>%
+  dplyr::bind_cols(
+    climate_reconstructions %>%
+      dplyr::select(sn = site_name,
+                    en = entity_name,
+                    new_elevation = elevation,
+                    mi:mtwa)
+  ) %>%
+  dplyr::relocate(mi:mtwa, .before = clean) %>%
+  dplyr::mutate(elevation = dplyr::coalesce(elevation, new_elevation))
+climate_reconstructions_with_counts %>%
+  dplyr::filter(site_name != sn | entity_name != en)
+waldo::compare(smpds::EMBSeCBIO,
+               climate_reconstructions_with_counts %>%
+                 dplyr::select(-c(mi:mtwa))
+)
+EMBSeCBIO <- climate_reconstructions_with_counts %>%
+  dplyr::select(-sn, -en, -new_elevation)
+usethis::use_data(EMBSeCBIO, overwrite = TRUE, compress = "xz")
+
+climate_reconstructions %>%
+  smpds::plot_climate_countour(
+    var = "mat",
+    xlim = range(.$longitude, na.rm = TRUE),
+    ylim = range(.$latitude, na.rm = TRUE)
+  )
+
+# Inspect enumerates ----
+### basin_size -----
+EMBSeCBIO$basin_size %>%
+  unique() %>%
+  sort()
+
+### site_type ----
+EMBSeCBIO$site_type %>%
+  unique() %>% sort()
+
+### entity_type ----
+EMBSeCBIO$entity_type %>%
+  unique() %>% sort()
+
+# Export Excel workbook ----
+wb <- openxlsx::createWorkbook()
+openxlsx::addWorksheet(wb, "metadata")
+openxlsx::writeData(wb, "metadata",
+                    EMBSeCBIO %>%
+                      dplyr::select(source:ID_SAMPLE))
+openxlsx::addWorksheet(wb, "clean")
+openxlsx::writeData(wb, "clean",
+                    EMBSeCBIO %>%
+                      dplyr::select(ID_SAMPLE, clean) %>%
+                      tidyr::unnest(clean))
+openxlsx::addWorksheet(wb, "intermediate")
+openxlsx::writeData(wb, "intermediate",
+                    EMBSeCBIO %>%
+                      dplyr::select(ID_SAMPLE, intermediate) %>%
+                      tidyr::unnest(intermediate))
+openxlsx::addWorksheet(wb, "amalgamated")
+openxlsx::writeData(wb, "amalgamated",
+                    EMBSeCBIO %>%
+                      dplyr::select(ID_SAMPLE, amalgamated) %>%
+                      tidyr::unnest(amalgamated))
+openxlsx::saveWorkbook(wb,
+                       paste0("data-raw/GLOBAL/EMBSeCBIO_",
                               Sys.Date(),
                               ".xlsx"))
