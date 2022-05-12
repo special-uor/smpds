@@ -5,7 +5,7 @@
 \alias{EMPDv2}
 \title{\code{EMPDv2} dataset}
 \format{
-A data frame (\code{tibble} object) with 8713 rows and 1917 variables:
+A data frame (\code{tibble} object) with 3508 rows and 17 variables:
 \describe{
 \item{...}{int ...}
 }

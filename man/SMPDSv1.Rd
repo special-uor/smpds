@@ -5,7 +5,7 @@
 \alias{SMPDSv1}
 \title{\code{SMPDSv1} dataset}
 \format{
-A data frame (\code{tibble} object) with 6458 rows and 1569 variables:
+A data frame (\code{tibble} object) with 6345 rows and 17 variables:
 \describe{
 \item{...}{int ...}
 }
