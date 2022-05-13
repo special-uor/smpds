@@ -478,26 +478,48 @@ EMPDv2_metadata_4 <-
   dplyr::rename(elevation_original = elevation) %>%
   smpds:::get_elevation(cpus = 12)
 
-EMPDv2_metadata_4 %>%
-  dplyr::select(ID_SAMPLE, elevation, elevation_original) %>%
-  dplyr::mutate(within_90p =
-                  dplyr::between(elevation,
-                                 min(c(0.9, 1.1) * elevation_original),
-                                 max(c(0.9, 1.1) * elevation_original)),
-                within_95p =
-                  dplyr::between(elevation,
-                                 min(c(0.95, 1.05) * elevation_original),
-                                 max(c(0.95, 1.05) * elevation_original)),
-                within_975p =
-                  dplyr::between(elevation,
-                                 min(c(0.975, 1.025) * elevation_original),
-                                 max(c(0.975, 1.025) * elevation_original))
+# EMPDv2_metadata_4 %>%
+#   dplyr::select(ID_SAMPLE, entity_name, latitude, longitude, elevation_new = elevation, elevation_original) %>%
+#   dplyr::mutate(diff =
+#                   abs(elevation_new - elevation_original) / elevation_original) %>%
+#   # readr::write_csv("data-raw/GLOBAL/EMPDv2_elevations_only.csv", na = "")
+#   dplyr::filter(diff >= 0.5)
+#   dplyr::mutate(within_90p =
+#                   dplyr::between(elevation,
+#                                  min(c(0.9, 1.1) * elevation_original),
+#                                  max(c(0.9, 1.1) * elevation_original)),
+#                 within_95p =
+#                   dplyr::between(elevation,
+#                                  min(c(0.95, 1.05) * elevation_original),
+#                                  max(c(0.95, 1.05) * elevation_original)),
+#                 within_975p =
+#                   dplyr::between(elevation,
+#                                  min(c(0.975, 1.025) * elevation_original),
+#                                  max(c(0.975, 1.025) * elevation_original))
+#   ) %>%
+#   dplyr::filter(!within_975p)
+
+# Load file created by SPH with actions for the entities with elevation = 0
+EMPDv2_zero_elevations_actions <-
+  "data-raw/GLOBAL/EMPDv2_only_SPH_clean_no dups_actions_for_entities_with_zeros_in_elevation.xlsx" %>%
+  readxl::read_excel(sheet = 1) %>%
+  janitor::clean_names() %>%
+  dplyr::mutate(elevation = ifelse(stringr::str_detect(action, "CHANGE"),
+                                   new,
+                                   original))
+
+EMPDv2_metadata_5 <-
+  EMPDv2_metadata_3 %>%
+  dplyr::left_join(
+    EMPDv2_zero_elevations_actions %>%
+      dplyr::select(entity_name, rev_elevation = elevation)
   ) %>%
-  dplyr::filter(!within_975p)
+  dplyr::mutate(elevation = dplyr::coalesce(rev_elevation, elevation)) %>%
+  dplyr::select(-rev_elevation)
 
 # Store subsets ----
 EMPDv2 <-
-  EMPDv2_metadata_3 %>%
+  EMPDv2_metadata_5 %>%
   dplyr::mutate(
     clean = EMPDv2_clean %>%
       dplyr::select(-c(ID_SAMPLE)),
@@ -507,17 +529,35 @@ EMPDv2 <-
       dplyr::select(-c(ID_SAMPLE))
   ) %>%
   dplyr::mutate(
+    basin_size_old = basin_size,
+    basin_size_num = basin_size %>%
+      as.numeric() %>%
+      round(digits = 6) %>%
+      as.character(),
+    basin_size = dplyr::coalesce(
+      basin_size_num,
+      basin_size
+    ),
     basin_size = basin_size %>%
-      stringr::str_replace_all("unknown", "not known"),
+      stringr::str_to_lower() %>%
+      stringr::str_squish() %>%
+      stringr::str_replace_all("unknown|Unknown", "not known"),
     entity_type = entity_type %>%
-      stringr::str_replace_all("unknown", "not known") %>%
+      stringr::str_to_lower() %>%
+      stringr::str_squish() %>%
+      stringr::str_replace_all("unknown|Unknown", "not known") %>%
       stringr::str_to_lower(),
     site_type = site_type %>%
+      stringr::str_to_lower() %>%
+      stringr::str_squish() %>%
       stringr::str_replace_all("estuarine", "coastal, estuarine") %>%
+      stringr::str_replace_all("drained/dry lake", "lacustrine, drained lake") %>%
+      stringr::str_replace_all("terrestrial, other sediments", "terrestrial") %>%
       stringr::str_replace_all("terrestrial, soil", "soil") %>%
       stringr::str_replace_all("unknown", "not known")
   ) %>%
-  dplyr::relocate(ID_SAMPLE, .before = clean)
+  dplyr::relocate(ID_SAMPLE, .before = clean) %>%
+  dplyr::select(-basin_size_num, -basin_size_old)
 
 usethis::use_data(EMPDv2, overwrite = TRUE, compress = "xz")
 
@@ -556,10 +596,6 @@ climate_reconstructions %>%
 # Inspect enumerates ----
 ### basin_size -----
 EMPDv2$basin_size %>%
-  # stringr::str_replace_all("not applicable", "-888888") %>%
-  # stringr::str_replace_all("not known", "-999999") %>%
-  # as.numeric() %>%
-  # round(digits = 6) %>%
   unique() %>%
   sort()
 
