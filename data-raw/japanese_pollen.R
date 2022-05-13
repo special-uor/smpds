@@ -385,37 +385,6 @@ japanese_pollen <-
 
 usethis::use_data(japanese_pollen, overwrite = TRUE, compress = "xz")
 
-# Load climate reconstructions ----
-climate_reconstructions <-
-  "data-raw/reconstructions/japanese_pollen_climate_reconstructions_2022-04-30.csv" %>%
-  readr::read_csv()
-
-climate_reconstructions_with_counts <- smpds::japanese_pollen %>%
-  dplyr::bind_cols(
-    climate_reconstructions %>%
-      dplyr::select(sn = site_name,
-                    en = entity_name,
-                    new_elevation = elevation,
-                    mi:mtwa)
-  ) %>%
-  dplyr::relocate(mi:mtwa, .before = clean) %>%
-  dplyr::mutate(elevation = dplyr::coalesce(elevation, new_elevation))
-climate_reconstructions_with_counts %>%
-  dplyr::filter(site_name != sn | entity_name != en)
-waldo::compare(smpds::japanese_pollen,
-               climate_reconstructions_with_counts %>%
-                 dplyr::select(-c(mi:mtwa))
-)
-japanese_pollen <- climate_reconstructions_with_counts %>%
-  dplyr::select(-sn, -en, -new_elevation)
-usethis::use_data(japanese_pollen, overwrite = TRUE, compress = "xz")
-
-climate_reconstructions %>%
-  smpds::plot_climate_countour(
-    var = "mat",
-    xlim = range(.$longitude, na.rm = TRUE),
-    ylim = range(.$latitude, na.rm = TRUE)
-  )
 
 # Inspect enumerates ----
 ## basin_size -----
@@ -458,3 +427,62 @@ openxlsx::saveWorkbook(wb,
                        paste0("data-raw/GLOBAL/japanese_pollen_",
                               Sys.Date(),
                               ".xlsx"))
+
+
+# Load climate reconstructions ----
+climate_reconstructions <-
+  "data-raw/reconstructions/japanese_pollen_climate_reconstructions_2022-05-12.csv" %>%
+  readr::read_csv()
+
+# Load daily values for precipitation to compute MAP (mean annual precipitation)
+climate_reconstructions_pre <-
+  "data-raw/reconstructions/japanese_pollen_climate_reconstructions_pre_2022-05-12.csv" %>%
+  readr::read_csv() %>%
+  dplyr::rowwise() %>%
+  dplyr::mutate(map = sum(dplyr::c_across(T1:T365), na.rm = TRUE), .before = T1)
+
+climate_reconstructions_2 <- climate_reconstructions %>%
+  dplyr::bind_cols(climate_reconstructions_pre %>%
+                     dplyr::select(map))
+
+climate_reconstructions_with_counts <-
+  smpds::japanese_pollen %>%
+  dplyr::select(-c(mi:mtwa)) %>%
+  dplyr::bind_cols(
+    climate_reconstructions_2 %>%
+      dplyr::select(sn = site_name,
+                    en = entity_name,
+                    new_elevation = elevation,
+                    mi:map)
+  ) %>%
+  dplyr::relocate(mi:map, .before = clean) %>%
+  dplyr::mutate(elevation = dplyr::coalesce(elevation, new_elevation))
+climate_reconstructions_with_counts %>%
+  dplyr::filter(site_name != sn | entity_name != en)
+waldo::compare(smpds::japanese_pollen,
+               climate_reconstructions_with_counts %>%
+                 dplyr::select(-c(mi:map, sn, en, new_elevation))
+)
+
+japanese_pollen <- climate_reconstructions_with_counts %>%
+  dplyr::select(-sn, -en, -new_elevation)
+usethis::use_data(japanese_pollen, overwrite = TRUE, compress = "xz")
+
+climate_reconstructions_2 %>%
+  smpds::plot_climate_countour(
+    var = "mat",
+    xlim = range(.$longitude, na.rm = TRUE),
+    ylim = range(.$latitude, na.rm = TRUE)
+  )
+
+climate_reconstructions_2 %>%
+  smpds::plot_climate(
+    var = "map",
+    xlim = range(.$longitude, na.rm = TRUE),
+    ylim = range(.$latitude, na.rm = TRUE)
+  )
+
+rm(climate_reconstructions,
+   climate_reconstructions_2,
+   climate_reconstructions_pre,
+   climate_reconstructions_with_counts)
