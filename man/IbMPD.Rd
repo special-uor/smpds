@@ -5,7 +5,7 @@
 \alias{IbMPD}
 \title{\code{IbMPD} dataset}
 \format{
-A data frame (\code{tibble} object) with 243 rows and 17 variables:
+A data frame (\code{tibble} object) with 243 rows and 23 variables:
 \describe{
 \item{...}{int ...}
 }
