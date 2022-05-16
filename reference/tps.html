@@ -58,6 +58,7 @@
   check_data <span class="op">=</span> <span class="cn">TRUE</span>,
   z_var <span class="op">=</span> <span class="cn">NULL</span>,
   z_mode <span class="op">=</span> <span class="st">"independent"</span>,
+  z_ref <span class="op">=</span> <span class="cn">NULL</span>,
   cpus <span class="op">=</span> <span class="fl">1</span>,
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
@@ -94,6 +95,10 @@ another independent variable to predict <code>var</code>.</p></li>
 <li><p><code>z_mode = "covariate"</code>, use the elevation as a linear
 covariate to predict <code>var</code>.</p></li>
 </ul></dd>
+<dt>z_ref</dt>
+<dd><p>Raster object or path to raster object with grid containing
+elevation information. For example the ETOPO5 (Earth topography 5 arc
+minute) data set.</p></dd>
 <dt>cpus</dt>
 <dd><p>Numeric value with the number of CPUs to use in the computation
 of the elevations for the interpolation grid.</p></dd>
