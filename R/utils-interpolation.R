@@ -6,7 +6,8 @@ create_sq_grid <- function(.data,
                                return(tibble::tibble(elevation = 0))
                                },
                            cpus = 1,
-                           land_borders = NULL) {
+                           land_borders = NULL,
+                           z_ref = NULL) {
   crs_raster_format <-
     "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0 +no_defs"
   .data_interp <- .data %>%
@@ -15,6 +16,34 @@ create_sq_grid <- function(.data,
       coords = c("longitude", "latitude"),
       crs = "+proj=longlat +datum=WGS84 +no_defs"
     )
+
+  if (!missing(z_ref) && !is.null(z_ref)) {
+    if ("character" %in% class(z_ref)) {
+      z_ref <- raster::raster(z_ref)
+    }
+
+    grid_boundary <- .data_interp %>%
+      sf::st_bbox()
+
+    grid_with_elevation <- z_ref %>%
+      raster::crop(grid_boundary)
+
+    # If land_borders are provided, apply as a mask to the grid
+    if (!missing(land_borders)) {
+      grid_with_elevation <- grid_with_elevation %>%
+        raster::mask(mask = land_borders)
+    }
+
+    grid_with_elevation <- grid_with_elevation %>%
+      raster::rasterToPoints() %>%
+      tibble::as_tibble() %>%
+      magrittr::set_names(c("x", "y", "Z")) %>%
+      raster::rasterFromXYZ(
+        crs = crs_raster_format
+      )
+
+    return(grid_with_elevation)
+  }
 
   alt_grd_template_sf <- .data_interp %>%
     sf::st_bbox() %>%
@@ -447,6 +476,9 @@ subset_coords <- function(.data, latitude, longitude, buffer) {
 #'         \item \code{z_mode = "covariate"}, use the elevation as a linear
 #'         covariate to predict `var`.
 #'     }
+#' @param z_ref Raster object or path to raster object with grid containing
+#'     elevation information. For example the ETOPO5 (Earth topography 5 arc
+#'     minute) data set.
 #' @param cpus Numeric value with the number of CPUs to use in the computation
 #'     of the elevations for the interpolation grid.
 #' @param ... Additional parameters for the interpolation.
@@ -463,6 +495,7 @@ tps <- function(.data,
                 check_data = TRUE,
                 z_var = NULL,
                 z_mode = "independent",
+                z_ref = NULL,
                 cpus = 1,
                 ...) {
   # Check coordinates
@@ -478,14 +511,18 @@ tps <- function(.data,
       create_sq_grid(resolution = resolution,
                      get_elevation = get_elevation,
                      cpus = cpus,
-                     land_borders = land_borders)
+                     land_borders = land_borders,
+                     z_ref = z_ref)
 
     if (z_mode == "independent") {
       message("Using the elevation as an independent variable...")
       fit_tps <- fields::Tps(x = .data2 %>%
                                dplyr::select(longitude,
                                              latitude,
-                                             Z),
+                                             Z) %>%
+                               magrittr::set_names(c(
+                                 "x", "y", "Z"
+                               )),
                              Y = .data2$var,
                              lon.lat = TRUE,
                              ...)
@@ -500,7 +537,10 @@ tps <- function(.data,
     } else {
       message("Using the elevation as a linear covariate...")
       fit_tps <- fields::Tps(x = .data2 %>%
-                               dplyr::select(longitude, latitude),
+                               dplyr::select(longitude, latitude) %>%
+                               magrittr::set_names(c(
+                                 "x", "y"
+                               )),
                              Y = .data2$var,
                              lon.lat = TRUE,
                              Z = .data2$Z,
@@ -527,7 +567,8 @@ tps <- function(.data,
     # Create rectangular grid
     sq_grid <- .data2 %>%
       create_sq_grid(resolution = resolution,
-                     land_borders = land_borders)
+                     land_borders = land_borders,
+                     z_ref = z_ref)
 
     fit_tps <- fields::Tps(.data2 %>%
                              dplyr::select(longitude, latitude),
