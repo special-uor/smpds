@@ -59,7 +59,8 @@
   varid <span class="op">=</span> <span class="cn">NULL</span>,
   coordinates <span class="op">=</span> <span class="fu">smpds</span><span class="fu">::</span><span class="va"><a href="CRU_coords.html">CRU_coords</a></span>,
   res <span class="op">=</span> <span class="fl">0.5</span>,
-  buffer <span class="op">=</span> <span class="fl">1.5</span>,
+  xy_buffer <span class="op">=</span> <span class="fl">1.5</span>,
+  z_buffer <span class="op">=</span> <span class="cn">NA</span>,
   cpus <span class="op">=</span> <span class="fl">1</span>,
   bandwidth <span class="op">=</span> <span class="fl">1.06</span>
 <span class="op">)</span>
@@ -70,7 +71,8 @@
   <span class="va">.tar</span>,
   coordinates <span class="op">=</span> <span class="fu">smpds</span><span class="fu">::</span><span class="va"><a href="CRU_coords.html">CRU_coords</a></span>,
   res <span class="op">=</span> <span class="fl">0.5</span>,
-  buffer <span class="op">=</span> <span class="fl">1.5</span>,
+  xy_buffer <span class="op">=</span> <span class="fl">1.5</span>,
+  z_buffer <span class="op">=</span> <span class="cn">NA</span>,
   cpus <span class="op">=</span> <span class="fl">1</span>,
   bandwidth <span class="op">=</span> <span class="fl">1.06</span>
 <span class="op">)</span></code></pre></div>
@@ -101,11 +103,17 @@ NetCDF file pointed by <code>.ref</code> (if applicable).</p></dd>
 <code><a href="CRU_coords.html">CRU_coords</a></code>.</p></dd>
 <dt>res</dt>
 <dd><p>Numeric value for the mask resolution. Default: 0.5 degrees.</p></dd>
-<dt>buffer</dt>
-<dd><p>Numeric value to be used as the boundary for the search area:</p><ul><li><p><code>latitude</code> &lt; <code>.tar$latitude + buffer</code></p></li>
-<li><p><code>latitude</code> &gt; <code>.tar$latitude - buffer</code></p></li>
-<li><p><code>longitude</code> &lt; <code>.tar$longitude + buffer</code></p></li>
-<li><p><code>longitude</code> &gt; <code>.tar$longitude - buffer</code></p></li>
+<dt>xy_buffer</dt>
+<dd><p>Numeric value to be used as the boundary for the search
+area in the <code>x</code> and <code>y</code> axes.</p><ul><li><p><code>latitude</code> &lt; <code>.tar$latitude + xy_buffer</code></p></li>
+<li><p><code>latitude</code> &gt; <code>.tar$latitude - xy_buffer</code></p></li>
+<li><p><code>longitude</code> &lt; <code>.tar$longitude + xy_buffer</code></p></li>
+<li><p><code>longitude</code> &gt; <code>.tar$longitude - xy_buffer</code></p></li>
+</ul></dd>
+<dt>z_buffer</dt>
+<dd><p>Numeric value to be used as the boundary for the search area
+in the <code>z</code> axis:</p><ul><li><p><code>elevation</code> &lt;= <code>.tar$elevation * z_buffer</code></p></li>
+<li><p><code>elevation</code> &gt;= <code>.tar$elevation / z_buffer</code></p></li>
 </ul></dd>
 <dt>cpus</dt>
 <dd><p>Number of CPUs to be used in parallel, default = 1.</p></dd>
