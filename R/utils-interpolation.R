@@ -176,12 +176,19 @@ get_elevation <- function(.data, cpus = 1, missing = -999999) {
 #' @param varid String with the identifier of the main variable inside the
 #'     NetCDF file pointed by \code{.ref} (if applicable).
 #' @inheritParams cru_mask
-#' @param buffer Numeric value to be used as the boundary for the search area:
+#' @param xy_buffer Numeric value to be used as the boundary for the search
+#' area in the `x` and `y` axes.
 #'     \itemize{
-#'      \item \code{latitude} < \code{.tar$latitude + buffer}
-#'      \item \code{latitude} > \code{.tar$latitude - buffer}
-#'      \item \code{longitude} < \code{.tar$longitude + buffer}
-#'      \item \code{longitude} > \code{.tar$longitude - buffer}
+#'      \item \code{latitude} < \code{.tar$latitude + xy_buffer}
+#'      \item \code{latitude} > \code{.tar$latitude - xy_buffer}
+#'      \item \code{longitude} < \code{.tar$longitude + xy_buffer}
+#'      \item \code{longitude} > \code{.tar$longitude - xy_buffer}
+#'     }
+#' @param z_buffer Numeric value to be used as the boundary for the search area
+#' in the `z` axis:
+#'     \itemize{
+#'      \item \code{elevation} <= \code{.tar$elevation * z_buffer}
+#'      \item \code{elevation} >= \code{.tar$elevation / z_buffer}
 #'     }
 #' @param cpus Number of CPUs to be used in parallel, default = 1.
 #' @inheritParams spgwr::gwr
@@ -228,7 +235,8 @@ gwr.character <- function(.ref,
                           varid = NULL,
                           coordinates = smpds::CRU_coords,
                           res = 0.5,
-                          buffer = 1.5,
+                          xy_buffer = 1.5,
+                          z_buffer = NA,
                           cpus = 1,
                           bandwidth = 1.06) {
   if(is.null(varid))
@@ -244,7 +252,8 @@ gwr.character <- function(.ref,
     gwr(.tar = .tar,
         coordinates = coordinates,
         res = res,
-        buffer = buffer,
+        xy_buffer = xy_buffer,
+        z_buffer = z_buffer,
         cpus = cpus,
         bandwidth = bandwidth)
 }
@@ -255,7 +264,8 @@ gwr.numeric <- function(.ref,
                         .tar,
                         coordinates = smpds::CRU_coords,
                         res = 0.5,
-                        buffer = 1.5,
+                        xy_buffer = 1.5,
+                        z_buffer = NA,
                         cpus = 1,
                         bandwidth = 1.06) {
   if (length(dim(.ref)) != 3)
@@ -287,7 +297,9 @@ gwr.numeric <- function(.ref,
           subset_coords(.data = climate_grid,
                         latitude = .tar$latitude[i],
                         longitude = .tar$longitude[i],
-                        buffer = buffer)
+                        elevation = .tar$elevation[i],
+                        xy_buffer = xy_buffer,
+                        z_buffer = z_buffer)
         }, error = function(e) {
           warning("A valid interpolation zone was not found (row ", i,"), ",
                   "this core is likely to be in an area without obsevations ",
@@ -306,8 +318,6 @@ gwr.numeric <- function(.ref,
             value = NA
           ) %>%
             tidyr::pivot_wider()
-          # pb()
-          # return(default_output)
           intermediate_output <- default_output
         } else {
           fms <-  names(climate_grid2) %>%
@@ -315,7 +325,6 @@ gwr.numeric <- function(.ref,
             stringr::str_c(fm_suffix)
           intermediate_output <- fms %>%
             furrr::future_map_dfc(~spgwr::gwr(formula = .x,
-            # purrr::map_dfc(~spgwr::gwr(formula = .x,
                                        data = climate_grid2,
                                        bandwidth = bandwidth,
                                        fit.points = .tar_coords[i, ],
@@ -426,23 +435,35 @@ pivot_data <- function(.data,
 
 #' Subset data
 #'
-#' Subset data using coordinates (\code{latitute} and \code{longitude}) and
-#' \code{buffer}.
+#' Subset data using coordinates (\code{latitute}, \code{longitude}) and
+#' \code{elevation}.
 #'
 #' @param .data 2D matrix with columns called \code{latitude} and
 #'     \code{longitude}.
 #' @param latitude Numeric value for reference \code{latitude}.
 #' @param longitude Numeric value for reference \code{longitude}.
+#' @param elevation Numeric value for reference \code{elevation}.
 #' @inheritParams gwr
 #'
 #' @return Filtered 2D matrix.
 #' @keywords internal
-subset_coords <- function(.data, latitude, longitude, buffer) {
+subset_coords <- function(.data,
+                          latitude,
+                          longitude,
+                          elevation,
+                          xy_buffer,
+                          z_buffer = NA) {
   .data_coords <- .data %>%
-    dplyr::filter(latitude > min(!!latitude - buffer),
-                  latitude < max(!!latitude + buffer),
-                  longitude > min(!!longitude - buffer),
-                  longitude < max(!!longitude + buffer))
+    dplyr::filter(latitude > min(!!latitude - xy_buffer),
+                  latitude < max(!!latitude + xy_buffer),
+                  longitude > min(!!longitude - xy_buffer),
+                  longitude < max(!!longitude + xy_buffer))
+
+  if (!missing(z_buffer) & !is.null(z_buffer) & !is.na(z_buffer)) {
+   .data_coords <- .data_coords %>%
+     dplyr::filter(elevation >= min(!!elevation / z_buffer),
+                   elevation <= max(!!elevation * z_buffer))
+  }
   sp::coordinates(.data_coords) <- c("longitude", "latitude")
   return(.data_coords)
 }
