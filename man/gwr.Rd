@@ -19,7 +19,8 @@ gwr(.ref, ...)
   varid = NULL,
   coordinates = smpds::CRU_coords,
   res = 0.5,
-  buffer = 1.5,
+  xy_buffer = 1.5,
+  z_buffer = NA,
   cpus = 1,
   bandwidth = 1.06
 )
@@ -29,7 +30,8 @@ gwr(.ref, ...)
   .tar,
   coordinates = smpds::CRU_coords,
   res = 0.5,
-  buffer = 1.5,
+  xy_buffer = 1.5,
+  z_buffer = NA,
   cpus = 1,
   bandwidth = 1.06
 )
@@ -52,12 +54,20 @@ NetCDF file pointed by \code{.ref} (if applicable).}
 
 \item{res}{Numeric value for the mask resolution. Default: 0.5 degrees.}
 
-\item{buffer}{Numeric value to be used as the boundary for the search area:
+\item{xy_buffer}{Numeric value to be used as the boundary for the search
+area in the \code{x} and \code{y} axes.
 \itemize{
-\item \code{latitude} < \code{.tar$latitude + buffer}
-\item \code{latitude} > \code{.tar$latitude - buffer}
-\item \code{longitude} < \code{.tar$longitude + buffer}
-\item \code{longitude} > \code{.tar$longitude - buffer}
+\item \code{latitude} < \code{.tar$latitude + xy_buffer}
+\item \code{latitude} > \code{.tar$latitude - xy_buffer}
+\item \code{longitude} < \code{.tar$longitude + xy_buffer}
+\item \code{longitude} > \code{.tar$longitude - xy_buffer}
+}}
+
+\item{z_buffer}{Numeric value to be used as the boundary for the search area
+in the \code{z} axis:
+\itemize{
+\item \code{elevation} <= \code{.tar$elevation * z_buffer}
+\item \code{elevation} >= \code{.tar$elevation / z_buffer}
 }}
 
 \item{cpus}{Number of CPUs to be used in parallel, default = 1.}

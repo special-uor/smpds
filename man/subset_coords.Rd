@@ -4,7 +4,7 @@
 \alias{subset_coords}
 \title{Subset data}
 \usage{
-subset_coords(.data, latitude, longitude, buffer)
+subset_coords(.data, latitude, longitude, elevation, xy_buffer, z_buffer = NA)
 }
 \arguments{
 \item{.data}{2D matrix with columns called \code{latitude} and
@@ -14,19 +14,29 @@ subset_coords(.data, latitude, longitude, buffer)
 
 \item{longitude}{Numeric value for reference \code{longitude}.}
 
-\item{buffer}{Numeric value to be used as the boundary for the search area:
+\item{elevation}{Numeric value for reference \code{elevation}.}
+
+\item{xy_buffer}{Numeric value to be used as the boundary for the search
+area in the \code{x} and \code{y} axes.
 \itemize{
-\item \code{latitude} < \code{.tar$latitude + buffer}
-\item \code{latitude} > \code{.tar$latitude - buffer}
-\item \code{longitude} < \code{.tar$longitude + buffer}
-\item \code{longitude} > \code{.tar$longitude - buffer}
+\item \code{latitude} < \code{.tar$latitude + xy_buffer}
+\item \code{latitude} > \code{.tar$latitude - xy_buffer}
+\item \code{longitude} < \code{.tar$longitude + xy_buffer}
+\item \code{longitude} > \code{.tar$longitude - xy_buffer}
+}}
+
+\item{z_buffer}{Numeric value to be used as the boundary for the search area
+in the \code{z} axis:
+\itemize{
+\item \code{elevation} <= \code{.tar$elevation * z_buffer}
+\item \code{elevation} >= \code{.tar$elevation / z_buffer}
 }}
 }
 \value{
 Filtered 2D matrix.
 }
 \description{
-Subset data using coordinates (\code{latitute} and \code{longitude}) and
-\code{buffer}.
+Subset data using coordinates (\code{latitute}, \code{longitude}) and
+\code{elevation}.
 }
 \keyword{internal}
