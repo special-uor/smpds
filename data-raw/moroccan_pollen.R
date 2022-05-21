@@ -44,6 +44,42 @@ moroccan_coretops_taxa_counts_amalgamation <-
   dplyr::relocate(clean, .after = amalgamated) %>%
   dplyr::relocate(ID_SAMPLE, .before = 1)
 
+### Additional taxonomic corrections (SPH - May 20th) ----
+taxonomic_corrections <- "data-raw/GLOBAL/taxonomic_corrections.xlsx" %>%
+  readxl::read_excel(sheet = 1) %>%
+  purrr::map_df(stringr::str_squish)
+
+moroccan_coretops_taxa_counts_amalgamation_rev <-
+  moroccan_coretops_taxa_counts_amalgamation %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("clean", "all")),
+                   by = c("clean" =  "original_taxon")) %>%
+  dplyr::mutate(clean = dplyr::coalesce(corrected_taxon_name,
+                                        clean)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("intermediate", "all")),
+                   by = c("intermediate" =  "original_taxon")) %>%
+  dplyr::mutate(intermediate = dplyr::coalesce(corrected_taxon_name,
+                                               intermediate)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("amalgamated", "all")),
+                   by = c("amalgamated" =  "original_taxon")) %>%
+  dplyr::mutate(amalgamated = dplyr::coalesce(corrected_taxon_name,
+                                              amalgamated)) %>%
+  dplyr::select(-corrected_taxon_name, -level)
+
+waldo::compare(moroccan_coretops_taxa_counts_amalgamation,
+               moroccan_coretops_taxa_counts_amalgamation_rev)
+waldo::compare(moroccan_coretops_taxa_counts_amalgamation %>%
+                 dplyr::distinct(clean, intermediate, amalgamated),
+               moroccan_coretops_taxa_counts_amalgamation_rev %>%
+                 dplyr::distinct(clean, intermediate, amalgamated),
+               max_diffs = Inf)
+
+moroccan_coretops_taxa_counts_amalgamation <- moroccan_coretops_taxa_counts_amalgamation_rev
+
 moroccan_coretops_taxa_counts_amalgamation %>%
   dplyr::filter(is.na(clean) | is.na(intermediate) | is.na(amalgamated)) %>%
   dplyr::distinct(clean, intermediate, amalgamated)
@@ -165,11 +201,12 @@ moroccan_pollen <-
       stringr::str_replace_all("unknown", "not known")
   ) %>%
   dplyr::relocate(ID_SAMPLE, .before = clean) %>%
-  dplyr::select(-dplyr::starts_with("ID_PUB"))
+  dplyr::select(-dplyr::starts_with("ID_PUB")) %>%
+  dplyr::mutate(age_BP = as.character(age_BP))
 
 usethis::use_data(moroccan_pollen, overwrite = TRUE, compress = "xz")
 
-## Inspect enumerates ----
+# Inspect enumerates ----
 ### basin_size -----
 moroccan_pollen$basin_size %>%
   unique() %>% sort()
@@ -207,3 +244,64 @@ openxlsx::saveWorkbook(wb,
                        paste0("data-raw/GLOBAL/moroccan_pollen_",
                               Sys.Date(),
                               ".xlsx"))
+
+# Load climate reconstructions ----
+climate_reconstructions <-
+  "data-raw/reconstructions/moroccan_climate_reconstructions_2022-04-29.csv" %>%
+  readr::read_csv()
+
+# Load daily values for precipitation to compute MAP (mean annual precipitation)
+climate_reconstructions_pre <-
+  "data-raw/reconstructions/moroccan_climate_reconstructions_pre_2022-04-29.csv" %>%
+  readr::read_csv() %>%
+  dplyr::rowwise() %>%
+  dplyr::mutate(map = sum(dplyr::c_across(T1:T365), na.rm = TRUE), .before = T1)
+
+climate_reconstructions_2 <- climate_reconstructions %>%
+  dplyr::bind_cols(climate_reconstructions_pre %>%
+                     dplyr::select(map))
+
+climate_reconstructions_with_counts <-
+  moroccan_pollen %>%
+  # smpds::moroccan_pollen %>%
+  # dplyr::select(-c(mi:map)) %>%
+  dplyr::bind_cols(
+    climate_reconstructions_2 %>%
+      dplyr::select(sn = site_name,
+                    en = entity_name,
+                    new_elevation = elevation,
+                    mi:map)
+  ) %>%
+  dplyr::relocate(mi:map, .before = clean) %>%
+  dplyr::mutate(elevation = dplyr::coalesce(elevation, new_elevation))
+climate_reconstructions_with_counts %>%
+  dplyr::filter(site_name != sn | entity_name != en)
+waldo::compare(smpds::moroccan_pollen,
+               climate_reconstructions_with_counts %>%
+                 dplyr::select(-c(mi:map, sn, en, new_elevation))
+)
+
+moroccan_pollen <- climate_reconstructions_with_counts %>%
+  dplyr::select(-sn, -en, -new_elevation) %>%
+  dplyr::select(-dplyr::starts_with("notes"))
+usethis::use_data(moroccan_pollen, overwrite = TRUE, compress = "xz")
+waldo::compare(smpds::moroccan_pollen, moroccan_pollen, max_diffs = Inf)
+
+climate_reconstructions_2 %>%
+  smpds::plot_climate_countour(
+    var = "mat",
+    xlim = range(.$longitude, na.rm = TRUE),
+    ylim = range(.$latitude, na.rm = TRUE)
+  )
+
+climate_reconstructions_2 %>%
+  smpds::plot_climate(
+    var = "map",
+    xlim = range(.$longitude, na.rm = TRUE),
+    ylim = range(.$latitude, na.rm = TRUE)
+  )
+
+rm(climate_reconstructions,
+   climate_reconstructions_2,
+   climate_reconstructions_pre,
+   climate_reconstructions_with_counts)

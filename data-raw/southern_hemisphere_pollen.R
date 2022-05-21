@@ -2,49 +2,27 @@
 `%>%` <- magrittr::`%>%`
 ## Load data ----
 ### Metadata ----
-gaillard_samples_metadata <-
-  "data-raw/GLOBAL/Gaillard et al_SPH.xlsx" %>%
+other_southern_hemisphere_metadata <-
+  "data-raw/GLOBAL/other_southern_hemisphere_SPH.xlsx" %>%
   readxl::read_excel(sheet = 1) %>%
-  dplyr::rename(doi = DOI) %>%
-  dplyr::mutate(ID_SAMPLE = seq_along(entity_name), .after = doi)
+  janitor::clean_names() %>%
+  dplyr::rename(age_BP = age_bp) %>%
+  dplyr::mutate(ID_SAMPLE = seq_along(entity_name))
 
-### Pollen counts ----
-gaillard_samples_counts <-
-  "data-raw/GLOBAL/Gaillard et al_SPH.xlsx" %>%
-  readxl::read_excel(sheet = 2) %>%
-  dplyr::rename(entity_name = `entity name`) %>%
-  dplyr::left_join(gaillard_samples_metadata %>%
-                     dplyr::select(entity_name, ID_SAMPLE),
-                   by = "entity_name") %>%
-  dplyr::relocate(ID_SAMPLE, .before = 1)
-gaillard_samples_counts_2 <- gaillard_samples_counts %>%
-  dplyr::select(ID_SAMPLE) %>%
-  dplyr::bind_cols(
-    gaillard_samples_counts %>% # Convert columns with counts to numeric type
-      dplyr::select(-c(ID_SAMPLE:entity_name)) %>%
-      purrr::map_dfc(~.x %>% as.numeric)
-  ) %>%
-  magrittr::set_names(
-    colnames(.) %>%
-      stringr::str_replace_all("\\.\\.\\.", "#")
-  ) %>%
-  tidyr::pivot_longer(-ID_SAMPLE,
-                      names_to = "clean",
-                      values_to = "taxon_count") %>%
-  dplyr::mutate(clean = clean %>%
-                  stringr::str_remove_all("\\#[0-9]+$") %>%
-                  stringr::str_squish()) %>%
-  dplyr::group_by(ID_SAMPLE, clean) %>%
-  dplyr::mutate(taxon_count = sum(taxon_count, na.rm = TRUE)) %>%
-  dplyr::distinct() %>%
-  dplyr::ungroup()
+### Polen counts ----
+other_southern_hemisphere_counts <-
+  "data-raw/GLOBAL/other_southern_hemisphere_SPH.xlsx" %>%
+  readxl::read_excel(sheet = 2, col_names = FALSE) %>%
+  magrittr::set_names(c(
+    "entity_name", "taxon_name", "taxon_count"
+  ))
 
 ### Amalgamations ----
-gaillard_samples_taxa_amalgamation <-
-  "data-raw/GLOBAL/Gaillard et al_SPH.xlsx" %>%
+other_southern_hemisphere_taxa_amalgamation <-
+  "data-raw/GLOBAL/other_southern_hemisphere_SPH.xlsx" %>%
   readxl::read_excel(sheet = 3) %>%
   magrittr::set_names(c(
-    "clean", "intermediate", "amalgamated"
+    "taxon_name", "clean", "intermediate", "amalgamated"
   )) %>%
   dplyr::distinct() %>%
   dplyr::mutate(clean = clean %>% stringr::str_squish(),
@@ -52,11 +30,15 @@ gaillard_samples_taxa_amalgamation <-
                 amalgamated = amalgamated %>% stringr::str_squish())
 
 ### Combine counts and amalgamation ----
-gaillard_samples_taxa_counts_amalgamation <-
-  gaillard_samples_counts_2 %>%
-  dplyr::left_join(gaillard_samples_taxa_amalgamation,
-                   by = c("clean")) %>%
+other_southern_hemisphere_taxa_counts_amalgamation <-
+  other_southern_hemisphere_counts %>%
+  dplyr::left_join(other_southern_hemisphere_taxa_amalgamation,
+                   by = c("taxon_name")) %>%
   dplyr::relocate(taxon_count, .after = amalgamated) %>%
+  dplyr::left_join(other_southern_hemisphere_metadata %>%
+                     dplyr::select(entity_name, ID_SAMPLE),
+                   by = "entity_name") %>%
+  dplyr::select(-entity_name, -taxon_name) %>%
   dplyr::relocate(ID_SAMPLE, .before = 1)
 
 ### Additional taxonomic corrections (SPH - May 20th) ----
@@ -64,8 +46,8 @@ taxonomic_corrections <- "data-raw/GLOBAL/taxonomic_corrections.xlsx" %>%
   readxl::read_excel(sheet = 1) %>%
   purrr::map_df(stringr::str_squish)
 
-gaillard_samples_taxa_counts_amalgamation_rev <-
-  gaillard_samples_taxa_counts_amalgamation %>%
+other_southern_hemisphere_taxa_counts_amalgamation_rev <-
+  other_southern_hemisphere_taxa_counts_amalgamation %>%
   dplyr::left_join(taxonomic_corrections %>%
                      dplyr::filter(level %in% c("clean", "all")),
                    by = c("clean" =  "original_taxon")) %>%
@@ -85,75 +67,70 @@ gaillard_samples_taxa_counts_amalgamation_rev <-
                                               amalgamated)) %>%
   dplyr::select(-corrected_taxon_name, -level)
 
-waldo::compare(gaillard_samples_taxa_counts_amalgamation,
-               gaillard_samples_taxa_counts_amalgamation_rev)
-waldo::compare(gaillard_samples_taxa_counts_amalgamation %>%
+waldo::compare(other_southern_hemisphere_taxa_counts_amalgamation,
+               other_southern_hemisphere_taxa_counts_amalgamation_rev)
+waldo::compare(other_southern_hemisphere_taxa_counts_amalgamation %>%
                  dplyr::distinct(clean, intermediate, amalgamated),
-               gaillard_samples_taxa_counts_amalgamation_rev %>%
+               other_southern_hemisphere_taxa_counts_amalgamation_rev %>%
                  dplyr::distinct(clean, intermediate, amalgamated),
                max_diffs = Inf)
 
-gaillard_samples_taxa_counts_amalgamation <- gaillard_samples_taxa_counts_amalgamation_rev
+other_southern_hemisphere_taxa_counts_amalgamation <- other_southern_hemisphere_taxa_counts_amalgamation_rev
 
-gaillard_samples_taxa_counts_amalgamation %>%
-  dplyr::filter(is.na(clean) | is.na(intermediate) | is.na(amalgamated)) %>%
-  dplyr::distinct(clean, intermediate, amalgamated)
+other_southern_hemisphere_taxa_counts_amalgamation %>%
+  dplyr::filter(is.na(clean) | is.na(intermediate) | is.na(amalgamated))
 
 ## Find DOIs ----
-gaillard_samples_metadata_pubs <-
-  gaillard_samples_metadata %>%
-  dplyr::distinct(publication, doi) %>%
+other_southern_hemisphere_metadata_pubs <-
+  other_southern_hemisphere_metadata %>%
+  dplyr::distinct(publication) %>%
   dplyr::arrange(publication) %>%
   dplyr::mutate(DOI = publication %>%
                   stringr::str_extract_all("\\[DOI\\s*(.*?)\\s*\\](;|$)") %>%
                   purrr::map_chr(~.x %>%
-                                   stringr::str_remove_all("^\\[DOI:") %>%
-                                   stringr::str_remove_all("\\]\\s*;\\s*$") %>%
-                                   stringr::str_remove_all("\\]$") %>%
-                                   stringr::str_remove_all("doi:") %>%
+                                   stringr::str_remove_all("^\\[DOI:|\\]$") %>%
                                    stringr::str_squish() %>%
                                    stringr::str_c(collapse = ";\n"))
   ) %>%
-  dplyr::mutate(ID_PUB = seq_along(publication)) %>%
-  dplyr::mutate(updated_publication = NA, .before = publication) %>%
-  dplyr::mutate(updated_DOI = NA, .before = DOI)
-# gaillard_samples_metadata_pubs %>%
-#   readr::write_excel_csv("data-raw/GLOBAL/gaillard_samples_modern-references.csv")
+  dplyr::mutate(ID_PUB = seq_along(publication))
+# other_southern_hemisphere_metadata_pubs %>%
+#   readr::write_excel_csv("data-raw/GLOBAL/other_southern_hemisphere_modern-references.csv")
 
 ### Load cleaned publications list ----
-gaillard_samples_clean_publications <-
-  "data-raw/GLOBAL/gaillard_samples_modern-references_clean.csv" %>%
+other_southern_hemisphere_clean_publications <-
+  "data-raw/GLOBAL/other_southern_hemisphere_modern-references_clean.csv" %>%
   readr::read_csv() %>%
   dplyr::select(-DOI)
+  # dplyr::mutate(ID_PUB = seq_along(publication))
 
 ## Append clean publications ----
-gaillard_samples_metadata_2 <-
-  gaillard_samples_metadata %>%
-  dplyr::left_join(gaillard_samples_metadata_pubs %>%
-                     dplyr::select(-DOI, -doi, -dplyr::contains("updated")),
+other_southern_hemisphere_metadata_2 <-
+  other_southern_hemisphere_metadata %>%
+  dplyr::left_join(other_southern_hemisphere_metadata_pubs %>%
+                     dplyr::select(-DOI),
                    by = "publication") %>%
-  dplyr::left_join(gaillard_samples_clean_publications,
+  dplyr::left_join(other_southern_hemisphere_clean_publications,
                    by = "ID_PUB") %>%
-  dplyr::select(-publication.x, -publication.y, -doi, -ID_PUB) %>%
+  dplyr::select(-publication.x, -publication.y, -doi) %>%
   dplyr::rename(doi = updated_DOI,
                 publication = updated_publication)
 
 ## Extract PNV/BIOME ----
-gaillard_samples_metadata_3 <-
-  gaillard_samples_metadata_2 %>%
-  smpds::parallel_extract_biome(cpus = 8) %>%
+other_southern_hemisphere_metadata_3 <-
+  other_southern_hemisphere_metadata_2 %>%
+  smpds::parallel_extract_biome(cpus = 5) %>%
   # smpds::biome_name() %>%
   dplyr::relocate(ID_BIOME, .after = doi) %>%
   smpds::pb()
 
-gaillard_samples_metadata_3 %>%
-  smpds::plot_biome(xlim = range(.$longitude, na.rm = TRUE) * c(0.9, 1.1),
-                    ylim = range(.$latitude, na.rm = TRUE) * c(0.9, 1.1))
+other_southern_hemisphere_metadata_3 %>%
+  smpds::plot_biome(xlim = range(.$longitude, na.rm = TRUE) * 1.1,
+                    ylim = range(.$latitude, na.rm = TRUE) * 1.1)
 
 ## Create count tables ----
 ### Clean ----
-gaillard_samples_clean <-
-  gaillard_samples_taxa_counts_amalgamation %>%
+other_southern_hemisphere_clean <-
+  other_southern_hemisphere_taxa_counts_amalgamation %>%
   dplyr::select(-intermediate, -amalgamated) %>%
   dplyr::rename(taxon_name = clean) %>%
   dplyr::group_by(ID_SAMPLE, taxon_name) %>%
@@ -163,12 +140,10 @@ gaillard_samples_clean <-
   tidyr::pivot_wider(ID_SAMPLE,
                      names_from = taxon_name,
                      values_from = taxon_count,
-                     names_sort = TRUE) %>%
-  dplyr::arrange(ID_SAMPLE)
-
+                     names_sort = TRUE)
 ### Intermediate ----
-gaillard_samples_intermediate <-
-  gaillard_samples_taxa_counts_amalgamation %>%
+other_southern_hemisphere_intermediate <-
+  other_southern_hemisphere_taxa_counts_amalgamation %>%
   dplyr::select(-clean, -amalgamated) %>%
   dplyr::rename(taxon_name = intermediate) %>%
   dplyr::group_by(ID_SAMPLE, taxon_name) %>%
@@ -178,12 +153,11 @@ gaillard_samples_intermediate <-
   tidyr::pivot_wider(ID_SAMPLE,
                      names_from = taxon_name,
                      values_from = taxon_count,
-                     names_sort = TRUE) %>%
-  dplyr::arrange(ID_SAMPLE)
+                     names_sort = TRUE)
 
 ### Amalgamated ----
-gaillard_samples_amalgamated <-
-  gaillard_samples_taxa_counts_amalgamation %>%
+other_southern_hemisphere_amalgamated <-
+  other_southern_hemisphere_taxa_counts_amalgamation %>%
   dplyr::select(-clean, -intermediate) %>%
   dplyr::rename(taxon_name = amalgamated) %>%
   dplyr::group_by(ID_SAMPLE, taxon_name) %>%
@@ -193,18 +167,17 @@ gaillard_samples_amalgamated <-
   tidyr::pivot_wider(ID_SAMPLE,
                      names_from = taxon_name,
                      values_from = taxon_count,
-                     names_sort = TRUE) %>%
-  dplyr::arrange(ID_SAMPLE)
+                     names_sort = TRUE)
 
 # Store subsets ----
-gaillard_pollen <-
-  gaillard_samples_metadata_3 %>%
+southern_hemisphere_pollen <-
+  other_southern_hemisphere_metadata_3 %>%
   dplyr::mutate(
-    clean = gaillard_samples_clean %>%
+    clean = other_southern_hemisphere_clean %>%
       dplyr::select(-c(ID_SAMPLE)),
-    intermediate = gaillard_samples_intermediate %>%
+    intermediate = other_southern_hemisphere_intermediate %>%
       dplyr::select(-c(ID_SAMPLE)),
-    amalgamated = gaillard_samples_amalgamated %>%
+    amalgamated = other_southern_hemisphere_amalgamated %>%
       dplyr::select(-c(ID_SAMPLE))
   ) %>%
   dplyr::mutate(
@@ -216,58 +189,58 @@ gaillard_pollen <-
       stringr::str_replace_all("unknown", "not known")
   ) %>%
   dplyr::relocate(ID_SAMPLE, .before = clean) %>%
-  dplyr::select(-dplyr::starts_with("ID_PUB")) %>%
-  dplyr::mutate(source = "Gaillard et al., 1992", .before = 1)
+  dplyr::mutate(source = "Southern Hemisphere pollen", .before = 1) %>%
+  dplyr::mutate(age_BP = as.character(age_BP))
 
-usethis::use_data(gaillard_pollen, overwrite = TRUE, compress = "xz")
+usethis::use_data(southern_hemisphere_pollen, overwrite = TRUE, compress = "xz")
 
-# Inspect enumerates ----
+## Inspect enumerates ----
 ### basin_size -----
-gaillard_pollen$basin_size %>%
+southern_hemisphere_pollen$basin_size %>%
   unique() %>% sort()
 
 ### site_type ----
-gaillard_pollen$site_type %>%
+southern_hemisphere_pollen$site_type %>%
   unique() %>% sort()
 
 ### entity_type ----
-gaillard_pollen$entity_type %>%
+southern_hemisphere_pollen$entity_type %>%
   unique() %>% sort()
 
 # Export Excel workbook ----
 wb <- openxlsx::createWorkbook()
 openxlsx::addWorksheet(wb, "metadata")
 openxlsx::writeData(wb, "metadata",
-                    gaillard_pollen %>%
-                      dplyr::select(source:ID_SAMPLE))
+                    southern_hemisphere_pollen %>%
+                      dplyr::select(site_name:ID_SAMPLE))
 openxlsx::addWorksheet(wb, "clean")
 openxlsx::writeData(wb, "clean",
-                    gaillard_pollen %>%
+                    southern_hemisphere_pollen %>%
                       dplyr::select(ID_SAMPLE, clean) %>%
                       tidyr::unnest(clean))
 openxlsx::addWorksheet(wb, "intermediate")
 openxlsx::writeData(wb, "intermediate",
-                    gaillard_pollen %>%
+                    southern_hemisphere_pollen %>%
                       dplyr::select(ID_SAMPLE, intermediate) %>%
                       tidyr::unnest(intermediate))
 openxlsx::addWorksheet(wb, "amalgamated")
 openxlsx::writeData(wb, "amalgamated",
-                    gaillard_pollen %>%
+                    southern_hemisphere_pollen %>%
                       dplyr::select(ID_SAMPLE, amalgamated) %>%
                       tidyr::unnest(amalgamated))
 openxlsx::saveWorkbook(wb,
-                       paste0("data-raw/GLOBAL/gaillard_pollen_",
+                       paste0("data-raw/GLOBAL/southern_hemisphere_pollen_",
                               Sys.Date(),
                               ".xlsx"))
 
 # Load climate reconstructions ----
 climate_reconstructions <-
-  "data-raw/reconstructions/gaillard_climate_reconstructions_2022-04-29.csv" %>%
+  "data-raw/reconstructions/southern_hemisphere_pollen_climate_reconstructions_2022-04-29.csv" %>%
   readr::read_csv()
 
 # Load daily values for precipitation to compute MAP (mean annual precipitation)
 climate_reconstructions_pre <-
-  "data-raw/reconstructions/gaillard_climate_reconstructions_pre_2022-04-29.csv" %>%
+  "data-raw/reconstructions/southern_hemisphere_pollen_climate_reconstructions_pre_2022-04-29.csv" %>%
   readr::read_csv() %>%
   dplyr::rowwise() %>%
   dplyr::mutate(map = sum(dplyr::c_across(T1:T365), na.rm = TRUE), .before = T1)
@@ -277,9 +250,9 @@ climate_reconstructions_2 <- climate_reconstructions %>%
                      dplyr::select(map))
 
 climate_reconstructions_with_counts <-
-  gaillard_pollen %>%
-  # smpds::gaillard_pollen %>%
-  # dplyr::select(-c(mi:map)) %>%
+  southern_hemisphere_pollen %>%
+  # smpds::southern_hemisphere_pollen %>%
+  # dplyr::select(-c(mi:mtwa)) %>%
   dplyr::bind_cols(
     climate_reconstructions_2 %>%
       dplyr::select(sn = site_name,
@@ -291,15 +264,17 @@ climate_reconstructions_with_counts <-
   dplyr::mutate(elevation = dplyr::coalesce(elevation, new_elevation))
 climate_reconstructions_with_counts %>%
   dplyr::filter(site_name != sn | entity_name != en)
-waldo::compare(smpds::gaillard_pollen,
+waldo::compare(smpds::southern_hemisphere_pollen,
                climate_reconstructions_with_counts %>%
                  dplyr::select(-c(mi:map, sn, en, new_elevation))
 )
 
-gaillard_pollen <- climate_reconstructions_with_counts %>%
+southern_hemisphere_pollen <- climate_reconstructions_with_counts %>%
   dplyr::select(-sn, -en, -new_elevation)
-usethis::use_data(gaillard_pollen, overwrite = TRUE, compress = "xz")
-waldo::compare(smpds::gaillard_pollen, gaillard_pollen, max_diffs = Inf)
+usethis::use_data(southern_hemisphere_pollen, overwrite = TRUE, compress = "xz")
+waldo::compare(smpds::southern_hemisphere_pollen,
+               southern_hemisphere_pollen,
+               max_diffs = Inf)
 
 climate_reconstructions_2 %>%
   smpds::plot_climate_countour(

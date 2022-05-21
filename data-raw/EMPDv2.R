@@ -327,7 +327,7 @@ EMPDv2_metadata <-
   EMPDv2_all %>%
   dplyr::select(source:ID_SAMPLE)
 
-### Polen counts ----
+### Pollen counts ----
 EMPDv2_counts <-
   EMPDv2_all %>%
   dplyr::select(ID_SAMPLE) %>%
@@ -369,6 +369,42 @@ EMPDv2_taxa_counts_amalgamation <-
   dplyr::relocate(taxon_count, .after = amalgamated) %>%
   dplyr::relocate(ID_SAMPLE, .before = 1) %>%
   dplyr::select(-taxon_name)
+
+### Additional taxonomic corrections (SPH - May 20th) ----
+taxonomic_corrections <- "data-raw/GLOBAL/taxonomic_corrections.xlsx" %>%
+  readxl::read_excel(sheet = 1) %>%
+  purrr::map_df(stringr::str_squish)
+
+EMPDv2_taxa_counts_amalgamation_rev <-
+  EMPDv2_taxa_counts_amalgamation %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("clean", "all")),
+                   by = c("clean" =  "original_taxon")) %>%
+  dplyr::mutate(clean = dplyr::coalesce(corrected_taxon_name,
+                                        clean)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("intermediate", "all")),
+                   by = c("intermediate" =  "original_taxon")) %>%
+  dplyr::mutate(intermediate = dplyr::coalesce(corrected_taxon_name,
+                                               intermediate)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("amalgamated", "all")),
+                   by = c("amalgamated" =  "original_taxon")) %>%
+  dplyr::mutate(amalgamated = dplyr::coalesce(corrected_taxon_name,
+                                              amalgamated)) %>%
+  dplyr::select(-corrected_taxon_name, -level)
+
+waldo::compare(EMPDv2_taxa_counts_amalgamation,
+               EMPDv2_taxa_counts_amalgamation_rev)
+waldo::compare(EMPDv2_taxa_counts_amalgamation %>%
+                 dplyr::distinct(clean, intermediate, amalgamated),
+               EMPDv2_taxa_counts_amalgamation_rev %>%
+                 dplyr::distinct(clean, intermediate, amalgamated),
+               max_diffs = Inf)
+
+EMPDv2_taxa_counts_amalgamation <- EMPDv2_taxa_counts_amalgamation_rev
 
 EMPDv2_taxa_counts_amalgamation %>%
   dplyr::filter(is.na(clean) | is.na(intermediate) | is.na(amalgamated)) %>%
@@ -517,9 +553,45 @@ EMPDv2_metadata_5 <-
   dplyr::mutate(elevation = dplyr::coalesce(rev_elevation, elevation)) %>%
   dplyr::select(-rev_elevation)
 
+# Include update to the metadata provided by Castor ----
+castor_entities <-
+  "data-raw/GLOBAL/Castor's sites.xlsx" %>%
+  readxl::read_excel(sheet = 1) %>%
+  magrittr::set_names(c(
+    "site_name_castor",
+    "entity_name_castor",
+    "latitude_castor",
+    "longitude_castor",
+    "elevation_castor"
+  )) %>%
+  dplyr::mutate(original_entity_name = entity_name_castor %>%
+                  stringr::str_extract_all("\\s*(.*?)\\s*\\(") %>%
+                  stringr::str_remove_all("\\($") %>%
+                  stringr::str_squish())
+
+EMPDv2_metadata_6 <-
+  EMPDv2_metadata_5 %>%
+  dplyr::left_join(castor_entities,
+                   by = c("entity_name" = "original_entity_name")) %>%
+  dplyr::mutate(
+    entity_name = dplyr::coalesce(entity_name_castor, entity_name),
+    latitude = dplyr::coalesce(latitude_castor, latitude),
+    longitude = dplyr::coalesce(longitude_castor, longitude),
+    elevation = dplyr::coalesce(elevation_castor, elevation),
+  ) %>%
+  dplyr::select(-dplyr::contains("_castor"))
+
+## Export the Castor sites to create new climate reconstructions ----
+EMPDv2_metadata_6 %>%
+  dplyr::filter(entity_name %in% castor_entities$entity_name_castor) %>%
+  # readr::write_excel_csv("data-raw/GLOBAL/castor_pollen_empdv2.csv", na = "")
+  View()
+
+waldo::compare(EMPDv2_metadata_5, EMPDv2_metadata_6, tolerance = 1E-6)
+
 # Store subsets ----
 EMPDv2 <-
-  EMPDv2_metadata_5 %>%
+  EMPDv2_metadata_6 %>%
   dplyr::mutate(
     clean = EMPDv2_clean %>%
       dplyr::select(-c(ID_SAMPLE)),
@@ -561,37 +633,6 @@ EMPDv2 <-
 
 usethis::use_data(EMPDv2, overwrite = TRUE, compress = "xz")
 
-# Load climate reconstructions ----
-climate_reconstructions <-
-  "data-raw/reconstructions/EMPDv2_climate_reconstructions_2022-04-30.csv" %>%
-  readr::read_csv()
-
-climate_reconstructions_with_counts <- smpds::EMPDv2 %>%
-  dplyr::bind_cols(
-    climate_reconstructions %>%
-      dplyr::select(sn = site_name,
-                    en = entity_name,
-                    new_elevation = elevation,
-                    mi:mtwa)
-  ) %>%
-  dplyr::relocate(mi:mtwa, .before = clean) %>%
-  dplyr::mutate(elevation = dplyr::coalesce(elevation, new_elevation))
-climate_reconstructions_with_counts %>%
-  dplyr::filter(site_name != sn | entity_name != en)
-waldo::compare(smpds::EMPDv2,
-               climate_reconstructions_with_counts %>%
-                 dplyr::select(-c(mi:mtwa))
-)
-EMPDv2 <- climate_reconstructions_with_counts %>%
-  dplyr::select(-sn, -en, -new_elevation)
-usethis::use_data(EMPDv2, overwrite = TRUE, compress = "xz")
-
-climate_reconstructions %>%
-  smpds::plot_climate_countour(
-    var = "mat",
-    xlim = range(.$longitude, na.rm = TRUE),
-    ylim = range(.$latitude, na.rm = TRUE)
-  )
 
 # Inspect enumerates ----
 ### basin_size -----
@@ -632,3 +673,122 @@ openxlsx::saveWorkbook(wb,
                        paste0("data-raw/GLOBAL/EMPDv2_",
                               Sys.Date(),
                               ".xlsx"))
+
+# Load climate reconstructions ----
+climate_reconstructions <-
+  "data-raw/reconstructions/EMPDv2_climate_reconstructions_2022-05-13.csv" %>%
+  readr::read_csv()
+
+# Load daily values for precipitation to compute MAP (mean annual precipitation)
+climate_reconstructions_pre <-
+  "data-raw/reconstructions/EMPDv2_climate_reconstructions_pre_2022-05-13.csv" %>%
+  readr::read_csv() %>%
+  dplyr::rowwise() %>%
+  dplyr::mutate(map = sum(dplyr::c_across(T1:T365), na.rm = TRUE), .before = T1)
+
+## Castor entities ----
+climate_reconstructions_castor <-
+  "data-raw/reconstructions/castor_pollen_empdv2_climate_reconstructions_2022-05-17.csv" %>%
+  readr::read_csv()
+
+# Load daily values for precipitation to compute MAP (mean annual precipitation)
+climate_reconstructions_castor_pre <-
+  "data-raw/reconstructions/castor_pollen_empdv2_climate_reconstructions_pre_2022-05-17.csv" %>%
+  readr::read_csv() %>%
+  dplyr::rowwise() %>%
+  dplyr::mutate(map = sum(dplyr::c_across(T1:T365), na.rm = TRUE), .before = T1)
+
+
+climate_reconstructions_2 <- climate_reconstructions %>%
+  dplyr::bind_cols(climate_reconstructions_pre %>%
+                     dplyr::select(map))
+
+climate_reconstructions_castor_2 <- climate_reconstructions_castor %>%
+  dplyr::bind_cols(climate_reconstructions_castor_pre %>%
+                     dplyr::select(map)) %>%
+  magrittr::set_names(
+    colnames(.) %>%
+      stringr::str_c("_castor")
+  ) %>%
+  dplyr::mutate(original_entity_name = entity_name_castor %>%
+                  stringr::str_extract_all("\\s*(.*?)\\s*\\(") %>%
+                  stringr::str_remove_all("\\($") %>%
+                  stringr::str_squish())
+
+climate_reconstructions_3 <- climate_reconstructions_2 %>%
+  dplyr::left_join(climate_reconstructions_castor_2,
+                   by = c("entity_name" = "original_entity_name")) %>%
+  dplyr::mutate(
+    latitude = dplyr::coalesce(latitude_castor, latitude),
+    longitude = dplyr::coalesce(longitude_castor, longitude),
+    elevation = dplyr::coalesce(elevation_castor, elevation),
+    mi = dplyr::coalesce(mi_castor, mi),
+    gdd0 = dplyr::coalesce(gdd0_castor, gdd0),
+    mat = dplyr::coalesce(mat_castor, mat),
+    mtco = dplyr::coalesce(mtco_castor, mtco),
+    mtwa = dplyr::coalesce(mtwa_castor, mtwa),
+    map = dplyr::coalesce(map_castor, map)
+  ) %>%
+  dplyr::select(-dplyr::contains("_castor"))
+
+waldo::compare(climate_reconstructions_2, climate_reconstructions_3,
+               max_diffs = Inf)
+waldo::compare(climate_reconstructions_2 %>%
+                 dplyr::filter(stringr::str_detect(entity_name, "MunozSobrino_",
+                                                   negate = !TRUE)),
+               climate_reconstructions_3 %>%
+                 dplyr::filter(stringr::str_detect(entity_name, "MunozSobrino_",
+                                                   negate = !TRUE)))
+waldo::compare(smpds::EMPDv2 %>%
+                 dplyr::filter(stringr::str_detect(entity_name, "MunozSobrino_",
+                                                   negate = !TRUE)),
+               climate_reconstructions_3 %>%
+                 dplyr::filter(stringr::str_detect(entity_name, "MunozSobrino_",
+                                                   negate = !TRUE)))
+
+climate_reconstructions_with_counts <-
+  EMPDv2 %>%
+  # smpds::EMPDv2 %>%
+  # dplyr::select(-c(mi:map)) %>%
+  dplyr::bind_cols(
+    climate_reconstructions_3 %>%
+      dplyr::select(sn = site_name,
+                    en = entity_name,
+                    new_elevation = elevation,
+                    mi:map)
+  ) %>%
+  dplyr::relocate(mi:map, .before = clean) %>%
+  dplyr::mutate(elevation = dplyr::coalesce(elevation, new_elevation))
+climate_reconstructions_with_counts %>%
+  dplyr::filter(site_name != sn | entity_name != en)
+waldo::compare(smpds::EMPDv2,
+               climate_reconstructions_with_counts %>%
+                 dplyr::select(-c(mi:map, sn, en, new_elevation))
+)
+
+EMPDv2 <- climate_reconstructions_with_counts %>%
+  dplyr::select(-sn, -en, -new_elevation) %>%
+  dplyr::mutate(source = "EMPDv2", .before = 1)
+usethis::use_data(EMPDv2, overwrite = TRUE, compress = "xz")
+waldo::compare(smpds::EMPDv2,
+               EMPDv2,
+               max_diffs = Inf)
+
+climate_reconstructions_2 %>%
+  smpds::plot_climate_countour(
+    var = "mat",
+    xlim = range(.$longitude, na.rm = TRUE),
+    ylim = range(.$latitude, na.rm = TRUE)
+  )
+
+climate_reconstructions_2 %>%
+  smpds::plot_climate(
+    var = "map",
+    xlim = range(.$longitude, na.rm = TRUE),
+    ylim = range(.$latitude, na.rm = TRUE)
+  )
+
+rm(climate_reconstructions,
+   climate_reconstructions_2,
+   climate_reconstructions_pre,
+   climate_reconstructions_with_counts)

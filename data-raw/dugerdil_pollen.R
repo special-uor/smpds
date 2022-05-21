@@ -57,6 +57,42 @@ dugerdil_taxa_counts_amalgamation <-
   dplyr::relocate(ID_SAMPLE, .before = 1) %>%
   dplyr::select(-taxon_name)
 
+### Additional taxonomic corrections (SPH - May 20th) ----
+taxonomic_corrections <- "data-raw/GLOBAL/taxonomic_corrections.xlsx" %>%
+  readxl::read_excel(sheet = 1) %>%
+  purrr::map_df(stringr::str_squish)
+
+dugerdil_taxa_counts_amalgamation_rev <-
+  dugerdil_taxa_counts_amalgamation %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("clean", "all")),
+                   by = c("clean" =  "original_taxon")) %>%
+  dplyr::mutate(clean = dplyr::coalesce(corrected_taxon_name,
+                                        clean)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("intermediate", "all")),
+                   by = c("intermediate" =  "original_taxon")) %>%
+  dplyr::mutate(intermediate = dplyr::coalesce(corrected_taxon_name,
+                                               intermediate)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("amalgamated", "all")),
+                   by = c("amalgamated" =  "original_taxon")) %>%
+  dplyr::mutate(amalgamated = dplyr::coalesce(corrected_taxon_name,
+                                              amalgamated)) %>%
+  dplyr::select(-corrected_taxon_name, -level)
+
+waldo::compare(dugerdil_taxa_counts_amalgamation,
+               dugerdil_taxa_counts_amalgamation_rev)
+waldo::compare(dugerdil_taxa_counts_amalgamation %>%
+                 dplyr::distinct(clean, intermediate, amalgamated),
+               dugerdil_taxa_counts_amalgamation_rev %>%
+                 dplyr::distinct(clean, intermediate, amalgamated),
+               max_diffs = Inf)
+
+dugerdil_taxa_counts_amalgamation <- dugerdil_taxa_counts_amalgamation_rev
+
 dugerdil_taxa_counts_amalgamation %>%
   dplyr::filter(is.na(clean) | is.na(intermediate) | is.na(amalgamated)) %>%
   dplyr::distinct(clean, intermediate, amalgamated)
@@ -177,41 +213,11 @@ dugerdil_pollen <-
       stringr::str_replace_all("unknown", "not known")
   ) %>%
   dplyr::relocate(ID_SAMPLE, .before = clean) %>%
-  dplyr::select(-dplyr::starts_with("ID_PUB"))
+  dplyr::select(-dplyr::starts_with("ID_PUB")) %>%
+  dplyr::mutate(source = "Dugerdil et al., 2021", .before = 1) %>%
+  dplyr::mutate(age_BP = as.character(age_BP))
 
 usethis::use_data(dugerdil_pollen, overwrite = TRUE, compress = "xz")
-
-# Load climate reconstructions ----
-climate_reconstructions <-
-  "data-raw/reconstructions/dugerdil_climate_reconstructions_2022-04-29.csv" %>%
-  readr::read_csv()
-
-climate_reconstructions_with_counts <- smpds::dugerdil_pollen %>%
-  dplyr::bind_cols(
-    climate_reconstructions %>%
-      dplyr::select(sn = site_name,
-                    en = entity_name,
-                    new_elevation = elevation,
-                    mi:mtwa)
-  ) %>%
-  dplyr::relocate(mi:mtwa, .before = clean) %>%
-  dplyr::mutate(elevation = dplyr::coalesce(elevation, new_elevation))
-climate_reconstructions_with_counts %>%
-  dplyr::filter(site_name != sn | entity_name != en)
-waldo::compare(smpds::dugerdil_pollen,
-               climate_reconstructions_with_counts %>%
-                 dplyr::select(-c(mi:mtwa))
-)
-dugerdil_pollen <- climate_reconstructions_with_counts %>%
-  dplyr::select(-sn, -en, -new_elevation)
-usethis::use_data(dugerdil_pollen, overwrite = TRUE, compress = "xz")
-
-climate_reconstructions %>%
-  smpds::plot_climate_countour(
-    var = "mat",
-    xlim = range(.$longitude, na.rm = TRUE),
-    ylim = range(.$latitude, na.rm = TRUE)
-  )
 
 # Inspect enumerates ----
 ### basin_size -----
@@ -251,3 +257,63 @@ openxlsx::saveWorkbook(wb,
                        paste0("data-raw/GLOBAL/dugerdil_pollen_",
                               Sys.Date(),
                               ".xlsx"))
+
+# Load climate reconstructions ----
+climate_reconstructions <-
+  "data-raw/reconstructions/dugerdil_pollen_climate_reconstructions_2022-05-04.csv" %>%
+  readr::read_csv()
+
+# Load daily values for precipitation to compute MAP (mean annual precipitation)
+climate_reconstructions_pre <-
+  "data-raw/reconstructions/dugerdil_pollen_climate_reconstructions_pre_2022-05-04.csv" %>%
+  readr::read_csv() %>%
+  dplyr::rowwise() %>%
+  dplyr::mutate(map = sum(dplyr::c_across(T1:T365), na.rm = TRUE), .before = T1)
+
+climate_reconstructions_2 <- climate_reconstructions %>%
+  dplyr::bind_cols(climate_reconstructions_pre %>%
+                     dplyr::select(map))
+
+climate_reconstructions_with_counts <-
+  dugerdil_pollen %>%
+  # smpds::dugerdil_pollen %>%
+  # dplyr::select(-c(mi:mtwa)) %>%
+  dplyr::bind_cols(
+    climate_reconstructions_2 %>%
+      dplyr::select(sn = site_name,
+                    en = entity_name,
+                    new_elevation = elevation,
+                    mi:map)
+  ) %>%
+  dplyr::relocate(mi:map, .before = clean) %>%
+  dplyr::mutate(elevation = dplyr::coalesce(elevation, new_elevation))
+climate_reconstructions_with_counts %>%
+  dplyr::filter(site_name != sn | entity_name != en)
+waldo::compare(smpds::dugerdil_pollen,
+               climate_reconstructions_with_counts %>%
+                 dplyr::select(-c(mi:map, sn, en, new_elevation))
+)
+
+dugerdil_pollen <- climate_reconstructions_with_counts %>%
+  dplyr::select(-sn, -en, -new_elevation)
+usethis::use_data(dugerdil_pollen, overwrite = TRUE, compress = "xz")
+waldo::compare(smpds::dugerdil_pollen, dugerdil_pollen, max_diffs = Inf)
+
+climate_reconstructions_2 %>%
+  smpds::plot_climate_countour(
+    var = "mat",
+    xlim = range(.$longitude, na.rm = TRUE),
+    ylim = range(.$latitude, na.rm = TRUE)
+  )
+
+climate_reconstructions_2 %>%
+  smpds::plot_climate(
+    var = "map",
+    xlim = range(.$longitude, na.rm = TRUE),
+    ylim = range(.$latitude, na.rm = TRUE)
+  )
+
+rm(climate_reconstructions,
+   climate_reconstructions_2,
+   climate_reconstructions_pre,
+   climate_reconstructions_with_counts)

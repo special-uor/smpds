@@ -186,6 +186,42 @@ australia_pollen %>%
   dplyr::distinct(sample_name, .keep_all = TRUE) %>%
   smpds::plot_climate(var = "elevation")
 
+### Additional taxonomic corrections (SPH - May 20th) ----
+taxonomic_corrections <- "data-raw/GLOBAL/taxonomic_corrections.xlsx" %>%
+  readxl::read_excel(sheet = 1) %>%
+  purrr::map_df(stringr::str_squish)
+
+australia_pollen_rev <-
+  australia_pollen %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("clean", "all")),
+                   by = c("clean" =  "original_taxon")) %>%
+  dplyr::mutate(clean = dplyr::coalesce(corrected_taxon_name,
+                                        clean)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("intermediate", "all")),
+                   by = c("intermediate" =  "original_taxon")) %>%
+  dplyr::mutate(intermediate = dplyr::coalesce(corrected_taxon_name,
+                                               intermediate)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("amalgamated", "all")),
+                   by = c("amalgamated" =  "original_taxon")) %>%
+  dplyr::mutate(amalgamated = dplyr::coalesce(corrected_taxon_name,
+                                              amalgamated)) %>%
+  dplyr::select(-corrected_taxon_name, -level)
+
+waldo::compare(australia_pollen,
+               australia_pollen_rev)
+waldo::compare(australia_pollen %>%
+                 dplyr::distinct(clean, intermediate, amalgamated),
+               australia_pollen_rev %>%
+                 dplyr::distinct(clean, intermediate, amalgamated),
+               max_diffs = Inf)
+
+australia_pollen <- australia_pollen_rev
+
 # Extract PNV/BIOME ----
 australia_pollen_biomes <- australia_pollen %>%
   dplyr::distinct(sample_name, latitude, longitude) %>%
@@ -243,6 +279,30 @@ australia_pollen_amalgamated <- australia_pollen_with_pnv %>%
                      names_from = taxon_name,
                      values_from = taxon_count,
                      names_sort = TRUE)
+
+# Find missing elevations ----
+australia_pollen_2022_04_11 <-
+  "~/Downloads/ready to upload/australia_pollen_2022-04-11.xlsx" %>%
+  readxl::read_excel()
+
+australia_pollen_2022_04_11_missing_elevations <-
+  australia_pollen_2022_04_11 %>%
+  dplyr::filter(is.na(elevation)) %>%
+  smpds:::get_elevation(cpus = 2)
+
+australia_pollen_2022_04_11 %>%
+  dplyr::left_join(australia_pollen_2022_04_11_missing_elevations %>%
+                     dplyr::select(ID_SAMPLE,
+                                   new_elevation = elevation),
+                   by = "ID_SAMPLE") %>%
+  # dplyr::filter(elevation != new_elevation | is.na(elevation)) %>%
+  # dplyr::select(site_name:elevation, new_elevation)
+  dplyr::mutate(elevation = dplyr::coalesce(elevation, new_elevation)) %>%
+  dplyr::select(-new_elevation) %>%
+  readr::write_csv(
+    "~/Downloads/ready to upload/australia_pollen_2022-04-11_with_elevations.csv",
+    na = ""
+    )
 
 # Climate reconstructions ----
 path_to_cru_ts <- "~/OneDrive - University of Reading/UoR/Data/CRU/4.04/"
@@ -383,7 +443,9 @@ australia_pollen <-
                                "terrestrial") %>%
       stringr::str_replace_all("terrestrial, soil", "soil") %>%
       stringr::str_replace_all("unknown", "not known")
-  )
+  ) %>%
+  dplyr::mutate(source = "Australian pollen", .before = 1) %>%
+  dplyr::select(-dplyr::contains("notes"))
 
 usethis::use_data(australia_pollen, overwrite = TRUE, compress = "xz")
 
@@ -428,3 +490,67 @@ openxlsx::saveWorkbook(wb,
                        paste0("data-raw/GLOBAL/AUSTRALIA/australia_pollen_",
                               Sys.Date(),
                               ".xlsx"))
+
+# Load climate reconstructions ----
+climate_reconstructions <-
+  "data-raw/reconstructions/australia_pollen_climate_reconstructions_2022-04-30.csv" %>%
+  readr::read_csv()
+
+# Load daily values for precipitation to compute MAP (mean annual precipitation)
+climate_reconstructions_pre <-
+  "data-raw/reconstructions/australia_pollen_climate_reconstructions_pre_2022-04-30.csv" %>%
+  readr::read_csv() %>%
+  dplyr::rowwise() %>%
+  dplyr::mutate(map = sum(dplyr::c_across(T1:T365), na.rm = TRUE), .before = T1)
+
+climate_reconstructions_2 <- climate_reconstructions %>%
+  dplyr::bind_cols(climate_reconstructions_pre %>%
+                     dplyr::select(map))
+
+climate_reconstructions_with_counts <-
+  australia_pollen %>%
+  # smpds::australia_pollen %>%
+  # dplyr::select(-c(mi:map)) %>%
+  dplyr::bind_cols(
+    climate_reconstructions_2 %>%
+      dplyr::select(sn = site_name,
+                    en = entity_name,
+                    new_elevation = elevation,
+                    mi:map)
+  ) %>%
+  dplyr::relocate(mi:map, .before = clean) %>%
+  dplyr::mutate(elevation = dplyr::coalesce(elevation, new_elevation))
+climate_reconstructions_with_counts %>%
+  dplyr::filter(site_name != sn | entity_name != en)
+waldo::compare(smpds::australia_pollen,
+               climate_reconstructions_with_counts %>%
+                 dplyr::select(-c(mi:map, sn, en, new_elevation))
+)
+
+australia_pollen <- climate_reconstructions_with_counts %>%
+  dplyr::select(-sn, -en, -new_elevation) %>%
+  dplyr::select(-dplyr::starts_with("notes"))
+usethis::use_data(australia_pollen, overwrite = TRUE, compress = "xz")
+
+waldo::compare(smpds::australia_pollen,
+               australia_pollen,
+               max_diffs = Inf)
+
+climate_reconstructions_2 %>%
+  smpds::plot_climate_countour(
+    var = "mat",
+    xlim = range(.$longitude, na.rm = TRUE),
+    ylim = range(.$latitude, na.rm = TRUE)
+  )
+
+climate_reconstructions_2 %>%
+  smpds::plot_climate(
+    var = "map",
+    xlim = range(.$longitude, na.rm = TRUE),
+    ylim = range(.$latitude, na.rm = TRUE)
+  )
+
+rm(climate_reconstructions,
+   climate_reconstructions_2,
+   climate_reconstructions_pre,
+   climate_reconstructions_with_counts)

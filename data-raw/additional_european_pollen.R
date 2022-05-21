@@ -21,44 +21,34 @@ additional_european_pollen_taxa_counts_amalgamation <-
   dplyr::relocate(ID_SAMPLE, .before = 1) %>%
   dplyr::select(-entity_name)
 
-# # Find DOIs ----
-# additional_european_pollen_metadata_pubs <-
-#   additional_european_pollen_metadata %>%
-#   dplyr::distinct(publication, doi) %>%
-#   dplyr::arrange(publication) %>%
-#   dplyr::mutate(DOI = publication %>%
-#                   stringr::str_extract_all("\\[DOI\\s*(.*?)\\s*\\](;|$)") %>%
-#                   purrr::map_chr(~.x %>%
-#                                    stringr::str_remove_all("^\\[DOI:") %>%
-#                                    stringr::str_remove_all("\\]\\s*;\\s*$") %>%
-#                                    stringr::str_remove_all("\\]$") %>%
-#                                    stringr::str_remove_all("doi:") %>%
-#                                    stringr::str_squish() %>%
-#                                    stringr::str_c(collapse = ";\n"))
-#   ) %>%
-#   dplyr::mutate(ID_PUB = seq_along(publication)) %>%
-#   dplyr::mutate(updated_publication = NA, .before = publication) %>%
-#   dplyr::mutate(updated_DOI = NA, .before = DOI)
-# # additional_european_pollen_metadata_pubs %>%
-# #   readr::write_excel_csv("data-raw/GLOBAL/additional_european_pollen_modern-references.csv")
-#
-# ## Load cleaned publications list ----
-# additional_european_pollen_clean_publications <-
-#   "data-raw/GLOBAL/additional_european_pollen_modern-references_clean.csv" %>%
-#   readr::read_csv() %>%
-#   dplyr::select(-DOI)
-#
-# # Append clean publications ----
-# additional_european_pollen_metadata_2 <-
-#   additional_european_pollen_metadata %>%
-#   dplyr::left_join(additional_european_pollen_metadata_pubs %>%
-#                      dplyr::select(-DOI, -doi, -dplyr::contains("updated")),
-#                    by = "publication") %>%
-#   dplyr::left_join(additional_european_pollen_clean_publications,
-#                    by = "ID_PUB") %>%
-#   dplyr::select(-publication.x, -publication.y, -doi, -ID_PUB) %>%
-#   dplyr::rename(doi = updated_DOI,
-#                 publication = updated_publication)
+### Additional taxonomic corrections (SPH - May 20th) ----
+taxonomic_corrections <- "data-raw/GLOBAL/taxonomic_corrections.xlsx" %>%
+  readxl::read_excel(sheet = 1) %>%
+  purrr::map_df(stringr::str_squish)
+
+additional_european_pollen_taxa_counts_amalgamation_rev <-
+  additional_european_pollen_taxa_counts_amalgamation %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("clean", "all")),
+                   by = c("clean" =  "original_taxon")) %>%
+  dplyr::mutate(clean = dplyr::coalesce(corrected_taxon_name,
+                                        clean)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("intermediate", "all")),
+                   by = c("intermediate" =  "original_taxon")) %>%
+  dplyr::mutate(intermediate = dplyr::coalesce(corrected_taxon_name,
+                                               intermediate)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("amalgamated", "all")),
+                   by = c("amalgamated" =  "original_taxon")) %>%
+  dplyr::mutate(amalgamated = dplyr::coalesce(corrected_taxon_name,
+                                              amalgamated)) %>%
+  dplyr::select(-corrected_taxon_name, -level)
+
+waldo::compare(additional_european_pollen_taxa_counts_amalgamation,
+               additional_european_pollen_taxa_counts_amalgamation_rev)
 
 # Extract PNV/BIOME ----
 additional_european_pollen_metadata_3 <-
@@ -121,32 +111,6 @@ additional_european_pollen_amalgamated <-
                      names_sort = TRUE) %>%
   dplyr::arrange(ID_SAMPLE)
 
-# Extract missing elevations ----
-# additional_european_pollen_metadata_4 <-
-#   additional_european_pollen_metadata_3 %>%
-#   dplyr::rename(elevation_original = elevation) %>%
-#   smpds:::get_elevation(cpus = 12)
-#
-# additional_european_pollen_metadata_4 %>%
-#   dplyr::select(ID_SAMPLE, entity_name, latitude, longitude, elevation_new = elevation, elevation_original) %>%
-#   dplyr::mutate(diff =
-#                   abs(elevation_new - elevation_original) / elevation_original) %>%
-#   # readr::write_csv("data-raw/GLOBAL/additional_european_pollen_elevations_only.csv", na = "")
-#   dplyr::filter(diff >= 0.5)
-# dplyr::mutate(within_90p =
-#                 dplyr::between(elevation,
-#                                min(c(0.9, 1.1) * elevation_original),
-#                                max(c(0.9, 1.1) * elevation_original)),
-#               within_95p =
-#                 dplyr::between(elevation,
-#                                min(c(0.95, 1.05) * elevation_original),
-#                                max(c(0.95, 1.05) * elevation_original)),
-#               within_975p =
-#                 dplyr::between(elevation,
-#                                min(c(0.975, 1.025) * elevation_original),
-#                                max(c(0.975, 1.025) * elevation_original))
-# ) %>%
-#   dplyr::filter(!within_975p)
 
 # Store subsets ----
 additional_european_pollen <-
@@ -193,38 +157,6 @@ additional_european_pollen <-
 
 usethis::use_data(additional_european_pollen, overwrite = TRUE, compress = "xz")
 
-# Load climate reconstructions ----
-climate_reconstructions <-
-  "data-raw/reconstructions/additional_european_pollen_climate_reconstructions_2022-04-30.csv" %>%
-  readr::read_csv()
-
-climate_reconstructions_with_counts <- smpds::additional_european_pollen %>%
-  dplyr::bind_cols(
-    climate_reconstructions %>%
-      dplyr::select(sn = site_name,
-                    en = entity_name,
-                    new_elevation = elevation,
-                    mi:mtwa)
-  ) %>%
-  dplyr::relocate(mi:mtwa, .before = clean) %>%
-  dplyr::mutate(elevation = dplyr::coalesce(elevation, new_elevation))
-climate_reconstructions_with_counts %>%
-  dplyr::filter(site_name != sn | entity_name != en)
-waldo::compare(smpds::additional_european_pollen,
-               climate_reconstructions_with_counts %>%
-                 dplyr::select(-c(mi:mtwa))
-)
-additional_european_pollen <- climate_reconstructions_with_counts %>%
-  dplyr::select(-sn, -en, -new_elevation)
-usethis::use_data(additional_european_pollen, overwrite = TRUE, compress = "xz")
-
-climate_reconstructions %>%
-  smpds::plot_climate_countour(
-    var = "mat",
-    xlim = range(.$longitude, na.rm = TRUE),
-    ylim = range(.$latitude, na.rm = TRUE)
-  )
-
 # Inspect enumerates ----
 ## basin_size -----
 additional_european_pollen$basin_size %>%
@@ -264,3 +196,57 @@ openxlsx::saveWorkbook(wb,
                        paste0("data-raw/GLOBAL/additional_european_pollen_",
                               Sys.Date(),
                               ".xlsx"))
+
+# Load climate reconstructions ----
+climate_reconstructions <-
+  "data-raw/reconstructions/additional_european_pollen_climate_reconstructions_2022-05-12.csv" %>%
+  readr::read_csv()
+
+# Load daily values for precipitation to compute MAP (mean annual precipitation)
+climate_reconstructions_pre <-
+  "data-raw/reconstructions/additional_european_pollen_climate_reconstructions_pre_2022-05-12.csv" %>%
+  readr::read_csv() %>%
+  dplyr::rowwise() %>%
+  dplyr::mutate(map = sum(dplyr::c_across(T1:T365), na.rm = TRUE), .before = T1)
+
+climate_reconstructions_2 <- climate_reconstructions %>%
+  dplyr::bind_cols(climate_reconstructions_pre %>%
+                     dplyr::select(map))
+
+climate_reconstructions_with_counts <-
+  additional_european_pollen %>%
+  # smpds::additional_european_pollen %>%
+  dplyr::bind_cols(
+    climate_reconstructions_2 %>%
+      dplyr::select(sn = site_name,
+                    en = entity_name,
+                    new_elevation = elevation,
+                    mi:map)
+  ) %>%
+  dplyr::relocate(mi:map, .before = clean) %>%
+  dplyr::mutate(elevation = dplyr::coalesce(elevation, new_elevation))
+climate_reconstructions_with_counts %>%
+  dplyr::filter(site_name != sn | entity_name != en)
+waldo::compare(smpds::additional_european_pollen,
+               climate_reconstructions_with_counts %>%
+                 dplyr::select(-c(mi:map, sn, en, new_elevation))
+)
+
+additional_european_pollen <- climate_reconstructions_with_counts %>%
+  dplyr::select(-sn, -en, -new_elevation)
+usethis::use_data(additional_european_pollen, overwrite = TRUE, compress = "xz")
+waldo::compare(smpds::additional_european_pollen,
+               additional_european_pollen,
+               max_diffs = Inf)
+
+climate_reconstructions %>%
+  smpds::plot_climate_countour(
+    var = "mat",
+    xlim = range(.$longitude, na.rm = TRUE),
+    ylim = range(.$latitude, na.rm = TRUE)
+  )
+
+rm(climate_reconstructions,
+   climate_reconstructions_2,
+   climate_reconstructions_pre,
+   climate_reconstructions_with_counts)

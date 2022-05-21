@@ -816,9 +816,7 @@ CMPD_taxa_amalgamation <-
     "clean", "intermediate", "amalgamated"
   )) %>%
   dplyr::distinct() %>%
-  dplyr::mutate(clean = clean %>% stringr::str_squish(),
-                intermediate = intermediate %>% stringr::str_squish(),
-                amalgamated = amalgamated %>% stringr::str_squish())
+  purrr::map_df(stringr::str_squish)
 
 ### Combine counts and amalgamation ----
 CMPD_taxa_counts_amalgamation <-
@@ -827,6 +825,43 @@ CMPD_taxa_counts_amalgamation <-
                    by = c("clean")) %>%
   dplyr::relocate(taxon_count, .after = amalgamated) %>%
   dplyr::relocate(ID_SAMPLE, .before = 1)
+
+
+### Additional taxonomic corrections (SPH - May 20th) ----
+taxonomic_corrections <- "data-raw/GLOBAL/taxonomic_corrections.xlsx" %>%
+  readxl::read_excel(sheet = 1) %>%
+  purrr::map_df(stringr::str_squish)
+
+CMPD_taxa_counts_amalgamation_rev <-
+  CMPD_taxa_counts_amalgamation %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("clean", "all")),
+                   by = c("clean" =  "original_taxon")) %>%
+  dplyr::mutate(clean = dplyr::coalesce(corrected_taxon_name,
+                                        clean)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("intermediate", "all")),
+                   by = c("intermediate" =  "original_taxon")) %>%
+  dplyr::mutate(intermediate = dplyr::coalesce(corrected_taxon_name,
+                                               intermediate)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("amalgamated", "all")),
+                   by = c("amalgamated" =  "original_taxon")) %>%
+  dplyr::mutate(amalgamated = dplyr::coalesce(corrected_taxon_name,
+                                              amalgamated)) %>%
+  dplyr::select(-corrected_taxon_name, -level)
+
+waldo::compare(CMPD_taxa_counts_amalgamation,
+               CMPD_taxa_counts_amalgamation_rev)
+waldo::compare(CMPD_taxa_counts_amalgamation %>%
+                 dplyr::distinct(clean, intermediate, amalgamated),
+               CMPD_taxa_counts_amalgamation_rev %>%
+                 dplyr::distinct(clean, intermediate, amalgamated),
+               max_diffs = Inf)
+
+CMPD_taxa_counts_amalgamation <- CMPD_taxa_counts_amalgamation_rev
 
 CMPD_taxa_counts_amalgamation %>%
   dplyr::filter(is.na(clean) | is.na(intermediate) | is.na(amalgamated)) %>%
@@ -873,12 +908,12 @@ CMPD_metadata_2 <-
 
 ## Extract PNV/BIOME ----
 CMPD_metadata_3 <-
-  CMPD_metadata_2 #%>%
-  # dplyr::select(-dplyr::starts_with("ID_BIOME")) %>%
-  # smpds::parallel_extract_biome(cpus = 12) %>%
-  # # smpds::biome_name() %>%
-  # dplyr::relocate(ID_BIOME, .after = doi) %>%
-  # smpds::pb()
+  CMPD_metadata_2 %>%
+  dplyr::select(-dplyr::starts_with("ID_BIOME")) %>%
+  smpds::parallel_extract_biome(cpus = 12) %>%
+  # smpds::biome_name() %>%
+  dplyr::relocate(ID_BIOME, .after = doi) %>%
+  smpds::pb()
 
 CMPD_metadata_3 %>%
   smpds::plot_biome(xlim = range(.$longitude, na.rm = TRUE) * c(0.9, 1.1),
@@ -956,7 +991,7 @@ CMPD <-
 
 usethis::use_data(CMPD, overwrite = TRUE, compress = "xz")
 
-## Inspect enumerates ----
+# Inspect enumerates ----
 ### basin_size -----
 CMPD$basin_size %>%
   unique() %>% sort()
@@ -994,3 +1029,64 @@ openxlsx::saveWorkbook(wb,
                        paste0("data-raw/GLOBAL/CMPD_",
                               Sys.Date(),
                               ".xlsx"))
+
+
+# Load climate reconstructions ----
+climate_reconstructions <-
+  "data-raw/reconstructions/CMPD_climate_reconstructions_2022-04-30.csv" %>%
+  readr::read_csv()
+
+# Load daily values for precipitation to compute MAP (mean annual precipitation)
+climate_reconstructions_pre <-
+  "data-raw/reconstructions/CMPD_climate_reconstructions_pre_2022-04-30.csv" %>%
+  readr::read_csv() %>%
+  dplyr::rowwise() %>%
+  dplyr::mutate(map = sum(dplyr::c_across(T1:T365), na.rm = TRUE), .before = T1)
+
+climate_reconstructions_2 <- climate_reconstructions %>%
+  dplyr::bind_cols(climate_reconstructions_pre %>%
+                     dplyr::select(map))
+
+climate_reconstructions_with_counts <-
+  CMPD %>%
+  # smpds::CMPD %>%
+  # dplyr::select(-c(mi:mtwa)) %>%
+  dplyr::bind_cols(
+    climate_reconstructions_2 %>%
+      dplyr::select(sn = site_name,
+                    en = entity_name,
+                    new_elevation = elevation,
+                    mi:map)
+  ) %>%
+  dplyr::relocate(mi:map, .before = clean) %>%
+  dplyr::mutate(elevation = dplyr::coalesce(elevation, new_elevation))
+climate_reconstructions_with_counts %>%
+  dplyr::filter(site_name != sn | entity_name != en)
+waldo::compare(smpds::CMPD,
+               climate_reconstructions_with_counts %>%
+                 dplyr::select(-c(mi:map, sn, en, new_elevation))
+)
+
+CMPD <- climate_reconstructions_with_counts %>%
+  dplyr::select(-sn, -en, -new_elevation)
+usethis::use_data(CMPD, overwrite = TRUE, compress = "xz")
+waldo::compare(smpds::CMPD, CMPD, max_diffs = Inf)
+
+climate_reconstructions_2 %>%
+  smpds::plot_climate_countour(
+    var = "mat",
+    xlim = range(.$longitude, na.rm = TRUE),
+    ylim = range(.$latitude, na.rm = TRUE)
+  )
+
+climate_reconstructions_2 %>%
+  smpds::plot_climate(
+    var = "map",
+    xlim = range(.$longitude, na.rm = TRUE),
+    ylim = range(.$latitude, na.rm = TRUE)
+  )
+
+rm(climate_reconstructions,
+   climate_reconstructions_2,
+   climate_reconstructions_pre,
+   climate_reconstructions_with_counts)

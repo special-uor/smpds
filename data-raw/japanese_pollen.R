@@ -242,6 +242,42 @@ japanese_pollen_taxa_counts_amalgamation_all <-
   ) %>%
   dplyr::arrange(ID_SAMPLE, clean)
 
+### Additional taxonomic corrections (SPH - May 20th) ----
+taxonomic_corrections <- "data-raw/GLOBAL/taxonomic_corrections.xlsx" %>%
+  readxl::read_excel(sheet = 1) %>%
+  purrr::map_df(stringr::str_squish)
+
+japanese_pollen_taxa_counts_amalgamation_all_rev <-
+  japanese_pollen_taxa_counts_amalgamation_all %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("clean", "all")),
+                   by = c("clean" =  "original_taxon")) %>%
+  dplyr::mutate(clean = dplyr::coalesce(corrected_taxon_name,
+                                        clean)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("intermediate", "all")),
+                   by = c("intermediate" =  "original_taxon")) %>%
+  dplyr::mutate(intermediate = dplyr::coalesce(corrected_taxon_name,
+                                               intermediate)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("amalgamated", "all")),
+                   by = c("amalgamated" =  "original_taxon")) %>%
+  dplyr::mutate(amalgamated = dplyr::coalesce(corrected_taxon_name,
+                                              amalgamated)) %>%
+  dplyr::select(-corrected_taxon_name, -level)
+
+waldo::compare(japanese_pollen_taxa_counts_amalgamation_all,
+               japanese_pollen_taxa_counts_amalgamation_all_rev)
+waldo::compare(japanese_pollen_taxa_counts_amalgamation_all %>%
+                 dplyr::distinct(clean, intermediate, amalgamated),
+               japanese_pollen_taxa_counts_amalgamation_all_rev %>%
+                 dplyr::distinct(clean, intermediate, amalgamated),
+               max_diffs = Inf)
+
+japanese_pollen_taxa_counts_amalgamation_all <- japanese_pollen_taxa_counts_amalgamation_all_rev
+
 # Find DOIs ----
 japanese_pollen_metadata_pubs <-
   japanese_pollen_metadata %>%
@@ -446,8 +482,9 @@ climate_reconstructions_2 <- climate_reconstructions %>%
                      dplyr::select(map))
 
 climate_reconstructions_with_counts <-
-  smpds::japanese_pollen %>%
-  dplyr::select(-c(mi:mtwa)) %>%
+  japanese_pollen %>%
+  # smpds::japanese_pollen %>%
+  # dplyr::select(-c(mi:mtwa)) %>%
   dplyr::bind_cols(
     climate_reconstructions_2 %>%
       dplyr::select(sn = site_name,
@@ -467,6 +504,9 @@ waldo::compare(smpds::japanese_pollen,
 japanese_pollen <- climate_reconstructions_with_counts %>%
   dplyr::select(-sn, -en, -new_elevation)
 usethis::use_data(japanese_pollen, overwrite = TRUE, compress = "xz")
+waldo::compare(smpds::japanese_pollen,
+               japanese_pollen,
+               max_diffs = Inf)
 
 climate_reconstructions_2 %>%
   smpds::plot_climate_countour(
