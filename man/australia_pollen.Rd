@@ -5,7 +5,7 @@
 \alias{australia_pollen}
 \title{\code{australia_pollen} dataset}
 \format{
-A data frame (\code{tibble} object) with 1541 rows and 23 variables:
+A data frame (\code{tibble} object) with 1541 rows and 24 variables:
 \describe{
 \item{...}{int ...}
 }
