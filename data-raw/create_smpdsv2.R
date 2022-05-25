@@ -7,40 +7,25 @@ output_path <- "/storage/shared/research/met/pacmedy/roberto.villegasdiaz/smpds"
 # Create dataset -----
 SMPDSv2 <- dplyr::bind_rows(
   smpds::additional_european_pollen,
-  smpds::AMSS %>%
-    dplyr::mutate(age_BP = as.character(age_BP)),
+  smpds::AMSS,
   smpds::APD,
-  smpds::australia_pollen %>%
-    dplyr::mutate(source = "Australian Pollen", .before = 1),
+  smpds::australia_pollen,
   smpds::CMPD,
-  smpds::dugerdil_pollen %>%
-    dplyr::mutate(source = "Dugerdil et al., 2021", .before = 1) %>%
-    dplyr::mutate(age_BP = as.character(age_BP)),
-  smpds::EMBSeCBIO %>%
-    dplyr::mutate(source = "EMBSeCBIO", .before = 1),
+  smpds::dugerdil_pollen,
+  smpds::EMBSeCBIO,
   smpds::EMPDv2,
-  smpds::gaillard_pollen %>%
-    dplyr::mutate(source = "Gaillard et al., 1992", .before = 1),
+  smpds::gaillard_pollen,
   smpds::Herzschuh,
-  smpds::IbMPD %>%
-    dplyr::mutate(age_BP = as.character(age_BP)),
+  smpds::IbMPD,
   smpds::japanese_pollen,
-  smpds::moroccan_pollen %>%
-    dplyr::mutate(age_BP = as.character(age_BP)),
+  smpds::moroccan_pollen,
   smpds::NEOTOMA,
-  smpds::neotropics_pollen %>%
-    dplyr::mutate(age_BP = as.character(age_BP)),
+  smpds::neotropics_pollen,
   smpds::north_america_pollen,
-  smpds::Phelps %>%
-    dplyr::mutate(source = "Phelps et al., 2020", .before = 1) %>%
-    dplyr::mutate(age_BP = as.character(age_BP)),
+  smpds::Phelps,
   smpds::SMPDSv1,
-  smpds::south_america_pollen %>%
-    dplyr::mutate(source = "Neotoma", .before = 1) %>%
-    dplyr::mutate(age_BP = as.character(age_BP)),
-  smpds::southern_hemisphere_pollen %>%
-    dplyr::mutate(source = "Southern Hemisphere pollen", .before = 1) %>%
-    dplyr::mutate(age_BP = as.character(age_BP)),
+  smpds::south_america_pollen,
+  smpds::southern_hemisphere_pollen,
   smpds::tatiana_pollen
 )
 
@@ -81,9 +66,23 @@ SMPDSv2 <-
       .$value2
   )
 
+# ## Arrange taxon_counts ----
+# SMPDSv2 %>%
+#   dplyr::select(ID_SAMPLE, clean) %>%
+#   tidyr::unnest(clean) %>%
+#   tidyr::pivot_longer(-ID_SAMPLE) %>%
+#   tidyr::pivot_wider(ID_SAMPLE, names_sort = TRUE, values_fill = 0)
+
+waldo::compare(smpds::SMPDSv2[1:19], SMPDSv2[1:19],
+               tolerance = 1E-4, max_diffs = Inf)
 usethis::use_data(SMPDSv2, overwrite = TRUE, compress = "xz")
 
 # Export list of amalgamations ----
+## Additional taxonomic corrections (SPH - May 20th) ----
+taxonomic_corrections <- "data-raw/GLOBAL/taxonomic_corrections.xlsx" %>%
+  readxl::read_excel(sheet = 1) %>%
+  purrr::map_df(stringr::str_squish)
+
 ## additional_european_pollen ----
 additional_european_pollen_taxa_counts_amalgamation <-
   "data-raw/GLOBAL/E_additional_Europe_clean.xlsx" %>%
@@ -241,6 +240,7 @@ IbMPD_taxa_counts_amalgamation <-
 ## japanese_pollen ----
 ### File 1 ----
 japanese_pollen_taxa_amalgamations_1 <-
+# japanese_pollen_taxa_counts_amalgamation_1 <-
   "data-raw/GLOBAL/japanese_pollen/Japan_dat files_clean_SPH.xlsx" %>%
   readxl::read_excel(sheet = 1) %>%
   magrittr::set_names(
@@ -442,6 +442,60 @@ smpdsv2_pollen_amalgamations <-
     southern_hemisphere_taxa_amalgamation,
     tatiana_samples_taxa_amalgamation
   ) %>%
+  # dplyr::left_join(taxonomic_corrections %>%
+  #                    dplyr::filter(level %in% c("clean", "all")),
+  #                  by = c("clean" =  "original_taxon")) %>%
+  # dplyr::mutate(clean = dplyr::coalesce(corrected_taxon_name,
+  #                                       clean)) %>%
+  # dplyr::select(-corrected_taxon_name, -level) %>%
+  # dplyr::left_join(taxonomic_corrections %>%
+  #                    dplyr::filter(level %in% c("intermediate", "all")),
+  #                  by = c("clean" =  "original_taxon")) %>%
+  # dplyr::mutate(intermediate = dplyr::coalesce(corrected_taxon_name,
+  #                                              intermediate)) %>%
+  # dplyr::select(-corrected_taxon_name, -level) %>%
+  # dplyr::left_join(taxonomic_corrections %>%
+  #                    dplyr::filter(level %in% c("amalgamated", "all")),
+  #                  by = c("clean" =  "original_taxon")) %>%
+  # dplyr::mutate(amalgamated = dplyr::coalesce(corrected_taxon_name,
+  #                                             amalgamated)) %>%
+  # dplyr::select(-corrected_taxon_name, -level) %>%
+dplyr::left_join(taxonomic_corrections %>%
+                   dplyr::filter(level %in% c("clean",  "all")),
+                 by = c("clean" =  "original_taxon")) %>%
+  dplyr::mutate(clean = dplyr::coalesce(corrected_taxon_name,
+                                        clean)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("intermediate", "all")),
+                   by = c("clean" =  "original_taxon")) %>%
+  dplyr::mutate(intermediate = dplyr::coalesce(corrected_taxon_name,
+                                               intermediate)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("amalgamated", "all")),
+                   by = c("clean" =  "original_taxon")) %>%
+  dplyr::mutate(amalgamated = dplyr::coalesce(corrected_taxon_name,
+                                              amalgamated)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("all")),
+                   by = c("clean" =  "original_taxon")) %>%
+  dplyr::mutate(clean = dplyr::coalesce(corrected_taxon_name,
+                                        clean)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("all")),
+                   by = c("intermediate" =  "original_taxon")) %>%
+  dplyr::mutate(intermediate = dplyr::coalesce(corrected_taxon_name,
+                                               intermediate)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("all")),
+                   by = c("amalgamated" =  "original_taxon")) %>%
+  dplyr::mutate(amalgamated = dplyr::coalesce(corrected_taxon_name,
+                                              amalgamated)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
   dplyr::arrange(clean, intermediate, amalgamated) %>%
   dplyr::distinct() %>%
   dplyr::group_by(clean, intermediate, amalgamated) %>%
@@ -452,11 +506,392 @@ smpdsv2_pollen_amalgamations <-
   dplyr::arrange(clean, intermediate, amalgamated) %>%
   dplyr::rename(`included in` = source)
 
-smpdsv2_pollen_amalgamations %>%
-  readr::write_excel_csv("data-raw/smpdsv2_pollen_amalgamations.csv", na = "")
 
+smpdsv2_pollen_amalgamations %>%
+  purrr::map_df(stringr::str_squish) %>%
+  dplyr::group_by(clean, intermediate) %>%
+  # dplyr::group_by(clean, amalgamated) %>%
+  # dplyr::group_by(intermediate, amalgamated) %>%
+  dplyr::mutate(n = dplyr::n()) %>%
+  dplyr::filter(n > 1) %>%
+  View()
+
+smpdsv2_pollen_amalgamations %>%
+  readr::write_excel_csv(paste0("data-raw/smpdsv2_pollen_amalgamations_",
+                                Sys.Date(),
+                                ".csv"), na = "")
 
 data("SMPDSv2", package = "smpds")
+
+# Export data to MySQL database ----
+`%>%` <- magrittr::`%>%`
+conn <- dabr::open_conn_mysql("SMPDSv2",
+                              password = rstudioapi::askForPassword())
+
+idx_pairs <- function(max, step) {
+  tibble::tibble(x = seq(1, max, step), y = c(x[-1] - 1, max))
+}
+
+SMPDSv2_db <- SMPDSv2 %>%
+  dplyr::arrange(site_name, entity_name, age_BP, elevation) %>%
+  dplyr::group_by(site_name) %>%
+  dplyr::mutate(ID_SITE = dplyr::cur_group_id(), .before = 1) %>%
+  dplyr::group_by(site_name, entity_name) %>%
+  dplyr::mutate(ID_ENTITY = dplyr::cur_group_id(), .before = 2) %>%
+  dplyr::ungroup()
+
+## entity ----
+idx_entity <- idx_pairs(nrow(SMPDSv2_db), 1000)
+pb <- progress::progress_bar$new(total = nrow(idx_entity))
+meta_neo_res <-
+  purrr::map2(idx_entity$x,
+              idx_entity$y,
+              ~ {
+                pb$tick()
+                SMPDSv2_db %>%
+                  dplyr::select(ID_SITE:age_BP, ID_SAMPLE, publication, doi) %>%
+                  dplyr::relocate(ID_SAMPLE, .after = ID_ENTITY) %>%
+                  dplyr::slice(.x:.y) %>%
+                  rpd:::update_records(conn = conn, table = "entity",
+                                       dry_run = TRUE, quiet = TRUE,
+                                       PK = 1:3)
+              })
+
+###### Validate -----
+entity_tb <- conn %>%
+  dabr::select_all("entity")
+waldo::compare(SMPDSv2_db %>%
+                 dplyr::select(ID_SITE:age_BP, ID_SAMPLE, publication) %>%
+                 dplyr::arrange(ID_SITE, ID_ENTITY, ID_SAMPLE) %>%
+                 .[order(colnames(.))],
+               entity_tb %>%
+                 dplyr::arrange(ID_SITE, ID_ENTITY, ID_SAMPLE) %>%
+                 .[order(colnames(.))],
+               tolerance = 1E-9)
+
+
+
+## climate ----
+idx_climate <- idx_pairs(nrow(SMPDSv2_db), 1000)
+pb <- progress::progress_bar$new(total = nrow(idx_climate))
+meta_neo_res <-
+  purrr::map2(idx_climate$x,
+              idx_climate$y,
+              ~ {
+                pb$tick()
+                SMPDSv2_db %>%
+                  dplyr::select(ID_SAMPLE, ID_BIOME:map) %>%
+                  dplyr::mutate(ID_BIOME = ifelse(ID_BIOME < 0, NA, ID_BIOME)) %>%
+                  dplyr::slice(.x:.y) %>%
+                  rpd:::update_records(conn = conn, table = "climate",
+                                       dry_run = TRUE, quiet = TRUE,
+                                       PK = 1)
+              })
+
+###### Validate -----
+climate_tb <- conn %>%
+  dabr::select_all("climate")
+waldo::compare(SMPDSv2_db %>%
+                 dplyr::select(ID_SAMPLE, ID_BIOME:map) %>%
+                 dplyr::mutate(ID_BIOME = ifelse(ID_BIOME < 0, NA, ID_BIOME)) %>%
+                 dplyr::arrange(ID_SAMPLE) %>%
+                 .[order(colnames(.))],
+               climate_tb %>%
+                 dplyr::arrange(ID_SAMPLE) %>%
+                 .[order(colnames(.))],
+               tolerance = 1E-9)
+
+## count ----
+### taxon_name ----
+taxon_list <-
+  dplyr::bind_rows(
+    tibble::tibble(
+      taxon_name = SMPDSv2$clean %>% colnames(),
+      column = "clean"
+    ),
+    tibble::tibble(
+      taxon_name = SMPDSv2$intermediate %>% colnames(),
+      column = "intermediate"
+    ),
+    tibble::tibble(
+      taxon_name = SMPDSv2$amalgamated %>% colnames(),
+      column = "amalgamated"
+    )
+  ) %>%
+  dplyr::mutate(taxon_name = taxon_name %>% stringr::str_squish()) %>%
+  dplyr::distinct(taxon_name) %>%
+  dplyr::arrange(taxon_name) %>%
+  dplyr::slice(-1) %>%
+  dplyr::mutate(taxon_name_lc = taxon_name %>%
+                  stringr::str_to_lower()) %>%
+  dplyr::group_by(taxon_name_lc) %>%
+  dplyr::mutate(ID_TAXON = dplyr::cur_group_id(), .before = 1) %>%
+  dplyr::ungroup()
+  # dplyr::mutate(ID_TAXON = seq_along(taxon_name), .before = 1)
+
+taxon_list %>%
+  # dplyr::mutate(taxon_name_lc = taxon_name %>%
+  #                 stringr::str_to_lower()) %>%
+  dplyr::group_by(taxon_name_lc) %>%
+  dplyr::mutate(n = dplyr::n()) %>%
+  dplyr::filter(n > 1)
+
+# dabr::select(conn, "SELECT * FROM taxon_name")
+# dabr::delete(conn, "DELETE FROM taxon_name WHERE ID_TAXON >= 1")
+
+taxon_list %>%
+  rpd:::update_records(conn = conn, table = "taxon_name",
+                       dry_run = TRUE, quiet = TRUE,
+                       PK = 1)
+
+### clean ----
+counts_table_1 <- SMPDSv2_db %>%
+  dplyr::select(ID_SAMPLE, clean) %>%
+  tidyr::unnest(clean) %>%
+  tidyr::pivot_longer(-ID_SAMPLE,
+                      names_to = "taxon_name",
+                      values_to = "count") %>%
+  dplyr::filter(!is.na(count)) %>%
+  dplyr::mutate(taxon_name = taxon_name %>% stringr::str_squish()) %>%
+  dplyr::left_join(taxon_list,
+                   by = "taxon_name") %>%
+  dplyr::mutate(amalgamation_level = 0) %>%
+  dplyr::filter(count != 0)
+
+counts_table_1 %>%
+  dplyr::filter(is.na(ID_TAXON))
+
+idx_stage1 <- idx_pairs(nrow(counts_table_1), 2000)
+pb <- progress::progress_bar$new(total = nrow(idx_stage1))
+meta_neo_res <-
+  purrr::map2(idx_stage1$x,
+              idx_stage1$y,
+              ~ {
+                pb$tick()
+                counts_table_1[.x:.y, ] %>%
+                  dplyr::select(-taxon_name) %>%
+                  rpd:::add_records(conn = conn, table = "pollen_count",
+                                    dry_run = !TRUE, quiet = TRUE)
+              })
+meta_neo_res %>% purrr::flatten_lgl() %>% sum()
+
+###### Validate -----
+TAXA_1 <- conn %>%
+  dabr::select("SELECT * FROM pollen_count WHERE ID_SAMPLE IN (",
+               paste0(unique(counts_table_1$ID_SAMPLE), collapse = ", "),
+               ") and amalgamation_level = 0")
+waldo::compare(counts_table_1 %>%
+                 dplyr::arrange(ID_SAMPLE, ID_TAXON) %>%
+                 # dplyr::slice(1:1E-6) %>%
+                 dplyr::select(-taxon_name) %>%
+                 .[order(colnames(.))],
+               TAXA_1 %>%
+                 dplyr::arrange(ID_SAMPLE, ID_TAXON) %>%
+                 # dplyr::slice(1:1E-6) %>%
+                 .[order(colnames(.))],
+               tolerance = 1E-9)
+
+### intermediate ----
+counts_table_2 <- SMPDSv2_db %>%
+  dplyr::select(ID_SAMPLE, intermediate) %>%
+  tidyr::unnest(intermediate) %>%
+  tidyr::pivot_longer(-ID_SAMPLE,
+                      names_to = "taxon_name",
+                      values_to = "count") %>%
+  dplyr::filter(!is.na(count)) %>%
+  dplyr::mutate(taxon_name = taxon_name %>% stringr::str_squish()) %>%
+  dplyr::left_join(taxon_list,
+                   by = "taxon_name") %>%
+  dplyr::mutate(amalgamation_level = 1) %>%
+  dplyr::filter(count != 0)
+
+counts_table_2 %>%
+  dplyr::filter(is.na(ID_TAXON))
+
+idx_stage_2 <- idx_pairs(nrow(counts_table_2), 2000)
+pb <- progress::progress_bar$new(total = nrow(idx_stage_2))
+meta_neo_res <-
+  purrr::map2(idx_stage_2$x,
+              idx_stage_2$y,
+              ~ {
+                pb$tick()
+                counts_table_2[.x:.y, ] %>%
+                  dplyr::select(-taxon_name) %>%
+                  rpd:::add_records(conn = conn, table = "pollen_count",
+                                    dry_run = TRUE, quiet = TRUE)
+              })
+meta_neo_res %>% purrr::flatten_lgl() %>% sum()
+
+###### Validate -----
+TAXA_2 <- conn %>%
+  dabr::select("SELECT * FROM pollen_count WHERE ID_SAMPLE IN (",
+               paste0(unique(counts_table_2$ID_SAMPLE), collapse = ", "),
+               ") and amalgamation_level = 1")
+waldo::compare(counts_table_2 %>%
+                 dplyr::arrange(ID_SAMPLE, ID_TAXON) %>%
+                 dplyr::select(-taxon_name) %>%
+                 .[order(colnames(.))],
+               TAXA_2 %>%
+                 dplyr::arrange(ID_SAMPLE, ID_TAXON) %>%
+                 .[order(colnames(.))],
+               tolerance = 1E-9)
+
+### amalgamated ----
+counts_table_3 <- SMPDSv2_db %>%
+  dplyr::select(ID_SAMPLE, amalgamated) %>%
+  tidyr::unnest(amalgamated) %>%
+  tidyr::pivot_longer(-ID_SAMPLE,
+                      names_to = "taxon_name",
+                      values_to = "count") %>%
+  dplyr::filter(!is.na(count)) %>%
+  dplyr::mutate(taxon_name = taxon_name %>%
+                  stringr::str_squish() %>%
+                  stringr::str_replace_all("0", "Eucalyptus")
+                ) %>%
+  dplyr::left_join(taxon_list,
+                   by = "taxon_name") %>%
+  dplyr::mutate(amalgamation_level = 2) %>%
+  dplyr::filter(count != 0)
+
+counts_table_3 %>%
+  dplyr::filter(is.na(ID_TAXON))
+
+idx_stage_3 <- idx_pairs(nrow(counts_table_3), 1000)
+pb <- progress::progress_bar$new(total = nrow(idx_stage_3))
+meta_neo_res <-
+  purrr::map2(idx_stage_3$x,
+              idx_stage_3$y,
+              ~ {
+                pb$tick()
+                counts_table_3[.x:.y, ] %>%
+                  dplyr::select(-taxon_name) %>%
+                  rpd:::add_records(conn = conn, table = "pollen_count",
+                                    dry_run = !TRUE, quiet = TRUE)
+              })
+meta_neo_res %>% purrr::flatten_lgl() %>% sum()
+
+###### Validate -----
+TAXA_3 <- conn %>%
+  dabr::select("SELECT * FROM pollen_count WHERE ID_SAMPLE IN (",
+               paste0(unique(counts_table_3$ID_SAMPLE), collapse = ", "),
+               ") and amalgamation_level = 2")
+waldo::compare(counts_table_3 %>%
+                 dplyr::arrange(ID_SAMPLE, ID_TAXON) %>%
+                 dplyr::select(-taxon_name) %>%
+                 .[order(colnames(.))],
+               TAXA_3 %>%
+                 dplyr::arrange(ID_SAMPLE, ID_TAXON) %>%
+                 .[order(colnames(.))],
+               tolerance = 1E-9)
+
+# Create map with marine and offshore entities ----
+`%>%` <- magrittr::`%>%`
+data("SMPDSv2", package = "smpds")
+sf::sf_use_s2(FALSE)
+land_borders <-
+  rnaturalearth::ne_countries(scale = "large",
+                              returnclass = "sf") #%>%
+  # sf::st_cast("POLYGON") %>%
+  # dplyr::mutate(area = sf::st_area(geometry))
+
+lakes <- rnaturalearth::ne_download(
+  scale = "large", type = "lakes", category = "physical", returnclass = "sf")
+# sp::plot(lakes110)
+
+SMPDSv2_offshore <- SMPDSv2 %>%
+  dplyr::select(1:19) %>%
+  dplyr::arrange(longitude, latitude) %>%
+  dplyr::mutate(geometry = NA, .after = longitude) %>%
+  sf::st_as_sf(
+    coords = c("longitude", "latitude"),
+    crs = "+proj=longlat +datum=WGS84 +no_defs"
+  ) %>%
+  dplyr::mutate(
+    on_land = sf::st_within(geometry, land_borders) %>%
+      lengths(),
+    on_lake = sf::st_within(geometry, lakes) %>%
+      lengths()
+    # on_land = purrr:::pmap(geometry,
+    #                        ~purrr::map(seq_len(nrow(land_borders)),
+    #                                    function(lb, g) {
+    #                                      sf::st_within(land_borders[g, ], lb)
+    #                                    }, g = .x))
+
+  )
+
+SMPDSv2_offshore_2 <- SMPDSv2_offshore %>%
+  # dplyr::filter(on_land != 1) %>%
+  # dplyr::filter(on_lake == 1) %>%
+  # dplyr::filter(on_land != 1 | on_lake == 1| map < 0 | mi < 0 | gdd0 < 0) %>%
+  dplyr::mutate(latitude = sf::st_coordinates(.)[, 2],
+                longitude = sf::st_coordinates(.)[, 1],
+                .after = geometry) %>%
+  sf::st_set_geometry(NULL)
+SMPDSv2_offshore_2 %>%
+  # dplyr::filter(on_land != 1) %>%
+  dplyr::filter(site_type != "marine") %>%
+  dplyr::filter(is.na(ID_BIOME) |
+                  is.na(mi) |
+                  is.na(gdd0) |
+                  is.na(mat) |
+                  is.na(mtco) |
+                  is.na(mtwa) |
+                  is.na(map) |
+                  ID_BIOME < 0 |
+                  map < 0 | mi < 0 | gdd0 < 0) %>%
+  View()
+  # smpds::plot_climate(var = "elevation", units = "m ASL", fill_sea = NA, fill_land = NA)
+
+
+.data_pre_3 <- SMPDSv2_offshore_2 %>%
+  # dplyr::filter(on_land != 1) %>%
+  dplyr::filter(site_type != "marine") %>%
+  dplyr::filter(map < 0) %>%
+  smpds:::get_elevation() %>%
+  smpds::gwr(
+    varid = "pre",
+    .ref =
+      file.path("~/Downloads/climatologies_v2/",
+                "cru_ts4.04.1901.2019.pre.dat-clim-1961-1990-int.nc"),
+                # "cru_ts4.04.1901.2019.pre.dat-new-clim-1961-1990-int.nc"),
+    coordinates = CRU_coords,
+    cpus = 4) %>%
+  smpds::pb()
+
+.data_pre_2 %>%
+  smpds::pivot_data(varname = "pre_2") %>% .$pre_2
+
+p_offshore <- SMPDSv2_offshore %>%
+  # dplyr::filter(on_land != 1) %>%
+  # dplyr::filter(on_lake == 1) %>%
+  dplyr::filter(on_land != 1 | on_lake == 1| map < 0 | mi < 0 | gdd0 < 0) %>%
+  dplyr::mutate(latitude = sf::st_coordinates(.)[, 2],
+                longitude = sf::st_coordinates(.)[, 1],
+                .after = geometry) %>%
+  sf::st_set_geometry(NULL) %>%
+  smpds::plot_climate(var = "elevation", units = "m ASL",
+                      land_borders = land_borders %>%
+                        sf::st_difference(sf::st_union(lakes)))
+ggplot2::ggsave(file.path("~/Downloads/",
+                          paste0("SMPDSv2_offshore_and_lake_entities_", Sys.Date(), ".pdf")),
+                plot = p_offshore,
+                device = "pdf",
+                width = 32,
+                height = 15,
+                units = "in")
+
+SMPDSv2_offshore %>%
+  dplyr::filter(on_land != 1 | on_lake == 1 | map < 0 | mi < 0 | gdd0 < 0) %>%
+  dplyr::mutate(latitude = sf::st_coordinates(.)[, 2],
+                longitude = sf::st_coordinates(.)[, 1],
+                .after = geometry) %>%
+  sf::st_set_geometry(NULL) %>%
+  dplyr::mutate(on_land = ifelse(on_land == 0, FALSE, TRUE),
+                on_lake = ifelse(on_land == 0, FALSE, TRUE)) %>%
+  readr::write_excel_csv(
+    file.path("~/Downloads/",
+              paste0("SMPDSv2_offshore_and_lake_entities_", Sys.Date(), ".csv"))
+  )
 
 # Export list of taxon names ----
 taxon_list <-

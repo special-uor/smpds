@@ -203,7 +203,7 @@ APD_metadata <-
   dplyr::select(site_name:ID_SAMPLE) %>%
   dplyr::rename(basin_size = `basin_size (km2)`)
 
-### Polen counts ----
+### Pollen counts ----
 APD_counts <-
   APD_all %>%
   dplyr::select(ID_SAMPLE) %>%
@@ -254,6 +254,7 @@ taxonomic_corrections <- "data-raw/GLOBAL/taxonomic_corrections.xlsx" %>%
 
 APD_taxa_counts_amalgamation_rev <-
   APD_taxa_counts_amalgamation %>%
+  dplyr::mutate(ID_COUNT = seq_along(ID_SAMPLE)) %>%
   dplyr::left_join(taxonomic_corrections %>%
                      dplyr::filter(level %in% c("clean", "all")),
                    by = c("clean" =  "original_taxon")) %>%
@@ -262,25 +263,51 @@ APD_taxa_counts_amalgamation_rev <-
   dplyr::select(-corrected_taxon_name, -level) %>%
   dplyr::left_join(taxonomic_corrections %>%
                      dplyr::filter(level %in% c("intermediate", "all")),
-                   by = c("intermediate" =  "original_taxon")) %>%
+                   by = c("clean" =  "original_taxon")) %>%
   dplyr::mutate(intermediate = dplyr::coalesce(corrected_taxon_name,
                                                intermediate)) %>%
   dplyr::select(-corrected_taxon_name, -level) %>%
   dplyr::left_join(taxonomic_corrections %>%
                      dplyr::filter(level %in% c("amalgamated", "all")),
+                   by = c("clean" =  "original_taxon")) %>%
+  dplyr::mutate(amalgamated = dplyr::coalesce(corrected_taxon_name,
+                                              amalgamated)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("all")),
+                   by = c("clean" =  "original_taxon")) %>%
+  dplyr::mutate(clean = dplyr::coalesce(corrected_taxon_name,
+                                        clean)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("all")),
+                   by = c("intermediate" =  "original_taxon")) %>%
+  dplyr::mutate(intermediate = dplyr::coalesce(corrected_taxon_name,
+                                               intermediate)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("all")),
                    by = c("amalgamated" =  "original_taxon")) %>%
   dplyr::mutate(amalgamated = dplyr::coalesce(corrected_taxon_name,
                                               amalgamated)) %>%
   dplyr::select(-corrected_taxon_name, -level)
+
+APD_taxa_counts_amalgamation_rev %>%
+  dplyr::group_by(ID_COUNT) %>%
+  dplyr::mutate(n = dplyr::n()) %>%
+  dplyr::filter(n > 1)
 
 waldo::compare(APD_taxa_counts_amalgamation,
                APD_taxa_counts_amalgamation_rev)
 waldo::compare(APD_taxa_counts_amalgamation %>%
                  dplyr::distinct(clean, intermediate, amalgamated),
                APD_taxa_counts_amalgamation_rev %>%
-                 dplyr::distinct(clean, intermediate, amalgamated))
+                 dplyr::distinct(clean, intermediate, amalgamated),
+               max_diffs = Inf)
 
-APD_taxa_counts_amalgamation <- APD_taxa_counts_amalgamation_rev
+APD_taxa_counts_amalgamation <- APD_taxa_counts_amalgamation_rev %>%
+  dplyr::filter(!is.na(taxon_count), taxon_count > 0) %>%
+  dplyr::select(-ID_COUNT)
 
 APD_taxa_counts_amalgamation %>%
   dplyr::filter(is.na(clean) | is.na(intermediate) | is.na(amalgamated))
@@ -323,7 +350,7 @@ APD_metadata_2 <-
 APD_metadata_3 <-
   APD_metadata_2 %>%
   dplyr::select(-dplyr::starts_with("ID_BIOME")) %>%
-  smpds::parallel_extract_biome(cpus = 12) %>%
+  smpds::parallel_extract_biome(cpus = 8) %>%
   # smpds::biome_name() %>%
   dplyr::relocate(ID_BIOME, .after = doi) %>%
   smpds::pb()
@@ -345,6 +372,7 @@ APD_clean <-
   tidyr::pivot_wider(ID_SAMPLE,
                      names_from = taxon_name,
                      values_from = taxon_count,
+                     values_fill = 0,
                      names_sort = TRUE) %>%
   dplyr::arrange(ID_SAMPLE)
 
@@ -360,6 +388,7 @@ APD_intermediate <-
   tidyr::pivot_wider(ID_SAMPLE,
                      names_from = taxon_name,
                      values_from = taxon_count,
+                     values_fill = 0,
                      names_sort = TRUE) %>%
   dplyr::arrange(ID_SAMPLE)
 
@@ -375,6 +404,7 @@ APD_amalgamated <-
   tidyr::pivot_wider(ID_SAMPLE,
                      names_from = taxon_name,
                      values_from = taxon_count,
+                     values_fill = 0,
                      names_sort = TRUE) %>%
   dplyr::arrange(ID_SAMPLE)
 
@@ -390,6 +420,14 @@ APD <-
       dplyr::select(-c(ID_SAMPLE))
   ) %>%
   dplyr::mutate(
+    basin_size_num = basin_size %>%
+      as.numeric() %>%
+      round(digits = 6) %>%
+      as.character(),
+    basin_size = dplyr::coalesce(
+      basin_size_num,
+      basin_size
+    ),
     basin_size = basin_size %>%
       stringr::str_replace_all("unknown", "not known"),
     entity_type = entity_type %>%
@@ -398,7 +436,8 @@ APD <-
       stringr::str_replace_all("unknown", "not known")
   ) %>%
   dplyr::relocate(ID_SAMPLE, .before = clean) %>%
-  dplyr::mutate(source = "APD", .before = 1)
+  dplyr::mutate(source = "APD", .before = 1) %>%
+  dplyr::select(-basin_size_num)
 
 usethis::use_data(APD, overwrite = TRUE, compress = "xz")
 
@@ -480,6 +519,9 @@ waldo::compare(smpds::APD,
 APD <- climate_reconstructions_with_counts %>%
   dplyr::select(-sn, -en, -new_elevation)
 usethis::use_data(APD, overwrite = TRUE, compress = "xz")
+waldo::compare(smpds::APD,
+               APD,
+               max_diffs = Inf)
 
 climate_reconstructions_2 %>%
   smpds::plot_climate_countour(

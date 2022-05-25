@@ -9,7 +9,7 @@ other_southern_hemisphere_metadata <-
   dplyr::rename(age_BP = age_bp) %>%
   dplyr::mutate(ID_SAMPLE = seq_along(entity_name))
 
-### Polen counts ----
+### Pollen counts ----
 other_southern_hemisphere_counts <-
   "data-raw/GLOBAL/other_southern_hemisphere_SPH.xlsx" %>%
   readxl::read_excel(sheet = 2, col_names = FALSE) %>%
@@ -48,34 +48,59 @@ taxonomic_corrections <- "data-raw/GLOBAL/taxonomic_corrections.xlsx" %>%
 
 other_southern_hemisphere_taxa_counts_amalgamation_rev <-
   other_southern_hemisphere_taxa_counts_amalgamation %>%
+  dplyr::mutate(ID_COUNT = seq_along(ID_SAMPLE)) %>%
   dplyr::left_join(taxonomic_corrections %>%
-                     dplyr::filter(level %in% c("clean", "all")),
+                     dplyr::filter(level %in% c("clean",  "all")),
                    by = c("clean" =  "original_taxon")) %>%
   dplyr::mutate(clean = dplyr::coalesce(corrected_taxon_name,
                                         clean)) %>%
   dplyr::select(-corrected_taxon_name, -level) %>%
   dplyr::left_join(taxonomic_corrections %>%
                      dplyr::filter(level %in% c("intermediate", "all")),
-                   by = c("intermediate" =  "original_taxon")) %>%
+                   by = c("clean" =  "original_taxon")) %>%
   dplyr::mutate(intermediate = dplyr::coalesce(corrected_taxon_name,
                                                intermediate)) %>%
   dplyr::select(-corrected_taxon_name, -level) %>%
   dplyr::left_join(taxonomic_corrections %>%
                      dplyr::filter(level %in% c("amalgamated", "all")),
+                   by = c("clean" =  "original_taxon")) %>%
+  dplyr::mutate(amalgamated = dplyr::coalesce(corrected_taxon_name,
+                                              amalgamated)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("all")),
+                   by = c("clean" =  "original_taxon")) %>%
+  dplyr::mutate(clean = dplyr::coalesce(corrected_taxon_name,
+                                        clean)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("all")),
+                   by = c("intermediate" =  "original_taxon")) %>%
+  dplyr::mutate(intermediate = dplyr::coalesce(corrected_taxon_name,
+                                               intermediate)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("all")),
                    by = c("amalgamated" =  "original_taxon")) %>%
   dplyr::mutate(amalgamated = dplyr::coalesce(corrected_taxon_name,
                                               amalgamated)) %>%
   dplyr::select(-corrected_taxon_name, -level)
 
-waldo::compare(other_southern_hemisphere_taxa_counts_amalgamation,
-               other_southern_hemisphere_taxa_counts_amalgamation_rev)
+other_southern_hemisphere_taxa_counts_amalgamation_rev %>%
+  dplyr::group_by(ID_COUNT) %>%
+  dplyr::mutate(n = dplyr::n()) %>%
+  dplyr::filter(n > 1)
+
 waldo::compare(other_southern_hemisphere_taxa_counts_amalgamation %>%
                  dplyr::distinct(clean, intermediate, amalgamated),
                other_southern_hemisphere_taxa_counts_amalgamation_rev %>%
                  dplyr::distinct(clean, intermediate, amalgamated),
                max_diffs = Inf)
 
-other_southern_hemisphere_taxa_counts_amalgamation <- other_southern_hemisphere_taxa_counts_amalgamation_rev
+other_southern_hemisphere_taxa_counts_amalgamation <-
+  other_southern_hemisphere_taxa_counts_amalgamation_rev %>%
+  dplyr::filter(!is.na(taxon_count), taxon_count > 0) %>%
+  dplyr::select(-ID_COUNT)
 
 other_southern_hemisphere_taxa_counts_amalgamation %>%
   dplyr::filter(is.na(clean) | is.na(intermediate) | is.na(amalgamated))
@@ -140,6 +165,7 @@ other_southern_hemisphere_clean <-
   tidyr::pivot_wider(ID_SAMPLE,
                      names_from = taxon_name,
                      values_from = taxon_count,
+                     values_fill = 0,
                      names_sort = TRUE)
 ### Intermediate ----
 other_southern_hemisphere_intermediate <-
@@ -153,6 +179,7 @@ other_southern_hemisphere_intermediate <-
   tidyr::pivot_wider(ID_SAMPLE,
                      names_from = taxon_name,
                      values_from = taxon_count,
+                     values_fill = 0,
                      names_sort = TRUE)
 
 ### Amalgamated ----
@@ -167,6 +194,7 @@ other_southern_hemisphere_amalgamated <-
   tidyr::pivot_wider(ID_SAMPLE,
                      names_from = taxon_name,
                      values_from = taxon_count,
+                     values_fill = 0,
                      names_sort = TRUE)
 
 # Store subsets ----
@@ -181,6 +209,14 @@ southern_hemisphere_pollen <-
       dplyr::select(-c(ID_SAMPLE))
   ) %>%
   dplyr::mutate(
+    basin_size_num = basin_size %>%
+      as.numeric() %>%
+      round(digits = 6) %>%
+      as.character(),
+    basin_size = dplyr::coalesce(
+      basin_size_num,
+      basin_size
+    ),
     basin_size = basin_size %>%
       stringr::str_replace_all("unknown", "not known"),
     entity_type = entity_type %>%
@@ -190,7 +226,8 @@ southern_hemisphere_pollen <-
   ) %>%
   dplyr::relocate(ID_SAMPLE, .before = clean) %>%
   dplyr::mutate(source = "Southern Hemisphere pollen", .before = 1) %>%
-  dplyr::mutate(age_BP = as.character(age_BP))
+  dplyr::mutate(age_BP = as.character(age_BP)) %>%
+  dplyr::select(-basin_size_num)
 
 usethis::use_data(southern_hemisphere_pollen, overwrite = TRUE, compress = "xz")
 

@@ -182,9 +182,9 @@ australia_pollen <- australia_pollen_1_all %>%
   dplyr::arrange(site_name, entity_name) %>%
   dplyr::select(-ID_SAMPLE)
 
-australia_pollen %>%
-  dplyr::distinct(sample_name, .keep_all = TRUE) %>%
-  smpds::plot_climate(var = "elevation")
+# australia_pollen %>%
+#   dplyr::distinct(sample_name, .keep_all = TRUE) %>%
+#   smpds::plot_climate(var = "elevation")
 
 ### Additional taxonomic corrections (SPH - May 20th) ----
 taxonomic_corrections <- "data-raw/GLOBAL/taxonomic_corrections.xlsx" %>%
@@ -193,6 +193,7 @@ taxonomic_corrections <- "data-raw/GLOBAL/taxonomic_corrections.xlsx" %>%
 
 australia_pollen_rev <-
   australia_pollen %>%
+  dplyr::mutate(ID_COUNT = seq_along(sample_name)) %>%
   dplyr::left_join(taxonomic_corrections %>%
                      dplyr::filter(level %in% c("clean", "all")),
                    by = c("clean" =  "original_taxon")) %>%
@@ -201,26 +202,49 @@ australia_pollen_rev <-
   dplyr::select(-corrected_taxon_name, -level) %>%
   dplyr::left_join(taxonomic_corrections %>%
                      dplyr::filter(level %in% c("intermediate", "all")),
-                   by = c("intermediate" =  "original_taxon")) %>%
+                   by = c("clean" =  "original_taxon")) %>%
   dplyr::mutate(intermediate = dplyr::coalesce(corrected_taxon_name,
                                                intermediate)) %>%
   dplyr::select(-corrected_taxon_name, -level) %>%
   dplyr::left_join(taxonomic_corrections %>%
                      dplyr::filter(level %in% c("amalgamated", "all")),
+                   by = c("clean" =  "original_taxon")) %>%
+  dplyr::mutate(amalgamated = dplyr::coalesce(corrected_taxon_name,
+                                              amalgamated)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("all")),
+                   by = c("clean" =  "original_taxon")) %>%
+  dplyr::mutate(clean = dplyr::coalesce(corrected_taxon_name,
+                                        clean)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("all")),
+                   by = c("intermediate" =  "original_taxon")) %>%
+  dplyr::mutate(intermediate = dplyr::coalesce(corrected_taxon_name,
+                                               intermediate)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("all")),
                    by = c("amalgamated" =  "original_taxon")) %>%
   dplyr::mutate(amalgamated = dplyr::coalesce(corrected_taxon_name,
                                               amalgamated)) %>%
   dplyr::select(-corrected_taxon_name, -level)
 
-waldo::compare(australia_pollen,
-               australia_pollen_rev)
+australia_pollen_rev %>%
+  dplyr::group_by(ID_COUNT) %>%
+  dplyr::mutate(n = dplyr::n()) %>%
+  dplyr::filter(n > 1)
+
 waldo::compare(australia_pollen %>%
                  dplyr::distinct(clean, intermediate, amalgamated),
                australia_pollen_rev %>%
                  dplyr::distinct(clean, intermediate, amalgamated),
                max_diffs = Inf)
 
-australia_pollen <- australia_pollen_rev
+australia_pollen <- australia_pollen_rev %>%
+  dplyr::filter(!is.na(taxon_count), taxon_count > 0) %>%
+  dplyr::select(-ID_COUNT)
 
 # Extract PNV/BIOME ----
 australia_pollen_biomes <- australia_pollen %>%
@@ -254,6 +278,7 @@ australia_pollen_clean <- australia_pollen_with_pnv %>%
   tidyr::pivot_wider(site_name:sample_name,
                      names_from = taxon_name,
                      values_from = taxon_count,
+                     values_fill = 0,
                      names_sort = TRUE)
 ## Intermediate ----
 australia_pollen_intermediate <- australia_pollen_with_pnv %>%
@@ -266,6 +291,7 @@ australia_pollen_intermediate <- australia_pollen_with_pnv %>%
   tidyr::pivot_wider(site_name:sample_name,
                      names_from = taxon_name,
                      values_from = taxon_count,
+                     values_fill = 0,
                      names_sort = TRUE)
 ## Amalgamated ----
 australia_pollen_amalgamated <- australia_pollen_with_pnv %>%
@@ -278,6 +304,7 @@ australia_pollen_amalgamated <- australia_pollen_with_pnv %>%
   tidyr::pivot_wider(site_name:sample_name,
                      names_from = taxon_name,
                      values_from = taxon_count,
+                     values_fill = 0,
                      names_sort = TRUE)
 
 # Find missing elevations ----
@@ -304,115 +331,9 @@ australia_pollen_2022_04_11 %>%
     na = ""
     )
 
-# Climate reconstructions ----
-path_to_cru_ts <- "~/OneDrive - University of Reading/UoR/Data/CRU/4.04/"
-CPUS <- 6
 australia_pollen_base <- australia_pollen_clean %>%
   dplyr::select(site_name:sample_name) %>%
   dplyr::mutate(ID_SAMPLE = seq_along(sample_name), .before = sample_name)
-## Interpolate climate from the CRU TS dataset
-## Cloud coverage ----
-australia_pollen_base_cld <- australia_pollen_base %>%
-  dplyr::slice(1:10) %>%
-  smpds::gwr(.ref = file.path(path_to_cru_ts,
-                              "cru_ts4.04.1901.2019.cld.dat-clim-1961-1990-int.nc"),
-             varid = "cld",
-             cpus = CPUS) %>%
-  smpds::pb()
-
-## Precipitation ----
-# tictoc::tic()
-australia_pollen_base_pre <- australia_pollen_base %>%
-  dplyr::slice(1:10) %>%
-  smpds::gwr(varid = "pre",
-             .ref = file.path(path_to_cru_ts,
-                              "cru_ts4.04.1901.2019.pre.dat-new-clim-1961-1990-int.nc"),
-             cpus = CPUS) %>%
-  smpds::pb()
-# tictoc::toc()
-
-## Temperature ----
-australia_pollen_base_tmp <- australia_pollen_base %>%
-  dplyr::slice(1:10) %>%
-  smpds::gwr(varid = "tmp",
-             .ref = file.path(path_to_cru_ts,
-                              "cru_ts4.04-clim-1961-1990-daily.tmp.nc"),
-             cpus = CPUS) %>%
-  smpds::pb()
-
-## Transform climate reconstructions
-australia_pollen_base_cld2 <- australia_pollen_base_cld %>%
-  smpds::pivot_data(varname = "cld")
-### Calculate sunshine fraction from cloud cover
-australia_pollen_base_sf <- australia_pollen_base_cld %>%
-  smpds::pivot_data(scale = -0.01, add = 1, varname = "sf")
-australia_pollen_base_pre2 <- australia_pollen_base_pre %>%
-  smpds::pivot_data(varname = "pre")
-australia_pollen_base_tmp2 <- australia_pollen_base_tmp %>%
-  smpds::pivot_data(varname = "tmp")
-
-australia_pollen_basev2 <- australia_pollen_base_sf %>%
-  dplyr::bind_cols(australia_pollen_base_pre2 %>% dplyr::select(pre),
-                   australia_pollen_base_tmp2 %>% dplyr::select(tmp))
-
-## Reconstruct climate variables
-australia_pollen_basev3 <- australia_pollen_basev2 %>%
-  smpds::mi(cpus = CPUS) %>%
-  smpds::gdd() %>%
-  smpds::mat() %>%
-  smpds::mtco() %>%
-  smpds::mtwa() %>%
-  smpds::pb()
-
-### Plots ----
-show_plot <- FALSE
-size <- 1.5
-stroke <- 0.1
-width <- 16
-xlim <- c(105, 160)
-ylim <- c(-51, 0)
-p_gdd0 <- smpds::plot_gdd(australia_pollen_basev3,
-                          size = size,
-                          stroke = stroke,
-                          xlim = xlim,
-                          ylim = ylim,
-                          show_plot = show_plot,
-                          # fill_countries = "white",
-                          fill_countries = NA,
-                          contour = T)
-# smpds::plot_mat(smpds::SMPDSv2,
-#                 size = size,
-#                 stroke = stroke,
-#                 # xlim = xlim,
-#                 # ylim = ylim,
-#                 show_plot = TRUE,
-#                 # fill_countries = "white",
-#                 fill_countries = NA,
-#                 contour = T)
-
-ggplot2::ggsave(file.path("~/Downloads/",
-                          paste0("australia_pollen_gdd0_", Sys.Date(), ".pdf")),
-                plot = p_gdd0,
-                device = "pdf",
-                width = width,
-                height = 8,
-                units = "in")
-p_mat <- smpds::plot_mat(australia_pollen_basev3,
-                         size = size,
-                         stroke = stroke,
-                         xlim = xlim,
-                         ylim = ylim,
-                         show_plot = show_plot)
-ggplot2::ggsave(file.path("~/Downloads",
-                          paste0("australia_pollen_mat_", Sys.Date(), ".pdf")),
-                plot = p_mat,
-                device = "pdf",
-                width = width,
-                height = 8,
-                units = "in")
-
-australia_pollen_basev3 %>%
-  smpds::plot_climate()
 
 # Store subsets ----
 australia_pollen <-
@@ -428,6 +349,14 @@ australia_pollen <-
       dplyr::select(-c(site_name:sample_name))
   ) %>%
   dplyr::mutate(
+    basin_size_num = basin_size %>%
+      as.numeric() %>%
+      round(digits = 6) %>%
+      as.character(),
+    basin_size = dplyr::coalesce(
+      basin_size_num,
+      basin_size
+    ),
     basin_size = basin_size %>%
       stringr::str_replace_all("unknown", "not known"),
     entity_type = entity_type %>%
@@ -445,7 +374,8 @@ australia_pollen <-
       stringr::str_replace_all("unknown", "not known")
   ) %>%
   dplyr::mutate(source = "Australian pollen", .before = 1) %>%
-  dplyr::select(-dplyr::contains("notes"))
+  dplyr::select(-dplyr::contains("notes")) %>%
+  dplyr::select(-basin_size_num)
 
 usethis::use_data(australia_pollen, overwrite = TRUE, compress = "xz")
 
@@ -505,7 +435,8 @@ climate_reconstructions_pre <-
 
 climate_reconstructions_2 <- climate_reconstructions %>%
   dplyr::bind_cols(climate_reconstructions_pre %>%
-                     dplyr::select(map))
+                     dplyr::select(map)) %>%
+  dplyr::filter(entity_name %in% australia_pollen$entity_name)
 
 climate_reconstructions_with_counts <-
   australia_pollen %>%
@@ -531,7 +462,6 @@ australia_pollen <- climate_reconstructions_with_counts %>%
   dplyr::select(-sn, -en, -new_elevation) %>%
   dplyr::select(-dplyr::starts_with("notes"))
 usethis::use_data(australia_pollen, overwrite = TRUE, compress = "xz")
-
 waldo::compare(smpds::australia_pollen,
                australia_pollen,
                max_diffs = Inf)

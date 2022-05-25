@@ -377,34 +377,59 @@ taxonomic_corrections <- "data-raw/GLOBAL/taxonomic_corrections.xlsx" %>%
 
 EMPDv2_taxa_counts_amalgamation_rev <-
   EMPDv2_taxa_counts_amalgamation %>%
+  dplyr::mutate(ID_COUNT = seq_along(ID_SAMPLE)) %>%
   dplyr::left_join(taxonomic_corrections %>%
-                     dplyr::filter(level %in% c("clean", "all")),
+                     dplyr::filter(level %in% c("clean",  "all")),
                    by = c("clean" =  "original_taxon")) %>%
   dplyr::mutate(clean = dplyr::coalesce(corrected_taxon_name,
                                         clean)) %>%
   dplyr::select(-corrected_taxon_name, -level) %>%
   dplyr::left_join(taxonomic_corrections %>%
                      dplyr::filter(level %in% c("intermediate", "all")),
-                   by = c("intermediate" =  "original_taxon")) %>%
+                   by = c("clean" =  "original_taxon")) %>%
   dplyr::mutate(intermediate = dplyr::coalesce(corrected_taxon_name,
                                                intermediate)) %>%
   dplyr::select(-corrected_taxon_name, -level) %>%
   dplyr::left_join(taxonomic_corrections %>%
                      dplyr::filter(level %in% c("amalgamated", "all")),
+                   by = c("clean" =  "original_taxon")) %>%
+  dplyr::mutate(amalgamated = dplyr::coalesce(corrected_taxon_name,
+                                              amalgamated)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("all")),
+                   by = c("clean" =  "original_taxon")) %>%
+  dplyr::mutate(clean = dplyr::coalesce(corrected_taxon_name,
+                                        clean)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("all")),
+                   by = c("intermediate" =  "original_taxon")) %>%
+  dplyr::mutate(intermediate = dplyr::coalesce(corrected_taxon_name,
+                                               intermediate)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("all")),
                    by = c("amalgamated" =  "original_taxon")) %>%
   dplyr::mutate(amalgamated = dplyr::coalesce(corrected_taxon_name,
                                               amalgamated)) %>%
   dplyr::select(-corrected_taxon_name, -level)
 
-waldo::compare(EMPDv2_taxa_counts_amalgamation,
-               EMPDv2_taxa_counts_amalgamation_rev)
+EMPDv2_taxa_counts_amalgamation_rev %>%
+  dplyr::group_by(ID_COUNT) %>%
+  dplyr::mutate(n = dplyr::n()) %>%
+  dplyr::filter(n > 1)
+
 waldo::compare(EMPDv2_taxa_counts_amalgamation %>%
                  dplyr::distinct(clean, intermediate, amalgamated),
                EMPDv2_taxa_counts_amalgamation_rev %>%
                  dplyr::distinct(clean, intermediate, amalgamated),
                max_diffs = Inf)
+nrow(EMPDv2_taxa_counts_amalgamation) == nrow(EMPDv2_taxa_counts_amalgamation_rev)
 
-EMPDv2_taxa_counts_amalgamation <- EMPDv2_taxa_counts_amalgamation_rev
+EMPDv2_taxa_counts_amalgamation <- EMPDv2_taxa_counts_amalgamation_rev %>%
+  dplyr::filter(!is.na(taxon_count), taxon_count > 0) %>%
+  dplyr::select(-ID_COUNT)
 
 EMPDv2_taxa_counts_amalgamation %>%
   dplyr::filter(is.na(clean) | is.na(intermediate) | is.na(amalgamated)) %>%
@@ -475,6 +500,7 @@ EMPDv2_clean <-
   tidyr::pivot_wider(ID_SAMPLE,
                      names_from = taxon_name,
                      values_from = taxon_count,
+                     values_fill = 0,
                      names_sort = TRUE) %>%
   dplyr::arrange(ID_SAMPLE)
 
@@ -490,6 +516,7 @@ EMPDv2_intermediate <-
   tidyr::pivot_wider(ID_SAMPLE,
                      names_from = taxon_name,
                      values_from = taxon_count,
+                     values_fill = 0,
                      names_sort = TRUE) %>%
   dplyr::arrange(ID_SAMPLE)
 
@@ -505,35 +532,15 @@ EMPDv2_amalgamated <-
   tidyr::pivot_wider(ID_SAMPLE,
                      names_from = taxon_name,
                      values_from = taxon_count,
+                     values_fill = 0,
                      names_sort = TRUE) %>%
   dplyr::arrange(ID_SAMPLE)
 
 # Extract missing elevations ----
-EMPDv2_metadata_4 <-
-  EMPDv2_metadata_3 %>%
-  dplyr::rename(elevation_original = elevation) %>%
-  smpds:::get_elevation(cpus = 12)
-
-# EMPDv2_metadata_4 %>%
-#   dplyr::select(ID_SAMPLE, entity_name, latitude, longitude, elevation_new = elevation, elevation_original) %>%
-#   dplyr::mutate(diff =
-#                   abs(elevation_new - elevation_original) / elevation_original) %>%
-#   # readr::write_csv("data-raw/GLOBAL/EMPDv2_elevations_only.csv", na = "")
-#   dplyr::filter(diff >= 0.5)
-#   dplyr::mutate(within_90p =
-#                   dplyr::between(elevation,
-#                                  min(c(0.9, 1.1) * elevation_original),
-#                                  max(c(0.9, 1.1) * elevation_original)),
-#                 within_95p =
-#                   dplyr::between(elevation,
-#                                  min(c(0.95, 1.05) * elevation_original),
-#                                  max(c(0.95, 1.05) * elevation_original)),
-#                 within_975p =
-#                   dplyr::between(elevation,
-#                                  min(c(0.975, 1.025) * elevation_original),
-#                                  max(c(0.975, 1.025) * elevation_original))
-#   ) %>%
-#   dplyr::filter(!within_975p)
+# EMPDv2_metadata_4 <-
+#   EMPDv2_metadata_3 %>%
+#   dplyr::rename(elevation_original = elevation) %>%
+#   smpds:::get_elevation(cpus = 12)
 
 # Load file created by SPH with actions for the entities with elevation = 0
 EMPDv2_zero_elevations_actions <-
@@ -601,7 +608,6 @@ EMPDv2 <-
       dplyr::select(-c(ID_SAMPLE))
   ) %>%
   dplyr::mutate(
-    basin_size_old = basin_size,
     basin_size_num = basin_size %>%
       as.numeric() %>%
       round(digits = 6) %>%
@@ -629,7 +635,7 @@ EMPDv2 <-
       stringr::str_replace_all("unknown", "not known")
   ) %>%
   dplyr::relocate(ID_SAMPLE, .before = clean) %>%
-  dplyr::select(-basin_size_num, -basin_size_old)
+  dplyr::select(-basin_size_num)
 
 usethis::use_data(EMPDv2, overwrite = TRUE, compress = "xz")
 

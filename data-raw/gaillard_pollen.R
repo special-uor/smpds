@@ -66,34 +66,59 @@ taxonomic_corrections <- "data-raw/GLOBAL/taxonomic_corrections.xlsx" %>%
 
 gaillard_samples_taxa_counts_amalgamation_rev <-
   gaillard_samples_taxa_counts_amalgamation %>%
+  dplyr::mutate(ID_COUNT = seq_along(ID_SAMPLE)) %>%
   dplyr::left_join(taxonomic_corrections %>%
-                     dplyr::filter(level %in% c("clean", "all")),
+                     dplyr::filter(level %in% c("clean",  "all")),
                    by = c("clean" =  "original_taxon")) %>%
   dplyr::mutate(clean = dplyr::coalesce(corrected_taxon_name,
                                         clean)) %>%
   dplyr::select(-corrected_taxon_name, -level) %>%
   dplyr::left_join(taxonomic_corrections %>%
                      dplyr::filter(level %in% c("intermediate", "all")),
-                   by = c("intermediate" =  "original_taxon")) %>%
+                   by = c("clean" =  "original_taxon")) %>%
   dplyr::mutate(intermediate = dplyr::coalesce(corrected_taxon_name,
                                                intermediate)) %>%
   dplyr::select(-corrected_taxon_name, -level) %>%
   dplyr::left_join(taxonomic_corrections %>%
                      dplyr::filter(level %in% c("amalgamated", "all")),
+                   by = c("clean" =  "original_taxon")) %>%
+  dplyr::mutate(amalgamated = dplyr::coalesce(corrected_taxon_name,
+                                              amalgamated)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("all")),
+                   by = c("clean" =  "original_taxon")) %>%
+  dplyr::mutate(clean = dplyr::coalesce(corrected_taxon_name,
+                                        clean)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("all")),
+                   by = c("intermediate" =  "original_taxon")) %>%
+  dplyr::mutate(intermediate = dplyr::coalesce(corrected_taxon_name,
+                                               intermediate)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("all")),
                    by = c("amalgamated" =  "original_taxon")) %>%
   dplyr::mutate(amalgamated = dplyr::coalesce(corrected_taxon_name,
                                               amalgamated)) %>%
   dplyr::select(-corrected_taxon_name, -level)
 
-waldo::compare(gaillard_samples_taxa_counts_amalgamation,
-               gaillard_samples_taxa_counts_amalgamation_rev)
+gaillard_samples_taxa_counts_amalgamation_rev %>%
+  dplyr::group_by(ID_COUNT) %>%
+  dplyr::mutate(n = dplyr::n()) %>%
+  dplyr::filter(n > 1)
+
 waldo::compare(gaillard_samples_taxa_counts_amalgamation %>%
                  dplyr::distinct(clean, intermediate, amalgamated),
                gaillard_samples_taxa_counts_amalgamation_rev %>%
                  dplyr::distinct(clean, intermediate, amalgamated),
                max_diffs = Inf)
 
-gaillard_samples_taxa_counts_amalgamation <- gaillard_samples_taxa_counts_amalgamation_rev
+gaillard_samples_taxa_counts_amalgamation <-
+  gaillard_samples_taxa_counts_amalgamation_rev %>%
+  dplyr::filter(!is.na(taxon_count), taxon_count > 0) %>%
+  dplyr::select(-ID_COUNT)
 
 gaillard_samples_taxa_counts_amalgamation %>%
   dplyr::filter(is.na(clean) | is.na(intermediate) | is.na(amalgamated)) %>%
@@ -163,6 +188,7 @@ gaillard_samples_clean <-
   tidyr::pivot_wider(ID_SAMPLE,
                      names_from = taxon_name,
                      values_from = taxon_count,
+                     values_fill = 0,
                      names_sort = TRUE) %>%
   dplyr::arrange(ID_SAMPLE)
 
@@ -178,6 +204,7 @@ gaillard_samples_intermediate <-
   tidyr::pivot_wider(ID_SAMPLE,
                      names_from = taxon_name,
                      values_from = taxon_count,
+                     values_fill = 0,
                      names_sort = TRUE) %>%
   dplyr::arrange(ID_SAMPLE)
 
@@ -193,6 +220,7 @@ gaillard_samples_amalgamated <-
   tidyr::pivot_wider(ID_SAMPLE,
                      names_from = taxon_name,
                      values_from = taxon_count,
+                     values_fill = 0,
                      names_sort = TRUE) %>%
   dplyr::arrange(ID_SAMPLE)
 
@@ -208,6 +236,14 @@ gaillard_pollen <-
       dplyr::select(-c(ID_SAMPLE))
   ) %>%
   dplyr::mutate(
+    basin_size_num = basin_size %>%
+      as.numeric() %>%
+      round(digits = 6) %>%
+      as.character(),
+    basin_size = dplyr::coalesce(
+      basin_size_num,
+      basin_size
+    ),
     basin_size = basin_size %>%
       stringr::str_replace_all("unknown", "not known"),
     entity_type = entity_type %>%
@@ -217,7 +253,8 @@ gaillard_pollen <-
   ) %>%
   dplyr::relocate(ID_SAMPLE, .before = clean) %>%
   dplyr::select(-dplyr::starts_with("ID_PUB")) %>%
-  dplyr::mutate(source = "Gaillard et al., 1992", .before = 1)
+  dplyr::mutate(source = "Gaillard et al., 1992", .before = 1) %>%
+  dplyr::select(-basin_size_num)
 
 usethis::use_data(gaillard_pollen, overwrite = TRUE, compress = "xz")
 

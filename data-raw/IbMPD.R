@@ -206,34 +206,58 @@ taxonomic_corrections <- "data-raw/GLOBAL/taxonomic_corrections.xlsx" %>%
 
 IbMPD_taxa_counts_amalgamation_rev <-
   IbMPD_taxa_counts_amalgamation %>%
+  dplyr::mutate(ID_COUNT = seq_along(ID_SAMPLE)) %>%
   dplyr::left_join(taxonomic_corrections %>%
-                     dplyr::filter(level %in% c("clean", "all")),
+                     dplyr::filter(level %in% c("clean",  "all")),
                    by = c("clean" =  "original_taxon")) %>%
   dplyr::mutate(clean = dplyr::coalesce(corrected_taxon_name,
                                         clean)) %>%
   dplyr::select(-corrected_taxon_name, -level) %>%
   dplyr::left_join(taxonomic_corrections %>%
                      dplyr::filter(level %in% c("intermediate", "all")),
-                   by = c("intermediate" =  "original_taxon")) %>%
+                   by = c("clean" =  "original_taxon")) %>%
   dplyr::mutate(intermediate = dplyr::coalesce(corrected_taxon_name,
                                                intermediate)) %>%
   dplyr::select(-corrected_taxon_name, -level) %>%
   dplyr::left_join(taxonomic_corrections %>%
                      dplyr::filter(level %in% c("amalgamated", "all")),
+                   by = c("clean" =  "original_taxon")) %>%
+  dplyr::mutate(amalgamated = dplyr::coalesce(corrected_taxon_name,
+                                              amalgamated)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("all")),
+                   by = c("clean" =  "original_taxon")) %>%
+  dplyr::mutate(clean = dplyr::coalesce(corrected_taxon_name,
+                                        clean)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("all")),
+                   by = c("intermediate" =  "original_taxon")) %>%
+  dplyr::mutate(intermediate = dplyr::coalesce(corrected_taxon_name,
+                                               intermediate)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("all")),
                    by = c("amalgamated" =  "original_taxon")) %>%
   dplyr::mutate(amalgamated = dplyr::coalesce(corrected_taxon_name,
                                               amalgamated)) %>%
   dplyr::select(-corrected_taxon_name, -level)
 
-waldo::compare(IbMPD_taxa_counts_amalgamation,
-               IbMPD_taxa_counts_amalgamation_rev)
+IbMPD_taxa_counts_amalgamation_rev %>%
+  dplyr::group_by(ID_COUNT) %>%
+  dplyr::mutate(n = dplyr::n()) %>%
+  dplyr::filter(n > 1)
+
 waldo::compare(IbMPD_taxa_counts_amalgamation %>%
                  dplyr::distinct(clean, intermediate, amalgamated),
                IbMPD_taxa_counts_amalgamation_rev %>%
                  dplyr::distinct(clean, intermediate, amalgamated),
                max_diffs = Inf)
 
-IbMPD_taxa_counts_amalgamation <- IbMPD_taxa_counts_amalgamation_rev
+IbMPD_taxa_counts_amalgamation <- IbMPD_taxa_counts_amalgamation_rev %>%
+  dplyr::filter(!is.na(taxon_count), taxon_count > 0) %>%
+  dplyr::select(-ID_COUNT)
 
 IbMPD_taxa_counts_amalgamation %>%
   dplyr::filter(is.na(clean) | is.na(intermediate) | is.na(amalgamated)) %>%
@@ -305,6 +329,7 @@ IbMPD_clean <-
   tidyr::pivot_wider(ID_SAMPLE,
                      names_from = taxon_name,
                      values_from = taxon_count,
+                     values_fill = 0,
                      names_sort = TRUE) %>%
   dplyr::arrange(ID_SAMPLE)
 
@@ -320,6 +345,7 @@ IbMPD_intermediate <-
   tidyr::pivot_wider(ID_SAMPLE,
                      names_from = taxon_name,
                      values_from = taxon_count,
+                     values_fill = 0,
                      names_sort = TRUE) %>%
   dplyr::arrange(ID_SAMPLE)
 
@@ -335,6 +361,7 @@ IbMPD_amalgamated <-
   tidyr::pivot_wider(ID_SAMPLE,
                      names_from = taxon_name,
                      values_from = taxon_count,
+                     values_fill = 0,
                      names_sort = TRUE) %>%
   dplyr::arrange(ID_SAMPLE)
 
@@ -351,7 +378,6 @@ IbMPD <-
   ) %>%
 
   dplyr::mutate(
-    basin_size_old = basin_size,
     basin_size_num = basin_size %>%
       as.numeric() %>%
       round(digits = 6) %>%
@@ -379,7 +405,7 @@ IbMPD <-
       stringr::str_replace_all("unknown", "not known")
   ) %>%
   dplyr::relocate(ID_SAMPLE, .before = clean) %>%
-  dplyr::select(-basin_size_num, -basin_size_old) %>%
+  dplyr::select(-basin_size_num) %>%
   dplyr::mutate(age_BP = as.character(age_BP))
 
 usethis::use_data(IbMPD, overwrite = TRUE, compress = "xz")

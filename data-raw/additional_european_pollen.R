@@ -28,6 +28,7 @@ taxonomic_corrections <- "data-raw/GLOBAL/taxonomic_corrections.xlsx" %>%
 
 additional_european_pollen_taxa_counts_amalgamation_rev <-
   additional_european_pollen_taxa_counts_amalgamation %>%
+  dplyr::mutate(ID_COUNT = seq_along(ID_SAMPLE)) %>%
   dplyr::left_join(taxonomic_corrections %>%
                      dplyr::filter(level %in% c("clean", "all")),
                    by = c("clean" =  "original_taxon")) %>%
@@ -36,19 +37,52 @@ additional_european_pollen_taxa_counts_amalgamation_rev <-
   dplyr::select(-corrected_taxon_name, -level) %>%
   dplyr::left_join(taxonomic_corrections %>%
                      dplyr::filter(level %in% c("intermediate", "all")),
-                   by = c("intermediate" =  "original_taxon")) %>%
+                   by = c("clean" =  "original_taxon")) %>%
   dplyr::mutate(intermediate = dplyr::coalesce(corrected_taxon_name,
                                                intermediate)) %>%
   dplyr::select(-corrected_taxon_name, -level) %>%
   dplyr::left_join(taxonomic_corrections %>%
                      dplyr::filter(level %in% c("amalgamated", "all")),
+                   by = c("clean" =  "original_taxon")) %>%
+  dplyr::mutate(amalgamated = dplyr::coalesce(corrected_taxon_name,
+                                              amalgamated)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("all")),
+                   by = c("clean" =  "original_taxon")) %>%
+  dplyr::mutate(clean = dplyr::coalesce(corrected_taxon_name,
+                                        clean)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("all")),
+                   by = c("intermediate" =  "original_taxon")) %>%
+  dplyr::mutate(intermediate = dplyr::coalesce(corrected_taxon_name,
+                                               intermediate)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("all")),
                    by = c("amalgamated" =  "original_taxon")) %>%
   dplyr::mutate(amalgamated = dplyr::coalesce(corrected_taxon_name,
                                               amalgamated)) %>%
   dplyr::select(-corrected_taxon_name, -level)
 
+additional_european_pollen_taxa_counts_amalgamation_rev %>%
+  dplyr::group_by(ID_COUNT) %>%
+  dplyr::mutate(n = dplyr::n()) %>%
+  dplyr::filter(n > 1)
+
 waldo::compare(additional_european_pollen_taxa_counts_amalgamation,
                additional_european_pollen_taxa_counts_amalgamation_rev)
+waldo::compare(additional_european_pollen_taxa_counts_amalgamation %>%
+                 dplyr::distinct(clean, intermediate, amalgamated),
+               additional_european_pollen_taxa_counts_amalgamation_rev %>%
+                 dplyr::distinct(clean, intermediate, amalgamated),
+               max_diffs = Inf)
+
+additional_european_pollen_taxa_counts_amalgamation <-
+  additional_european_pollen_taxa_counts_amalgamation_rev %>%
+  dplyr::filter(!is.na(taxon_count), taxon_count > 0) %>%
+  dplyr::select(-ID_COUNT)
 
 # Extract PNV/BIOME ----
 additional_european_pollen_metadata_3 <-
@@ -78,6 +112,7 @@ additional_european_pollen_clean <-
   tidyr::pivot_wider(ID_SAMPLE,
                      names_from = taxon_name,
                      values_from = taxon_count,
+                     values_fill = 0,
                      names_sort = TRUE) %>%
   dplyr::arrange(ID_SAMPLE)
 
@@ -93,6 +128,7 @@ additional_european_pollen_intermediate <-
   tidyr::pivot_wider(ID_SAMPLE,
                      names_from = taxon_name,
                      values_from = taxon_count,
+                     values_fill = 0,
                      names_sort = TRUE) %>%
   dplyr::arrange(ID_SAMPLE)
 
@@ -108,6 +144,7 @@ additional_european_pollen_amalgamated <-
   tidyr::pivot_wider(ID_SAMPLE,
                      names_from = taxon_name,
                      values_from = taxon_count,
+                     values_fill = 0,
                      names_sort = TRUE) %>%
   dplyr::arrange(ID_SAMPLE)
 
@@ -124,7 +161,6 @@ additional_european_pollen <-
       dplyr::select(-c(ID_SAMPLE))
   ) %>%
   dplyr::mutate(
-    basin_size_old = basin_size,
     basin_size_num = basin_size %>%
       as.numeric() %>%
       round(digits = 6) %>%
@@ -152,16 +188,14 @@ additional_european_pollen <-
       stringr::str_replace_all("unknown", "not known")
   ) %>%
   dplyr::relocate(ID_SAMPLE, .before = clean) %>%
-  # dplyr::relocate(basin_size_old, .after = basin_size) %>%
-  dplyr::select(-basin_size_num, -basin_size_old)
+  dplyr::select(-basin_size_num)
 
 usethis::use_data(additional_european_pollen, overwrite = TRUE, compress = "xz")
 
 # Inspect enumerates ----
 ## basin_size -----
 additional_european_pollen$basin_size %>%
-  unique() %>%
-  sort()
+  unique() %>% sort()
 
 ## site_type ----
 additional_european_pollen$site_type %>%

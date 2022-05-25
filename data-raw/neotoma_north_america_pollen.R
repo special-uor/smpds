@@ -362,38 +362,62 @@ taxonomic_corrections <- "data-raw/GLOBAL/taxonomic_corrections.xlsx" %>%
 
 neotoma_north_america_pollen_taxa_counts_amalgamation_rev <-
   neotoma_north_america_pollen_taxa_counts_amalgamation %>%
+  dplyr::mutate(ID_COUNT = seq_along(ID_SAMPLE)) %>%
   dplyr::left_join(taxonomic_corrections %>%
-                     dplyr::filter(level %in% c("clean", "all")),
+                     dplyr::filter(level %in% c("clean",  "all")),
                    by = c("clean" =  "original_taxon")) %>%
   dplyr::mutate(clean = dplyr::coalesce(corrected_taxon_name,
                                         clean)) %>%
   dplyr::select(-corrected_taxon_name, -level) %>%
   dplyr::left_join(taxonomic_corrections %>%
                      dplyr::filter(level %in% c("intermediate", "all")),
-                   by = c("intermediate" =  "original_taxon")) %>%
+                   by = c("clean" =  "original_taxon")) %>%
   dplyr::mutate(intermediate = dplyr::coalesce(corrected_taxon_name,
                                                intermediate)) %>%
   dplyr::select(-corrected_taxon_name, -level) %>%
   dplyr::left_join(taxonomic_corrections %>%
                      dplyr::filter(level %in% c("amalgamated", "all")),
+                   by = c("clean" =  "original_taxon")) %>%
+  dplyr::mutate(amalgamated = dplyr::coalesce(corrected_taxon_name,
+                                              amalgamated)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("all")),
+                   by = c("clean" =  "original_taxon")) %>%
+  dplyr::mutate(clean = dplyr::coalesce(corrected_taxon_name,
+                                        clean)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("all")),
+                   by = c("intermediate" =  "original_taxon")) %>%
+  dplyr::mutate(intermediate = dplyr::coalesce(corrected_taxon_name,
+                                               intermediate)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("all")),
                    by = c("amalgamated" =  "original_taxon")) %>%
   dplyr::mutate(amalgamated = dplyr::coalesce(corrected_taxon_name,
                                               amalgamated)) %>%
   dplyr::select(-corrected_taxon_name, -level)
 
-waldo::compare(neotoma_north_america_pollen_taxa_counts_amalgamation,
-               neotoma_north_america_pollen_taxa_counts_amalgamation_rev)
+neotoma_north_america_pollen_taxa_counts_amalgamation_rev %>%
+  dplyr::group_by(ID_COUNT) %>%
+  dplyr::mutate(n = dplyr::n()) %>%
+  dplyr::filter(n > 1)
+
 waldo::compare(neotoma_north_america_pollen_taxa_counts_amalgamation %>%
                  dplyr::distinct(clean, intermediate, amalgamated),
                neotoma_north_america_pollen_taxa_counts_amalgamation_rev %>%
                  dplyr::distinct(clean, intermediate, amalgamated),
                max_diffs = Inf)
 
-neotoma_north_america_pollen_taxa_counts_amalgamation <- neotoma_north_america_pollen_taxa_counts_amalgamation_rev
+neotoma_north_america_pollen_taxa_counts_amalgamation <-
+  neotoma_north_america_pollen_taxa_counts_amalgamation_rev %>%
+  dplyr::filter(!is.na(taxon_count), taxon_count > 0) %>%
+  dplyr::select(-ID_COUNT)
 
 neotoma_north_america_pollen_taxa_counts_amalgamation %>%
   dplyr::filter(is.na(clean) | is.na(intermediate) | is.na(amalgamated))
-
 
 neotoma_north_america_pollen_surface_taxa_counts_amalgamation <-
   neotoma_north_america_pollen_surface_counts_2 %>%
@@ -410,34 +434,59 @@ taxonomic_corrections <- "data-raw/GLOBAL/taxonomic_corrections.xlsx" %>%
 
 neotoma_north_america_pollen_surface_taxa_counts_amalgamation_rev <-
   neotoma_north_america_pollen_surface_taxa_counts_amalgamation %>%
+  dplyr::mutate(ID_COUNT = seq_along(ID_SAMPLE)) %>%
   dplyr::left_join(taxonomic_corrections %>%
-                     dplyr::filter(level %in% c("clean", "all")),
+                     dplyr::filter(level %in% c("clean",  "all")),
                    by = c("clean" =  "original_taxon")) %>%
   dplyr::mutate(clean = dplyr::coalesce(corrected_taxon_name,
                                         clean)) %>%
   dplyr::select(-corrected_taxon_name, -level) %>%
   dplyr::left_join(taxonomic_corrections %>%
                      dplyr::filter(level %in% c("intermediate", "all")),
-                   by = c("intermediate" =  "original_taxon")) %>%
+                   by = c("clean" =  "original_taxon")) %>%
   dplyr::mutate(intermediate = dplyr::coalesce(corrected_taxon_name,
                                                intermediate)) %>%
   dplyr::select(-corrected_taxon_name, -level) %>%
   dplyr::left_join(taxonomic_corrections %>%
                      dplyr::filter(level %in% c("amalgamated", "all")),
+                   by = c("clean" =  "original_taxon")) %>%
+  dplyr::mutate(amalgamated = dplyr::coalesce(corrected_taxon_name,
+                                              amalgamated)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("all")),
+                   by = c("clean" =  "original_taxon")) %>%
+  dplyr::mutate(clean = dplyr::coalesce(corrected_taxon_name,
+                                        clean)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("all")),
+                   by = c("intermediate" =  "original_taxon")) %>%
+  dplyr::mutate(intermediate = dplyr::coalesce(corrected_taxon_name,
+                                               intermediate)) %>%
+  dplyr::select(-corrected_taxon_name, -level) %>%
+  dplyr::left_join(taxonomic_corrections %>%
+                     dplyr::filter(level %in% c("all")),
                    by = c("amalgamated" =  "original_taxon")) %>%
   dplyr::mutate(amalgamated = dplyr::coalesce(corrected_taxon_name,
                                               amalgamated)) %>%
   dplyr::select(-corrected_taxon_name, -level)
 
-waldo::compare(neotoma_north_america_pollen_surface_taxa_counts_amalgamation,
-               neotoma_north_america_pollen_surface_taxa_counts_amalgamation_rev)
+neotoma_north_america_pollen_surface_taxa_counts_amalgamation_rev %>%
+  dplyr::group_by(ID_COUNT) %>%
+  dplyr::mutate(n = dplyr::n()) %>%
+  dplyr::filter(n > 1)
+
 waldo::compare(neotoma_north_america_pollen_surface_taxa_counts_amalgamation %>%
                  dplyr::distinct(clean, intermediate, amalgamated),
                neotoma_north_america_pollen_surface_taxa_counts_amalgamation_rev %>%
                  dplyr::distinct(clean, intermediate, amalgamated),
                max_diffs = Inf)
 
-neotoma_north_america_pollen_surface_taxa_counts_amalgamation <- neotoma_north_america_pollen_surface_taxa_counts_amalgamation_rev
+neotoma_north_america_pollen_surface_taxa_counts_amalgamation <-
+  neotoma_north_america_pollen_surface_taxa_counts_amalgamation_rev %>%
+  dplyr::filter(!is.na(taxon_count), taxon_count > 0) %>%
+  dplyr::select(-ID_COUNT)
 
 neotoma_north_america_pollen_surface_taxa_counts_amalgamation %>%
   dplyr::filter(is.na(clean) | is.na(intermediate) | is.na(amalgamated))
@@ -599,6 +648,7 @@ neotoma_north_america_pollen_clean <-
   tidyr::pivot_wider(ID_SAMPLE,
                      names_from = taxon_name,
                      values_from = taxon_count,
+                     values_fill = 0,
                      names_sort = TRUE) %>%
   dplyr::arrange(ID_SAMPLE)
 
@@ -614,6 +664,7 @@ neotoma_north_america_pollen_intermediate <-
   tidyr::pivot_wider(ID_SAMPLE,
                      names_from = taxon_name,
                      values_from = taxon_count,
+                     values_fill = 0,
                      names_sort = TRUE) %>%
   dplyr::arrange(ID_SAMPLE)
 
@@ -629,6 +680,7 @@ neotoma_north_america_pollen_amalgamated <-
   tidyr::pivot_wider(ID_SAMPLE,
                      names_from = taxon_name,
                      values_from = taxon_count,
+                     values_fill = 0,
                      names_sort = TRUE) %>%
   dplyr::arrange(ID_SAMPLE)
 
@@ -685,6 +737,7 @@ north_america_pollen <-
     new_elevation
   )) %>%
   dplyr::select(-sample_id, -site_id, -ID_ENTITY, -new_elevation) %>%
+  dplyr::filter(ID_SAMPLE %in% neotoma_north_america_pollen_clean$ID_SAMPLE) %>%
   dplyr::mutate(
     clean = neotoma_north_america_pollen_clean %>%
       dplyr::select(-c(ID_SAMPLE)),
@@ -694,6 +747,14 @@ north_america_pollen <-
       dplyr::select(-c(ID_SAMPLE))
   ) %>%
   dplyr::mutate(
+    basin_size_num = basin_size %>%
+      as.numeric() %>%
+      round(digits = 6) %>%
+      as.character(),
+    basin_size = dplyr::coalesce(
+      basin_size_num,
+      basin_size
+    ),
     basin_size = basin_size %>%
       stringr::str_replace_all("unknown", "not known"),
     entity_type = entity_type %>%
@@ -708,7 +769,8 @@ north_america_pollen <-
   ) %>%
   dplyr::relocate(ID_SAMPLE, .before = clean) %>%
   dplyr::mutate(source = "Neotoma") %>%
-  dplyr::relocate(source, .before = 1)
+  dplyr::relocate(source, .before = 1) %>%
+  dplyr::select(-basin_size_num)
 
 usethis::use_data(north_america_pollen, overwrite = TRUE, compress = "xz")
 
@@ -767,7 +829,12 @@ climate_reconstructions_pre <-
 
 climate_reconstructions_2 <- climate_reconstructions %>%
   dplyr::bind_cols(climate_reconstructions_pre %>%
-                     dplyr::select(map))
+                     dplyr::select(map)) %>%
+  dplyr::bind_cols(neotoma_north_america_pollen_metadata_all %>%
+                     dplyr::select(sn = site_name, en = entity_name, ID_SAMPLE))
+
+climate_reconstructions_2 %>%
+  dplyr::filter(site_name != sn | entity_name != en)
 
 climate_reconstructions_with_counts <-
   north_america_pollen %>%
@@ -775,6 +842,8 @@ climate_reconstructions_with_counts <-
   # dplyr::select(-c(mi:mtwa)) %>%
   dplyr::bind_cols(
     climate_reconstructions_2 %>%
+      dplyr::filter(ID_SAMPLE %in% north_america_pollen$ID_SAMPLE) %>%
+      dplyr::select(-sn, -en, -ID_SAMPLE) %>%
       dplyr::select(sn = site_name,
                     en = entity_name,
                     new_elevation = elevation,
