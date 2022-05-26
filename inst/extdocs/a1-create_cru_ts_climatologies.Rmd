@@ -1,0 +1,138 @@
+---
+title: "A1. CRU TS 4.04"
+output: 
+  github_document:
+    pandoc_args: --webtex
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, 
+                      eval = FALSE,
+                      comment = "#>",
+                      fig.path = "man/figures/cru-ts-4.04-",
+                      out.width = "100%",
+                      dpi = 300, 
+                      fig.width = 7)
+```
+
+This appendix shows how to generate the input files for the climate reconstructions, 
+based on the CRU TS4.04 dataset (Harris et al., 2020).
+
+The target output files are:
+```{bash}
+"cru_ts4.04.1901.2019.cld.dat-clim-1961-1990-int.nc"
+"cru_ts4.04.1901.2019.pre.dat-clim-1961-1990-int.nc"
+"cru_ts4.04-clim-1961-1990-daily.tmp.nc"
+```
+
+## Raw data
+Download the following files directly from the CEDA Archive (https://catalogue.ceda.ac.uk/uuid/89e1e34ec3554dc98594a5732622bce9) 
+```{r}
+ncfiles_raw <- c("cru_ts4.04.1901.2019.cld.dat.nc",
+                 "cru_ts4.04.1901.2019.pre.dat.nc",
+                 "cru_ts4.04.1901.2019.tmn.dat.nc",
+                 "cru_ts4.04.1901.2019.tmx.dat.nc",
+                 "cru_ts4.04.1901.2019.vap.dat.nc")
+ncfiles_var <- c("cld", "pre", "tmn", "tmx", "vap")
+path <- "/path/to/CRU/4.04/"
+```
+
+## Convert precipitation from `[mm/month]` to `[mm/day]`
+```{r}
+codos:::convert_units.m2d(
+  filename = file.path(path, "cru_ts4.04.1901.2019.pre.dat.nc"),
+  varid = "pre",
+  output_filename =
+    file.path(output_path, "cru_ts4.04.1901.2019.pre.dat-new.nc")
+)
+```
+##### Output file
+```{bash}
+"cru_ts4.04.1901.2019.pre.dat-new.nc"
+```
+
+## Create monthly climatologies: 1961-1990
+```{r}
+ncfiles_clim <- c("cru_ts4.04.1901.2019.cld.dat-clim-1961-1990.nc",
+                  "cru_ts4.04.1901.2019.pre.dat-clim-1961-1990.nc",
+                  "cru_ts4.04.1901.2019.tmn.dat-clim-1961-1990.nc",
+                  "cru_ts4.04.1901.2019.tmx.dat-clim-1961-1990.nc",
+                  "cru_ts4.04.1901.2019.vap.dat-clim-1961-1990.nc")
+
+message("###### Create monthly climatologies: 1961-1990 ######")
+for (i in seq_along(ncfiles_raw)) {
+  message("Processing: ", ncfiles_var[i], "...")
+  codos::monthly_clim(
+    filename = file.path(path, ncfiles_raw[i]),
+    varid = ncfiles_var[i],
+    s_year = 1961,
+    e_year = 1990,
+    output_filename = file.path(output_path, ncfiles_clim[i])
+  )
+}
+```
+
+##### Output files
+```{bash}
+"cru_ts4.04.1901.2019.cld.dat-clim-1961-1990.nc"
+"cru_ts4.04.1901.2019.pre.dat-clim-1961-1990.nc"
+"cru_ts4.04.1901.2019.tmn.dat-clim-1961-1990.nc"
+"cru_ts4.04.1901.2019.tmx.dat-clim-1961-1990.nc"
+"cru_ts4.04.1901.2019.vap.dat-clim-1961-1990.nc"
+```
+
+## Interpolate monthly data to daily
+```{r}
+ncfiles_clim <- c("cru_ts4.04.1901.2019.cld.dat-clim-1961-1990.nc",
+                  "cru_ts4.04.1901.2019.pre.dat-clim-1961-1990.nc",
+                  "cru_ts4.04.1901.2019.tmn.dat-clim-1961-1990.nc",
+                  "cru_ts4.04.1901.2019.tmx.dat-clim-1961-1990.nc",
+                  "cru_ts4.04.1901.2019.vap.dat-clim-1961-1990.nc")
+ncfiles_var <- c("cld", "pre", "tmn", "tmx", "vap")
+ncfiles_clim_int <- c("cru_ts4.04.1901.2019.cld.dat-clim-1961-1990-int.nc",
+                      "cru_ts4.04.1901.2019.pre.dat-clim-1961-1990-int.nc",
+                      "cru_ts4.04.1901.2019.tmn.dat-clim-1961-1990-int.nc",
+                      "cru_ts4.04.1901.2019.tmx.dat-clim-1961-1990-int.nc",
+                      "cru_ts4.04.1901.2019.vap.dat-clim-1961-1990-int.nc")
+
+message("###### Interpolate monthly data to daily ######")
+for (i in seq_along(ncfiles_raw)) {
+  message("Processing: ", ncfiles_var[i], "...")
+  codos:::nc_int(
+    filename = file.path(output_path, ncfiles_clim[i]),
+    varid = ncfiles_var[i],
+    s_year = 1961,
+    cpus = 20,
+    output_filename = file.path(output_path, ncfiles_clim_int[i])
+  )
+}
+```
+
+##### Output files
+```{bash}
+"cru_ts4.04.1901.2019.cld.dat-clim-1961-1990-int.nc"
+"cru_ts4.04.1901.2019.pre.dat-clim-1961-1990-int.nc"
+"cru_ts4.04.1901.2019.tmn.dat-clim-1961-1990-int.nc"
+"cru_ts4.04.1901.2019.tmx.dat-clim-1961-1990-int.nc"
+"cru_ts4.04.1901.2019.vap.dat-clim-1961-1990-int.nc"
+```
+
+## Calculate daily temperature
+```{r}
+tmin <- file.path(path, "cru_ts4.04.1901.2019.tmn.dat-clim-1961-1990-int.nc")
+tmax <- file.path(path, "cru_ts4.04.1901.2019.tmx.dat-clim-1961-1990-int.nc")
+output_filename <- file.path(path, "cru_ts4.04-clim-1961-1990-daily.tmp.nc")
+codos::daily_temp(tmin = list(filename = tmin, id = "tmn"),
+                  tmax = list(filename = tmax, id = "tmx"),
+                  output_filename = output_filename)
+```
+
+##### Output file
+```{bash}
+"cru_ts4.04-clim-1961-1990-daily.tmp.nc"
+```
+
+
+## References
+Harris, I., Osborn, T.J., Jones, P., Lister, D., 2020. Version 4 of the CRU TS monthly high-resolution gridded multivariate climate dataset. Sci Data 7, 109. https://doi.org/10.1038/s41597-020-0453-3

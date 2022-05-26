@@ -1,0 +1,321 @@
+---
+title: "A2. Climate and PNV reconstructions"
+output: 
+  word_document: default
+  github_document:
+    pandoc_args: --webtex
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, 
+                      eval = FALSE,
+                      comment = "#>",
+                      fig.path = "man/figures/climate-pnv-recon-",
+                      out.width = "100%",
+                      dpi = 300, 
+                      fig.width = 7)
+```
+
+This appendix shows the details on how the climate and potential natural vegetation (PNV) reconstructions were obtained.
+
+In addition to the functions described below, you need to installed the R package called `smpds` which can be downloaded from GitHub: http://github.com/special-uor/smpds 
+
+```{r}
+remotes::install_github("special-uor/smpds")
+```
+
+## Climate reconstructions
+Two functions were created to streamline the process:
+
+#### `reconstruct_climate`
+This function takes the following parametres:
+
+- `.data`: data frame with information of the sites/entities for which the reconstructions are required. It should contain at least the following three columns: `elevation`, `latitude` and `longitude`.
+- `dataset`: string of characters to be used as the prefix for the output files (e.g. `"smpdsv2"`).
+- `path`: Path where the reference climate files are stored (check Appendix A1).
+- `output_path` (*optional*): Path where the output files should be stored.
+- `...` (*optional*): Additional parametres passed to the function `smpds::gwr` (including `cpus`, `xy_buffer`, `z_buffer`, etc.). Run the following command to get more details about this function, `?smpds::gwr`
+
+```{r}
+reconstruct_climate <- function(.data,
+                                dataset,
+                                path,
+                                output_path = path,
+                                ...) {
+  if (!file.exists(file.path(
+    output_path,
+    paste0(dataset, "_climate_reconstructions_cld_", Sys.Date(), ".csv")
+  ))) {
+    tictoc::tic("CLD")
+    .data_cld <- .data %>%
+      smpds::gwr(
+        varid = "cld",
+        .ref =
+          file.path(path, "cru_ts4.04.1901.2019.cld.dat-clim-1961-1990-int.nc"),
+        ...)
+    .data_cld %>%
+      readr::write_excel_csv(
+        file.path(
+          output_path,
+          paste0(dataset, "_climate_reconstructions_cld_", Sys.Date(), ".csv")
+        ),
+        na = "")
+    tictoc::toc()
+  } else {
+    print("Skipping CLD ...")
+  }
+
+  if (!file.exists(file.path(
+    output_path,
+    paste0(dataset, "_climate_reconstructions_pre_", Sys.Date(), ".csv")
+  ))) {
+    tictoc::tic("PRE")
+    .data_pre <- .data %>%
+      smpds::gwr(
+        varid = "pre",
+        .ref =
+          file.path(path,
+                    "cru_ts4.04.1901.2019.pre.dat-clim-1961-1990-int.nc"),
+        ...)
+    .data_pre %>%
+      readr::write_excel_csv(
+        file.path(
+          output_path,
+          paste0(dataset, "_climate_reconstructions_pre_", Sys.Date(), ".csv")
+        ),
+        na = "")
+    tictoc::toc()
+  } else {
+    print("Skipping PRE ...")
+  }
+
+  if (!file.exists(file.path(
+    output_path,
+    paste0(dataset, "_climate_reconstructions_tmp_", Sys.Date(), ".csv")
+  ))) {
+    tictoc::tic("TMP")
+    .data_tmp <- .data %>%
+      smpds::gwr(
+        varid = "tmp",
+        .ref = file.path(path, "cru_ts4.04-clim-1961-1990-daily.tmp.nc"),
+        ...)
+    .data_tmp %>%
+      readr::write_excel_csv(
+        file.path(
+          output_path,
+          paste0(dataset, "_climate_reconstructions_tmp_", Sys.Date(), ".csv")
+        ),
+        na = "")
+    tictoc::toc()
+  } else {
+    print("Skipping TMP ...")
+  }
+}
+```
+
+#### `postprocessing`
+This function takes the following parametres:
+
+- `.data`: data frame with information of the sites/entities for which the reconstructions are required. It should contain at least the following three columns: `elevation`, `latitude` and `longitude`.
+- `dataset`: string of characters used as the prefix for the output files (e.g. `"smpdsv2"`).
+- `output_path`: Path where the output files are store.
+- `CPUS` (*optional*): Number of CPUs to be used on the computation of Moisture Index (MI).
+
+```{r}
+postprocessing <- function(.data,
+                           dataset,
+                           output_path,
+                           CPUS = 1) {
+  N_MAX <- nrow(.data)
+
+  # SPLASH is driven by daily temperature (tmp), precipitation (pre),
+  # cloud coverage (cld), and latitude.
+  suppressMessages({
+    .data_cld <-
+      readr::read_csv(
+        file.path(
+          output_path,
+          paste0(dataset, "_climate_reconstructions_cld_", Sys.Date(), ".csv")
+        ),
+        n_max = N_MAX)
+
+    .data_cld2 <-
+      .data_cld %>%
+      smpds::pivot_data(varname = "cld")
+
+    # Calculate sunshine fraction from cloud cover
+    .data_sf2 <- .data_cld %>%
+      smpds::pivot_data(scale = -0.01, add = 1, varname = "sf")
+
+    .data_pre <-
+      readr::read_csv(
+        file.path(
+          output_path,
+          paste0(dataset, "_climate_reconstructions_pre_", Sys.Date(), ".csv")
+        ),
+        n_max = N_MAX)
+    .data_pre2 <- .data_pre %>%
+      smpds::pivot_data(varname = "pre")
+
+    .data_tmp <-
+      readr::read_csv(
+        file.path(
+          output_path,
+          paste0(dataset, "_climate_reconstructions_tmp_", Sys.Date(), ".csv")
+        ),
+        n_max = N_MAX)
+    .data_tmp2 <- .data_tmp %>%
+      smpds::pivot_data(varname = "tmp")
+  })
+
+  .data_all_vars <- .data_sf2 %>%
+    dplyr::left_join(.data_pre2) %>%
+    dplyr::left_join(.data_tmp2) %>%
+    dplyr::select(site_name:elevation, sf, pre, tmp)
+  
+  .data_pre_map <- .data_pre %>%
+  dplyr::rowwise() %>%
+  dplyr::mutate(map = sum(dplyr::c_across(T1:T365), na.rm = TRUE), .before = T1)
+
+  ## Reconstruct climate variables
+  .data_all_vars2 <- .data_all_vars %>%
+    smpds::mi(cpus = CPUS) %>%
+    smpds::gdd() %>%
+    smpds::mat() %>%
+    smpds::mtco() %>%
+    smpds::mtwa() %>%
+    dplyr::bind_cols(.data_pre_map %>% dplyr::select(map))
+
+  .data_all_vars2 %>%
+    dplyr::select(-sf, -tmp, -pre) %>%
+    readr::write_excel_csv(
+      file.path(
+        output_path,
+        paste0(dataset, "_climate_reconstructions_", Sys.Date(), ".csv")
+      ),
+      na = ""
+    )
+}
+```
+
+### Example
+
+Using the following toy dataset, we can obtain climate reconstructions.
+
+```{r echo = FALSE}
+set.seed(2022)
+smpds::SMPDSv2 %>% 
+  dplyr::select(site_name:elevation) %>% 
+  .[sample(1:24649, 10), ] %>%
+  datapasta::dpasta()
+```
+
+```{r}
+`%>%` <- magrittr::`%>%`
+smpdsv2_demo <-
+  tibble::tribble(
+    ~site_name, ~entity_name, ~latitude, ~longitude, ~elevation,
+    "Madrid W", "Lopez_a385", 40.408461, -4.4047361, 550,
+    "Lya ljunghed", "Lya ljunghed", 59.585321, 16.727049, 27,
+    "Brandenburg", "Matthias_b17", 52.09969, 14.5223, 126,
+    "Dongling Mt", "Dongling Mt 02", 40.03, 115.45, 2280,
+    "SB-4, Santa Ana River, Seven Oaks", "SB-4", 34.17735, -116.92446, 1670,
+    "Western Siberia, southern taiga, N.Port-Tobolsk 83", "Ryabogina_a173", 59.478085, 69.141222, 56,
+    "Tianshan North", "Tianshan North 48", 43.9581, 88.0833, 1300,
+    "Dingbian", "Dingbian 09", 36.920222, 108.172222, 1325,
+    "Laguna Carimagua-Bosque", "CABOSQUE_10", 4.5865, -71.327135, 180,
+    "Stand 47 (Mack and Bryant 1974]", "RNM047", 46.9, -120.47, 610
+  )
+
+reconstruct_climate(
+  .data = smpdsv2_demo,
+  dataset = "smpdsv2",
+  path = "/path/to/CRU/4.04/climatologies",
+  output_path = "/path/to/climate_reconstructions",
+  cpus = 10
+)
+
+postprocessing(
+  .data = smpdsv2_demo,
+  dataset = "smpdsv2",
+  output_path = "/path/to/climate_reconstructions",
+  cpus = 10
+)
+```
+
+#### Output files
+
+```{bash}
+"smpdsv2_climate_reconstructions_YYYY-MM-dd.csv"
+"smpdsv2_climate_reconstructions_cld_YYYY-MM-dd.csv"
+"smpdsv2_climate_reconstructions_pre_YYYY-MM-dd.csv"
+"smpdsv2_climate_reconstructions_tmp_YYYY-MM-dd.csv"
+```
+
+```{r eval = TRUE, echo = FALSE}
+`%>%` <- magrittr::`%>%`
+smpdsv2_demo <-
+  tibble::tribble(
+    ~site_name, ~entity_name, ~latitude, ~longitude, ~elevation,
+    "Madrid W", "Lopez_a385", 40.408461, -4.4047361, 550,
+    "Lya ljunghed", "Lya ljunghed", 59.585321, 16.727049, 27,
+    "Brandenburg", "Matthias_b17", 52.09969, 14.5223, 126,
+    "Dongling Mt", "Dongling Mt 02", 40.03, 115.45, 2280,
+    "SB-4, Santa Ana River, Seven Oaks", "SB-4", 34.17735, -116.92446, 1670,
+    "Western Siberia, southern taiga, N.Port-Tobolsk 83", "Ryabogina_a173", 59.478085, 69.141222, 56,
+    "Tianshan North", "Tianshan North 48", 43.9581, 88.0833, 1300,
+    "Dingbian", "Dingbian 09", 36.920222, 108.172222, 1325,
+    "Laguna Carimagua-Bosque", "CABOSQUE_10", 4.5865, -71.327135, 180,
+    "Stand 47 (Mack and Bryant 1974]", "RNM047", 46.9, -120.47, 610
+  ) %>%
+  dplyr::mutate(latitude = round(latitude, 6),
+                longitude = round(longitude, 6))
+
+knitr::kable(smpdsv2_demo)
+```
+
+```{r eval = TRUE, echo = FALSE}
+smpdsv2_climate <- 
+  tibble::tribble(
+                                            ~site_name,        ~entity_name,        ~latitude,        ~longitude, ~elevation, ~ID_BIOME,                                               ~PNV,               ~mi,            ~gdd0,               ~mat,             ~mtco,            ~mtwa,             ~map,
+                                            "Dingbian",       "Dingbian 09", 36.9202222222222,  108.172222222222,       1325,        22,                                           "steppe", 0.394949592723695, 3592.72302064678,   8.55092162490546, -6.61490292837552, 21.8971942186536, 436.062275230345,
+                                         "Dongling Mt",    "Dongling Mt 02",            40.03,            115.45,       2280,        13,             "temperate deciduous broadleaf forest", 0.390979730141493, 1573.68177363758,  -2.17965933523764, -20.4553391763972,  13.749458265842,  363.91429531485,
+                                      "Tianshan North", "Tianshan North 48",          43.9581,           88.0833,       1300,        27,                                           "desert", 0.142451940389485, 3283.31819345228,   5.40821518022873, -13.9987374998661, 21.7268906346751, 148.674522284724,
+                                         "Brandenburg",      "Matthias_b17",         52.09969,           14.5223,        126,         9,                                "cool mixed forest", 0.806252444137485, 3263.46687219566,   8.79133963632887,  -1.3051180853309, 18.0621638730891, 579.931754561202,
+  "Western Siberia, southern taiga, N.Port-Tobolsk 83",    "Ryabogina_a173",        59.478085,         69.141222,         56,        15,                 "cold evergreen needleleaf forest",  1.02264793744194, 2046.97517727995, -0.611833301624974, -19.8340286819492, 18.4338271172047, 506.545585208792,
+                                        "Lya ljunghed",      "Lya ljunghed",        59.585321,         16.727049,         27,        15,                 "cold evergreen needleleaf forest", 0.920452135545231,  2392.7633953845,   5.63467146736352, -4.01872443600383,  15.945166204496, 547.108706490404,
+                   "SB-4, Santa Ana River, Seven Oaks",              "SB-4",         34.17735,        -116.92446,       1670,        20,                           "xerophytic woods/scrub", 0.394456557024853, 4309.16727557118,   11.8059377412909,  3.14813843297513, 23.3959895727668, 557.076435427559,
+                     "Stand 47 (Mack and Bryant 1974]",            "RNM047",             46.9,           -120.47,        610,        22,                                           "steppe",  0.57901181486918, 3472.61046927691,   9.33013859032236, -1.21107168650365, 19.9439175891367, 504.744316448146,
+                                            "Madrid W",        "Lopez_a385", 40.4084611111111, -4.40473611111111,        550,         4,        "warm-temperate evergreen and mixed forest", 0.348819036204376, 5356.98667283546,   14.6766758159876,  6.36787498222421, 24.8143271360429, 439.010745019972,
+                             "Laguna Carimagua-Bosque",       "CABOSQUE_10",           4.5865,        -71.327135,        180,         3, "tropical deciduous broadleaf forest and woodland",  1.78953358913693, 9651.87135377917,   26.4434831610388,  25.0212021892405, 27.9689485746237, 2649.56673562742
+  ) %>%
+  dplyr::mutate(latitude = round(latitude, 6),
+                longitude = round(longitude, 6))
+smpdsv2_climate %>%
+  dplyr::select(-ID_BIOME, -PNV) %>%
+  knitr::kable()
+```
+
+## Potential Natural Vegetation (PNV) reconstructions
+
+The climate reconstructions are based on the work by (Hengl et al., 2018) and the package `smpds` includes a function to calculate the PNV for each site/entity.
+
+```{r}
+`%>%` <- magrittr::`%>%`
+smpdsv2_demo %>%
+  smpds::parallel_extract_biome(cpus = 2) %>%
+  smpds::biome_name() %>%
+  dplyr::rename(PND = description) %>%
+  dplyr::select(-colour) %>%
+  smpds::pb()
+```
+
+```{r, eval = TRUE, echo = FALSE}
+smpdsv2_climate %>%
+  dplyr::select(site_name:PNV) %>%
+  knitr::kable()
+```
+
+## References
+
+Hengl, T., Walsh, M.G., Sanderman, J., Wheeler, I., Harrison, S.P., Prentice, I.C., 2018. Global mapping of potential natural vegetation: an assessment of machine learning algorithms for estimating land potential. PeerJ 6, e5457. https://doi.org/10.7717/peerj.5457
