@@ -75,6 +75,32 @@ SMPDSv2 <-
 
 waldo::compare(smpds::SMPDSv2[1:19], SMPDSv2[1:19],
                tolerance = 1E-4, max_diffs = Inf)
+
+# Remove climate and PNV reconstructions for marine entities ----
+SMPDSv2_marine_entities_corrected <- SMPDSv2 %>%
+  dplyr::mutate(
+    ID_BIOME =
+      ifelse(!is.na(site_type) & site_type == "marine", NA, ID_BIOME),
+    PNV =
+      ifelse(!is.na(site_type) & site_type == "marine", "not applicable", PNV),
+    mi =
+      ifelse(!is.na(site_type) & site_type == "marine", NA, mi),
+    gdd0 =
+      ifelse(!is.na(site_type) & site_type == "marine", NA, gdd0),
+    mat =
+      ifelse(!is.na(site_type) & site_type == "marine", NA, mat),
+    mtco =
+      ifelse(!is.na(site_type) & site_type == "marine", NA, mtco),
+    mtwa =
+      ifelse(!is.na(site_type) & site_type == "marine", NA, mtwa),
+    map =
+      ifelse(!is.na(site_type) & site_type == "marine", NA, map)
+  )
+waldo::compare(SMPDSv2, SMPDSv2_marine_entities_corrected, max_diffs = Inf)
+SMPDSv2_marine_entities_corrected %>%
+  dplyr::filter(is.na(ID_BIOME)) %>%
+  View()
+SMPDSv2 <- SMPDSv2_marine_entities_corrected
 usethis::use_data(SMPDSv2, overwrite = TRUE, compress = "xz")
 
 # Export list of amalgamations ----
@@ -569,8 +595,6 @@ waldo::compare(SMPDSv2_db %>%
                  .[order(colnames(.))],
                tolerance = 1E-9)
 
-
-
 ## climate ----
 idx_climate <- idx_pairs(nrow(SMPDSv2_db), 1000)
 pb <- progress::progress_bar$new(total = nrow(idx_climate))
@@ -621,7 +645,7 @@ taxon_list <-
   dplyr::mutate(taxon_name = taxon_name %>% stringr::str_squish()) %>%
   dplyr::distinct(taxon_name) %>%
   dplyr::arrange(taxon_name) %>%
-  dplyr::slice(-1) %>%
+  # dplyr::slice(-1) %>%
   dplyr::mutate(taxon_name_lc = taxon_name %>%
                   stringr::str_to_lower()) %>%
   dplyr::group_by(taxon_name_lc) %>%
@@ -640,23 +664,62 @@ taxon_list %>%
 # dabr::delete(conn, "DELETE FROM taxon_name WHERE ID_TAXON >= 1")
 
 taxon_list %>%
+  dplyr::select(-taxon_name_lc) %>%
   rpd:::update_records(conn = conn, table = "taxon_name",
                        dry_run = TRUE, quiet = TRUE,
                        PK = 1)
 
+waldo::compare(taxon_list, dabr::select_all(conn, "taxon_name"))
+
 ### clean ----
-counts_table_1 <- SMPDSv2_db %>%
+counts_table_1_1 <- SMPDSv2_db %>%
+  dplyr::slice(1:10000) %>%
   dplyr::select(ID_SAMPLE, clean) %>%
   tidyr::unnest(clean) %>%
   tidyr::pivot_longer(-ID_SAMPLE,
                       names_to = "taxon_name",
                       values_to = "count") %>%
-  dplyr::filter(!is.na(count)) %>%
+  dplyr::filter(!is.na(count), count != 0) %>%
   dplyr::mutate(taxon_name = taxon_name %>% stringr::str_squish()) %>%
-  dplyr::left_join(taxon_list,
+  dplyr::left_join(taxon_list %>%
+                     dplyr::select(-taxon_name_lc),
                    by = "taxon_name") %>%
-  dplyr::mutate(amalgamation_level = 0) %>%
-  dplyr::filter(count != 0)
+  dplyr::mutate(amalgamation_level = 0)
+
+counts_table_1_2 <- SMPDSv2_db %>%
+  dplyr::slice(10001:20000) %>%
+  dplyr::select(ID_SAMPLE, clean) %>%
+  tidyr::unnest(clean) %>%
+  tidyr::pivot_longer(-ID_SAMPLE,
+                      names_to = "taxon_name",
+                      values_to = "count") %>%
+  dplyr::filter(!is.na(count), count != 0) %>%
+  dplyr::mutate(taxon_name = taxon_name %>% stringr::str_squish()) %>%
+  dplyr::left_join(taxon_list %>%
+                     dplyr::select(-taxon_name_lc),
+                   by = "taxon_name") %>%
+  dplyr::mutate(amalgamation_level = 0)
+
+counts_table_1_3 <- SMPDSv2_db %>%
+  dplyr::slice(-c(1:20000)) %>%
+  dplyr::select(ID_SAMPLE, clean) %>%
+  tidyr::unnest(clean) %>%
+  tidyr::pivot_longer(-ID_SAMPLE,
+                      names_to = "taxon_name",
+                      values_to = "count") %>%
+  dplyr::filter(!is.na(count), count != 0) %>%
+  dplyr::mutate(taxon_name = taxon_name %>% stringr::str_squish()) %>%
+  dplyr::left_join(taxon_list %>%
+                     dplyr::select(-taxon_name_lc),
+                   by = "taxon_name") %>%
+  dplyr::mutate(amalgamation_level = 0)
+
+counts_table_1 <-
+  dplyr::bind_rows(
+    counts_table_1_1,
+    counts_table_1_2,
+    counts_table_1_3
+  )
 
 counts_table_1 %>%
   dplyr::filter(is.na(ID_TAXON))
@@ -671,7 +734,7 @@ meta_neo_res <-
                 counts_table_1[.x:.y, ] %>%
                   dplyr::select(-taxon_name) %>%
                   rpd:::add_records(conn = conn, table = "pollen_count",
-                                    dry_run = !TRUE, quiet = TRUE)
+                                    dry_run = TRUE, quiet = TRUE)
               })
 meta_neo_res %>% purrr::flatten_lgl() %>% sum()
 
@@ -692,19 +755,54 @@ waldo::compare(counts_table_1 %>%
                tolerance = 1E-9)
 
 ### intermediate ----
-counts_table_2 <- SMPDSv2_db %>%
+counts_table_2_1 <- SMPDSv2_db %>%
+  dplyr::slice(1:10000) %>%
   dplyr::select(ID_SAMPLE, intermediate) %>%
   tidyr::unnest(intermediate) %>%
   tidyr::pivot_longer(-ID_SAMPLE,
                       names_to = "taxon_name",
                       values_to = "count") %>%
-  dplyr::filter(!is.na(count)) %>%
+  dplyr::filter(!is.na(count), count != 0) %>%
   dplyr::mutate(taxon_name = taxon_name %>% stringr::str_squish()) %>%
-  dplyr::left_join(taxon_list,
+  dplyr::left_join(taxon_list %>%
+                     dplyr::select(-taxon_name_lc),
                    by = "taxon_name") %>%
-  dplyr::mutate(amalgamation_level = 1) %>%
-  dplyr::filter(count != 0)
+  dplyr::mutate(amalgamation_level = 1)
 
+counts_table_2_2 <- SMPDSv2_db %>%
+  dplyr::slice(10001:20000) %>%
+  dplyr::select(ID_SAMPLE, intermediate) %>%
+  tidyr::unnest(intermediate) %>%
+  tidyr::pivot_longer(-ID_SAMPLE,
+                      names_to = "taxon_name",
+                      values_to = "count") %>%
+  dplyr::filter(!is.na(count), count != 0) %>%
+  dplyr::mutate(taxon_name = taxon_name %>% stringr::str_squish()) %>%
+  dplyr::left_join(taxon_list %>%
+                     dplyr::select(-taxon_name_lc),
+                   by = "taxon_name") %>%
+  dplyr::mutate(amalgamation_level = 1)
+
+counts_table_2_3 <- SMPDSv2_db %>%
+  dplyr::slice(-c(1:20000)) %>%
+  dplyr::select(ID_SAMPLE, intermediate) %>%
+  tidyr::unnest(intermediate) %>%
+  tidyr::pivot_longer(-ID_SAMPLE,
+                      names_to = "taxon_name",
+                      values_to = "count") %>%
+  dplyr::filter(!is.na(count), count != 0) %>%
+  dplyr::mutate(taxon_name = taxon_name %>% stringr::str_squish()) %>%
+  dplyr::left_join(taxon_list %>%
+                     dplyr::select(-taxon_name_lc),
+                   by = "taxon_name") %>%
+  dplyr::mutate(amalgamation_level = 1)
+
+counts_table_2 <-
+  dplyr::bind_rows(
+    counts_table_2_1,
+    counts_table_2_2,
+    counts_table_2_3
+  )
 counts_table_2 %>%
   dplyr::filter(is.na(ID_TAXON))
 
@@ -737,21 +835,70 @@ waldo::compare(counts_table_2 %>%
                tolerance = 1E-9)
 
 ### amalgamated ----
-counts_table_3 <- SMPDSv2_db %>%
+counts_table_3_1 <- SMPDSv2_db %>%
+  dplyr::slice(1:10000) %>%
   dplyr::select(ID_SAMPLE, amalgamated) %>%
   tidyr::unnest(amalgamated) %>%
   tidyr::pivot_longer(-ID_SAMPLE,
                       names_to = "taxon_name",
                       values_to = "count") %>%
-  dplyr::filter(!is.na(count)) %>%
-  dplyr::mutate(taxon_name = taxon_name %>%
-                  stringr::str_squish() %>%
-                  stringr::str_replace_all("0", "Eucalyptus")
-                ) %>%
-  dplyr::left_join(taxon_list,
+  dplyr::filter(!is.na(count), count != 0) %>%
+  dplyr::mutate(taxon_name = taxon_name %>% stringr::str_squish()) %>%
+  dplyr::left_join(taxon_list %>%
+                     dplyr::select(-taxon_name_lc),
                    by = "taxon_name") %>%
-  dplyr::mutate(amalgamation_level = 2) %>%
-  dplyr::filter(count != 0)
+  dplyr::mutate(amalgamation_level = 2)
+
+counts_table_3_2 <- SMPDSv2_db %>%
+  dplyr::slice(10001:20000) %>%
+  dplyr::select(ID_SAMPLE, amalgamated) %>%
+  tidyr::unnest(amalgamated) %>%
+  tidyr::pivot_longer(-ID_SAMPLE,
+                      names_to = "taxon_name",
+                      values_to = "count") %>%
+  dplyr::filter(!is.na(count), count != 0) %>%
+  dplyr::mutate(taxon_name = taxon_name %>% stringr::str_squish()) %>%
+  dplyr::left_join(taxon_list %>%
+                     dplyr::select(-taxon_name_lc),
+                   by = "taxon_name") %>%
+  dplyr::mutate(amalgamation_level = 2)
+
+counts_table_3_3 <- SMPDSv2_db %>%
+  dplyr::slice(-c(1:20000)) %>%
+  dplyr::select(ID_SAMPLE, amalgamated) %>%
+  tidyr::unnest(amalgamated) %>%
+  tidyr::pivot_longer(-ID_SAMPLE,
+                      names_to = "taxon_name",
+                      values_to = "count") %>%
+  dplyr::filter(!is.na(count), count != 0) %>%
+  dplyr::mutate(taxon_name = taxon_name %>% stringr::str_squish()) %>%
+  dplyr::left_join(taxon_list %>%
+                     dplyr::select(-taxon_name_lc),
+                   by = "taxon_name") %>%
+  dplyr::mutate(amalgamation_level = 2)
+
+# counts_table_3 <- SMPDSv2_db %>%
+#   dplyr::select(ID_SAMPLE, amalgamated) %>%
+#   tidyr::unnest(amalgamated) %>%
+#   tidyr::pivot_longer(-ID_SAMPLE,
+#                       names_to = "taxon_name",
+#                       values_to = "count") %>%
+#   dplyr::filter(!is.na(count)) %>%
+#   dplyr::mutate(taxon_name = taxon_name %>%
+#                   stringr::str_squish() %>%
+#                   stringr::str_replace_all("0", "Eucalyptus")
+#                 ) %>%
+#   dplyr::left_join(taxon_list,
+#                    by = "taxon_name") %>%
+#   dplyr::mutate(amalgamation_level = 2) %>%
+#   dplyr::filter(count != 0)
+
+counts_table_3 <-
+  dplyr::bind_rows(
+    counts_table_3_1,
+    counts_table_3_2,
+    counts_table_3_3
+  )
 
 counts_table_3 %>%
   dplyr::filter(is.na(ID_TAXON))
@@ -766,7 +913,7 @@ meta_neo_res <-
                 counts_table_3[.x:.y, ] %>%
                   dplyr::select(-taxon_name) %>%
                   rpd:::add_records(conn = conn, table = "pollen_count",
-                                    dry_run = !TRUE, quiet = TRUE)
+                                    dry_run = TRUE, quiet = TRUE)
               })
 meta_neo_res %>% purrr::flatten_lgl() %>% sum()
 
@@ -790,13 +937,9 @@ data("SMPDSv2", package = "smpds")
 sf::sf_use_s2(FALSE)
 land_borders <-
   rnaturalearth::ne_countries(scale = "large",
-                              returnclass = "sf") #%>%
-  # sf::st_cast("POLYGON") %>%
-  # dplyr::mutate(area = sf::st_area(geometry))
-
+                              returnclass = "sf")
 lakes <- rnaturalearth::ne_download(
   scale = "large", type = "lakes", category = "physical", returnclass = "sf")
-# sp::plot(lakes110)
 
 SMPDSv2_offshore <- SMPDSv2 %>%
   dplyr::select(1:19) %>%
@@ -811,12 +954,6 @@ SMPDSv2_offshore <- SMPDSv2 %>%
       lengths(),
     on_lake = sf::st_within(geometry, lakes) %>%
       lengths()
-    # on_land = purrr:::pmap(geometry,
-    #                        ~purrr::map(seq_len(nrow(land_borders)),
-    #                                    function(lb, g) {
-    #                                      sf::st_within(land_borders[g, ], lb)
-    #                                    }, g = .x))
-
   )
 
 SMPDSv2_offshore_2 <- SMPDSv2_offshore %>%
@@ -842,8 +979,88 @@ SMPDSv2_offshore_2 %>%
   View()
   # smpds::plot_climate(var = "elevation", units = "m ASL", fill_sea = NA, fill_land = NA)
 
+SMPDSv2_dodgy_entities <- SMPDSv2_offshore_2 %>%
+  dplyr::filter(site_type != "marine") %>%
+  dplyr::filter(is.na(ID_BIOME) |
+                  is.na(mi) |
+                  is.na(gdd0) |
+                  is.na(mat) |
+                  is.na(mtco) |
+                  is.na(mtwa) |
+                  is.na(map) |
+                  ID_BIOME < 0 |
+                  map < 0 | mi < 0 | gdd0 < 0) %>%
+  dplyr::select(source:PNV, ID_SAMPLE, on_land, on_lake) %>%
+  dplyr::left_join(
+    SMPDSv2 %>%
+      dplyr::select(ID_SAMPLE, publication, doi)
+  )
 
-.data_pre_3 <- SMPDSv2_offshore_2 %>%
+SMPDSv2_dodgy_entities_2 <- SMPDSv2_dodgy_entities %>%
+  smpds:::get_elevation(cpus = 4) %>%
+  smpds::pb()
+
+SMPDSv2_dodgy_entities_3 <- SMPDSv2_dodgy_entities_2 %>%
+  dplyr::bind_cols(
+    SMPDSv2_dodgy_entities %>%
+      dplyr::select(old_elevation = elevation)
+  ) %>%
+  dplyr::relocate(old_elevation, .after = elevation) #%>%
+  # dplyr::mutate(diff_elevation = old_elevation - elevation,
+  #               .after = old_elevation)
+View(SMPDSv2_dodgy_entities_3)
+
+SMPDSv2_dodgy_entities_3 %>%
+  readr::write_excel_csv(
+    paste0("data-raw/smpdsv2_sites_with_dodgy_climate_reconstructions_",
+           Sys.Date(), ".csv"), na = "")
+
+## Load climate for dodgy entities ----
+climate_reconstructions <-
+  "data-raw/reconstructions/smpdsv2_sites_with_dodgy_climate_reconstructions_climate_reconstructions_2022-05-25.csv" %>%
+  readr::read_csv()
+
+# Load daily values for precipitation to compute MAP (mean annual precipitation)
+climate_reconstructions_pre <-
+  "data-raw/reconstructions/smpdsv2_sites_with_dodgy_climate_reconstructions_climate_reconstructions_pre_2022-05-25.csv" %>%
+  readr::read_csv() %>%
+  dplyr::rowwise() %>%
+  dplyr::mutate(map = sum(dplyr::c_across(T1:T365), na.rm = TRUE), .before = T1)
+
+climate_reconstructions_z_buffer_2 <-
+  "data-raw/reconstructions/smpdsv2_sites_with_dodgy_climate_reconstructions_climate_reconstructions_2022-05-25_z_buffer_2.csv" %>%
+  readr::read_csv()
+
+# Load daily values for precipitation to compute MAP (mean annual precipitation)
+climate_reconstructions_z_buffer_2_pre <-
+  "data-raw/reconstructions/smpdsv2_sites_with_dodgy_climate_reconstructions_climate_reconstructions_pre_2022-05-25_z_buffer_2.csv" %>%
+  readr::read_csv() %>%
+  dplyr::rowwise() %>%
+  dplyr::mutate(map = sum(dplyr::c_across(T1:T365), na.rm = TRUE), .before = T1)
+
+climate_reconstructions_2 <- climate_reconstructions %>%
+  dplyr::bind_cols(climate_reconstructions_pre %>%
+                     dplyr::select(map))
+climate_reconstructions_z_buffer_2_2 <- climate_reconstructions_z_buffer_2 %>%
+  dplyr::bind_cols(climate_reconstructions_z_buffer_2_pre %>%
+                     dplyr::select(map))
+View(climate_reconstructions_2)
+View(climate_reconstructions_z_buffer_2_2)
+
+SMPDSv2_offshore_2 %>%
+  dplyr::filter(on_land != 1) %>%
+  dplyr::filter(site_type != "marine") %>%
+  dplyr::filter(is.na(ID_BIOME) |
+                  is.na(mi) |
+                  is.na(gdd0) |
+                  is.na(mat) |
+                  is.na(mtco) |
+                  is.na(mtwa) |
+                  is.na(map) |
+                  ID_BIOME < 0 |
+                  map < 0 | mi < 0 | gdd0 < 0)
+
+.data_pre_1 <- SMPDSv2_offshore_2 %>%
   # dplyr::filter(on_land != 1) %>%
   dplyr::filter(site_type != "marine") %>%
   dplyr::filter(map < 0) %>%
@@ -851,15 +1068,19 @@ SMPDSv2_offshore_2 %>%
   smpds::gwr(
     varid = "pre",
     .ref =
-      file.path("~/Downloads/climatologies_v2/",
-                "cru_ts4.04.1901.2019.pre.dat-clim-1961-1990-int.nc"),
-                # "cru_ts4.04.1901.2019.pre.dat-new-clim-1961-1990-int.nc"),
-    coordinates = CRU_coords,
+      file.path("~/Downloads/climatologies/",
+                # "cru_ts4.04.1901.2019.pre.dat-clim-1961-1990-int.nc"),
+                "cru_ts4.04.1901.2019.pre.dat-new-clim-1961-1990-int.nc"),
+    z_buffer = 2,
     cpus = 4) %>%
   smpds::pb()
 
-.data_pre_2 %>%
-  smpds::pivot_data(varname = "pre_2") %>% .$pre_2
+.data_pre_1 %>%
+  # smpds::pivot_data(varname = "pre_1") %>%
+  dplyr::rowwise() %>%
+  dplyr::mutate(map = sum(dplyr::c_across(T1:T365), na.rm = TRUE),
+                .before = T1) %>%
+  dplyr::select(-c(T1:T365), -basin_size, -age_BP)
 
 p_offshore <- SMPDSv2_offshore %>%
   # dplyr::filter(on_land != 1) %>%
@@ -920,11 +1141,11 @@ taxon_list %>%
   dplyr::arrange(taxon_name) %>%
   dplyr::ungroup() %>%
   dplyr::distinct() %>%
-  dplyr::slice(-1) %>%
+  # dplyr::slice(-1) %>%
   # dplyr::distinct(taxon_name, .keep_all = TRUE) %>%
-  readr::write_excel_csv("smpdsv2_taxon_list.csv", na = "")
-
-
+  readr::write_excel_csv(
+    paste0("smpdsv2_taxon_list_", Sys.Date(), ".csv"),
+    na = "")
 
 # Export list of categorical variables ----
 site_type_tb <-
@@ -970,17 +1191,32 @@ openxlsx::addWorksheet(wb, "clean")
 openxlsx::writeData(wb, "clean",
                     SMPDSv2 %>%
                       dplyr::select(ID_SAMPLE, clean) %>%
-                      tidyr::unnest(clean))
+                      tidyr::unnest(clean) %>%
+                      tidyr::pivot_longer(-ID_SAMPLE) %>%
+                      dplyr::filter(!is.na(value)) %>%
+                      tidyr::pivot_wider(names_sort = TRUE,
+                                         values_fill = 0)
+)
 openxlsx::addWorksheet(wb, "intermediate")
 openxlsx::writeData(wb, "intermediate",
                     SMPDSv2 %>%
                       dplyr::select(ID_SAMPLE, intermediate) %>%
-                      tidyr::unnest(intermediate))
+                      tidyr::unnest(intermediate) %>%
+                      tidyr::pivot_longer(-ID_SAMPLE) %>%
+                      dplyr::filter(!is.na(value)) %>%
+                      tidyr::pivot_wider(names_sort = TRUE,
+                                         values_fill = 0)
+)
 openxlsx::addWorksheet(wb, "amalgamated")
 openxlsx::writeData(wb, "amalgamated",
                     SMPDSv2 %>%
                       dplyr::select(ID_SAMPLE, amalgamated) %>%
-                      tidyr::unnest(amalgamated))
+                      tidyr::unnest(amalgamated) %>%
+                      tidyr::pivot_longer(-ID_SAMPLE) %>%
+                      dplyr::filter(!is.na(value)) %>%
+                      tidyr::pivot_wider(names_sort = TRUE,
+                                         values_fill = 0)
+)
 openxlsx::saveWorkbook(wb,
                        paste0("data-raw/SMPDSv2_",
                               Sys.Date(),
