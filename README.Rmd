@@ -14,20 +14,19 @@ knitr::opts_chunk$set(
 options(knitr.kable.NA = "")
 ```
 
-# SMPDS: Modern Pollen Data for climate reconstructionS
+# SMPDS: The SPECIAL Modern Pollen Data for Climate Reconstructions
 
 <!-- badges: start -->
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-[![CRAN status](https://www.r-pkg.org/badges/version/smpds)](https://CRAN.R-project.org/package=smpds)
-[![Codecov test coverage](https://codecov.io/gh/special-uor/smpds/branch/main/graph/badge.svg)](https://codecov.io/gh/special-uor/smpds?branch=main)
-[![R-CMD-check](https://github.com/special-uor/smpds/workflows/R-CMD-check/badge.svg)](https://github.com/special-uor/smpds/actions)
+`r badger::badge_devel("special-uor/smpds", "yellow")`
+`r badger::badge_github_actions("special-uor/smpds")`
+`r badger::badge_cran_release("smpds", "black")`
 <!-- badges: end -->
 
-The goal of smpds is to ...
+The goal of `smpds` is to provide access to the SPECIAL Modern Pollen Data Set for Climate Reconstructions (SMPDS).
 
 ## Installation
 
-You can install the released version of SMPDS from [CRAN](https://CRAN.R-project.org) with:
+You **can(not)** install the released version of SMPDS from [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
 install.packages("smpds")
@@ -36,25 +35,130 @@ install.packages("smpds")
 And the development version from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("special-uor/smpds")
+# install.packages("remotes")
+remotes::install_github("special-uor/smpds")
 ```
+
 ## Example
-
-<!-- This is a basic example which shows you how to solve a common problem: -->
-
-```{r example, eval = TRUE}
-library(smpds)
-## basic example code
-smpds::SMPDSv2 %>%
-  dplyr::relocate(DOI, .after = publication) %>%
-  dplyr::slice(1:20) %>%
-  smpds::rm_na_taxa(cols = 1:120) %>% # Filter taxa without counts
-  dplyr::select(1:70) %>% # Select only the metadata (16) + the 50 first taxa
-  knitr::kable()
+#### Load tables to the working environment
+```{r, eval = FALSE}
+data("climate", package = "smpds")
+data("entity", package = "smpds")
+data("pollen_count", package = "smpds")
+data("taxon_name", package = "smpds")
 ```
 
-#### Plots 
+#### Create a snapshot of entities
+
+The function `smpds::snapshot` takes few different parameters and based on
+the first one, `x`, it returns a variety of snapshots. 
+
+This function returns a list with 3 components:
+
+- `entity`: data frame (`tibble` object) with the metadata associated to the entities.
+- `climate`: data frame (`tibble` object) with the climate and vegetation reconstructions. This one can be linked to the `entity` table using the column called `ID_SAMPLE`.
+- `pollen_count`: list of data frames (`tibble` objects) containing the pollen counts for 3 levels of "amalgamation":
+    - `clean`
+    - `intermediate`
+    - `amalgamated`
+    
+  All these data frames can be linked to the `entity` table using the column called `ID_SAMPLE`.
+
+:warning: **NOTE:** the output is returned "invisibly", so you should assign the output of the function to a variable.
+
+```{r, eval = FALSE}
+output <- smpds::snapshot(...)
+output$entity
+output$climate
+output$pollen_count$clean
+output$pollen_count$intermediate
+output$pollen_count$intermediate
+```
+
+##### Using the `entity_name`
+```{r, eval = TRUE}
+smpds::snapshot("juodonys_core")
+```
+
+##### Using the `site_name`
+```{r, eval = TRUE}
+smpds::snapshot("Petresiunai", use_site_name = TRUE)
+```
+
+##### Using the `ID_ENTITY`
+```{r, eval = TRUE}
+smpds::snapshot(2)
+```
+
+##### Using the `ID_SITE`
+```{r, eval = TRUE}
+smpds::snapshot(3, use_id_site = TRUE)
+```
+
+##### Extracting multiple records at once
+```{r, eval = TRUE}
+smpds::snapshot(1:10)
+```
+
+##### Extracting all the records at once
+This will run __**very slow**__, so if only few entities are required, it would be better
+to indicate which, based on the previous examples.
+
+```{r, eval = FALSE}
+out <- smpds::snapshot()
+```
+
+#### Export data as individual CSV files
+
+The function `smpds::write_csvs` takes to parameters:
+
+- `.data`: a list of class `snapshot`, this one can be generated using the function `smpds::snapshot` (see previous section).
+- `prefix`: a prefix name to be included in each individual files, this prefix can include a relative or absolute path to a directory in the local machine.
+
+##### Without a path
+```{r, eval = TRUE}
+`%>%` <- smpds::`%>%`
+smpds::snapshot("juodonys_core") %>%
+  smpds::write_csvs(prefix = "juodonys_core")
+```
+
+###### Output
+```{r, echo = FALSE}
+paths <- list.files(pattern = "juodonys_core", full.names = TRUE)
+tree <- data.tree::as.Node(data.frame(pathString = paths))
+data.tree::SetGraphStyle(tree, rankdir = "TB")
+data.tree::SetNodeStyle(tree,
+                        style = "filled,rounded",
+                        shape = "box")
+print(tree)
+```
+
+##### Including a path
+```{r, eval = FALSE}
+`%>%` <- smpds::`%>%`
+smpds::snapshot("juodonys_core") %>%
+  smpds::write_csvs(prefix = "/special.uor/epd/juodonys_core")
+```
+
+###### Output
+```{r, echo = FALSE}
+paths <- list.files(pattern = "juodonys_core", full.names = TRUE) %>%
+  stringr::str_replace_all("./", "/special.uor/epd/")
+tree <- data.tree::as.Node(data.frame(pathString = paths))
+data.tree::SetGraphStyle(tree, rankdir = "TB")
+data.tree::SetNodeStyle(tree,
+                        style = "filled,rounded",
+                        shape = "box")
+print(tree)
+```
+
+```{r, eval = TRUE, echo = FALSE}
+paths <- list.files(pattern = "juodonys_core", full.names = TRUE)
+unlink(paths)
+```
+
+
+## Spatial distribution of the entities
 ##### Potential Natural Vegetation (PNV)
 ```{r example-plot, eval =  TRUE, fig.width = 14, fig.height = 8, dpi = 300}
 smpds::SMPDSv2 %>%

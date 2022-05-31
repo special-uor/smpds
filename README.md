@@ -1,24 +1,22 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# SMPDS: Modern Pollen Data for climate reconstructionS
+# SMPDS: The SPECIAL Modern Pollen Data for Climate Reconstructions
 
 <!-- badges: start -->
 
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-[![CRAN
-status](https://www.r-pkg.org/badges/version/smpds)](https://CRAN.R-project.org/package=smpds)
-[![Codecov test
-coverage](https://codecov.io/gh/special-uor/smpds/branch/main/graph/badge.svg)](https://codecov.io/gh/special-uor/smpds?branch=main)
-[![R-CMD-check](https://github.com/special-uor/smpds/workflows/R-CMD-check/badge.svg)](https://github.com/special-uor/smpds/actions)
+[![](https://img.shields.io/badge/devel%20version-2.0.0-yellow.svg)](https://github.com/special-uor/smpds)
+[![R build
+status](https://github.com/special-uor/smpds/workflows/R-CMD-check/badge.svg)](https://github.com/special-uor/smpds/actions)
+[![](https://www.r-pkg.org/badges/version/smpds?color=black)](https://cran.r-project.org/package=smpds)
 <!-- badges: end -->
 
-The goal of smpds is to …
+The goal of `smpds` is to provide access to the SPECIAL Modern Pollen
+Data Set for Climate Reconstructions (SMPDS).
 
 ## Installation
 
-You can install the released version of SMPDS from
+You **can(not)** install the released version of SMPDS from
 [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
@@ -28,49 +26,178 @@ install.packages("smpds")
 And the development version from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("special-uor/smpds")
+# install.packages("remotes")
+remotes::install_github("special-uor/smpds")
 ```
 
 ## Example
 
-<!-- This is a basic example which shows you how to solve a common problem: -->
+#### Load tables to the working environment
 
 ``` r
-library(smpds)
-## basic example code
-smpds::SMPDSv2 %>%
-  dplyr::relocate(DOI, .after = publication) %>%
-  dplyr::slice(1:20) %>%
-  smpds::rm_na_taxa(cols = 1:120) %>% # Filter taxa without counts
-  dplyr::select(1:70) %>% # Select only the metadata (16) + the 50 first taxa
-  knitr::kable()
+data("climate", package = "smpds")
+data("entity", package = "smpds")
+data("pollen_count", package = "smpds")
+data("taxon_name", package = "smpds")
 ```
 
-| original | source   | site\_name     | entity\_name   | latitude | longitude | elevation | basin\_size         | site\_type                   | entity\_type         | age\_BP        | ID\_BIOME | BIOME\_description                           |        mi |     gdd0 |       mat |        mtco |     mtwa | publication                                                                                                                  | DOI               | Abelia | Abies | Abies alba | Abies cilicica | Abies fargesii | Abies nordmanniana | Abies pinsapo | Abies pinsapo subsp marocana | Abies pinsapo subsp marocana | Abies sibirica | Acacia | Acacia confusa | Acalypha | Acanthaceae | Acantholimon | Acanthus | Acanthus ilicifolius | Acanthus mollis | Acer | Acer campestre | Acer campestre type | Acer pseudoplatanus | Acer turkestanica | Acer type | Achillea | Achillea type | Achillea/Anthemis type | Achillea/Aster | Achillea/Aster type | Achillea/Eupatorium type | Achyranthes aspera type | Aconitum | Aconitum napellus type | Aconitum septentrionale | Aconitum type | Acronychia | Actaea | Actinidia | Actinidia chinensis var deliciosa | Actinostemma/Gynostemma | Adenanthera | Adenostyles type | Adiantum | Adina | Adinandra | Adonis | Adonis aestivalis | Adonis aestivalis type | Adonis annua type | Adonis type |
-| :------- | :------- | :------------- | :------------- | -------: | --------: | --------: | :------------------ | :--------------------------- | :------------------- | :------------- | --------: | :------------------------------------------- | --------: | -------: | --------: | ----------: | -------: | :--------------------------------------------------------------------------------------------------------------------------- | :---------------- | -----: | ----: | ---------: | -------------: | -------------: | -----------------: | ------------: | ---------------------------: | ---------------------------: | -------------: | -----: | -------------: | -------: | ----------: | -----------: | -------: | -------------------: | --------------: | ---: | -------------: | ------------------: | ------------------: | ----------------: | --------: | -------: | ------------: | ---------------------: | -------------: | ------------------: | -----------------------: | ----------------------: | -------: | ---------------------: | ----------------------: | ------------: | ---------: | -----: | --------: | --------------------------------: | ----------------------: | ----------: | ---------------: | -------: | ----: | --------: | -----: | ----------------: | ---------------------: | ----------------: | ----------: |
-| SMPDSv1  | EMPD     | Mt Shipchenska | Atanassova\_a1 | 42.74111 |  25.34139 |      1310 |                     | Unknown                      | moss polster or moss | \-52           |        13 | temperate deciduous broadleaf forest         | 0.8239493 | 2683.142 |  6.595417 | \-4.0535105 | 16.81607 | Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset. | 10.17864/1947.194 |        |     7 |            |                |                |                    |               |                              |                              |                |        |                |          |             |              |          |                      |                 |    1 |                |                     |                     |                   |           |          |               |                        |                |                     |                          |                         |          |                        |                         |               |            |        |           |                                   |                         |             |                  |          |       |           |        |                   |                        |                   |             |
-| SMPDSv1  | EMPD     | Mt Shipchenska | Atanassova\_a2 | 42.75556 |  25.32750 |      1195 |                     | Unknown                      | moss polster or moss | \-52           |        13 | temperate deciduous broadleaf forest         | 0.8023825 | 2820.270 |  7.065475 | \-3.7582657 | 17.37840 | Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset. | 10.17864/1947.194 |        |       |            |                |                |                    |               |                              |                              |                |        |                |          |             |              |          |                      |                 |      |                |                     |                     |                   |           |          |               |                        |                |                     |                          |                         |          |                        |                         |               |            |        |           |                                   |                         |             |                  |          |       |           |        |                   |                        |                   |             |
-| SMPDSv1  | EMPD     | Mt Shipchenska | Atanassova\_a3 | 42.76000 |  25.32750 |      1061 |                     | Unknown                      | moss polster or moss | \-52           |        13 | temperate deciduous broadleaf forest         | 0.7697785 | 2993.127 |  7.650907 | \-3.3696565 | 18.04428 | Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset. | 10.17864/1947.194 |        |       |            |                |                |                    |               |                              |                              |                |        |                |          |             |              |          |                      |                 |      |                |                     |                     |                   |           |          |               |                        |                |                     |                          |                         |          |                        |                         |               |            |        |           |                                   |                         |             |                  |          |       |           |        |                   |                        |                   |             |
-| SMPDSv1  | EMPD     | Mt Shipchenska | Atanassova\_a4 | 42.72056 |  25.34083 |       895 |                     | Unknown                      | moss polster or moss | \-52           |        13 | temperate deciduous broadleaf forest         | 0.7251731 | 3230.620 |  8.464212 | \-2.6945199 | 18.91247 | Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset. | 10.17864/1947.194 |        |       |            |                |                |                    |               |                              |                              |                |        |                |          |             |              |          |                      |                 |      |                |                     |                     |                   |           |          |               |                        |                |                     |                          |                         |          |                        |                         |               |            |        |           |                                   |                         |             |                  |          |       |           |        |                   |                        |                   |             |
-| SMPDSv1  | EMPD     | Mt Shipchenska | Atanassova\_a5 | 42.72444 |  25.33722 |       639 |                     | Unknown                      | moss polster or moss | \-52           |        13 | temperate deciduous broadleaf forest         | 0.6679003 | 3587.848 |  9.612987 | \-1.8595969 | 20.20097 | Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset. | 10.17864/1947.194 |        |       |            |                |                |                    |               |                              |                              |                |        |                |          |             |              |          |                      |                 |    1 |                |                     |                     |                   |           |          |               |                        |                |                     |                          |                         |          |                        |                         |               |            |        |           |                                   |                         |             |                  |          |       |           |        |                   |                        |                   |             |
-| SMPDSv1  | EMPD     | Mt Shipchenska | Atanassova\_b1 | 42.74111 |  25.34139 |      1310 |                     | Unknown                      | moss polster or moss | \-53           |        13 | temperate deciduous broadleaf forest         | 0.8239493 | 2683.142 |  6.595417 | \-4.0535105 | 16.81607 | Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset. | 10.17864/1947.194 |        |     2 |            |                |                |                    |               |                              |                              |                |        |                |          |             |              |          |                      |                 |      |                |                     |                     |                   |           |          |               |                        |                |                     |                          |                         |          |                        |                         |               |            |        |           |                                   |                         |             |                  |          |       |           |        |                   |                        |                   |             |
-| SMPDSv1  | EMPD     | Mt Shipchenska | Atanassova\_b2 | 42.75556 |  25.32750 |      1195 |                     | Unknown                      | moss polster or moss | \-53           |        13 | temperate deciduous broadleaf forest         | 0.8023825 | 2820.270 |  7.065475 | \-3.7582657 | 17.37840 | Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset. | 10.17864/1947.194 |        |       |            |                |                |                    |               |                              |                              |                |        |                |          |             |              |          |                      |                 |    3 |                |                     |                     |                   |           |          |               |                        |                |                     |                          |                         |          |                        |                         |               |            |        |           |                                   |                         |             |                  |          |       |           |        |                   |                        |                   |             |
-| SMPDSv1  | EMPD     | Mt Shipchenska | Atanassova\_b3 | 42.76000 |  25.32750 |      1061 |                     | Unknown                      | moss polster or moss | \-53           |        13 | temperate deciduous broadleaf forest         | 0.7697785 | 2993.127 |  7.650907 | \-3.3696565 | 18.04428 | Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset. | 10.17864/1947.194 |        |       |            |                |                |                    |               |                              |                              |                |        |                |          |             |              |          |                      |                 |      |                |                     |                     |                   |           |          |               |                        |                |                     |                          |                         |          |                        |                         |               |            |        |           |                                   |                         |             |                  |          |       |           |        |                   |                        |                   |             |
-| SMPDSv1  | EMPD     | Mt Shipchenska | Atanassova\_b4 | 42.72056 |  25.34083 |       895 |                     | Unknown                      | moss polster or moss | \-53           |        13 | temperate deciduous broadleaf forest         | 0.7251731 | 3230.620 |  8.464212 | \-2.6945199 | 18.91247 | Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset. | 10.17864/1947.194 |        |     3 |            |                |                |                    |               |                              |                              |                |        |                |          |             |              |          |                      |                 |    3 |                |                     |                     |                   |           |          |               |                        |                |                     |                          |                         |          |                        |                         |               |            |        |           |                                   |                         |             |                  |          |       |           |        |                   |                        |                   |             |
-| SMPDSv1  | EMPD     | Mt Shipchenska | Atanassova\_b5 | 42.72444 |  25.33722 |       639 |                     | Unknown                      | moss polster or moss | \-53           |        13 | temperate deciduous broadleaf forest         | 0.6679003 | 3587.848 |  9.612987 | \-1.8595969 | 20.20097 | Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset. | 10.17864/1947.194 |        |       |            |                |                |                    |               |                              |                              |                |        |                |          |             |              |          |                      |                 |      |                |                     |                     |                   |           |          |               |                        |                |                     |                          |                         |          |                        |                         |               |            |        |           |                                   |                         |             |                  |          |       |           |        |                   |                        |                   |             |
-| SMPDSv1  | EMPD     | Mt Shipchenska | Atanassova\_c1 | 42.74111 |  25.34139 |      1310 |                     | Unknown                      | moss polster or moss | \-54           |        13 | temperate deciduous broadleaf forest         | 0.8239493 | 2683.142 |  6.595417 | \-4.0535105 | 16.81607 | Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset. | 10.17864/1947.194 |        |       |            |                |                |                    |               |                              |                              |                |        |                |          |             |              |          |                      |                 |      |                |                     |                     |                   |           |          |               |                        |                |                     |                          |                         |          |                        |                         |               |            |        |           |                                   |                         |             |                  |          |       |           |        |                   |                        |                   |             |
-| SMPDSv1  | EMPD     | Mt Shipchenska | Atanassova\_c2 | 42.75556 |  25.32750 |      1195 |                     | Unknown                      | moss polster or moss | \-54           |        13 | temperate deciduous broadleaf forest         | 0.8023825 | 2820.270 |  7.065475 | \-3.7582657 | 17.37840 | Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset. | 10.17864/1947.194 |        |       |            |                |                |                    |               |                              |                              |                |        |                |          |             |              |          |                      |                 |      |                |                     |                     |                   |           |          |               |                        |                |                     |                          |                         |          |                        |                         |               |            |        |           |                                   |                         |             |                  |          |       |           |        |                   |                        |                   |             |
-| SMPDSv1  | EMPD     | Mt Shipchenska | Atanassova\_c3 | 42.76000 |  25.32750 |      1061 |                     | Unknown                      | moss polster or moss | \-54           |        13 | temperate deciduous broadleaf forest         | 0.7697785 | 2993.127 |  7.650907 | \-3.3696565 | 18.04428 | Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset. | 10.17864/1947.194 |        |       |            |                |                |                    |               |                              |                              |                |        |                |          |             |              |          |                      |                 |   11 |                |                     |                     |                   |           |          |               |                        |                |                     |                          |                         |          |                        |                         |               |            |        |           |                                   |                         |             |                  |          |       |           |        |                   |                        |                   |             |
-| SMPDSv1  | EMPD     | Mt Shipchenska | Atanassova\_c4 | 42.72056 |  25.34083 |       895 |                     | Unknown                      | moss polster or moss | \-54           |        13 | temperate deciduous broadleaf forest         | 0.7251731 | 3230.620 |  8.464212 | \-2.6945199 | 18.91247 | Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset. | 10.17864/1947.194 |        |       |            |                |                |                    |               |                              |                              |                |        |                |          |             |              |          |                      |                 |      |                |                     |                     |                   |           |          |               |                        |                |                     |                          |                         |          |                        |                         |               |            |        |           |                                   |                         |             |                  |          |       |           |        |                   |                        |                   |             |
-| SMPDSv1  | EMPD     | Mt Shipchenska | Atanassova\_c5 | 42.72444 |  25.33722 |       639 |                     | Unknown                      | moss polster or moss | \-54           |        13 | temperate deciduous broadleaf forest         | 0.6679003 | 3587.848 |  9.612987 | \-1.8595969 | 20.20097 | Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset. | 10.17864/1947.194 |        |       |            |                |                |                    |               |                              |                              |                |        |                |          |             |              |          |                      |                 |      |                |                     |                     |                   |           |          |               |                        |                |                     |                          |                         |          |                        |                         |               |            |        |           |                                   |                         |             |                  |          |       |           |        |                   |                        |                   |             |
-| SMPDSv1  | EMPD     | Mt Shipchenska | Atanassova\_d1 | 42.75556 |  25.32750 |      1195 |                     | Unknown                      | moss polster or moss | \-55           |        13 | temperate deciduous broadleaf forest         | 0.8023825 | 2820.270 |  7.065475 | \-3.7582657 | 17.37840 | Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset. | 10.17864/1947.194 |        |     3 |            |                |                |                    |               |                              |                              |                |        |                |          |             |              |          |                      |                 |      |                |                     |                     |                   |           |          |               |                        |                |                     |                          |                         |          |                        |                         |               |            |        |           |                                   |                         |             |                  |          |       |           |        |                   |                        |                   |             |
-| SMPDSv1  | EMPD     | Mt Shipchenska | Atanassova\_d2 | 42.76000 |  25.32750 |      1061 |                     | Unknown                      | moss polster or moss | \-55           |        13 | temperate deciduous broadleaf forest         | 0.7697785 | 2993.127 |  7.650907 | \-3.3696565 | 18.04428 | Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset. | 10.17864/1947.194 |        |    12 |            |                |                |                    |               |                              |                              |                |        |                |          |             |              |          |                      |                 |      |                |                     |                     |                   |           |          |               |                        |                |                     |                          |                         |          |                        |                         |               |            |        |           |                                   |                         |             |                  |          |       |           |        |                   |                        |                   |             |
-| SMPDSv1  | EMPD/EMB | GravgazMarsh   | Bakker\_a1     | 37.59118 |  30.40144 |      1241 | medium (1.1-50 km2) | terrestrial, marsh           | surface sample       | assumed modern |        17 | temperate evergreen needleleaf open woodland | 0.3996845 | 4250.760 | 11.645917 |   1.4309660 | 21.90219 | Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset. | 10.17864/1947.194 |        |       |            |              1 |                |                    |               |                              |                              |                |        |                |          |             |              |          |                      |                 |    2 |                |                     |                     |                   |           |          |               |                        |                |                     |                          |                         |          |                        |                         |               |            |        |           |                                   |                         |             |                  |          |       |           |        |                   |                        |                   |             |
-| SMPDSv1  | EMPD/EMB | Bereket Basin  | Bakker\_a10    | 37.55091 |  30.29780 |      1486 | medium (1.1-50 km2) | terrestrial, other sediments | moss polster or moss | assumed modern |        17 | temperate evergreen needleleaf open woodland | 0.3748226 | 3760.236 | 10.274915 | \-0.3163084 | 20.75712 | Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset. | 10.17864/1947.194 |        |       |            |                |                |                    |               |                              |                              |                |        |                |          |             |              |          |                      |                 |      |                |                     |                     |                   |           |          |               |                        |                |                     |                          |                         |          |                        |                         |               |            |        |           |                                   |                         |             |                  |          |       |           |        |                   |                        |                   |             |
-| SMPDSv1  | EMPD/EMB | Bereket Basin  | Bakker\_a11    | 37.54651 |  30.30045 |      1449 | medium (1.1-50 km2) | terrestrial, other sediments | moss polster or moss | assumed modern |        17 | temperate evergreen needleleaf open woodland | 0.3785727 | 3830.830 | 10.487544 | \-0.0446082 | 20.93606 | Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset. | 10.17864/1947.194 |        |       |            |              1 |                |                    |               |                              |                              |                |        |                |          |             |              |          |                      |                 |      |                |                     |                     |                   |           |          |               |                        |                |                     |                          |                         |          |                        |                         |               |            |        |           |                                   |                         |             |                  |          |       |           |        |                   |                        |                   |             |
+#### Create a snapshot of entities
 
-#### Plots
+The function `smpds::snapshot` takes few different parameters and based
+on the first one, `x`, it returns a variety of snapshots.
+
+This function returns a list with 3 components:
+
+-   `entity`: data frame (`tibble` object) with the metadata associated
+    to the entities.
+-   `climate`: data frame (`tibble` object) with the climate and
+    vegetation reconstructions. This one can be linked to the `entity`
+    table using the column called `ID_SAMPLE`.
+-   `pollen_count`: list of data frames (`tibble` objects) containing
+    the pollen counts for 3 levels of “amalgamation”:
+    -   `clean`
+    -   `intermediate`
+    -   `amalgamated`
+
+    All these data frames can be linked to the `entity` table using the
+    column called `ID_SAMPLE`.
+
+:warning: **NOTE:** the output is returned “invisibly”, so you should
+assign the output of the function to a variable.
+
+``` r
+output <- smpds::snapshot(...)
+output$entity
+output$climate
+output$pollen_count$clean
+output$pollen_count$intermediate
+output$pollen_count$intermediate
+```
+
+##### Using the `entity_name`
+
+``` r
+smpds::snapshot("juodonys_core")
+#> # A tibble: 1 × 6
+#>   ID_SITE ID_ENTITY ID_SAMPLE site_name entity_name   pollen_counts$clean
+#>     <int>     <int>     <int> <chr>     <chr>                       <int>
+#> 1    3890      7901         1 Juodonys  juodonys_core                   1
+#> # … with 2 more variables: pollen_counts$intermediate <int>, $amalgamated <int>
+```
+
+##### Using the `site_name`
+
+``` r
+smpds::snapshot("Petresiunai", use_site_name = TRUE)
+#> # A tibble: 1 × 6
+#>   ID_SITE ID_ENTITY ID_SAMPLE site_name   entity_name     pollen_counts$clean
+#>     <int>     <int>     <int> <chr>       <chr>                         <int>
+#> 1    6690     14229         2 Petresiunai petresiunai_121                   1
+#> # … with 2 more variables: pollen_counts$intermediate <int>, $amalgamated <int>
+```
+
+##### Using the `ID_ENTITY`
+
+``` r
+smpds::snapshot(2)
+#> # A tibble: 1 × 6
+#>   ID_SITE ID_ENTITY ID_SAMPLE site_name entity_name pollen_counts$clean
+#>     <int>     <int>     <int> <chr>     <chr>                     <int>
+#> 1       1         2      9710 05-Mo     05-Mo-10                      1
+#> # … with 2 more variables: pollen_counts$intermediate <int>, $amalgamated <int>
+```
+
+##### Using the `ID_SITE`
+
+``` r
+smpds::snapshot(3, use_id_site = TRUE)
+#> # A tibble: 1 × 6
+#>   ID_SITE ID_ENTITY ID_SAMPLE site_name  entity_name pollen_counts$clean
+#>     <int>     <int>     <int> <chr>      <chr>                     <int>
+#> 1       3        37     15871 11 [HFL11] HFL11                         1
+#> # … with 2 more variables: pollen_counts$intermediate <int>, $amalgamated <int>
+```
+
+##### Extracting multiple records at once
+
+``` r
+smpds::snapshot(1:10)
+#> # A tibble: 10 × 6
+#>    ID_SITE ID_ENTITY ID_SAMPLE site_name entity_name pollen_counts$clean
+#>      <int>     <int>     <int> <chr>     <chr>                     <int>
+#>  1       1         1      9709 05-Mo     05-Mo                        10
+#>  2       1         2      9710 05-Mo     05-Mo-10                     10
+#>  3       1         3      9711 05-Mo     05-Mo-11                     10
+#>  4       1         4      9712 05-Mo     05-Mo-12                     10
+#>  5       1         5      9713 05-Mo     05-Mo-13                     10
+#>  6       1         6      9714 05-Mo     05-Mo-14                     10
+#>  7       1         7      9715 05-Mo     05-Mo-15                     10
+#>  8       1         8      9716 05-Mo     05-Mo-16                     10
+#>  9       1         9      9717 05-Mo     05-Mo-17                     10
+#> 10       1        10      9718 05-Mo     05-Mo-18                     10
+#> # … with 2 more variables: pollen_counts$intermediate <int>, $amalgamated <int>
+```
+
+##### Extracting all the records at once
+
+This will run ****very slow****, so if only few entities are required,
+it would be better to indicate which, based on the previous examples.
+
+``` r
+out <- smpds::snapshot()
+```
+
+#### Export data as individual CSV files
+
+The function `smpds::write_csvs` takes to parameters:
+
+-   `.data`: a list of class `snapshot`, this one can be generated using
+    the function `smpds::snapshot` (see previous section).
+-   `prefix`: a prefix name to be included in each individual files,
+    this prefix can include a relative or absolute path to a directory
+    in the local machine.
+
+##### Without a path
+
+``` r
+`%>%` <- smpds::`%>%`
+smpds::snapshot("juodonys_core") %>%
+  smpds::write_csvs(prefix = "juodonys_core")
+#> # A tibble: 1 × 6
+#>   ID_SITE ID_ENTITY ID_SAMPLE site_name entity_name   pollen_counts$clean
+#>     <int>     <int>     <int> <chr>     <chr>                       <int>
+#> 1    3890      7901         1 Juodonys  juodonys_core                   1
+#> # … with 2 more variables: pollen_counts$intermediate <int>, $amalgamated <int>
+```
+
+###### Output
+
+    #>                                          levelName
+    #> 1 .                                               
+    #> 2  ¦--juodonys_core_metadata.csv                  
+    #> 3  ¦--juodonys_core_pollen_counts_amalgamated.csv 
+    #> 4  ¦--juodonys_core_pollen_counts_clean.csv       
+    #> 5  °--juodonys_core_pollen_counts_intermediate.csv
+
+##### Including a path
+
+``` r
+`%>%` <- smpds::`%>%`
+smpds::snapshot("juodonys_core") %>%
+  smpds::write_csvs(prefix = "/special.uor/epd/juodonys_core")
+```
+
+###### Output
+
+    #>                                              levelName
+    #> 1 special.uor                                         
+    #> 2  °--epd                                             
+    #> 3      ¦--juodonys_core_metadata.csv                  
+    #> 4      ¦--juodonys_core_pollen_counts_amalgamated.csv 
+    #> 5      ¦--juodonys_core_pollen_counts_clean.csv       
+    #> 6      °--juodonys_core_pollen_counts_intermediate.csv
+
+## Spatial distribution of the entities
 
 ##### Potential Natural Vegetation (PNV)
 
