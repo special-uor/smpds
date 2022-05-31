@@ -197,6 +197,28 @@ SMPDSv2 <- SMPDSv2_with_climate_corrections_2 %>%
   dplyr::select(-dplyr::starts_with("new_"))
 usethis::use_data(SMPDSv2, overwrite = TRUE, compress = "xz")
 
+# Update citation for Harrison et al., 2022 ----
+`%>%` <- magrittr::`%>%`
+data("SMPDSv2", package = "smpds")
+SMPDSv2_updated <- SMPDSv2 %>%
+  dplyr::mutate(
+    # source = ifelse(source == "Harrison et al., 2021",
+    #                 "Harrison et al., 2022",
+    #                 source),
+    publication =
+      ifelse(source == "Harrison et al., 2021",
+             "Harrison, S.P., Villegas-Diaz, R., Cruz-Silva, E., Gallagher, D., Kesner, D., Lincoln, P., Shen, Y., Sweeney, L., Colombaroli, D., Ali, A., Barhoumi, C., Bergeron, Y., Blyakharchuk, T., Bobek, P., Bradshaw, R., Clear, J.L., Czerwiński, S., Daniau, A-L., Dodson, J., Edwards, K.J., Edwards, M.E., Feurdean, A., Foster, D., Gajewski, K., Gałka, M., Garneau, M., Giesecke, T.,  Gil Romera, G., Girardin, M.P., Hoefer, D., Huang, K., Inoue, J., Jamrichová, E., Jasiunas, N., Jiang, W., Jiménez-Moreno, G., Karpińska-Kołaczek, M., Kołaczek, P., Kuosmanen, N., Lamentowicz, M., Lavoie, M., Li, F., Li, J., Lisitsyna, O., López-Sáez, J.A., Luelmo-Lautenschlaeger, R., Magnan, G., Magyari, E.K., Maksims, A., Marcisz, K., Marinova, E., Marlon, J., Mensing, S., Miroslaw-Grabowska, J., Oswald, W., Pérez-Díaz, S., Pérez-Obiol, R., Piilo, S., Poska, A., Qin, X., Remy, C.C., Richard, P.J.H., Salonen, S., Sasaki, N., Schneider, H., Shotyk, W., Stancikaite, M., Šteinberga, D., Stivrins, N., Takahara, H., Tan, Z., Trasune, L., Umbanhowar, C.E., Väliranta, M., Vassiljev, J., Xiao, X., Xu, Q., Xu, X., Zawisza, E., Zhao, Y., Zhou, Z., Paillard, J., 2021/2022. The Reading Palaeofire database: an expanded global resource to document changes in fire regimes from sedimentary charcoal records Earth System Science Data Discussions https://doi.org/10.5194/essd-2021-272. Earth System Science Data 14: 1109-1124 https://doi.org/10.5194/essd-14-1109-2022",
+             publication),
+    doi =
+      ifelse(source == "Harrison et al., 2021",
+             "10.5194/essd-2021-272",
+             doi),
+  )
+
+waldo::compare(SMPDSv2, SMPDSv2_updated)
+SMPDSv2 <- SMPDSv2_updated
+usethis::use_data(SMPDSv2, overwrite = TRUE, compress = "xz")
+
 # Export list of amalgamations ----
 ## Additional taxonomic corrections (SPH - May 20th) ----
 taxonomic_corrections <- "data-raw/GLOBAL/taxonomic_corrections.xlsx" %>%
