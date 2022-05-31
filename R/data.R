@@ -121,18 +121,17 @@
 #' https://researchdata.reading.ac.uk/294
 "IbMPD"
 
-#' \code{ItMPD} dataset
+
+#' \code{japanese_pollen} dataset
 #'
-#' The Italian Modern Pollen Dataset (ItMPD).
+#' The Japanese Pollen Dataset.
 #'
-#' @format A data frame (\code{tibble} object) with `r nrow(smpds::ItMPD)` rows and `r ncol(smpds::ItMPD)` variables:
+#' @format A data frame (\code{tibble} object) with `r nrow(smpds::japanese_pollen)` rows and `r ncol(smpds::japanese_pollen)` variables:
 #' \describe{
 #'   \item{...}{int ...}
 #' }
 #'
-#' @references
-#' \insertRef{finsinger2007modern}{smpds}
-"ItMPD"
+"japanese_pollen"
 
 #' \code{NEOTOMA} dataset
 #'
@@ -220,18 +219,17 @@
 #' \insertRef{williams2018neotoma}{smpds}
 "SMPDSv2"
 
-#' \code{SSMPD} dataset
-#'
-#' Dataset provided by \insertCite{gaillard1992modern;textual}{smpds}.
-#'
-#' @format A data frame (\code{tibble} object) with `r nrow(smpds::SSMPD)` rows and `r ncol(smpds::SSMPD)` variables:
-#' \describe{
-#'   \item{...}{int ...}
-#' }
-#'
-#' @references
-#' \insertAllCited{}
-#'
-#' @source
-#' https://doi.org/10.1007/BF00190697
-"SSMPD"
+#' @keywords internal
+"_PACKAGE"
+
+#' \code{climate}
+"climate"
+
+#' \code{entity}
+"entity"
+
+#' \code{pollen_count}
+"pollen_count"
+
+#' \code{taxon_name}
+"taxon_name"
