@@ -27,3 +27,8 @@ usethis::use_data(taxon_name, overwrite = TRUE, compress = "xz")
 
 # Close database connection
 dabr::close_conn(conn)
+
+# Dump as CSV files ----
+snap <- smpds::snapshot()
+snap %>%
+  smpds::write_csvs("~/Downloads/smpdsv2")
