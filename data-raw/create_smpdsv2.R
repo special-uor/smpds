@@ -103,6 +103,100 @@ SMPDSv2_marine_entities_corrected %>%
 SMPDSv2 <- SMPDSv2_marine_entities_corrected
 usethis::use_data(SMPDSv2, overwrite = TRUE, compress = "xz")
 
+# Update reconstructions for dodgy entities ----
+dodgy_entities <-
+  "data-raw/smpdsv2_sites_with_dodgy_climate_reconstructions_2022-05-25_SPH.xlsx" %>%
+  readxl::read_excel(sheet = 1)
+
+climate_reconstructions <-
+  "data-raw/reconstructions/smpdsv2_sites_with_dodgy_climate_reconstructions_climate_reconstructions_2022-05-30.csv" %>%
+  readr::read_csv()
+
+# Load daily values for precipitation to compute MAP (mean annual precipitation)
+climate_reconstructions_pre <-
+  "data-raw/reconstructions/smpdsv2_sites_with_dodgy_climate_reconstructions_climate_reconstructions_pre_2022-05-30.csv" %>%
+  readr::read_csv() %>%
+  dplyr::rowwise() %>%
+  dplyr::mutate(map = sum(dplyr::c_across(T1:T365), na.rm = TRUE), .before = T1)
+climate_reconstructions_2 <- climate_reconstructions %>%
+  dplyr::bind_cols(climate_reconstructions_pre %>%
+                     dplyr::select(map, ID_BIOME, PNV))
+View(climate_reconstructions_2)
+
+# Remove reconstructed values where mi < 0 (not accurate reconstructions)
+climate_reconstructions_3 <- climate_reconstructions_2 %>%
+  dplyr::mutate(
+    mi = ifelse(is.na(mi) | mi < 0, NA, mi),
+    gdd0 = ifelse(is.na(mi) | mi < 0, NA, gdd0),
+    mat = ifelse(is.na(mi) | mi < 0, NA, mat),
+    mtco = ifelse(is.na(mi) | mi < 0, NA, mtco),
+    mtwa = ifelse(is.na(mi) | mi < 0, NA, mtwa),
+    map = ifelse(is.na(mi) | mi < 0, NA, map)
+  )
+View(climate_reconstructions_3)
+
+## Update the main dataset ----
+climate_reconstructions_3 %>%
+  dplyr::bind_cols(
+    dodgy_entities %>%
+      dplyr::select(source, age_BP, ID_SAMPLE)
+  )
+
+SMPDSv2_with_climate_corrections <- SMPDSv2 %>%
+  dplyr::left_join(
+    climate_reconstructions_3 %>%
+      dplyr::distinct() %>%
+      magrittr::set_names(paste0("new_", colnames(.))),
+    by = c("site_name" = "new_site_name", "entity_name" = "new_entity_name")
+  )
+
+SMPDSv2_with_climate_corrections_2 <-
+  SMPDSv2_with_climate_corrections %>%
+  dplyr::mutate(
+    mi = ifelse(!is.na(new_latitude), NA, mi),
+    gdd0 = ifelse(!is.na(new_latitude), NA, gdd0),
+    mat = ifelse(!is.na(new_latitude), NA, mat),
+    mtco = ifelse(!is.na(new_latitude), NA, mtco),
+    mtwa = ifelse(!is.na(new_latitude), NA, mtwa),
+    map = ifelse(!is.na(new_latitude), NA, map),
+    ID_BIOME = ifelse(!is.na(new_latitude), NA, ID_BIOME),
+    PNV = ifelse(!is.na(new_latitude), NA, PNV)
+  ) %>%
+  dplyr::mutate(
+    latitude = dplyr::coalesce(new_latitude, latitude),
+    longitude = dplyr::coalesce(new_longitude, longitude),
+    elevation = dplyr::coalesce(new_elevation, elevation),
+    mi = dplyr::coalesce(new_mi, mi),
+    gdd0 = dplyr::coalesce(new_gdd0, gdd0),
+    mat = dplyr::coalesce(new_mat, mat),
+    mtco = dplyr::coalesce(new_mtco, mtco),
+    mtwa = dplyr::coalesce(new_mtwa, mtwa),
+    map = dplyr::coalesce(new_map, map),
+    ID_BIOME = dplyr::coalesce(new_ID_BIOME, ID_BIOME),
+    PNV = dplyr::coalesce(new_PNV, PNV)
+  ) #%>%
+  # dplyr::filter(!is.na(new_latitude)) %>%
+  # dplyr::select(-clean, -intermediate, -amalgamated) %>%
+  # View()
+  # dplyr::filter(!is.na(new_latitude)) %>% View()
+
+waldo::compare(climate_reconstructions_3 %>%
+                 dplyr::arrange(site_name, entity_name),
+               SMPDSv2_with_climate_corrections_2 %>%
+                 dplyr::filter(!is.na(new_latitude)) %>%
+                 dplyr::arrange(site_name, entity_name) %>%
+                 dplyr::select(site_name:elevation, mi:map, ID_BIOME:PNV))
+waldo::compare(SMPDSv2,
+               SMPDSv2_with_climate_corrections_2 %>%
+                 dplyr::select(-dplyr::starts_with("new_")),
+               max_diffs = Inf)
+SMPDSv2_with_climate_corrections_2 %>%
+  dplyr::filter(is.na(ID_BIOME)) %>%
+  View()
+SMPDSv2 <- SMPDSv2_with_climate_corrections_2 %>%
+  dplyr::select(-dplyr::starts_with("new_"))
+usethis::use_data(SMPDSv2, overwrite = TRUE, compress = "xz")
+
 # Export list of amalgamations ----
 ## Additional taxonomic corrections (SPH - May 20th) ----
 taxonomic_corrections <- "data-raw/GLOBAL/taxonomic_corrections.xlsx" %>%
@@ -593,7 +687,8 @@ waldo::compare(SMPDSv2_db %>%
                entity_tb %>%
                  dplyr::arrange(ID_SITE, ID_ENTITY, ID_SAMPLE) %>%
                  .[order(colnames(.))],
-               tolerance = 1E-9)
+               tolerance = 1E-9,
+               max_diffs = Inf)
 
 ## climate ----
 idx_climate <- idx_pairs(nrow(SMPDSv2_db), 1000)
@@ -623,7 +718,8 @@ waldo::compare(SMPDSv2_db %>%
                climate_tb %>%
                  dplyr::arrange(ID_SAMPLE) %>%
                  .[order(colnames(.))],
-               tolerance = 1E-9)
+               tolerance = 1E-9,
+               max_diffs = Inf)
 
 ## count ----
 ### taxon_name ----
@@ -1016,36 +1112,52 @@ SMPDSv2_dodgy_entities_3 %>%
            Sys.Date(), ".csv"), na = "")
 
 ## Load climate for dodgy entities ----
+dodgy_entities <-
+  "data-raw/smpdsv2_sites_with_dodgy_climate_reconstructions_2022-05-25_SPH.xlsx" %>%
+  readxl::read_excel(sheet = 1)
+
 climate_reconstructions <-
-  "data-raw/reconstructions/smpdsv2_sites_with_dodgy_climate_reconstructions_climate_reconstructions_2022-05-25.csv" %>%
+  "data-raw/reconstructions/smpdsv2_sites_with_dodgy_climate_reconstructions_climate_reconstructions_2022-05-30.csv" %>%
   readr::read_csv()
 
 # Load daily values for precipitation to compute MAP (mean annual precipitation)
 climate_reconstructions_pre <-
-  "data-raw/reconstructions/smpdsv2_sites_with_dodgy_climate_reconstructions_climate_reconstructions_pre_2022-05-25.csv" %>%
+  "data-raw/reconstructions/smpdsv2_sites_with_dodgy_climate_reconstructions_climate_reconstructions_pre_2022-05-30.csv" %>%
   readr::read_csv() %>%
   dplyr::rowwise() %>%
   dplyr::mutate(map = sum(dplyr::c_across(T1:T365), na.rm = TRUE), .before = T1)
-
-climate_reconstructions_z_buffer_2 <-
-  "data-raw/reconstructions/smpdsv2_sites_with_dodgy_climate_reconstructions_climate_reconstructions_2022-05-25_z_buffer_2.csv" %>%
-  readr::read_csv()
-
-# Load daily values for precipitation to compute MAP (mean annual precipitation)
-climate_reconstructions_z_buffer_2_pre <-
-  "data-raw/reconstructions/smpdsv2_sites_with_dodgy_climate_reconstructions_climate_reconstructions_pre_2022-05-25_z_buffer_2.csv" %>%
-  readr::read_csv() %>%
-  dplyr::rowwise() %>%
-  dplyr::mutate(map = sum(dplyr::c_across(T1:T365), na.rm = TRUE), .before = T1)
-
 climate_reconstructions_2 <- climate_reconstructions %>%
   dplyr::bind_cols(climate_reconstructions_pre %>%
-                     dplyr::select(map))
-climate_reconstructions_z_buffer_2_2 <- climate_reconstructions_z_buffer_2 %>%
-  dplyr::bind_cols(climate_reconstructions_z_buffer_2_pre %>%
-                     dplyr::select(map))
+                     dplyr::select(map, ID_BIOME, PNV))
 View(climate_reconstructions_2)
-View(climate_reconstructions_z_buffer_2_2)
+
+# Remove reconstructed values where mi < 0 (not accurate reconstructions)
+climate_reconstructions_3 <- climate_reconstructions_2 %>%
+  dplyr::mutate(
+    mi = ifelse(is.na(mi) | mi < 0, NA, mi),
+    gdd0 = ifelse(is.na(mi) | mi < 0, NA, gdd0),
+    mat = ifelse(is.na(mi) | mi < 0, NA, mat),
+    mtco = ifelse(is.na(mi) | mi < 0, NA, mtco),
+    mtwa = ifelse(is.na(mi) | mi < 0, NA, mtwa),
+    map = ifelse(is.na(mi) | mi < 0, NA, map)
+  )
+View(climate_reconstructions_3)
+
+# climate_reconstructions_z_buffer_2 <-
+#   "data-raw/reconstructions/smpdsv2_sites_with_dodgy_climate_reconstructions_climate_reconstructions_2022-05-25_z_buffer_2.csv" %>%
+#   readr::read_csv()
+#
+# # Load daily values for precipitation to compute MAP (mean annual precipitation)
+# climate_reconstructions_z_buffer_2_pre <-
+#   "data-raw/reconstructions/smpdsv2_sites_with_dodgy_climate_reconstructions_climate_reconstructions_pre_2022-05-25_z_buffer_2.csv" %>%
+#   readr::read_csv() %>%
+#   dplyr::rowwise() %>%
+#   dplyr::mutate(map = sum(dplyr::c_across(T1:T365), na.rm = TRUE), .before = T1)
+# climate_reconstructions_z_buffer_2_2 <- climate_reconstructions_z_buffer_2 %>%
+#   dplyr::bind_cols(climate_reconstructions_z_buffer_2_pre %>%
+#                      dplyr::select(map))
+
+# View(climate_reconstructions_z_buffer_2_2)
 
 SMPDSv2_offshore_2 %>%
   dplyr::filter(on_land != 1) %>%
