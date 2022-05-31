@@ -73,6 +73,9 @@
     <loc>/reference/clean_taxa.html</loc>
   </url>
   <url>
+    <loc>/reference/climate.html</loc>
+  </url>
+  <url>
     <loc>/reference/compare_latlon.html</loc>
   </url>
   <url>
@@ -80,6 +83,9 @@
   </url>
   <url>
     <loc>/reference/cru_mask.html</loc>
+  </url>
+  <url>
+    <loc>/reference/entity.html</loc>
   </url>
   <url>
     <loc>/reference/extract_biome.html</loc>
@@ -133,6 +139,12 @@
     <loc>/reference/pnv_classes.html</loc>
   </url>
   <url>
+    <loc>/reference/pollen_count.html</loc>
+  </url>
+  <url>
+    <loc>/reference/print.html</loc>
+  </url>
+  <url>
     <loc>/reference/process_apd.html</loc>
   </url>
   <url>
@@ -145,15 +157,24 @@
     <loc>/reference/smpds-package.html</loc>
   </url>
   <url>
+    <loc>/reference/snapshot.html</loc>
+  </url>
+  <url>
     <loc>/reference/sort_taxa.html</loc>
   </url>
   <url>
     <loc>/reference/subset_coords.html</loc>
   </url>
   <url>
+    <loc>/reference/taxon_name.html</loc>
+  </url>
+  <url>
     <loc>/reference/total_taxa.html</loc>
   </url>
   <url>
     <loc>/reference/tps.html</loc>
+  </url>
+  <url>
+    <loc>/reference/write_csvs.html</loc>
   </url>
 </urlset>

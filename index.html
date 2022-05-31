@@ -5,18 +5,19 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The SPECIAL Modern Pollen Data • smpds</title>
+<title>The SPECIAL Modern Pollen Data Set for Climate Reconstructions • smpds</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="The SPECIAL Modern Pollen Data">
+<script src="pkgdown.js"></script><meta property="og:title" content="The SPECIAL Modern Pollen Data Set for Climate Reconstructions">
 <meta property="og:description" content="Provides functions to facilitate the access to the SPECIAL Modern 
-    Pollen DataSet (SMPDS) and to reconstruct climate variables, like Mean
-    Temperature of the COldest month (MTCO), Mean Temperature of the WArmest
-    month (MTWA) and Growing Degree Days (GDD). Also, it provides functions to
-    find the Potential Natural Vegetation (PNV) of a given site.">
+    Pollen Data Set for Climate Reconstructions (SMPDS) and to reconstruct 
+    climate variables, like Mean Temperature of the COldest month (MTCO), Mean 
+    Temperature of the WArmest month (MTWA) and Growing Degree Days (GDD). Also, 
+    it provides functions to find the Potential Natural Vegetation (PNV) of a 
+    given site.">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -37,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">smpds</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.0</span>
       </span>
     </div>
 
@@ -67,1628 +68,195 @@
       </header><div class="row">
   <div class="contents col-md-9">
 <div class="section level1">
-<div class="page-header"><h1 id="smpds-modern-pollen-data-for-climate-reconstructions">SMPDS: Modern Pollen Data for climate reconstructionS<a class="anchor" aria-label="anchor" href="#smpds-modern-pollen-data-for-climate-reconstructions"></a>
+<div class="page-header"><h1 id="smpds-the-special-modern-pollen-data-for-climate-reconstructions">SMPDS: The SPECIAL Modern Pollen Data for Climate Reconstructions<a class="anchor" aria-label="anchor" href="#smpds-the-special-modern-pollen-data-for-climate-reconstructions"></a>
 </h1></div>
 <!-- badges: start -->
-<p>The goal of smpds is to …</p>
+<p>The goal of <code>smpds</code> is to provide access to the SPECIAL Modern Pollen Data Set for Climate Reconstructions (SMPDS).</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the released version of SMPDS from <a href="https://CRAN.R-project.org" class="external-link">CRAN</a> with:</p>
+<p>You <strong>can(not)</strong> install the released version of SMPDS from <a href="https://CRAN.R-project.org" class="external-link">CRAN</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"smpds"</span><span class="op">)</span></code></pre></div>
 <p>And the development version from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"special-uor/smpds"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="co"># install.packages("remotes")</span>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"special-uor/smpds"</span><span class="op">)</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<!-- This is a basic example which shows you how to solve a common problem: --><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/special-uor/smpds/" class="external-link">smpds</a></span><span class="op">)</span>
-<span class="co">## basic example code</span>
-<span class="fu">smpds</span><span class="fu">::</span><span class="va"><a href="reference/SMPDSv2.html">SMPDSv2</a></span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/relocate.html" class="external-link">relocate</a></span><span class="op">(</span><span class="va">DOI</span>, .after <span class="op">=</span> <span class="va">publication</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">smpds</span><span class="fu">::</span><span class="fu"><a href="reference/rm_na_taxa.html">rm_na_taxa</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">120</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="co"># Filter taxa without counts</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">70</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="co"># Select only the metadata (16) + the 50 first taxa</span>
-  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<table style="width:100%;" class="table">
-<colgroup>
-<col width="0%">
-<col width="0%">
-<col width="1%">
-<col width="1%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="1%">
-<col width="2%">
-<col width="1%">
-<col width="1%">
-<col width="0%">
-<col width="3%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="11%">
-<col width="1%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="1%">
-<col width="1%">
-<col width="1%">
-<col width="1%">
-<col width="2%">
-<col width="2%">
-<col width="1%">
-<col width="0%">
-<col width="1%">
-<col width="0%">
-<col width="0%">
-<col width="1%">
-<col width="0%">
-<col width="1%">
-<col width="1%">
-<col width="0%">
-<col width="1%">
-<col width="1%">
-<col width="1%">
-<col width="1%">
-<col width="0%">
-<col width="0%">
-<col width="1%">
-<col width="1%">
-<col width="1%">
-<col width="1%">
-<col width="2%">
-<col width="2%">
-<col width="0%">
-<col width="1%">
-<col width="2%">
-<col width="1%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="2%">
-<col width="2%">
-<col width="0%">
-<col width="1%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="1%">
-<col width="1%">
-<col width="1%">
-<col width="0%">
-</colgroup>
-<thead><tr class="header">
-<th align="left">original</th>
-<th align="left">source</th>
-<th align="left">site_name</th>
-<th align="left">entity_name</th>
-<th align="right">latitude</th>
-<th align="right">longitude</th>
-<th align="right">elevation</th>
-<th align="left">basin_size</th>
-<th align="left">site_type</th>
-<th align="left">entity_type</th>
-<th align="left">age_BP</th>
-<th align="right">ID_BIOME</th>
-<th align="left">BIOME_description</th>
-<th align="right">mi</th>
-<th align="right">gdd0</th>
-<th align="right">mat</th>
-<th align="right">mtco</th>
-<th align="right">mtwa</th>
-<th align="left">publication</th>
-<th align="left">DOI</th>
-<th align="right">Abelia</th>
-<th align="right">Abies</th>
-<th align="right">Abies alba</th>
-<th align="right">Abies cilicica</th>
-<th align="right">Abies fargesii</th>
-<th align="right">Abies nordmanniana</th>
-<th align="right">Abies pinsapo</th>
-<th align="right">Abies pinsapo subsp marocana</th>
-<th align="right">Abies pinsapo subsp marocana</th>
-<th align="right">Abies sibirica</th>
-<th align="right">Acacia</th>
-<th align="right">Acacia confusa</th>
-<th align="right">Acalypha</th>
-<th align="right">Acanthaceae</th>
-<th align="right">Acantholimon</th>
-<th align="right">Acanthus</th>
-<th align="right">Acanthus ilicifolius</th>
-<th align="right">Acanthus mollis</th>
-<th align="right">Acer</th>
-<th align="right">Acer campestre</th>
-<th align="right">Acer campestre type</th>
-<th align="right">Acer pseudoplatanus</th>
-<th align="right">Acer turkestanica</th>
-<th align="right">Acer type</th>
-<th align="right">Achillea</th>
-<th align="right">Achillea type</th>
-<th align="right">Achillea/Anthemis type</th>
-<th align="right">Achillea/Aster</th>
-<th align="right">Achillea/Aster type</th>
-<th align="right">Achillea/Eupatorium type</th>
-<th align="right">Achyranthes aspera type</th>
-<th align="right">Aconitum</th>
-<th align="right">Aconitum napellus type</th>
-<th align="right">Aconitum septentrionale</th>
-<th align="right">Aconitum type</th>
-<th align="right">Acronychia</th>
-<th align="right">Actaea</th>
-<th align="right">Actinidia</th>
-<th align="right">Actinidia chinensis var deliciosa</th>
-<th align="right">Actinostemma/Gynostemma</th>
-<th align="right">Adenanthera</th>
-<th align="right">Adenostyles type</th>
-<th align="right">Adiantum</th>
-<th align="right">Adina</th>
-<th align="right">Adinandra</th>
-<th align="right">Adonis</th>
-<th align="right">Adonis aestivalis</th>
-<th align="right">Adonis aestivalis type</th>
-<th align="right">Adonis annua type</th>
-<th align="right">Adonis type</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">SMPDSv1</td>
-<td align="left">EMPD</td>
-<td align="left">Mt Shipchenska</td>
-<td align="left">Atanassova_a1</td>
-<td align="right">42.74111</td>
-<td align="right">25.34139</td>
-<td align="right">1310</td>
-<td align="left"></td>
-<td align="left">Unknown</td>
-<td align="left">moss polster or moss</td>
-<td align="left">-52</td>
-<td align="right">13</td>
-<td align="left">temperate deciduous broadleaf forest</td>
-<td align="right">0.8239493</td>
-<td align="right">2683.142</td>
-<td align="right">6.595417</td>
-<td align="right">-4.0535105</td>
-<td align="right">16.81607</td>
-<td align="left">Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset.</td>
-<td align="left">10.17864/1947.194</td>
-<td align="right"></td>
-<td align="right">7</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right">1</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr class="even">
-<td align="left">SMPDSv1</td>
-<td align="left">EMPD</td>
-<td align="left">Mt Shipchenska</td>
-<td align="left">Atanassova_a2</td>
-<td align="right">42.75556</td>
-<td align="right">25.32750</td>
-<td align="right">1195</td>
-<td align="left"></td>
-<td align="left">Unknown</td>
-<td align="left">moss polster or moss</td>
-<td align="left">-52</td>
-<td align="right">13</td>
-<td align="left">temperate deciduous broadleaf forest</td>
-<td align="right">0.8023825</td>
-<td align="right">2820.270</td>
-<td align="right">7.065475</td>
-<td align="right">-3.7582657</td>
-<td align="right">17.37840</td>
-<td align="left">Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset.</td>
-<td align="left">10.17864/1947.194</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr class="odd">
-<td align="left">SMPDSv1</td>
-<td align="left">EMPD</td>
-<td align="left">Mt Shipchenska</td>
-<td align="left">Atanassova_a3</td>
-<td align="right">42.76000</td>
-<td align="right">25.32750</td>
-<td align="right">1061</td>
-<td align="left"></td>
-<td align="left">Unknown</td>
-<td align="left">moss polster or moss</td>
-<td align="left">-52</td>
-<td align="right">13</td>
-<td align="left">temperate deciduous broadleaf forest</td>
-<td align="right">0.7697785</td>
-<td align="right">2993.127</td>
-<td align="right">7.650907</td>
-<td align="right">-3.3696565</td>
-<td align="right">18.04428</td>
-<td align="left">Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset.</td>
-<td align="left">10.17864/1947.194</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr class="even">
-<td align="left">SMPDSv1</td>
-<td align="left">EMPD</td>
-<td align="left">Mt Shipchenska</td>
-<td align="left">Atanassova_a4</td>
-<td align="right">42.72056</td>
-<td align="right">25.34083</td>
-<td align="right">895</td>
-<td align="left"></td>
-<td align="left">Unknown</td>
-<td align="left">moss polster or moss</td>
-<td align="left">-52</td>
-<td align="right">13</td>
-<td align="left">temperate deciduous broadleaf forest</td>
-<td align="right">0.7251731</td>
-<td align="right">3230.620</td>
-<td align="right">8.464212</td>
-<td align="right">-2.6945199</td>
-<td align="right">18.91247</td>
-<td align="left">Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset.</td>
-<td align="left">10.17864/1947.194</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr class="odd">
-<td align="left">SMPDSv1</td>
-<td align="left">EMPD</td>
-<td align="left">Mt Shipchenska</td>
-<td align="left">Atanassova_a5</td>
-<td align="right">42.72444</td>
-<td align="right">25.33722</td>
-<td align="right">639</td>
-<td align="left"></td>
-<td align="left">Unknown</td>
-<td align="left">moss polster or moss</td>
-<td align="left">-52</td>
-<td align="right">13</td>
-<td align="left">temperate deciduous broadleaf forest</td>
-<td align="right">0.6679003</td>
-<td align="right">3587.848</td>
-<td align="right">9.612987</td>
-<td align="right">-1.8595969</td>
-<td align="right">20.20097</td>
-<td align="left">Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset.</td>
-<td align="left">10.17864/1947.194</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right">1</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr class="even">
-<td align="left">SMPDSv1</td>
-<td align="left">EMPD</td>
-<td align="left">Mt Shipchenska</td>
-<td align="left">Atanassova_b1</td>
-<td align="right">42.74111</td>
-<td align="right">25.34139</td>
-<td align="right">1310</td>
-<td align="left"></td>
-<td align="left">Unknown</td>
-<td align="left">moss polster or moss</td>
-<td align="left">-53</td>
-<td align="right">13</td>
-<td align="left">temperate deciduous broadleaf forest</td>
-<td align="right">0.8239493</td>
-<td align="right">2683.142</td>
-<td align="right">6.595417</td>
-<td align="right">-4.0535105</td>
-<td align="right">16.81607</td>
-<td align="left">Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset.</td>
-<td align="left">10.17864/1947.194</td>
-<td align="right"></td>
-<td align="right">2</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr class="odd">
-<td align="left">SMPDSv1</td>
-<td align="left">EMPD</td>
-<td align="left">Mt Shipchenska</td>
-<td align="left">Atanassova_b2</td>
-<td align="right">42.75556</td>
-<td align="right">25.32750</td>
-<td align="right">1195</td>
-<td align="left"></td>
-<td align="left">Unknown</td>
-<td align="left">moss polster or moss</td>
-<td align="left">-53</td>
-<td align="right">13</td>
-<td align="left">temperate deciduous broadleaf forest</td>
-<td align="right">0.8023825</td>
-<td align="right">2820.270</td>
-<td align="right">7.065475</td>
-<td align="right">-3.7582657</td>
-<td align="right">17.37840</td>
-<td align="left">Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset.</td>
-<td align="left">10.17864/1947.194</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right">3</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr class="even">
-<td align="left">SMPDSv1</td>
-<td align="left">EMPD</td>
-<td align="left">Mt Shipchenska</td>
-<td align="left">Atanassova_b3</td>
-<td align="right">42.76000</td>
-<td align="right">25.32750</td>
-<td align="right">1061</td>
-<td align="left"></td>
-<td align="left">Unknown</td>
-<td align="left">moss polster or moss</td>
-<td align="left">-53</td>
-<td align="right">13</td>
-<td align="left">temperate deciduous broadleaf forest</td>
-<td align="right">0.7697785</td>
-<td align="right">2993.127</td>
-<td align="right">7.650907</td>
-<td align="right">-3.3696565</td>
-<td align="right">18.04428</td>
-<td align="left">Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset.</td>
-<td align="left">10.17864/1947.194</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr class="odd">
-<td align="left">SMPDSv1</td>
-<td align="left">EMPD</td>
-<td align="left">Mt Shipchenska</td>
-<td align="left">Atanassova_b4</td>
-<td align="right">42.72056</td>
-<td align="right">25.34083</td>
-<td align="right">895</td>
-<td align="left"></td>
-<td align="left">Unknown</td>
-<td align="left">moss polster or moss</td>
-<td align="left">-53</td>
-<td align="right">13</td>
-<td align="left">temperate deciduous broadleaf forest</td>
-<td align="right">0.7251731</td>
-<td align="right">3230.620</td>
-<td align="right">8.464212</td>
-<td align="right">-2.6945199</td>
-<td align="right">18.91247</td>
-<td align="left">Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset.</td>
-<td align="left">10.17864/1947.194</td>
-<td align="right"></td>
-<td align="right">3</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right">3</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr class="even">
-<td align="left">SMPDSv1</td>
-<td align="left">EMPD</td>
-<td align="left">Mt Shipchenska</td>
-<td align="left">Atanassova_b5</td>
-<td align="right">42.72444</td>
-<td align="right">25.33722</td>
-<td align="right">639</td>
-<td align="left"></td>
-<td align="left">Unknown</td>
-<td align="left">moss polster or moss</td>
-<td align="left">-53</td>
-<td align="right">13</td>
-<td align="left">temperate deciduous broadleaf forest</td>
-<td align="right">0.6679003</td>
-<td align="right">3587.848</td>
-<td align="right">9.612987</td>
-<td align="right">-1.8595969</td>
-<td align="right">20.20097</td>
-<td align="left">Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset.</td>
-<td align="left">10.17864/1947.194</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr class="odd">
-<td align="left">SMPDSv1</td>
-<td align="left">EMPD</td>
-<td align="left">Mt Shipchenska</td>
-<td align="left">Atanassova_c1</td>
-<td align="right">42.74111</td>
-<td align="right">25.34139</td>
-<td align="right">1310</td>
-<td align="left"></td>
-<td align="left">Unknown</td>
-<td align="left">moss polster or moss</td>
-<td align="left">-54</td>
-<td align="right">13</td>
-<td align="left">temperate deciduous broadleaf forest</td>
-<td align="right">0.8239493</td>
-<td align="right">2683.142</td>
-<td align="right">6.595417</td>
-<td align="right">-4.0535105</td>
-<td align="right">16.81607</td>
-<td align="left">Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset.</td>
-<td align="left">10.17864/1947.194</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr class="even">
-<td align="left">SMPDSv1</td>
-<td align="left">EMPD</td>
-<td align="left">Mt Shipchenska</td>
-<td align="left">Atanassova_c2</td>
-<td align="right">42.75556</td>
-<td align="right">25.32750</td>
-<td align="right">1195</td>
-<td align="left"></td>
-<td align="left">Unknown</td>
-<td align="left">moss polster or moss</td>
-<td align="left">-54</td>
-<td align="right">13</td>
-<td align="left">temperate deciduous broadleaf forest</td>
-<td align="right">0.8023825</td>
-<td align="right">2820.270</td>
-<td align="right">7.065475</td>
-<td align="right">-3.7582657</td>
-<td align="right">17.37840</td>
-<td align="left">Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset.</td>
-<td align="left">10.17864/1947.194</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr class="odd">
-<td align="left">SMPDSv1</td>
-<td align="left">EMPD</td>
-<td align="left">Mt Shipchenska</td>
-<td align="left">Atanassova_c3</td>
-<td align="right">42.76000</td>
-<td align="right">25.32750</td>
-<td align="right">1061</td>
-<td align="left"></td>
-<td align="left">Unknown</td>
-<td align="left">moss polster or moss</td>
-<td align="left">-54</td>
-<td align="right">13</td>
-<td align="left">temperate deciduous broadleaf forest</td>
-<td align="right">0.7697785</td>
-<td align="right">2993.127</td>
-<td align="right">7.650907</td>
-<td align="right">-3.3696565</td>
-<td align="right">18.04428</td>
-<td align="left">Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset.</td>
-<td align="left">10.17864/1947.194</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right">11</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr class="even">
-<td align="left">SMPDSv1</td>
-<td align="left">EMPD</td>
-<td align="left">Mt Shipchenska</td>
-<td align="left">Atanassova_c4</td>
-<td align="right">42.72056</td>
-<td align="right">25.34083</td>
-<td align="right">895</td>
-<td align="left"></td>
-<td align="left">Unknown</td>
-<td align="left">moss polster or moss</td>
-<td align="left">-54</td>
-<td align="right">13</td>
-<td align="left">temperate deciduous broadleaf forest</td>
-<td align="right">0.7251731</td>
-<td align="right">3230.620</td>
-<td align="right">8.464212</td>
-<td align="right">-2.6945199</td>
-<td align="right">18.91247</td>
-<td align="left">Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset.</td>
-<td align="left">10.17864/1947.194</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr class="odd">
-<td align="left">SMPDSv1</td>
-<td align="left">EMPD</td>
-<td align="left">Mt Shipchenska</td>
-<td align="left">Atanassova_c5</td>
-<td align="right">42.72444</td>
-<td align="right">25.33722</td>
-<td align="right">639</td>
-<td align="left"></td>
-<td align="left">Unknown</td>
-<td align="left">moss polster or moss</td>
-<td align="left">-54</td>
-<td align="right">13</td>
-<td align="left">temperate deciduous broadleaf forest</td>
-<td align="right">0.6679003</td>
-<td align="right">3587.848</td>
-<td align="right">9.612987</td>
-<td align="right">-1.8595969</td>
-<td align="right">20.20097</td>
-<td align="left">Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset.</td>
-<td align="left">10.17864/1947.194</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr class="even">
-<td align="left">SMPDSv1</td>
-<td align="left">EMPD</td>
-<td align="left">Mt Shipchenska</td>
-<td align="left">Atanassova_d1</td>
-<td align="right">42.75556</td>
-<td align="right">25.32750</td>
-<td align="right">1195</td>
-<td align="left"></td>
-<td align="left">Unknown</td>
-<td align="left">moss polster or moss</td>
-<td align="left">-55</td>
-<td align="right">13</td>
-<td align="left">temperate deciduous broadleaf forest</td>
-<td align="right">0.8023825</td>
-<td align="right">2820.270</td>
-<td align="right">7.065475</td>
-<td align="right">-3.7582657</td>
-<td align="right">17.37840</td>
-<td align="left">Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset.</td>
-<td align="left">10.17864/1947.194</td>
-<td align="right"></td>
-<td align="right">3</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr class="odd">
-<td align="left">SMPDSv1</td>
-<td align="left">EMPD</td>
-<td align="left">Mt Shipchenska</td>
-<td align="left">Atanassova_d2</td>
-<td align="right">42.76000</td>
-<td align="right">25.32750</td>
-<td align="right">1061</td>
-<td align="left"></td>
-<td align="left">Unknown</td>
-<td align="left">moss polster or moss</td>
-<td align="left">-55</td>
-<td align="right">13</td>
-<td align="left">temperate deciduous broadleaf forest</td>
-<td align="right">0.7697785</td>
-<td align="right">2993.127</td>
-<td align="right">7.650907</td>
-<td align="right">-3.3696565</td>
-<td align="right">18.04428</td>
-<td align="left">Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset.</td>
-<td align="left">10.17864/1947.194</td>
-<td align="right"></td>
-<td align="right">12</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr class="even">
-<td align="left">SMPDSv1</td>
-<td align="left">EMPD/EMB</td>
-<td align="left">GravgazMarsh</td>
-<td align="left">Bakker_a1</td>
-<td align="right">37.59118</td>
-<td align="right">30.40144</td>
-<td align="right">1241</td>
-<td align="left">medium (1.1-50 km2)</td>
-<td align="left">terrestrial, marsh</td>
-<td align="left">surface sample</td>
-<td align="left">assumed modern</td>
-<td align="right">17</td>
-<td align="left">temperate evergreen needleleaf open woodland</td>
-<td align="right">0.3996845</td>
-<td align="right">4250.760</td>
-<td align="right">11.645917</td>
-<td align="right">1.4309660</td>
-<td align="right">21.90219</td>
-<td align="left">Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset.</td>
-<td align="left">10.17864/1947.194</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right">1</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right">2</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr class="odd">
-<td align="left">SMPDSv1</td>
-<td align="left">EMPD/EMB</td>
-<td align="left">Bereket Basin</td>
-<td align="left">Bakker_a10</td>
-<td align="right">37.55091</td>
-<td align="right">30.29780</td>
-<td align="right">1486</td>
-<td align="left">medium (1.1-50 km2)</td>
-<td align="left">terrestrial, other sediments</td>
-<td align="left">moss polster or moss</td>
-<td align="left">assumed modern</td>
-<td align="right">17</td>
-<td align="left">temperate evergreen needleleaf open woodland</td>
-<td align="right">0.3748226</td>
-<td align="right">3760.236</td>
-<td align="right">10.274915</td>
-<td align="right">-0.3163084</td>
-<td align="right">20.75712</td>
-<td align="left">Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset.</td>
-<td align="left">10.17864/1947.194</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr class="even">
-<td align="left">SMPDSv1</td>
-<td align="left">EMPD/EMB</td>
-<td align="left">Bereket Basin</td>
-<td align="left">Bakker_a11</td>
-<td align="right">37.54651</td>
-<td align="right">30.30045</td>
-<td align="right">1449</td>
-<td align="left">medium (1.1-50 km2)</td>
-<td align="left">terrestrial, other sediments</td>
-<td align="left">moss polster or moss</td>
-<td align="left">assumed modern</td>
-<td align="right">17</td>
-<td align="left">temperate evergreen needleleaf open woodland</td>
-<td align="right">0.3785727</td>
-<td align="right">3830.830</td>
-<td align="right">10.487544</td>
-<td align="right">-0.0446082</td>
-<td align="right">20.93606</td>
-<td align="left">Harrison, Sandy P., 2019. Modern pollen data for climate reconstructions, version 1 (SMPDS). University of Reading. Dataset.</td>
-<td align="left">10.17864/1947.194</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right">1</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-</tbody>
-</table>
 <div class="section level4">
-<h4 id="plots">Plots<a class="anchor" aria-label="anchor" href="#plots"></a>
+<h4 id="load-tables-to-the-working-environment">Load tables to the working environment<a class="anchor" aria-label="anchor" href="#load-tables-to-the-working-environment"></a>
 </h4>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"climate"</span>, package <span class="op">=</span> <span class="st">"smpds"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"entity"</span>, package <span class="op">=</span> <span class="st">"smpds"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"pollen_count"</span>, package <span class="op">=</span> <span class="st">"smpds"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"taxon_name"</span>, package <span class="op">=</span> <span class="st">"smpds"</span><span class="op">)</span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="create-a-snapshot-of-entities">Create a snapshot of entities<a class="anchor" aria-label="anchor" href="#create-a-snapshot-of-entities"></a>
+</h4>
+<p>The function <code><a href="reference/snapshot.html">smpds::snapshot</a></code> takes few different parameters and based on the first one, <code>x</code>, it returns a variety of snapshots.</p>
+<p>This function returns a list with 3 components:</p>
+<ul>
+<li>
+<code>entity</code>: data frame (<code>tibble</code> object) with the metadata associated to the entities.</li>
+<li>
+<code>climate</code>: data frame (<code>tibble</code> object) with the climate and vegetation reconstructions. This one can be linked to the <code>entity</code> table using the column called <code>ID_SAMPLE</code>.</li>
+<li>
+<code>pollen_count</code>: list of data frames (<code>tibble</code> objects) containing the pollen counts for 3 levels of “amalgamation”:<ul>
+<li><code>clean</code></li>
+<li><code>intermediate</code></li>
+<li><code>amalgamated</code></li>
+</ul>All these data frames can be linked to the <code>entity</code> table using the column called <code>ID_SAMPLE</code>.</li>
+</ul>
+<p><span class="emoji" data-emoji="warning">⚠️</span> <strong>NOTE:</strong> the output is returned “invisibly”, so you should assign the output of the function to a variable.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">output</span> <span class="op">&lt;-</span> <span class="fu">smpds</span><span class="fu">::</span><span class="fu"><a href="reference/snapshot.html">snapshot</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span>
+<span class="va">output</span><span class="op">$</span><span class="va">entity</span>
+<span class="va">output</span><span class="op">$</span><span class="va">climate</span>
+<span class="va">output</span><span class="op">$</span><span class="va">pollen_count</span><span class="op">$</span><span class="va">clean</span>
+<span class="va">output</span><span class="op">$</span><span class="va">pollen_count</span><span class="op">$</span><span class="va">intermediate</span>
+<span class="va">output</span><span class="op">$</span><span class="va">pollen_count</span><span class="op">$</span><span class="va">intermediate</span></code></pre></div>
+<div class="section level5">
+<h5 id="using-the-entity_name">Using the <code>entity_name</code>
+<a class="anchor" aria-label="anchor" href="#using-the-entity_name"></a>
+</h5>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">smpds</span><span class="fu">::</span><span class="fu"><a href="reference/snapshot.html">snapshot</a></span><span class="op">(</span><span class="st">"juodonys_core"</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 1 × 6</span>
+<span class="co">#&gt;   ID_SITE ID_ENTITY ID_SAMPLE site_name entity_name   pollen_counts$clean</span>
+<span class="co">#&gt;     &lt;int&gt;     &lt;int&gt;     &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;                       &lt;int&gt;</span>
+<span class="co">#&gt; 1    3890      7901         1 Juodonys  juodonys_core                   1</span>
+<span class="co">#&gt; # … with 2 more variables: pollen_counts$intermediate &lt;int&gt;, $amalgamated &lt;int&gt;</span></code></pre></div>
+</div>
+<div class="section level5">
+<h5 id="using-the-site_name">Using the <code>site_name</code>
+<a class="anchor" aria-label="anchor" href="#using-the-site_name"></a>
+</h5>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">smpds</span><span class="fu">::</span><span class="fu"><a href="reference/snapshot.html">snapshot</a></span><span class="op">(</span><span class="st">"Petresiunai"</span>, use_site_name <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 1 × 6</span>
+<span class="co">#&gt;   ID_SITE ID_ENTITY ID_SAMPLE site_name   entity_name     pollen_counts$clean</span>
+<span class="co">#&gt;     &lt;int&gt;     &lt;int&gt;     &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;                         &lt;int&gt;</span>
+<span class="co">#&gt; 1    6690     14229         2 Petresiunai petresiunai_121                   1</span>
+<span class="co">#&gt; # … with 2 more variables: pollen_counts$intermediate &lt;int&gt;, $amalgamated &lt;int&gt;</span></code></pre></div>
+</div>
+<div class="section level5">
+<h5 id="using-the-id_entity">Using the <code>ID_ENTITY</code>
+<a class="anchor" aria-label="anchor" href="#using-the-id_entity"></a>
+</h5>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">smpds</span><span class="fu">::</span><span class="fu"><a href="reference/snapshot.html">snapshot</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 1 × 6</span>
+<span class="co">#&gt;   ID_SITE ID_ENTITY ID_SAMPLE site_name entity_name pollen_counts$clean</span>
+<span class="co">#&gt;     &lt;int&gt;     &lt;int&gt;     &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;                     &lt;int&gt;</span>
+<span class="co">#&gt; 1       1         2      9710 05-Mo     05-Mo-10                      1</span>
+<span class="co">#&gt; # … with 2 more variables: pollen_counts$intermediate &lt;int&gt;, $amalgamated &lt;int&gt;</span></code></pre></div>
+</div>
+<div class="section level5">
+<h5 id="using-the-id_site">Using the <code>ID_SITE</code>
+<a class="anchor" aria-label="anchor" href="#using-the-id_site"></a>
+</h5>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">smpds</span><span class="fu">::</span><span class="fu"><a href="reference/snapshot.html">snapshot</a></span><span class="op">(</span><span class="fl">3</span>, use_id_site <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 1 × 6</span>
+<span class="co">#&gt;   ID_SITE ID_ENTITY ID_SAMPLE site_name  entity_name pollen_counts$clean</span>
+<span class="co">#&gt;     &lt;int&gt;     &lt;int&gt;     &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;                     &lt;int&gt;</span>
+<span class="co">#&gt; 1       3        37     15871 11 [HFL11] HFL11                         1</span>
+<span class="co">#&gt; # … with 2 more variables: pollen_counts$intermediate &lt;int&gt;, $amalgamated &lt;int&gt;</span></code></pre></div>
+</div>
+<div class="section level5">
+<h5 id="extracting-multiple-records-at-once">Extracting multiple records at once<a class="anchor" aria-label="anchor" href="#extracting-multiple-records-at-once"></a>
+</h5>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">smpds</span><span class="fu">::</span><span class="fu"><a href="reference/snapshot.html">snapshot</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 10 × 6</span>
+<span class="co">#&gt;    ID_SITE ID_ENTITY ID_SAMPLE site_name entity_name pollen_counts$clean</span>
+<span class="co">#&gt;      &lt;int&gt;     &lt;int&gt;     &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;                     &lt;int&gt;</span>
+<span class="co">#&gt;  1       1         1      9709 05-Mo     05-Mo                        10</span>
+<span class="co">#&gt;  2       1         2      9710 05-Mo     05-Mo-10                     10</span>
+<span class="co">#&gt;  3       1         3      9711 05-Mo     05-Mo-11                     10</span>
+<span class="co">#&gt;  4       1         4      9712 05-Mo     05-Mo-12                     10</span>
+<span class="co">#&gt;  5       1         5      9713 05-Mo     05-Mo-13                     10</span>
+<span class="co">#&gt;  6       1         6      9714 05-Mo     05-Mo-14                     10</span>
+<span class="co">#&gt;  7       1         7      9715 05-Mo     05-Mo-15                     10</span>
+<span class="co">#&gt;  8       1         8      9716 05-Mo     05-Mo-16                     10</span>
+<span class="co">#&gt;  9       1         9      9717 05-Mo     05-Mo-17                     10</span>
+<span class="co">#&gt; 10       1        10      9718 05-Mo     05-Mo-18                     10</span>
+<span class="co">#&gt; # … with 2 more variables: pollen_counts$intermediate &lt;int&gt;, $amalgamated &lt;int&gt;</span></code></pre></div>
+</div>
+<div class="section level5">
+<h5 id="extracting-all-the-records-at-once">Extracting all the records at once<a class="anchor" aria-label="anchor" href="#extracting-all-the-records-at-once"></a>
+</h5>
+<p>This will run ****very slow****, so if only few entities are required, it would be better to indicate which, based on the previous examples.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">smpds</span><span class="fu">::</span><span class="fu"><a href="reference/snapshot.html">snapshot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+</div>
+</div>
+<div class="section level4">
+<h4 id="export-data-as-individual-csv-files">Export data as individual CSV files<a class="anchor" aria-label="anchor" href="#export-data-as-individual-csv-files"></a>
+</h4>
+<p>The function <code><a href="reference/write_csvs.html">smpds::write_csvs</a></code> takes to parameters:</p>
+<ul>
+<li>
+<code>.data</code>: a list of class <code>snapshot</code>, this one can be generated using the function <code><a href="reference/snapshot.html">smpds::snapshot</a></code> (see previous section).</li>
+<li>
+<code>prefix</code>: a prefix name to be included in each individual files, this prefix can include a relative or absolute path to a directory in the local machine.</li>
+</ul>
+<div class="section level5">
+<h5 id="without-a-path">Without a path<a class="anchor" aria-label="anchor" href="#without-a-path"></a>
+</h5>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">`%&gt;%`</span> <span class="op">&lt;-</span> <span class="fu">smpds</span><span class="fu">::</span><span class="va">`%&gt;%`</span>
+<span class="fu">smpds</span><span class="fu">::</span><span class="fu"><a href="reference/snapshot.html">snapshot</a></span><span class="op">(</span><span class="st">"juodonys_core"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">smpds</span><span class="fu">::</span><span class="fu"><a href="reference/write_csvs.html">write_csvs</a></span><span class="op">(</span>prefix <span class="op">=</span> <span class="st">"juodonys_core"</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 1 × 6</span>
+<span class="co">#&gt;   ID_SITE ID_ENTITY ID_SAMPLE site_name entity_name   pollen_counts$clean</span>
+<span class="co">#&gt;     &lt;int&gt;     &lt;int&gt;     &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;                       &lt;int&gt;</span>
+<span class="co">#&gt; 1    3890      7901         1 Juodonys  juodonys_core                   1</span>
+<span class="co">#&gt; # … with 2 more variables: pollen_counts$intermediate &lt;int&gt;, $amalgamated &lt;int&gt;</span></code></pre></div>
+<div class="section level6">
+<h6 id="output">Output<a class="anchor" aria-label="anchor" href="#output"></a>
+</h6>
+<div class="sourceCode" id="cb12"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co">#&gt;                                          levelName</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="co">#&gt; 1 .                                               </span></span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="co">#&gt; 2  ¦--juodonys_core_metadata.csv                  </span></span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="co">#&gt; 3  ¦--juodonys_core_pollen_counts_amalgamated.csv </span></span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="co">#&gt; 4  ¦--juodonys_core_pollen_counts_clean.csv       </span></span>
+<span id="cb12-6"><a href="#cb12-6"></a><span class="co">#&gt; 5  °--juodonys_core_pollen_counts_intermediate.csv</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level5">
+<h5 id="including-a-path">Including a path<a class="anchor" aria-label="anchor" href="#including-a-path"></a>
+</h5>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">`%&gt;%`</span> <span class="op">&lt;-</span> <span class="fu">smpds</span><span class="fu">::</span><span class="va">`%&gt;%`</span>
+<span class="fu">smpds</span><span class="fu">::</span><span class="fu"><a href="reference/snapshot.html">snapshot</a></span><span class="op">(</span><span class="st">"juodonys_core"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">smpds</span><span class="fu">::</span><span class="fu"><a href="reference/write_csvs.html">write_csvs</a></span><span class="op">(</span>prefix <span class="op">=</span> <span class="st">"/special.uor/epd/juodonys_core"</span><span class="op">)</span></code></pre></div>
+<div class="section level6">
+<h6 id="output-1">Output<a class="anchor" aria-label="anchor" href="#output-1"></a>
+</h6>
+<div class="sourceCode" id="cb14"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co">#&gt;                                              levelName</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="co">#&gt; 1 special.uor                                         </span></span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="co">#&gt; 2  °--epd                                             </span></span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="co">#&gt; 3      ¦--juodonys_core_metadata.csv                  </span></span>
+<span id="cb14-5"><a href="#cb14-5"></a><span class="co">#&gt; 4      ¦--juodonys_core_pollen_counts_amalgamated.csv </span></span>
+<span id="cb14-6"><a href="#cb14-6"></a><span class="co">#&gt; 5      ¦--juodonys_core_pollen_counts_clean.csv       </span></span>
+<span id="cb14-7"><a href="#cb14-7"></a><span class="co">#&gt; 6      °--juodonys_core_pollen_counts_intermediate.csv</span></span></code></pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="spatial-distribution-of-the-entities">Spatial distribution of the entities<a class="anchor" aria-label="anchor" href="#spatial-distribution-of-the-entities"></a>
+</h2>
 <div class="section level5">
 <h5 id="potential-natural-vegetation-pnv">Potential Natural Vegetation (PNV)<a class="anchor" aria-label="anchor" href="#potential-natural-vegetation-pnv"></a>
 </h5>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">smpds</span><span class="fu">::</span><span class="va"><a href="reference/SMPDSv2.html">SMPDSv2</a></span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
   <span class="fu">smpds</span><span class="fu">::</span><span class="fu"><a href="reference/plot_biome.html">plot_biome</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-example-plot-1.png" width="100%"></p>
@@ -1696,7 +264,7 @@
 <div class="section level5">
 <h5 id="growing-degree-days-aboce-0-deg-celsius-gdd0">Growing Degree Days aboce 0 deg Celsius (<code>gdd0</code>)<a class="anchor" aria-label="anchor" href="#growing-degree-days-aboce-0-deg-celsius-gdd0"></a>
 </h5>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">smpds</span><span class="fu">::</span><span class="va"><a href="reference/SMPDSv2.html">SMPDSv2</a></span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
   <span class="fu">smpds</span><span class="fu">::</span><span class="fu"><a href="reference/plot_climate.html">plot_gdd</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-example-plot-gdd0-1.png" width="100%"></p>
@@ -1704,7 +272,7 @@
 <div class="section level5">
 <h5 id="mean-temperature-of-the-coldest-month-mtco">Mean Temperature of the COldest month (<code>mtco</code>)<a class="anchor" aria-label="anchor" href="#mean-temperature-of-the-coldest-month-mtco"></a>
 </h5>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">smpds</span><span class="fu">::</span><span class="va"><a href="reference/SMPDSv2.html">SMPDSv2</a></span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
   <span class="fu">smpds</span><span class="fu">::</span><span class="fu"><a href="reference/plot_climate.html">plot_mtco</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-example-plot-mtco-1.png" width="100%"></p>
@@ -1712,11 +280,10 @@
 <div class="section level5">
 <h5 id="moisture-index-mi">Moisture Index (<code>mi</code>)<a class="anchor" aria-label="anchor" href="#moisture-index-mi"></a>
 </h5>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">smpds</span><span class="fu">::</span><span class="va"><a href="reference/SMPDSv2.html">SMPDSv2</a></span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
   <span class="fu">smpds</span><span class="fu">::</span><span class="fu"><a href="reference/plot_climate.html">plot_mi</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-example-plot-mi-1.png" width="100%"></p>
-</div>
 </div>
 </div>
 <div class="section level2">
@@ -1771,10 +338,9 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.tidyverse.org/lifecycle/#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
-<li><a href="https://CRAN.R-project.org/package=smpds" class="external-link"><img src="https://www.r-pkg.org/badges/version/smpds" alt="CRAN status"></a></li>
-<li><a href="https://codecov.io/gh/special-uor/smpds?branch=main" class="external-link"><img src="https://codecov.io/gh/special-uor/smpds/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
-<li><a href="https://github.com/special-uor/smpds/actions" class="external-link"><img src="https://github.com/special-uor/smpds/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://github.com/special-uor/smpds" class="external-link"><img src="https://img.shields.io/badge/devel%20version-2.0.0-yellow.svg"></a></li>
+<li><a href="https://github.com/special-uor/smpds/actions" class="external-link"><img src="https://github.com/special-uor/smpds/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="https://cran.r-project.org/package=smpds" class="external-link"><img src="https://www.r-pkg.org/badges/version/smpds?color=black"></a></li>
 </ul>
 </div>
 
