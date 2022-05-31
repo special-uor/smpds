@@ -1,0 +1,121 @@
+﻿"source","site_name","entity_name","latitude","longitude","elevation","basin_size","site_type","entity_type","age_BP","ID_BIOME","PNV","ID_SAMPLE"
+"APD","Grootdrift Farm 2","GDV4_0",-32.3833333333333,18,720,"not applicable","terrestrial","not known","modern",,"not applicable",83
+"APD","Grootdrift Farm 2","GDV4_5",-32.3833333333333,18,720,"not applicable","terrestrial","not known","modern",,"not applicable",84
+"Australian pollen","Airport Swamp","Airport Swamp core_05",31.54,159.08,5,"very small (<0.01 km2)","terrestrial, bog/fen/swamp","core","-28",,"not applicable",136
+"Australian pollen","Airport Swamp","Airport Swamp core_105",31.54,159.08,5,"very small (<0.01 km2)","terrestrial, bog/fen/swamp","core","46",,"not applicable",137
+"Australian pollen","Airport Swamp","Airport Swamp core_25",31.54,159.08,5,"very small (<0.01 km2)","terrestrial, bog/fen/swamp","core","-14",,"not applicable",138
+"Australian pollen","Airport Swamp","Airport Swamp core_50",31.54,159.08,5,"very small (<0.01 km2)","terrestrial, bog/fen/swamp","core","5",,"not applicable",139
+"Australian pollen","Airport Swamp","Airport Swamp core_75",31.54,159.08,5,"very small (<0.01 km2)","terrestrial, bog/fen/swamp","core","24",,"not applicable",140
+"Australian pollen","Bremer Bay Swamp","Bremer Bay Swamp_a",-34.833,119.4,0,"not known","terrestrial, bog/fen/swamp","not known","modern",,"not applicable",385
+"Australian pollen","Bremer Bay Swamp","Bremer Bay Swamp_b",-34.833,119.4,0,"not known","terrestrial, bog/fen/swamp","not known","modern",,"not applicable",386
+"Australian pollen","Bremer Bay Swamp","Bremer Bay Swamp_c",-34.833,119.4,0,"not known","terrestrial, bog/fen/swamp","not known","modern",,"not applicable",387
+"Australian pollen","Groote Eylandt","Groote Eylandt - core 891 (Four Mile Billabong)",-13.52,136.49,1,"not known","coastal, other","core top","-39",,"not applicable",662
+"Australian pollen","Lake Euramoo","Lake Euramoo_Haberle 1999_1600",-17.1667,146.633,718,"small (0.01-1 km2)","lake","core","-49",,"not applicable",847
+"Australian pollen","Lake Euramoo","Lake Euramoo_Haberle 1999_1601",-17.1667,146.633,718,"small (0.01-1 km2)","lake","core","-42",,"not applicable",848
+"Australian pollen","Lake Euramoo","Lake Euramoo_Haberle 1999_1602",-17.1667,146.633,718,"small (0.01-1 km2)","lake","core","-36",,"not applicable",849
+"Australian pollen","Lake Euramoo","Lake Euramoo_Haberle 1999_1603",-17.1667,146.633,718,"small (0.01-1 km2)","lake","core","-29",,"not applicable",850
+"Australian pollen","Lake Euramoo","Lake Euramoo_Haberle 1999_1604",-17.1667,146.633,718,"small (0.01-1 km2)","lake","core","-23",,"not applicable",851
+"Australian pollen","Lake Euramoo","Lake Euramoo_Haberle 1999_1606",-17.1667,146.633,718,"small (0.01-1 km2)","lake","core","-10",,"not applicable",852
+"Australian pollen","Lake Euramoo","Lake Euramoo_Haberle 1999_1608",-17.1667,146.633,718,"small (0.01-1 km2)","lake","core","3",,"not applicable",853
+"Australian pollen","Lake Euramoo","Lake Euramoo_Haberle 1999_1612",-17.1667,146.633,718,"small (0.01-1 km2)","lake","core","29",,"not applicable",854
+"Australian pollen","Rano Kao","Rano Kao_a",-27.1833,-109.4333,110,"not known","lake","not known","modern",20,"xerophytic woods/scrub",1291
+"Australian pollen","Rano Kao","Rano Kao_b",-27.1833,-109.4333,110,"not known","lake","not known","modern",20,"xerophytic woods/scrub",1292
+"Australian pollen","Rano Kao","Rano Kao_c",-27.1833,-109.4333,110,"not known","lake","not known","modern",20,"xerophytic woods/scrub",1293
+"Australian pollen","Umej","Umej_core",-20.2594,168.8594,2,"not known","terrestrial, bog/fen/swamp","core top","-32",,"not applicable",1570
+"Australian pollen","Umej","Umej_ss",-20.2594,168.8594,2,"not known","terrestrial, bog/fen/swamp","surface sample","-32",,"not applicable",1571
+"Australian pollen","Warrananga Salt Lake","Warrananga core",-39.97,141.56,50,"medium (1.1-50 km2)","lacustrine, drained lake","core top","-55",,"not applicable",1589
+"Australian pollen","Warrananga Salt Lake","Warrananga ss_2",-39.97,141.56,50,"medium (1.1-50 km2)","lacustrine, drained lake","surface sample","-55",,"not applicable",1590
+"CMPD","Qinghai Lake","Qinghai Lake L10",37.0369166666667,100.200611111111,3168.7,"not known","lake","lake surface sample","assumed modern",,"not applicable",4246
+"EMPDv2","Lake Baikal St. GC 3-96","Binney2017_E2214",53.68,108.35,449,"not known","not known","not known","-55",,"not applicable",6239
+"EMPDv2","Bezrukova 1","Binney2017_E2702",53.63,108.3,449,"not known","not known","not known","-55",,"not applicable",6328
+"EMPDv2","Bezrukova 11","Binney2017_E2714",51.75,105.12,449,"not known","not known","not known","-55",,"not applicable",6340
+"EMPDv2","Bezrukova 13","Binney2017_E2736",55.32,109.47,449,"not known","not known","not known","-55",,"not applicable",6362
+"EMPDv2","Bezrukova 14","Binney2017_E2747",53.72,108.33,449,"not known","not known","not known","-55",,"not applicable",6373
+"EMPDv2","Bezrukova 16","Binney2017_E2769",54.92,109.22,449,"not known","not known","not known","-55",,"not applicable",6395
+"EMPDv2","Bezrukova 18","Binney2017_E2776",55.35,109.43,449,"not known","not known","not known","-55",,"not applicable",6402
+"EMPDv2","Bezrukova 20","Binney2017_E2779",53.72,108.33,449,"not known","not known","not known","-55",,"not applicable",6405
+"EMPDv2","Bezrukova 23","Binney2017_E2782",52.85,107.67,449,"not known","not known","not known","-55",,"not applicable",6408
+"EMPDv2","Bezrukova 26","Binney2017_E2785",55.32,109.47,449,"not known","not known","not known","-55",,"not applicable",6411
+"EMPDv2","Bezrukova 28","Binney2017_E2787",51.78,105.45,449,"not known","not known","not known","-55",,"not applicable",6413
+"EMPDv2","Bezrukova 3","Binney2017_E2789",53.53,108,449,"not known","not known","not known","-55",,"not applicable",6415
+"EMPDv2","Bezrukova 31","Binney2017_E2791",52.05,105.85,449,"not known","not known","not known","-55",,"not applicable",6417
+"EMPDv2","Bezrukova 34","Binney2017_E2794",55.35,109.43,449,"not known","not known","not known","-55",,"not applicable",6420
+"EMPDv2","Bezrukova 37","Binney2017_E2797",53.63,108.23,449,"not known","not known","not known","-55",,"not applicable",6423
+"EMPDv2","Bezrukova 38","Binney2017_E2798",53.12,108.1,449,"not known","not known","not known","-55",,"not applicable",6424
+"EMPDv2","Bezrukova 39","Binney2017_E2799",53.62,108.12,449,"not known","not known","not known","-55",,"not applicable",6425
+"EMPDv2","Bezrukova 4","Binney2017_E2800",53.53,108,449,"not known","not known","not known","-55",,"not applicable",6426
+"EMPDv2","Bezrukova 40","Binney2017_E2801",53.63,108.3,449,"not known","not known","not known","-55",,"not applicable",6427
+"EMPDv2","Bezrukova 44","Binney2017_E2805",53.63,108.3,449,"not known","not known","not known","-55",,"not applicable",6431
+"EMPDv2","Bezrukova 45","Binney2017_E2806",54.92,109.22,449,"not known","not known","not known","-55",,"not applicable",6432
+"EMPDv2","Bezrukova 8","Binney2017_E2844",53.63,108.3,449,"not known","not known","not known","-55",,"not applicable",6470
+"EMPDv2","Bezrukova 9","Binney2017_E2855",53.63,108.23,449,"not known","not known","not known","-55",,"not applicable",6481
+"EMPDv2","R44","Binney2017_E3374",71.17,-179.75,822,"not known","not known","not known","assumed modern",28,"tundra",6611
+"EMPDv2","MD72/5-22","EPDcoretop_E2058",42.2,36.49,-838,"not known","terrestrial","core top","assumed modern",,"not applicable",7109
+"EMPDv2","Kelly s Lough","EPDcoretop_E2243",52.95,-6.41,585,"not known","lake","core top","assumed modern",13,"temperate deciduous broadleaf forest",7163
+"EMPDv2","Kara-Bogaz Gol","EPDcoretop_E2317",41.85,53.25,-29,"not known","coastal, other","core top","assumed modern",,"not applicable",7175
+"EMPDv2","Adriatic Sea 108MAY90","EPDcoretop_E2358",44.75,12.75,-32,"not known","coastal, other","core top","assumed modern",,"not applicable",7185
+"EMPDv2","Caspian Sea","Leroy_j7",36.99615,53.6842833333333,-13.34,"371000","not known","sediment sample","-64",,"not applicable",7821
+"EMPDv2","Caspian Sea","Leroy_j8",37.0037,53.0821333333333,-220.91,"371000","not known","sediment sample","-64",,"not applicable",7822
+"EMPDv2","Caspian Sea","Leroy_j9",36.9913333333333,53.1001833333333,-199.67,"371000","not known","sediment sample","-64",,"not applicable",7823
+"EMPDv2","Caspian Sea","Leroy_j10",36.9956333333333,53.1479333333333,-148.27,"371000","not known","sediment sample","-64",,"not applicable",7824
+"EMPDv2","Caspian Sea","Leroy_j11",36.98355,53.1746666666667,-92,"371000","not known","sediment sample","-64",,"not applicable",7825
+"EMPDv2","Caspian Sea","Leroy_j12",36.9714166666667,53.2074333333333,-46.37,"371000","not known","sediment sample","-64",,"not applicable",7826
+"EMPDv2","AmurLiman_8","Mikishin-Gvozdeva_a122",52.555,141.585,-7,"not applicable","coastal, estuarine","sediment sample","-36",,"not applicable",8059
+"EMPDv2","AmurLiman_12","Mikishin-Gvozdeva_a126",52.9002777777778,141.554722222222,-3,"not applicable","coastal, estuarine","sediment sample","-36",,"not applicable",8063
+"Herzschuh et al., 2019","Baikel Lake","Baikel Lake",52.08,105.87,130,"31722","lake","lake surface sample","43.3",,"not applicable",9752
+"BIOME6000 Japan","Ushinohira","UsnhrD0",32.4,128.44,50,"not known","terrestrial, bog/fen/swamp","peat core top","assumed modern",,"not applicable",10547
+"Bush et al., 2020","Titicaca","Titicaca",-15.72,-69.567,3822,"not known","lake","lake surface sample","-51",,"not applicable",11300
+"Neotoma","Site 9, Georgian Bay, Canadian Hydrographic Service","AT1966-9",45.155,-81.075,176,"not known","lake","surface sample","-14",,"not applicable",11836
+"Neotoma","Site 2, Georgian Bay, Canadian Hydrographic Service","AT1966-2",45.376,-81.151,176,"not known","lake","surface sample","-14",,"not applicable",11837
+"Neotoma","Site 6, Georgian Bay, Canadian Hydrographic Service","AT1966-6",45.294,-81.068,176,"not known","lake","surface sample","-14",,"not applicable",11838
+"Neotoma","Site 11a, Georgian Bay, Canadian Hydrographic Service","AT1966-11A",45.201,-80.897,176,"not known","lake","surface sample","-14",,"not applicable",11839
+"Neotoma","Site 13, Georgian Bay, Canadian Hydrographic Service","AT1966-13",45.122,-80.93,176,"not known","lake","surface sample","-14",,"not applicable",11840
+"Neotoma","Site 19a, Georgian Bay, Canadian Hydrographic Service","AT1966-19A",45.137,-80.84,176,"not known","lake","surface sample","-14",,"not applicable",11842
+"Neotoma","Site 22, Georgian Bay, Canadian Hydrographic Service","AT1966-22",45.248,-80.858,176,"not known","lake","surface sample","-14",,"not applicable",11843
+"Neotoma","Site 24, Georgian Bay, Canadian Hydrographic Service","AT1966-24",45.297,-80.857,176,"not known","lake","surface sample","-14",,"not applicable",11844
+"Neotoma","Site 27, Georgian Bay, Canadian Hydrographic Service","AT1966-27",45.406,-80.836,176,"not known","lake","surface sample","-14",,"not applicable",11845
+"Neotoma","Site 3, Georgian Bay, Canadian Hydrographic Service","AT1966-3",45.337,-80.745,176,"not known","lake","surface sample","-14",,"not applicable",11846
+"Neotoma","Site 5, Georgian Bay, Canadian Hydrographic Service","AT1966-5",45.252,-80.737,176,"not known","lake","surface sample","-14",,"not applicable",11847
+"Neotoma","Site 7, Georgian Bay, Canadian Hydrographic Service","AT1966-7",45.192,-80.753,176,"not known","lake","surface sample","-14",,"not applicable",11848
+"Neotoma","Site 11, Georgian Bay, Canadian Hydrographic Service","AT1966-11",45.047,-80.781,176,"not known","lake","surface sample","-14",,"not applicable",11849
+"Neotoma","Site 19, Georgian Bay, Canadian Hydrographic Service","AT1966-19",45.182,-80.616,176,"not known","lake","surface sample","-14",,"not applicable",11850
+"Neotoma","Site 23, Georgian Bay, Canadian Hydrographic Service","AT1966-23",45.027,-80.604,176,"not known","lake","surface sample","-14",,"not applicable",11851
+"Neotoma","Site 31, Georgian Bay, Canadian Hydrographic Service","AT1966-31",45.22,-80.535,176,"not known","lake","surface sample","-14",,"not applicable",11852
+"Neotoma","Devon Island Glacier","DEVON4",75.35,-82.5,1800,"not known","glacier ice","core","-23",,"not applicable",12498
+"Neotoma","Devon Island Glacier","DEVON4",75.35,-82.5,1800,"not known","glacier ice","core","7",,"not applicable",12499
+"Neotoma","Mangrove Lake","MANGROVE",32.3,-64.75,0,"not known","lake","core","0",,"not applicable",12889
+"Neotoma","Lake Ontario, Rochester Basin","ONT-ROCH",43.51,-76.9,75,"not known","lake","core","6",,"not applicable",13021
+"Neotoma","Lake Ontario, Rochester Basin","ONT-ROCH",43.51,-76.9,75,"not known","lake","core","36",,"not applicable",13022
+"Neotoma","Lake Ontario, Rochester Basin","ONT-ROCH",43.51,-76.9,75,"not known","lake","core","48",,"not applicable",13023
+"Neotoma","Lake Ontario, Mississauga Basin","ONTMIS1",43.556667,-78.15,75,"not known","lake","core","6",,"not applicable",13024
+"Neotoma","Lake Ontario, Mississauga Basin","ONTMIS1",43.556667,-78.15,75,"not known","lake","core","12",,"not applicable",13025
+"Neotoma","Lake Ontario, Mississauga Basin","ONTMIS1",43.556667,-78.15,75,"not known","lake","core","24",,"not applicable",13026
+"Neotoma","Lake Ontario, Mississauga Basin","ONTMIS1",43.556667,-78.15,75,"not known","lake","core","36",,"not applicable",13027
+"Neotoma","Lake Ontario, Mississauga Basin","ONTMIS1",43.556667,-78.15,75,"not known","lake","core","48",,"not applicable",13028
+"Neotoma","Laysan Island Lake","LAYSAN",25.768,-171.7328,0,"not known","lake","core","-40",,"not applicable",14075
+"Neotoma","Lake Hill","LAHI",57.17824,-170.24827,37,"not known","lake","core","-56",9,"cool mixed forest",14430
+"Neotoma","Lake Hill","LAHI",57.17824,-170.24827,37,"not known","lake","core","2",9,"cool mixed forest",14431
+"Neotoma","La Push","CJH088",48.5,-124.8,107,"not known","terrestrial","surface sample","Modern",,"not applicable",15509
+"Neotoma","Dune du sud","PJHR056",47.416667,-62.75,6,"not known","not known","surface sample","Modern",,"not applicable",16695
+"Neotoma","Stand 77 (Mack and Bryant 1974]","RNM077",47.28,-120.08,213,"not known","terrestrial","surface sample","Modern",22,"steppe",16890
+"Phelps et al., 2020","Lake Malawi","M86_22P_1.5",-13.0167,34.5223,476,"not known","lake","not known","18",,"not applicable",17601
+"Phelps et al., 2020","Lake Tanganyika III","SD24TAN_0",-4.513889,29.333333,767,"not known","lake","core top","0",,"not applicable",17616
+"Phelps et al., 2020","Lake Tanganyika IV","SD36TAN_0",-4.966667,29.366667,767,"not known","lake","core top","0",,"not applicable",17617
+"SMPDSv1","Central Jordan Rift","Fall_a1",30.40749,35.49882,1700,"not applicable","terrestrial, soil","soil sample","0",20,"xerophytic woods/scrub",18508
+"SMPDSv1","Central Jordan Rift","Fall_a2",30.40096,35.48847,1600,"not applicable","terrestrial, soil","soil sample","0",20,"xerophytic woods/scrub",18519
+"SMPDSv1","Central Jordan Rift","Fall_a3",30.39092,35.48821,1500,"not applicable","terrestrial, soil","soil sample","0",20,"xerophytic woods/scrub",18522
+"SMPDSv1","Littox","Barboni_a962",36.15,-2.68,780,"not known","not known","not known","assumed modern",,"not applicable",20525
+"SMPDSv1","Moroc","Barboni_a1095",30.55,-10.66,900,"not known","not known","not known","assumed modern",,"not applicable",21324
+"SMPDSv1","Moroc","Barboni_a1178",30.58,-10.38,240,"not known","not known","not known","assumed modern",,"not applicable",21407
+"SMPDSv1","Onego Lake","EPDcoretop_E495",61.716667,34.916667,33,"9690","lake","lacustrine core top","0",,"not applicable",21762
+"SMPDSv1","Onego Lake","EPDcoretop_E496",61.716667,34.916667,33,"9690","lake","lacustrine core top","0",,"not applicable",21763
+"SMPDSv1","Onegskoe lake","Onegskoe lake_SS",61.7167,34.9167,33,"not known","lake","surface sample","-67",,"not applicable",21764
+"Neotoma","La Mision","LAMISION",-53.5,-67.833333,5,"not known","terrestrial, bog/fen/swamp","core","0",,"not applicable",24179
+"Neotoma","Ra'irua marsh","RAIDA4_3",-23.868164,-147.678742,1.42,"not known","terrestrial, marsh","core","-50",,"not applicable",24368
+"Neotoma","Ra'irua marsh","RAIDA4_13",-23.868164,-147.678742,1.42,"not known","terrestrial, marsh","core","-23",,"not applicable",24369
+"Neotoma","Ra'irua marsh","RAIDA4_23",-23.868164,-147.678742,1.42,"not known","terrestrial, marsh","core","3",,"not applicable",24370
+"Neotoma","Ra'irua marsh","RAIDA4_33",-23.868164,-147.678742,1.42,"not known","terrestrial, marsh","core","30",,"not applicable",24371
+"Neotoma","Tukou marsh","TUKOU2_6",-27.604014,-144.351975,2,"not known","terrestrial, marsh","core","-32",,"not applicable",24372
+"Neotoma","Tukou marsh","TUKOU2_12",-27.604014,-144.351975,2,"not known","terrestrial, marsh","core","-13",,"not applicable",24373
+"Neotoma","Tukou marsh","TUKOU2_22",-27.604014,-144.351975,2,"not known","terrestrial, marsh","core","20",,"not applicable",24374
+"Southern Hemisphere pollen","Lyell Buller Road","Lyell Buller_mod",41.78,171.598,85,"small (0.01-1 km2)","terrestrial","surface sample","-36",,"not applicable",24435
