@@ -1,6 +1,6 @@
 Package: smpds
-Title: The SPECIAL Modern Pollen Data
-Version: 2.0.0.9000
+Title: The SPECIAL Modern Pollen Data Set for Climate Reconstructions
+Version: 2.0.0
 Authors@R: c(
     person(given = "Roberto",
            family = "Villegas-Diaz",
@@ -14,13 +14,15 @@ Authors@R: c(
            comment = c(ORCID = "0000-0001-5687-1903")),
     person("SPECIAL Research Group @ University of Reading", role = c("cph")))
 Description: Provides functions to facilitate the access to the SPECIAL Modern 
-    Pollen DataSet (SMPDS) and to reconstruct climate variables, like Mean
-    Temperature of the COldest month (MTCO), Mean Temperature of the WArmest
-    month (MTWA) and Growing Degree Days (GDD). Also, it provides functions to
-    find the Potential Natural Vegetation (PNV) of a given site.
+    Pollen Data Set for Climate Reconstructions (SMPDS) and to reconstruct 
+    climate variables, like Mean Temperature of the COldest month (MTCO), Mean 
+    Temperature of the WArmest month (MTWA) and Growing Degree Days (GDD). Also, 
+    it provides functions to find the Potential Natural Vegetation (PNV) of a 
+    given site.
 License: MIT + file LICENSE
 Suggests: 
     covr,
+    dabr,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)
