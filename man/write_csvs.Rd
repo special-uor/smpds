@@ -5,7 +5,7 @@
 \title{Write DB snapshot to disk
 Write DB snapshot to disk as individual CSV files.}
 \usage{
-write_csvs(.data, prefix)
+write_csvs(.data, prefix = "smpdsv2")
 }
 \arguments{
 \item{.data}{DB snapshot (object of \code{smpds} class).}
