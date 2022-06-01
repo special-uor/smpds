@@ -9,6 +9,7 @@
 [![R build
 status](https://github.com/special-uor/smpds/workflows/R-CMD-check/badge.svg)](https://github.com/special-uor/smpds/actions)
 [![](https://www.r-pkg.org/badges/version/smpds?color=black)](https://cran.r-project.org/package=smpds)
+[![](https://img.shields.io/badge/doi-10.5281/zenodo.6598832-blue.svg)](https://doi.org/10.5281/zenodo.6598832)
 <!-- badges: end -->
 
 The goal of `smpds` is to provide access to the SPECIAL Modern Pollen
@@ -241,3 +242,11 @@ Please note that the SMPDS project is released with a [Contributor Code
 of
 Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.
+
+## Publications
+
+This package is a companion to the following dataset:
+
+Villegas-Diaz, R., Harrison, S. P., 2022. The SPECIAL Modern Pollen Data
+Set for Climate Reconstructions, version 2 (SMPDSv2). University of
+Reading. Dataset. <https://doi.org/10.17864/1947.000385>
