@@ -249,4 +249,4 @@ This package is a companion to the following dataset:
 
 Villegas-Diaz, R., Harrison, S. P., 2022. The SPECIAL Modern Pollen Data
 Set for Climate Reconstructions, version 2 (SMPDSv2). University of
-Reading. Dataset. <https://doi.org/10.17864/1947.000385>
+Reading. Dataset. <https://doi.org/10.17864/1947.000389>
