@@ -7,7 +7,8 @@ create_sq_grid <- function(.data,
                                },
                            cpus = 1,
                            land_borders = NULL,
-                           z_ref = NULL) {
+                           z_ref = NULL,
+                           xy_pad = c(xmin = 0, ymin = 0, xmax = 0, ymax = 0)) {
   crs_raster_format <-
     "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0 +no_defs"
   .data_interp <- .data %>%
@@ -26,7 +27,7 @@ create_sq_grid <- function(.data,
       sf::st_bbox()
 
     grid_with_elevation <- z_ref %>%
-      raster::crop(grid_boundary)
+      raster::crop(grid_boundary + xy_pad)
 
     # If land_borders are provided, apply as a mask to the grid
     if (!missing(land_borders)) {
@@ -502,6 +503,10 @@ subset_coords <- function(.data,
 #'     minute) data set.
 #' @param cpus Numeric value with the number of CPUs to use in the computation
 #'     of the elevations for the interpolation grid.
+#' @param xy_pad Numeric vector of length 4. The entries should be named as
+#'     follow: `xmin`, `ymin`, `xmax`, `ymax`. The values will be used to
+#'     expand the interpolation grid horizontally (longitude) and vertically
+#'     (latitude).
 #' @param ... Additional parameters for the interpolation.
 #'
 #' @return `tibble` object with interpolated values.
@@ -518,6 +523,7 @@ tps <- function(.data,
                 z_mode = "independent",
                 z_ref = NULL,
                 cpus = 1,
+                xy_pad = c(xmin = 0, ymin = 0, xmax = 0, ymax = 0),
                 ...) {
   # Check coordinates
   .data2 <- .data %>%
@@ -533,7 +539,8 @@ tps <- function(.data,
                      get_elevation = get_elevation,
                      cpus = cpus,
                      land_borders = land_borders,
-                     z_ref = z_ref)
+                     z_ref = z_ref,
+                     xy_pad = xy_pad)
 
     if (z_mode == "independent") {
       message("Using the elevation as an independent variable...")
@@ -589,7 +596,8 @@ tps <- function(.data,
     sq_grid <- .data2 %>%
       create_sq_grid(resolution = resolution,
                      land_borders = land_borders,
-                     z_ref = z_ref)
+                     z_ref = z_ref,
+                     xy_pad = xy_pad)
 
     fit_tps <- fields::Tps(.data2 %>%
                              dplyr::select(longitude, latitude),

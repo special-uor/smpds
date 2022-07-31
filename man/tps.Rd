@@ -14,6 +14,7 @@ tps(
   z_mode = "independent",
   z_ref = NULL,
   cpus = 1,
+  xy_pad = c(xmin = 0, ymin = 0, xmax = 0, ymax = 0),
   ...
 )
 }
@@ -57,6 +58,11 @@ minute) data set.}
 
 \item{cpus}{Numeric value with the number of CPUs to use in the computation
 of the elevations for the interpolation grid.}
+
+\item{xy_pad}{Numeric vector of length 4. The entries should be named as
+follow: \code{xmin}, \code{ymin}, \code{xmax}, \code{ymax}. The values will be used to
+expand the interpolation grid horizontally (longitude) and vertically
+(latitude).}
 
 \item{...}{
   Arguments passed on to \code{\link[fields:Tps]{fields::Tps}}
