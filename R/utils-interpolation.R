@@ -554,14 +554,6 @@ tps <- function(.data,
                              Y = .data2$var,
                              lon.lat = TRUE,
                              ...)
-      interp_tps <- raster::interpolate(sq_grid,
-                                        fit_tps,
-                                        xyOnly = FALSE)
-      interp_tps %>%
-        raster::rasterToPoints() %>%
-        tibble::as_tibble() %>%
-        magrittr::set_names(c("longitude", "latitude", var))
-
     } else {
       message("Using the elevation as a linear covariate...")
       fit_tps <- fields::Tps(x = .data2 %>%
@@ -573,23 +565,6 @@ tps <- function(.data,
                              lon.lat = TRUE,
                              Z = .data2$Z,
                              ...)
-      pfun <- function(model, x, ...) {
-        predict(model, x[, 1:2], Z = x[, 3], ...)
-      }
-
-      interp_tps <- raster::interpolate(sq_grid,
-                                        fit_tps,
-                                        xyOnly = FALSE,
-                                        fun = pfun)
-      # if (!missing(land_borders)) {
-      #   interp_tps <- interp_tps %>%
-      #     raster::mask(mask = land_borders)
-      # }
-
-      interp_tps %>%
-        raster::rasterToPoints() %>%
-        tibble::as_tibble() %>%
-        magrittr::set_names(c("longitude", "latitude", var))
     }
   } else {
     # Create rectangular grid
@@ -605,14 +580,54 @@ tps <- function(.data,
                              dplyr::select(var),
                            lon.lat = TRUE,
                            ...)
-
-    interp_tps <- raster::interpolate(sq_grid, fit_tps)
-
-    interp_tps %>%
-      raster::mask(mask = land_borders) %>%
-      raster::rasterToPoints() %>%
-      tibble::as_tibble() %>%
-      magrittr::set_names(c("longitude", "latitude", var))
-
   }
+
+  message("Interpolating the new values...")
+  oplan <- future::plan(future::multisession, workers = cpus)
+  on.exit(future::plan(oplan), add = TRUE)
+  {
+    N_STEPS <-
+      raster::nrow(sq_grid)
+    pb <- progressr::progressor(steps = N_STEPS)
+    pred_funct <- function(model, x, ...) {
+      predict(model, x[, 1:2], Z = x[, 3], ...)
+    }
+    interp_tps <- seq_len(N_STEPS) %>%
+      furrr::future_map_dfr(function(i) {
+      # purrr::map_dfr(function(i) {
+        sub_sq_grid <-
+          tibble::tibble(
+            x = raster::xFromCol(sq_grid, seq_len(raster::ncol(sq_grid))),
+            y = raster::yFromRow(sq_grid, i),
+            Z = raster::getValues(sq_grid, i)
+          ) %>%
+          raster::rasterFromXYZ(res = raster::res(sq_grid),
+                                crs = raster::crs(sq_grid))
+        if (!is.null(z_var)) {
+          if (z_mode == "independent") {
+            intermediate_output <- raster::interpolate(sub_sq_grid,
+                                                       fit_tps,
+                                                       xyOnly = FALSE)
+          } else {
+            intermediate_output <- raster::interpolate(sub_sq_grid,
+                                                       fit_tps,
+                                                       xyOnly = FALSE,
+                                                       fun = pred_funct)
+          }
+        } else {
+          intermediate_output <- raster::interpolate(sub_sq_grid, fit_tps)
+        }
+        pb()
+        intermediate_output %>%
+          raster::mask(mask = land_borders) %>%
+          raster::rasterToPoints() %>%
+          tibble::as_tibble() %>%
+          magrittr::set_names(c("longitude", "latitude", var))
+      },
+      .options = furrr::furrr_options(seed = TRUE,
+                                      packages = c("fields", "raster", "sf"))
+      )
+  }
+  message("Done. Bye!")
+  interp_tps
 }
