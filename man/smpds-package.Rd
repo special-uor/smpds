@@ -42,18 +42,5 @@ Other contributors:
   \item SPECIAL Research Group @ University of Reading [copyright holder]
 }
 
-
-\strong{Maintainer}: Roberto Villegas-Diaz \email{r.villegas-diaz@outlook.com} (\href{https://orcid.org/0000-0001-5036-8661}{ORCID})
-
-Authors:
-\itemize{
-  \item Sandy P. Harrison \email{s.p.harrison@reading.ac.uk} (\href{https://orcid.org/0000-0001-5687-1903}{ORCID})
-}
-
-Other contributors:
-\itemize{
-  \item SPECIAL Research Group @ University of Reading [copyright holder]
-}
-
 }
 \keyword{internal}

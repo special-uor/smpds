@@ -7,8 +7,7 @@
 pivot_data(
   .data,
   timestep = "^T[0-9]*",
-  cols = colnames(.data) \%>\% stringr::str_detect(timestep, negate = TRUE) \%>\%
-    which(),
+  cols = colnames(.data) \%>\% stringr::str_detect(timestep, negate = TRUE) \%>\% which(),
   scale = 1,
   add = 0,
   varname = "value"

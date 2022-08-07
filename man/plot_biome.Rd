@@ -30,28 +30,10 @@ plot_biome(
 
 \item{stroke}{Numeric value for the \code{stroke} aesthetic.}
 
-\item{legend.key.height}{size of legend keys (\code{unit}); key background height & width inherit from
-\code{legend.key.size} or can be specified separately}
-
-\item{legend.key.width}{size of legend keys (\code{unit}); key background height & width inherit from
-\code{legend.key.size} or can be specified separately}
-
 \item{legend.position}{the position of legends ("none", "left", "right",
 "bottom", "top", or two-element numeric vector)}
 
-\item{xlim}{Limits for the x and y axes. These limits are specified
-in the units of the default CRS. By default, this means projected coordinates
-(\code{default_crs = NULL}). How limit specifications translate into the exact
-region shown on the plot can be confusing when non-linear or rotated coordinate
-systems are used as the default crs. First, different methods can be preferable
-under different conditions. See parameter \code{lims_method} for details. Second,
-specifying limits along only one direction can affect the automatically generated
-limits along the other direction. Therefore, it is best to always specify limits
-for both x and y. Third, specifying limits via position scales or \code{xlim()}/\code{ylim()}
-is strongly discouraged, as it can result in data points being dropped from the plot even
-though they would be visible in the final plot region.}
-
-\item{ylim}{Limits for the x and y axes. These limits are specified
+\item{xlim, ylim}{Limits for the x and y axes. These limits are specified
 in the units of the default CRS. By default, this means projected coordinates
 (\code{default_crs = NULL}). How limit specifications translate into the exact
 region shown on the plot can be confusing when non-linear or rotated coordinate
