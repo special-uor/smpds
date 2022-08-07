@@ -8,7 +8,8 @@ create_sq_grid <- function(.data,
                            cpus = 1,
                            land_borders = NULL,
                            z_ref = NULL,
-                           xy_pad = c(xmin = 0, ymin = 0, xmax = 0, ymax = 0)) {
+                           xy_pad = c(xmin = 0, ymin = 0, xmax = 0, ymax = 0),
+                           grid_boundary = NULL) {
   crs_raster_format <-
     "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0 +no_defs"
   .data_interp <- .data %>%
@@ -18,13 +19,23 @@ create_sq_grid <- function(.data,
       crs = "+proj=longlat +datum=WGS84 +no_defs"
     )
 
+  # Check if the grid_boundary was given, otherwise calculate it from the
+  # observations (`.data`)
+  if (missing(grid_boundary) ||
+      is.null(grid_boundary) ||
+      length(grid_boundary) != 4) {
+    grid_boundary <- .data_interp %>%
+      sf::st_bbox()
+  } else {
+    grid_boundary <- grid_boundary %>%
+      magrittr::set_class(unique(c("bbox", class(.))))
+  }
+
+  # If the `z_ref` is given, then use this for the interpolation grid
   if (!missing(z_ref) && !is.null(z_ref)) {
     if ("character" %in% class(z_ref)) {
       z_ref <- raster::raster(z_ref)
     }
-
-    grid_boundary <- .data_interp %>%
-      sf::st_bbox()
 
     grid_with_elevation <- z_ref %>%
       raster::crop(grid_boundary + xy_pad)
@@ -46,8 +57,8 @@ create_sq_grid <- function(.data,
     return(grid_with_elevation)
   }
 
-  alt_grd_template_sf <- .data_interp %>%
-    sf::st_bbox() %>%
+  alt_grd_template_sf <-
+    (grid_boundary + xy_pad) %>%
     sf::st_as_sfc() %>%
     sf::st_make_grid(
       cellsize = c(resolution, resolution),
@@ -507,6 +518,9 @@ subset_coords <- function(.data,
 #'     follow: `xmin`, `ymin`, `xmax`, `ymax`. The values will be used to
 #'     expand the interpolation grid horizontally (longitude) and vertically
 #'     (latitude).
+#' @param grid_boundary Numeric vector of length 4. The entries should be named
+#'     as follow: `xmin`, `ymin`, `xmax`, `ymax`. The values will be used to
+#'     manually specify the interpolation area.
 #' @param ... Additional parameters for the interpolation.
 #'
 #' @return `tibble` object with interpolated values.
@@ -524,6 +538,7 @@ tps <- function(.data,
                 z_ref = NULL,
                 cpus = 1,
                 xy_pad = c(xmin = 0, ymin = 0, xmax = 0, ymax = 0),
+                grid_boundary = NULL,
                 ...) {
   # Check coordinates
   .data2 <- .data %>%
@@ -540,7 +555,8 @@ tps <- function(.data,
                      cpus = cpus,
                      land_borders = land_borders,
                      z_ref = z_ref,
-                     xy_pad = xy_pad)
+                     xy_pad = xy_pad,
+                     grid_boundary = grid_boundary)
 
     if (z_mode == "independent") {
       message("Using the elevation as an independent variable...")
@@ -572,7 +588,8 @@ tps <- function(.data,
       create_sq_grid(resolution = resolution,
                      land_borders = land_borders,
                      z_ref = z_ref,
-                     xy_pad = xy_pad)
+                     xy_pad = xy_pad,
+                     grid_boundary = grid_boundary)
 
     fit_tps <- fields::Tps(.data2 %>%
                              dplyr::select(longitude, latitude),
