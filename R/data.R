@@ -8,9 +8,8 @@
 #' }
 #'
 #' @references
-#' `r Rdpack::insert_ref("vincens2007african", "smpds")`
-#'
-# \insertRef{vincens2007african}{smpds}
+# `r Rdpack::insert_ref("vincens2007african", "smpds")`
+#' \insertRef{vincens2007african}{smpds}
 #'
 #' @source
 #' http://fpd.sedoo.fr/fpd/bibli.do
@@ -121,7 +120,6 @@
 #' https://researchdata.reading.ac.uk/294
 "IbMPD"
 
-
 #' \code{japanese_pollen} dataset
 #'
 #' The Japanese Pollen Dataset.
@@ -165,18 +163,18 @@
 #' https://doi.pangaea.de/10.1594/PANGAEA.905309
 "Phelps"
 
-#' \code{PNV} dataset
+#' \code{PNV_1km} dataset
 #'
 #' Global Maps of Potential Natural Vegetation at 1 km resolution, version 4.
 #'
-#' @format A data frame (\code{RasterBrick} object) with `r dim(smpds::PNV)[1]` rows and `r dim(smpds::PNV)[2]` columns.
+#' @format A data frame (\code{RasterBrick} object) with `r dim(smpds::PNV_1km)[1]` rows and `r dim(smpds::PNV_1km)[2]` columns.
 #'
 #' @references
 #' \insertRef{hengl2018global}{smpds}
 #'
 #' @source
 #' \insertRef{hengl2018global1kmres}{smpds}
-"PNV"
+"PNV_1km"
 
 #' \code{SMPDSv1} dataset
 #'
@@ -201,7 +199,6 @@
 #' }
 #'
 #' @references
-#'
 #' \insertRef{davis2020eurasian}{smpds}
 #'
 #' \insertRef{finsinger2007modern}{smpds}
@@ -218,9 +215,6 @@
 #'
 #' \insertRef{williams2018neotoma}{smpds}
 "SMPDSv2"
-
-#' @keywords internal
-"_PACKAGE"
 
 #' \code{climate}
 "climate"
