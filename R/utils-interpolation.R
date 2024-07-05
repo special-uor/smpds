@@ -1,15 +1,14 @@
 #' @keywords internal
 create_sq_grid <- function(.data,
                            resolution = 0.5,
-                           get_elevation =
-                             function(...) {
-                               return(tibble::tibble(elevation = 0))
-                               },
+                           get_elevation = get_elevation_zero,
                            cpus = 1,
                            land_borders = NULL,
                            z_ref = NULL,
                            xy_pad = c(xmin = 0, ymin = 0, xmax = 0, ymax = 0),
                            grid_boundary = NULL) {
+  # Local bindings
+  . <- longitude <- x <- y <- NULL
   crs_raster_format <-
     "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0 +no_defs"
   .data_interp <- .data %>%
@@ -67,7 +66,7 @@ create_sq_grid <- function(.data,
     sf::st_as_sf() %>%
     cbind(., sf::st_coordinates(.)) %>%
     sf::st_drop_geometry() %>%
-    dplyr:::mutate(Z = 0) %>%
+    dplyr::mutate(Z = 0) %>%
     magrittr::set_names(c("x", "y", "Z"))
 
   # If land_borders are provided, apply as a mask to the grid
@@ -137,6 +136,8 @@ cru_mask <- function(res = 0.5,
 
 #' @keywords internal
 get_elevation <- function(.data, cpus = 1, missing = -999999) {
+  # Local bindings
+  latitude <- longitude <- NULL
   latlon_proj <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
   oplan <- future::plan(future::multisession, workers = cpus)
   on.exit(future::plan(oplan), add = TRUE)
@@ -167,6 +168,11 @@ get_elevation <- function(.data, cpus = 1, missing = -999999) {
   } %>%
     smpds::pb()
   return(output)
+}
+
+#' @keywords internal
+get_elevation_zero <- function(...) {
+  return(tibble::tibble(elevation = 0))
 }
 
 #' Geographically Weighted Regression
@@ -283,6 +289,8 @@ gwr.numeric <- function(.ref,
   if (length(dim(.ref)) != 3)
     stop("Invalid reference object, `.ref`, expecting a 3-dimensional array.",
          call. = FALSE)
+  # Local bindings
+  land <- sea <- NULL
   .ref_tbl <- .ref %>%
     mask_nc(mask = cru_mask(res = res, coordinates = coordinates)) %>%
     dplyr::filter(land) %>%
@@ -540,6 +548,8 @@ tps <- function(.data,
                 xy_pad = c(xmin = 0, ymin = 0, xmax = 0, ymax = 0),
                 grid_boundary = NULL,
                 ...) {
+  # Local bindings
+  latitude <- longitude <- Z <- NULL
   # Check coordinates
   .data2 <- .data %>%
     check_coords(var = var, skip = !check_data)
@@ -607,7 +617,7 @@ tps <- function(.data,
       raster::nrow(sq_grid)
     pb <- progressr::progressor(steps = N_STEPS)
     pred_funct <- function(model, x, ...) {
-      predict(model, x[, 1:2], Z = x[, 3], ...)
+      raster::predict(model, x[, 1:2], Z = x[, 3], ...)
     }
     interp_tps <- seq_len(N_STEPS) %>%
       furrr::future_map_dfr(function(i) {

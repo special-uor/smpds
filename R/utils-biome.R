@@ -150,7 +150,7 @@ parallel_extract_biome <- function(.data,
                                    cpus = 2,
                                    all = FALSE) {
   # Local bindings
-  . <- ID <- latitude <- longitude <- NULL
+  . <- .ID_PAR_BIO <- ID <- latitude <- longitude <- NULL
   # Create data subset to improve performance
   .data <- .data %>%
     dplyr::mutate(.ID_PAR_BIO = seq_along(latitude))

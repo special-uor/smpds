@@ -42,7 +42,7 @@ alt_grd_template_sf <- .data_interp %>%
   sf::st_as_sf() %>%
   cbind(., sf::st_coordinates(.)) %>%
   sf::st_drop_geometry() %>%
-  dplyr:::mutate(Z = 0) %>%
+  dplyr::mutate(Z = 0) %>%
   magrittr::set_names(c("x", "y", "Z"))
 
 # If land_borders are provided, apply as a mask to the grid

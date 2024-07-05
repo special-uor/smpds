@@ -2,6 +2,8 @@
 check_coords <- function(.data, var, skip = FALSE) {
   if (skip) # Avoid double checking data
     return(.data)
+  # Local bindings
+  idx <- var_names <- NULL
   lat_var_names <- c("latitude", "lat", "y")
   lon_var_names <- c("longitude", "long", "lon", "x")
   main_var_names <- var
@@ -97,6 +99,8 @@ climate_theme <- function(fill_sea,
 create_factor <- function(.data) {
   if (!is.factor(.data$var) |
       (!is.factor(.data$var) & !is.character(.data$var))) {
+    # Local bindings
+    . <- var <- NULL
     .data <- .data %>%
       dplyr::mutate(
         var = var %>%
@@ -188,7 +192,7 @@ plot_biome <- function(.data,
                        fill_sea = "#CFE2F3",
                        ...) {
   # Local bindings
-  description <- ID_BIOME <- n <- latitude <- longitude <- NULL
+  description <- ID_BIOME <- n <- latitude <- longitude <- var <- NULL
 
   # Check for latitude, longitude and var (one of each expected)
   .data <- .data %>%
@@ -554,7 +558,7 @@ plot_climate_tiles <-
            continuous = FALSE,
            ...) {
   # Local bindings
-  caption <- latitude <- longitude <- NULL
+  .is_tile <- caption <- latitude <- longitude <- NULL
 
   # Check for latitude, longitude and var (one of each expected)
   .data <- .data %>%
