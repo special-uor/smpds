@@ -105,9 +105,9 @@ create_sq_grid <- function(.data,
 #'
 #' @return Table with land-sea mask:
 #' \itemize{
-#'  \item{\code{land = TRUE} }{ Grid cell with data provided by the CRU TS.}
-#'  \item{\code{land = FALSE} }{ Grid cell where data is not provided by the
-#'  CRU TS.}
+#'  \item \code{land = TRUE}: Grid cell with data provided by the CRU TS.
+#'  \item \code{land = FALSE}: Grid cell where data is not provided by the
+#'  CRU TS.
 #' }
 #'
 #' @keywords internal
@@ -367,8 +367,8 @@ gwr.numeric <- function(.ref,
 #'     \code{longitude} and a third variable called \code{land} with logical
 #'     values to indicated whether a grid cell should be used or ignored.
 #'     \itemize{
-#'      \item{\code{land = TRUE} }{ use this value.}
-#'      \item{\code{land = FALSE} }{ ignore this value.}
+#'      \item \code{land = TRUE}: use this value.
+#'      \item \code{land = FALSE}: ignore this value.
 #'     }
 #'
 #' @return 2D version of \code{.data}, including \code{latitute},

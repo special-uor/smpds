@@ -31,7 +31,7 @@ clean_taxa <- function() {
 #'     \code{signif}.
 #' @param ... Optional parameters passed to \code{fx}.
 #'
-#' @return Table with records of \code{y} that exist in {x}.
+#' @return Table with records of \code{y} that exist in \code{x}.
 #' @export
 compare_latlon <- function(x,
                            y,
@@ -69,7 +69,7 @@ compare_latlon <- function(x,
 #'
 #' @inheritParams compare_latlon
 #'
-#' @return Table with records of \code{y} that exist in {x}.
+#' @return Table with records of \code{y} that exist in \code{x}.
 #' @export
 compare_latlonelv <- function(x,
                               y,
@@ -137,9 +137,9 @@ rm_na_taxa <- function(.data, cols = 1) {
   # Local binding
   value <- NULL
   .data %>%
-    tidyr::pivot_longer(-cols) %>%
+    tidyr::pivot_longer(-dplyr::all_of(cols)) %>%
     dplyr::filter(!is.na(value)) %>%
-    tidyr::pivot_wider(cols)
+    tidyr::pivot_wider(dplyr::all_of(cols))
 }
 
 #' Remove taxa/columns with zeros
@@ -155,9 +155,9 @@ rm_zero_taxa <- function(.data, cols = 1) {
   # Local binding
   value <- NULL
   .data %>%
-    tidyr::pivot_longer(-cols) %>%
+    tidyr::pivot_longer(-dplyr::all_of(cols)) %>%
     dplyr::filter(value != 0) %>%
-    tidyr::pivot_wider(cols)
+    tidyr::pivot_wider(dplyr::all_of(cols))
 }
 
 #' Sort taxa/columns alphabetically
@@ -174,7 +174,7 @@ sort_taxa <- function(.data, cols = 1) {
   # Local binding
   . <- NULL
   .data %>%
-    dplyr::select(cols, order(colnames(.)[-cols]) + length(cols))
+    dplyr::select(dplyr::all_of(cols, order(colnames(.)[-cols]) + length(cols)))
 }
 
 #' @keywords internal
