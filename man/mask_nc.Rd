@@ -14,8 +14,8 @@ mask_nc(.data, mask = cru_mask())
 \code{longitude} and a third variable called \code{land} with logical
 values to indicated whether a grid cell should be used or ignored.
 \itemize{
-\item{\code{land = TRUE} }{ use this value.}
-\item{\code{land = FALSE} }{ ignore this value.}
+\item \code{land = TRUE}: use this value.
+\item \code{land = FALSE}: ignore this value.
 }}
 }
 \value{

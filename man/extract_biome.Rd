@@ -9,13 +9,25 @@
 \usage{
 extract_biome(.data, ...)
 
-\method{extract_biome}{tbl_df}(.data, ..., reference = smpds::PNV, buffer = 12000, all = FALSE)
+\method{extract_biome}{tbl_df}(
+  .data,
+  ...,
+  reference = smpds::PNV_1km,
+  buffer = 12000,
+  all = FALSE
+)
 
-\method{extract_biome}{sf}(.data, ..., reference = smpds::PNV, buffer = 12000, all = FALSE)
+\method{extract_biome}{sf}(
+  .data,
+  ...,
+  reference = smpds::PNV_1km,
+  buffer = 12000,
+  all = FALSE
+)
 
 parallel_extract_biome(
   .data,
-  reference = smpds::PNV,
+  reference = smpds::PNV_1km,
   buffer = 12000,
   cpus = 2,
   all = FALSE
@@ -32,7 +44,7 @@ column (\code{sf} object).}
     \item{\code{}}{}
   }}
 
-\item{reference}{Reference map with biomes, default: \code{smpds::PNV}.}
+\item{reference}{Reference map with biomes, default: \code{smpds::PNV_1km}.}
 
 \item{buffer}{numeric. The radius of a buffer around each point from which to extract cell values. If the distance between the sampling point and the center of a cell is less than or equal to the buffer, the cell is included. The buffer can be specified as a single value, or as a vector of the length of the number of points.  If the data are not projected (latitude/longitude), the unit should be meters. Otherwise it should be in map-units (typically also meters).}
 
@@ -44,11 +56,11 @@ biomes, default: \code{FALSE} (dominant biome only).}
 \value{
 Table with the original data and matched biome(s):
 \itemize{
-\item{if \code{all = FALSE} (default) }{ Only returns the dominant biome:
-\code{ID_BIOME}}
-\item{if \code{all = TRUE} }{ Returns all the detected biomes:
+\item if \code{all = FALSE} (default): Only returns the dominant biome:
+\code{ID_BIOME}
+\item if \code{all = TRUE}: Returns all the detected biome -
 \code{ID_BIOME} and \code{px}, the number of pixels detected for each
-biome.}
+biome.
 }
 }
 \description{

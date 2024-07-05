@@ -23,7 +23,7 @@ are \code{round}, \code{trunc}, \code{floor}, \code{ceiling} and
 \item{...}{Optional parameters passed to \code{fx}.}
 }
 \value{
-Table with records of \code{y} that exist in {x}.
+Table with records of \code{y} that exist in \code{x}.
 }
 \description{
 Compare two datasets using \code{latitude} and \code{longitude}, the
