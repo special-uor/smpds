@@ -5,7 +5,8 @@
 \alias{CRU_coords}
 \title{\code{CRU_coords} dataset}
 \format{
-A data frame (\code{tibble} object) with 67420 rows and 3 variables:
+A data frame (\code{tibble} object) with 67420
+rows and 3 variables.
 \describe{
 \item{latitude}{Numeric values for latitude in decimal degrees.}
 \item{longitude}{Numeric values for longitude in decimal degrees.}

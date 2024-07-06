@@ -5,10 +5,8 @@
 \alias{APD}
 \title{\code{APD} dataset}
 \format{
-A data frame (\code{tibble} object) with 90 rows and 23 variables:
-\describe{
-\item{...}{int ...}
-}
+A data frame (\code{tibble} object) with 90 rows
+and 23 variables.
 }
 \source{
 http://fpd.sedoo.fr/fpd/bibli.do
@@ -19,7 +17,65 @@ APD
 \description{
 The African Pollen dataset.
 }
+\section{Variables}{
+
+\describe{
+\item{source}{\code{character} Source from which the data was repatriated}
+\item{site_name}{\code{character} Site name as given by the original
+authors or as defined by us where there was not an unique name given to
+the site}
+\item{entity_name}{\code{character} Entity name. An entity may be a
+separate core from the same site or an alternative measurement type of the
+same core}
+\item{latitude}{\code{numeric} Latitude of the sampling site, given in
+decimal degrees, where N is positive and S is negative}
+\item{longitude}{\code{numeric} Longitude of the sampling site in decimal
+degrees, where E is positive and W is negative}
+\item{elevation}{\code{numeric} Elevation of the sampling site in metres
+above (+) or below (-) sea level}
+\item{basin_size}{\code{character} Size of sampled site (e.g. lake, bog,
+etc.) in [km^2] or given as a categorical estimated when precise
+information was not recorded or was not available}
+\item{site_type}{\code{character} Information about type of site
+(e.g. cave, lake, glacial, terrestrial, etc.)}
+\item{entity_type}{\code{character} Information about the type of entity
+(e.g. composite, core top, surface sample, etc.)}
+\item{age_BP}{\code{character} Sample age in years before present (BP) or
+categorical estimate where not numeric values were available}
+\item{publication}{\code{character} Citation for the publication(s) where
+the data was originally published}
+\item{doi}{\code{character} Digital Object Identifier (DOI) for the (each)
+publication - if available}
+\item{ID_BIOME}{\code{numeric} Unique identifier for each potential
+natural vegetation (PNV)}
+\item{PNV (only \link{SMPDSv2})}{\code{character} Potential Natural
+Vegetation based on the work by
+\insertCite{hengl2018global}{smpds}}
+\item{ID_SAMPLE}{\code{numeric} Unique identifier for each sample}
+\item{sample_name (only \link{australia_pollen})}{\code{character}
+Sample name}
+\item{mi}{\code{numeric} Reconstructed Moisture Index \link{unitless} using the
+CRU TS 4.04 \insertCite{harris2020}{smpds} dataset}
+\item{gdd0}{\code{numeric} Reconstructed Growing Degree Days above 0°C
+[°C day] using the CRU TS 4.04 \insertCite{harris2020}{smpds} dataset}
+\item{mat}{\code{numeric} Reconstructed Mean Annual Temperature [°C]
+using the CRU TS 4.04 \insertCite{harris2020}{smpds} dataset}
+\item{mtco}{\code{numeric} Reconstructed Mean Temperature of the Coldest
+Month [°C] using the CRU TS 4.04 \insertCite{harris2020}{smpds} dataset}
+\item{mtwa}{\code{numeric} Reconstructed Mean Temperature of the Warmest
+Month [°C] using the CRU TS 4.04 \insertCite{harris2020}{smpds} dataset}
+\item{map}{\code{numeric} Reconstructed Mean Annual Precipitation
+[mm/year] using the CRU TS 4.04 \insertCite{harris2020}{smpds} dataset}
+\item{clean}{\code{data.frame} Clean pollen counts. Each column represents
+a different pollen taxon}
+\item{intermediate}{\code{data.frame} Intermediate (grouped) pollen counts}
+\item{amalgamated}{\code{data.frame} Amalgamated pollen counts}
+}
+}
+
 \references{
 \insertRef{vincens2007african}{smpds}
+
+\insertAllCited{}
 }
 \keyword{datasets}
