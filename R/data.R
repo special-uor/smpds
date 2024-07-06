@@ -2,9 +2,6 @@
 #'
 #' The African Modern Surface Samples dataset. Part of the [smpds::SMPDSv2].
 #'
-#' @format A data frame (\code{tibble} object) with `r nrow(smpds::AMSS)` rows
-#' and `r ncol(smpds::AMSS)` variables.
-#'
 #' @section Variables:
 #' \describe{
 #'   \item{source}{\code{character} Source from which the data was repatriated}
@@ -75,9 +72,6 @@
 #'
 #' The African Pollen dataset.
 #'
-#' @format A data frame (\code{tibble} object) with `r nrow(smpds::APD)` rows
-#' and `r ncol(smpds::APD)` variables.
-#'
 #' @inheritSection AMSS Variables
 #'
 #' @references
@@ -94,10 +88,6 @@
 #'
 #' The Australian Pollen dataset.
 #'
-#' @format A data frame (\code{tibble} object) with
-#' `r nrow(smpds::australia_pollen)` rows and `r ncol(smpds::australia_pollen)`
-#' variables.
-#'
 #' @inheritSection AMSS Variables
 #'
 "australia_pollen"
@@ -105,9 +95,6 @@
 #' \code{CMPD} dataset
 #'
 #' The Chinese Modern Pollen Dataset by Ni Jian.
-#'
-#' @format A data frame (\code{tibble} object) with `r nrow(smpds::CMPD)` rows
-#' and `r ncol(smpds::CMPD)` variables.
 #'
 #' @inheritSection AMSS Variables
 #'
@@ -122,8 +109,7 @@
 #'
 #' The CRU TS 2.1 dataset coordinates at 0.5 degrees resolution.
 #'
-#' @format A data frame (\code{tibble} object) with `r nrow(smpds::CRU_coords)`
-#' rows and `r ncol(smpds::CRU_coords)` variables.
+#' @section Variables:
 #' \describe{
 #'   \item{latitude}{Numeric values for latitude in decimal degrees.}
 #'   \item{longitude}{Numeric values for longitude in decimal degrees.}
@@ -141,9 +127,6 @@
 #'
 #' The Eurasian Modern Pollen Database (EMPD), version 2.
 #'
-#' @format A data frame (\code{tibble} object) with `r nrow(smpds::EMPDv2)` rows
-#' and `r ncol(smpds::EMPDv2)` variables.
-#'
 #' @inheritSection AMSS Variables
 #'
 #' @references
@@ -159,9 +142,6 @@
 #'
 #' The Eastern Mediterranean-Black Sea-Caspian-Corridor region and biome
 #' reconstructions database.
-#'
-#' @format A data frame (\code{tibble} object) with `r nrow(smpds::EMBSeCBIO)`
-#' rows and `r ncol(smpds::EMBSeCBIO)` variables.
 #'
 #' @inheritSection AMSS Variables
 #'
@@ -180,9 +160,6 @@
 #'
 #' Dataset provided by \insertCite{herzschuh2019position;textual}{smpds}.
 #'
-#' @format A data frame (\code{tibble} object) with `r nrow(smpds::Herzschuh)`
-#' rows and `r ncol(smpds::Herzschuh)` variables.
-#'
 #' @inheritSection AMSS Variables
 #'
 #' @references
@@ -195,9 +172,6 @@
 #' \code{IbMPD} dataset
 #'
 #' The Iberian Modern Pollen Dataset (IbMPD).
-#'
-#' @format A data frame (\code{tibble} object) with `r nrow(smpds::IbMPD)` rows
-#' and `r ncol(smpds::IbMPD)` variables.
 #'
 #' @inheritSection AMSS Variables
 #'
@@ -214,10 +188,6 @@
 #'
 #' The Japanese Pollen dataset.
 #'
-#' @format A data frame (\code{tibble} object) with
-#' `r nrow(smpds::japanese_pollen)` rows and `r ncol(smpds::japanese_pollen)`
-#' variables.
-#'
 #' @inheritSection AMSS Variables
 #'
 #' @references
@@ -227,9 +197,6 @@
 #' \code{NEOTOMA} dataset
 #'
 #' The Neotoma Paleoecology Database subset (NEOTOMA).
-#'
-#' @format A data frame (\code{tibble} object) with `r nrow(smpds::NEOTOMA)`
-#' rows and `r ncol(smpds::NEOTOMA)` variables.
 #'
 #' @inheritSection AMSS Variables
 #'
@@ -246,9 +213,6 @@
 #'
 #' Dataset provided by \insertCite{phelps2020asymmetric;textual}{smpds}.
 #'
-#' @format A data frame (\code{tibble} object) with `r nrow(smpds::Phelps)`
-#' rows and `r ncol(smpds::Phelps)` variables.
-#'
 #' @inheritSection AMSS Variables
 #'
 #' @references
@@ -262,9 +226,6 @@
 #'
 #' Global Maps of Potential Natural Vegetation at 1 km resolution, version 4.
 #'
-#' @format A data frame (\code{RasterBrick} object) with
-#' `r dim(smpds::PNV_1km)[1]` rows and `r dim(smpds::PNV_1km)[2]` columns.
-#'
 #' @references
 #' \insertRef{hengl2018global}{smpds}
 #'
@@ -275,9 +236,6 @@
 #' \code{SMPDSv1} dataset
 #'
 #' SPECIAL Modern Pollen Data for climate reconstructionS, version 1.
-#'
-#' @format A data frame (\code{tibble} object) with `r nrow(smpds::SMPDSv1)`
-#' rows and `r ncol(smpds::SMPDSv1)` variables.
 #'
 #' @inheritSection AMSS Variables
 #'
@@ -291,9 +249,6 @@
 #' \code{SMPDSv2} dataset
 #'
 #' SPECIAL Modern Pollen Data for climate reconstructionS, version 2.
-#'
-#' @format A data frame (\code{tibble} object) with `r nrow(smpds::SMPDSv2)`
-#' rows and `r ncol(smpds::SMPDSv2)` variables.
 #'
 #' @inheritSection AMSS Variables
 #'
