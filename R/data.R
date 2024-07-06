@@ -1,6 +1,6 @@
 #' \code{AMSS} dataset
 #'
-#' The African Modern Surface Samples Dataset. Part of the [smpds::SMPDSv2].
+#' The African Modern Surface Samples dataset. Part of the [smpds::SMPDSv2].
 #'
 #' @format A data frame (\code{tibble} object) with `r nrow(smpds::AMSS)` rows and `r ncol(smpds::AMSS)` variables:
 #' \describe{
@@ -41,7 +41,7 @@
 
 #' \code{APD} dataset
 #'
-#' The African Pollen Dataset.
+#' The African Pollen dataset.
 #'
 #' @format A data frame (\code{tibble} object) with `r nrow(smpds::APD)` rows and `r ncol(smpds::APD)` variables:
 #' \describe{
@@ -58,7 +58,7 @@
 
 #' \code{australia_pollen} dataset
 #'
-#' The Australian Pollen Dataset.
+#' The Australian Pollen dataset.
 #'
 #' @format A data frame (\code{tibble} object) with `r nrow(smpds::australia_pollen)` rows and `r ncol(smpds::australia_pollen)` variables:
 #' \describe{
@@ -163,7 +163,7 @@
 
 #' \code{japanese_pollen} dataset
 #'
-#' The Japanese Pollen Dataset.
+#' The Japanese Pollen dataset.
 #'
 #' @format A data frame (\code{tibble} object) with `r nrow(smpds::japanese_pollen)` rows and `r ncol(smpds::japanese_pollen)` variables:
 #' \describe{
@@ -268,3 +268,76 @@
 
 #' \code{taxon_name}
 "taxon_name"
+
+#' \code{additional_european_pollen} dataset
+#'
+#' Additional European pollen samples. Part of the [smpds::SMPDSv2].
+"additional_european_pollen"
+
+#' \code{dugerdil_pollen} dataset
+#'
+#' Pollen samples provided by L. Dugerdil. Part of the [smpds::SMPDSv2].
+#'
+#' @references
+#' \insertRef{dugerdil2021climate}{smpds}
+"dugerdil_pollen"
+
+#' \code{gaillard_pollen} dataset
+#'
+#' Pollen samples provided by M.J. Gaillard. Part of the [smpds::SMPDSv2].
+#'
+#' @references
+#' \insertRef{gaillard1992modern}{smpds}
+"gaillard_pollen"
+
+#' \code{moroccan_pollen} dataset
+#'
+#' Moroccan pollen samples. Part of the [smpds::SMPDSv2].
+#'
+#' @references
+#' \insertRef{hamouri1991changements}{smpds}
+#'
+#' \insertRef{lamb1995vegetational}{smpds}
+#'
+#' \insertRef{cheddadi1998holocene}{smpds}
+#'
+#' \insertRef{el201418}{smpds}
+#'
+#' \insertRef{cheddadi2015history}{smpds}
+#'
+#' \insertRef{campbell2017environmental}{smpds}
+#'
+#' \insertRef{cheddadi2017microrefugia}{smpds}
+#'
+#' \insertRef{fletcher2017ams}{smpds}
+#'
+#' \insertRef{zielhofer2017atlantic}{smpds}
+"moroccan_pollen"
+
+#' \code{neotropics_pollen} dataset
+#'
+#' Neotropics pollen samples. Part of the [smpds::SMPDSv2].
+#'
+#' @references
+#' \insertRef{bush2021modern}{smpds}
+"neotropics_pollen"
+
+#' \code{north_america_pollen} dataset
+#'
+#' North America  pollen samples. Part of the [smpds::SMPDSv2].
+"north_america_pollen"
+
+#' \code{south_america_pollen} dataset
+#'
+#' South America  pollen samples. Part of the [smpds::SMPDSv2].
+"south_america_pollen"
+
+#' \code{southern_hemisphere_pollen} dataset
+#'
+#' Southern hemisphere  pollen samples. Part of the [smpds::SMPDSv2].
+"southern_hemisphere_pollen"
+
+#' \code{tatiana_pollen} dataset
+#'
+#' Pollen samples provided by Tatiana B. Part of the [smpds::SMPDSv2].
+"tatiana_pollen"
