@@ -17,7 +17,7 @@ http://fpd.sedoo.fr/fpd/bibli.do
 APD
 }
 \description{
-The African Pollen Dataset.
+The African Pollen dataset.
 }
 \references{
 \insertRef{vincens2007african}{smpds}

@@ -339,5 +339,5 @@
 
 #' \code{tatiana_pollen} dataset
 #'
-#' Pollen samples provided by Tatiana B. Part of the [smpds::SMPDSv2].
+#' Pollen samples provided by T. Blyakharchuk. Part of the [smpds::SMPDSv2].
 "tatiana_pollen"

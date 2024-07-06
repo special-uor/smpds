@@ -36,7 +36,7 @@ A data frame (\code{tibble} object) with 38 rows and 23 variables:
 AMSS
 }
 \description{
-The African Modern Surface Samples Dataset. Part of the \link{SMPDSv2}.
+The African Modern Surface Samples dataset. Part of the \link{SMPDSv2}.
 }
 \references{
 \insertRef{jolly1996representation}{smpds}

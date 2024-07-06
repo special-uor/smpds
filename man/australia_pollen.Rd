@@ -14,6 +14,6 @@ A data frame (\code{tibble} object) with 1540 rows and 24 variables:
 australia_pollen
 }
 \description{
-The Australian Pollen Dataset.
+The Australian Pollen dataset.
 }
 \keyword{datasets}
