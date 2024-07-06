@@ -5,8 +5,7 @@
 \alias{CMPD}
 \title{\code{CMPD} dataset}
 \format{
-A data frame (\code{tibble} object) with 4208 rows
-and 23 variables.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 4208 rows and 23 columns.
 }
 \usage{
 CMPD

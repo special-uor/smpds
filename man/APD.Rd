@@ -5,8 +5,7 @@
 \alias{APD}
 \title{\code{APD} dataset}
 \format{
-A data frame (\code{tibble} object) with 90 rows
-and 23 variables.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 90 rows and 23 columns.
 }
 \source{
 http://fpd.sedoo.fr/fpd/bibli.do

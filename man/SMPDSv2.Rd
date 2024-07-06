@@ -5,8 +5,7 @@
 \alias{SMPDSv2}
 \title{\code{SMPDSv2} dataset}
 \format{
-A data frame (\code{tibble} object) with 24649
-rows and 24 variables.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 24649 rows and 24 columns.
 }
 \usage{
 SMPDSv2

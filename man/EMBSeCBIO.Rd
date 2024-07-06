@@ -5,8 +5,7 @@
 \alias{EMBSeCBIO}
 \title{\code{EMBSeCBIO} dataset}
 \format{
-A data frame (\code{tibble} object) with 149
-rows and 23 variables.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 149 rows and 23 columns.
 }
 \source{
 10.17864/1947.309

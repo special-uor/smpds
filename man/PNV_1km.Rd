@@ -5,8 +5,7 @@
 \alias{PNV_1km}
 \title{\code{PNV_1km} dataset}
 \format{
-A data frame (\code{RasterBrick} object) with
-17924 rows and 43200 columns.
+An object of class \code{RasterBrick} of dimension 17924 x 43200 x 1.
 }
 \source{
 \insertRef{hengl2018global1kmres}{smpds}

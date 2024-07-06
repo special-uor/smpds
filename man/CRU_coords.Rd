@@ -5,13 +5,7 @@
 \alias{CRU_coords}
 \title{\code{CRU_coords} dataset}
 \format{
-A data frame (\code{tibble} object) with 67420
-rows and 3 variables.
-\describe{
-\item{latitude}{Numeric values for latitude in decimal degrees.}
-\item{longitude}{Numeric values for longitude in decimal degrees.}
-\item{elevation}{Numeric values for elevation in metres above sea level.}
-}
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 67420 rows and 3 columns.
 }
 \source{
 https://crudata.uea.ac.uk/~timm/grid/CRU_TS_2_1.html
@@ -22,6 +16,15 @@ CRU_coords
 \description{
 The CRU TS 2.1 dataset coordinates at 0.5 degrees resolution.
 }
+\section{Variables}{
+
+\describe{
+\item{latitude}{Numeric values for latitude in decimal degrees.}
+\item{longitude}{Numeric values for longitude in decimal degrees.}
+\item{elevation}{Numeric values for elevation in metres above sea level.}
+}
+}
+
 \references{
 \insertRef{mitchell2005improved}{smpds}
 }

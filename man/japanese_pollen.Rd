@@ -5,9 +5,7 @@
 \alias{japanese_pollen}
 \title{\code{japanese_pollen} dataset}
 \format{
-A data frame (\code{tibble} object) with
-94 rows and 23
-variables.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 94 rows and 23 columns.
 }
 \usage{
 japanese_pollen

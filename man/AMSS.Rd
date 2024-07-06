@@ -5,8 +5,7 @@
 \alias{AMSS}
 \title{\code{AMSS} dataset}
 \format{
-A data frame (\code{tibble} object) with 38 rows
-and 23 variables.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 38 rows and 23 columns.
 }
 \usage{
 AMSS

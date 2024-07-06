@@ -5,9 +5,7 @@
 \alias{australia_pollen}
 \title{\code{australia_pollen} dataset}
 \format{
-A data frame (\code{tibble} object) with
-1540 rows and 24
-variables.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 1540 rows and 24 columns.
 }
 \usage{
 australia_pollen
