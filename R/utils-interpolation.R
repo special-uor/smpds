@@ -249,14 +249,15 @@ gwr <- function(.ref, ...) {
 #' @export
 #' @rdname gwr
 gwr.character <- function(.ref,
+                          ...,
                           .tar,
-                          varid = NULL,
                           coordinates = smpds::CRU_coords,
                           res = 0.5,
                           xy_buffer = 1.5,
                           z_buffer = NA,
                           cpus = 1,
-                          bandwidth = 1.06) {
+                          bandwidth = 1.06,
+                          varid = NULL) {
   if(is.null(varid))
     stop("When `.ref` is a string/path, `varid` cannot be NULL.",
          call. = FALSE)
@@ -279,6 +280,7 @@ gwr.character <- function(.ref,
 #' @export
 #' @rdname gwr
 gwr.numeric <- function(.ref,
+                        ...,
                         .tar,
                         coordinates = smpds::CRU_coords,
                         res = 0.5,
