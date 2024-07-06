@@ -332,27 +332,42 @@
 #' \code{additional_european_pollen} dataset
 #'
 #' Additional European pollen samples. Part of the [smpds::SMPDSv2].
+#'
+#' @inheritSection AMSS Variables
+#'
+#' @references
+#' \insertAllCited{}
 "additional_european_pollen"
 
 #' \code{dugerdil_pollen} dataset
 #'
 #' Pollen samples provided by L. Dugerdil. Part of the [smpds::SMPDSv2].
 #'
+#' @inheritSection AMSS Variables
+#'
 #' @references
 #' \insertRef{dugerdil2021climate}{smpds}
+#'
+#' \insertAllCited{}
 "dugerdil_pollen"
 
 #' \code{gaillard_pollen} dataset
 #'
 #' Pollen samples provided by M.J. Gaillard. Part of the [smpds::SMPDSv2].
 #'
+#' @inheritSection AMSS Variables
+#'
 #' @references
 #' \insertRef{gaillard1992modern}{smpds}
+#'
+#' \insertAllCited{}
 "gaillard_pollen"
 
 #' \code{moroccan_pollen} dataset
 #'
 #' Moroccan pollen samples. Part of the [smpds::SMPDSv2].
+#'
+#' @inheritSection AMSS Variables
 #'
 #' @references
 #' \insertRef{hamouri1991changements}{smpds}
@@ -372,32 +387,58 @@
 #' \insertRef{fletcher2017ams}{smpds}
 #'
 #' \insertRef{zielhofer2017atlantic}{smpds}
+#'
+#' \insertAllCited{}
 "moroccan_pollen"
 
 #' \code{neotropics_pollen} dataset
 #'
 #' Neotropics pollen samples. Part of the [smpds::SMPDSv2].
 #'
+#' @inheritSection AMSS Variables
+#'
 #' @references
 #' \insertRef{bush2021modern}{smpds}
+#'
+#' \insertAllCited{}
 "neotropics_pollen"
 
 #' \code{north_america_pollen} dataset
 #'
 #' North America  pollen samples. Part of the [smpds::SMPDSv2].
+#'
+#' @inheritSection AMSS Variables
+#'
+#' @references
+#' \insertAllCited{}
 "north_america_pollen"
 
 #' \code{south_america_pollen} dataset
 #'
 #' South America  pollen samples. Part of the [smpds::SMPDSv2].
+#'
+#' @inheritSection AMSS Variables
+#'
+#' @references
+#' \insertAllCited{}
 "south_america_pollen"
 
 #' \code{southern_hemisphere_pollen} dataset
 #'
 #' Southern hemisphere  pollen samples. Part of the [smpds::SMPDSv2].
+#'
+#' @inheritSection AMSS Variables
+#'
+#' @references
+#' \insertAllCited{}
 "southern_hemisphere_pollen"
 
 #' \code{tatiana_pollen} dataset
 #'
 #' Pollen samples provided by T. Blyakharchuk. Part of the [smpds::SMPDSv2].
+#'
+#' @inheritSection AMSS Variables
+#'
+#' @references
+#' \insertAllCited{}
 "tatiana_pollen"
