@@ -3,29 +3,58 @@
 #' The African Modern Surface Samples dataset. Part of the [smpds::SMPDSv2].
 #'
 #' @format A data frame (\code{tibble} object) with `r nrow(smpds::AMSS)` rows
-#' and `r ncol(smpds::AMSS)` variables:
+#' and `r ncol(smpds::AMSS)` variables.
+#'
+#' @section Variables:
 #' \describe{
-#'   \item{source}{\code{character} Source of the dataset}
-#'   \item{site_name}{\code{character} Site name}
-#'   \item{entity_name}{\code{character} Entity name}
-#'   \item{latitude}{\code{numeric} Latitude}
-#'   \item{longitude}{\code{numeric} Longitude}
-#'   \item{elevation}{\code{numeric} Elevation}
-#'   \item{basin_size}{\code{character} Basin size}
-#'   \item{site_type}{\code{character} Site type}
-#'   \item{entity_type}{\code{character} Entity type}
-#'   \item{age_BP}{\code{character} Age BP}
-#'   \item{publication}{\code{character} Publication}
-#'   \item{doi}{\code{character} DOI}
-#'   \item{ID_BIOME}{\code{numeric} Biome identifier}
-#'   \item{ID_SAMPLE}{\code{numeric} Sample identifier}
-#'   \item{mi}{\code{numeric} Moisture index}
-#'   \item{gdd0}{\code{numeric} Growing degree days with 0°C}
-#'   \item{mat}{\code{numeric} Mean annual temperature}
-#'   \item{mtco}{\code{numeric} Mean temperature of the coldest month}
-#'   \item{mtwa}{\code{numeric} Mean temperature of the warmest month}
-#'   \item{map}{\code{numeric} Mean annual precipitation}
-#'   \item{clean}{\code{data.frame} Clean pollen counts}
+#'   \item{source}{\code{character} Source from which the data was repatriated}
+#'   \item{site_name}{\code{character} Site name as given by the original
+#'   authors or as defined by us where there was not an unique name given to
+#'   the site}
+#'   \item{entity_name}{\code{character} Entity name. An entity may be a
+#'   separate core from the same site or an alternative measurement type of the
+#'   same core}
+#'   \item{latitude}{\code{numeric} Latitude of the sampling site, given in
+#'   decimal degrees, where N is positive and S is negative}
+#'   \item{longitude}{\code{numeric} Longitude of the sampling site in decimal
+#'   degrees, where E is positive and W is negative}
+#'   \item{elevation}{\code{numeric} Elevation of the sampling site in metres
+#'   above (+) or below (-) sea level}
+#'   \item{basin_size}{\code{character} Size of sampled site (e.g. lake, bog,
+#'   etc.) in \[km^2\] or given as a categorical estimated when precise
+#'   information was not recorded or was not available}
+#'   \item{site_type}{\code{character} Information about type of site
+#'   (e.g. cave, lake, glacial, terrestrial, etc.)}
+#'   \item{entity_type}{\code{character} Information about the type of entity
+#'   (e.g. composite, core top, surface sample, etc.)}
+#'   \item{age_BP}{\code{character} Sample age in years before present (BP) or
+#'   categorical estimate where not numeric values were available}
+#'   \item{publication}{\code{character} Citation for the publication(s) where
+#'   the data was originally published}
+#'   \item{doi}{\code{character} Digital Object Identifier (DOI) for the (each)
+#'   publication - if available}
+#'   \item{ID_BIOME}{\code{numeric} Unique identifier for each potential
+#'   natural vegetation (PNV)}
+#'   \item{PNV (only [smpds::SMPDSv2])}{\code{character} Potential Natural
+#'   Vegetation based on the work by
+#'   \insertCite{hengl2018global}{smpds}}
+#'   \item{ID_SAMPLE}{\code{numeric} Unique identifier for each sample}
+#'   \item{sample_name (only [smpds::australia_pollen])}{\code{character}
+#'   Sample name}
+#'   \item{mi}{\code{numeric} Reconstructed Moisture Index [unitless] using the
+#'   CRU TS 4.04 \insertCite{harris2020}{smpds} dataset}
+#'   \item{gdd0}{\code{numeric} Reconstructed Growing Degree Days above 0°C
+#'   \[°C day\] using the CRU TS 4.04 \insertCite{harris2020}{smpds} dataset}
+#'   \item{mat}{\code{numeric} Reconstructed Mean Annual Temperature \[°C\]
+#'   using the CRU TS 4.04 \insertCite{harris2020}{smpds} dataset}
+#'   \item{mtco}{\code{numeric} Reconstructed Mean Temperature of the Coldest
+#'   Month \[°C\] using the CRU TS 4.04 \insertCite{harris2020}{smpds} dataset}
+#'   \item{mtwa}{\code{numeric} Reconstructed Mean Temperature of the Warmest
+#'   Month \[°C\] using the CRU TS 4.04 \insertCite{harris2020}{smpds} dataset}
+#'   \item{map}{\code{numeric} Reconstructed Mean Annual Precipitation
+#'   \[mm/year\] using the CRU TS 4.04 \insertCite{harris2020}{smpds} dataset}
+#'   \item{clean}{\code{data.frame} Clean pollen counts. Each column represents
+#'   a different pollen taxon}
 #'   \item{intermediate}{\code{data.frame} Intermediate (grouped) pollen counts}
 #'   \item{amalgamated}{\code{data.frame} Amalgamated pollen counts}
 #' }
@@ -38,6 +67,8 @@
 #' \insertRef{julier2018modern}{smpds}
 #'
 #' \insertRef{julier2019variability}{smpds}
+#'
+#' \insertAllCited{}
 "AMSS"
 
 #' \code{APD} dataset
@@ -45,36 +76,15 @@
 #' The African Pollen dataset.
 #'
 #' @format A data frame (\code{tibble} object) with `r nrow(smpds::APD)` rows
-#' and `r ncol(smpds::APD)` variables:
-#' \describe{
-#'   \item{source}{\code{character} Source of the dataset}
-#'   \item{site_name}{\code{character} Site name}
-#'   \item{entity_name}{\code{character} Entity name}
-#'   \item{latitude}{\code{numeric} Latitude}
-#'   \item{longitude}{\code{numeric} Longitude}
-#'   \item{elevation}{\code{numeric} Elevation}
-#'   \item{basin_size}{\code{character} Basin size}
-#'   \item{site_type}{\code{character} Site type}
-#'   \item{entity_type}{\code{character} Entity type}
-#'   \item{age_BP}{\code{character} Age BP}
-#'   \item{publication}{\code{character} Publication}
-#'   \item{doi}{\code{character} DOI}
-#'   \item{ID_BIOME}{\code{numeric} Biome identifier}
-#'   \item{ID_SAMPLE}{\code{numeric} Sample identifier}
-#'   \item{mi}{\code{numeric} Moisture index}
-#'   \item{gdd0}{\code{numeric} Growing degree days with 0°C}
-#'   \item{mat}{\code{numeric} Mean annual temperature}
-#'   \item{mtco}{\code{numeric} Mean temperature of the coldest month}
-#'   \item{mtwa}{\code{numeric} Mean temperature of the warmest month}
-#'   \item{map}{\code{numeric} Mean annual precipitation}
-#'   \item{clean}{\code{data.frame} Clean pollen counts}
-#'   \item{intermediate}{\code{data.frame} Intermediate (grouped) pollen counts}
-#'   \item{amalgamated}{\code{data.frame} Amalgamated pollen counts}
-#' }
+#' and `r ncol(smpds::APD)` variables.
+#'
+#' @inheritSection AMSS Variables
 #'
 #' @references
 # `r Rdpack::insert_ref("vincens2007african", "smpds")`
 #' \insertRef{vincens2007african}{smpds}
+#'
+#' \insertAllCited{}
 #'
 #' @source
 #' http://fpd.sedoo.fr/fpd/bibli.do
@@ -86,33 +96,9 @@
 #'
 #' @format A data frame (\code{tibble} object) with
 #' `r nrow(smpds::australia_pollen)` rows and `r ncol(smpds::australia_pollen)`
-#' variables:
-#' \describe{
-#'   \item{source}{\code{character} Source of the dataset}
-#'   \item{site_name}{\code{character} Site name}
-#'   \item{entity_name}{\code{character} Entity name}
-#'   \item{latitude}{\code{numeric} Latitude}
-#'   \item{longitude}{\code{numeric} Longitude}
-#'   \item{elevation}{\code{numeric} Elevation}
-#'   \item{basin_size}{\code{character} Basin size}
-#'   \item{site_type}{\code{character} Site type}
-#'   \item{entity_type}{\code{character} Entity type}
-#'   \item{age_BP}{\code{character} Age BP}
-#'   \item{publication}{\code{character} Publication}
-#'   \item{doi}{\code{character} DOI}
-#'   \item{ID_BIOME}{\code{numeric} Biome identifier}
-#'   \item{ID_SAMPLE}{\code{numeric} Sample identifier}
-#'   \item{sample_name}{\code{character} Sample name}
-#'   \item{mi}{\code{numeric} Moisture index}
-#'   \item{gdd0}{\code{numeric} Growing degree days with 0°C}
-#'   \item{mat}{\code{numeric} Mean annual temperature}
-#'   \item{mtco}{\code{numeric} Mean temperature of the coldest month}
-#'   \item{mtwa}{\code{numeric} Mean temperature of the warmest month}
-#'   \item{map}{\code{numeric} Mean annual precipitation}
-#'   \item{clean}{\code{data.frame} Clean pollen counts}
-#'   \item{intermediate}{\code{data.frame} Intermediate (grouped) pollen counts}
-#'   \item{amalgamated}{\code{data.frame} Amalgamated pollen counts}
-#' }
+#' variables.
+#'
+#' @inheritSection AMSS Variables
 #'
 "australia_pollen"
 
@@ -121,32 +107,15 @@
 #' The Chinese Modern Pollen Dataset by Ni Jian.
 #'
 #' @format A data frame (\code{tibble} object) with `r nrow(smpds::CMPD)` rows
-#' and `r ncol(smpds::CMPD)` variables:
-#' \describe{
-#'   \item{source}{\code{character} Source of the dataset}
-#'   \item{site_name}{\code{character} Site name}
-#'   \item{entity_name}{\code{character} Entity name}
-#'   \item{latitude}{\code{numeric} Latitude}
-#'   \item{longitude}{\code{numeric} Longitude}
-#'   \item{elevation}{\code{numeric} Elevation}
-#'   \item{basin_size}{\code{character} Basin size}
-#'   \item{site_type}{\code{character} Site type}
-#'   \item{entity_type}{\code{character} Entity type}
-#'   \item{age_BP}{\code{character} Age BP}
-#'   \item{publication}{\code{character} Publication}
-#'   \item{doi}{\code{character} DOI}
-#'   \item{ID_BIOME}{\code{numeric} Biome identifier}
-#'   \item{ID_SAMPLE}{\code{numeric} Sample identifier}
-#'   \item{mi}{\code{numeric} Moisture index}
-#'   \item{gdd0}{\code{numeric} Growing degree days with 0°C}
-#'   \item{mat}{\code{numeric} Mean annual temperature}
-#'   \item{mtco}{\code{numeric} Mean temperature of the coldest month}
-#'   \item{mtwa}{\code{numeric} Mean temperature of the warmest month}
-#'   \item{map}{\code{numeric} Mean annual precipitation}
-#'   \item{clean}{\code{data.frame} Clean pollen counts}
-#'   \item{intermediate}{\code{data.frame} Intermediate (grouped) pollen counts}
-#'   \item{amalgamated}{\code{data.frame} Amalgamated pollen counts}
-#' }
+#' and `r ncol(smpds::CMPD)` variables.
+#'
+#' @inheritSection AMSS Variables
+#'
+#' @references
+#' \insertRef{chen2021modern}{smpds}
+#'
+#' \insertAllCited{}
+#'
 "CMPD"
 
 #' \code{CRU_coords} dataset
@@ -154,7 +123,7 @@
 #' The CRU TS 2.1 dataset coordinates at 0.5 degrees resolution.
 #'
 #' @format A data frame (\code{tibble} object) with `r nrow(smpds::CRU_coords)`
-#' rows and `r ncol(smpds::CRU_coords)` variables:
+#' rows and `r ncol(smpds::CRU_coords)` variables.
 #' \describe{
 #'   \item{latitude}{Numeric values for latitude in decimal degrees.}
 #'   \item{longitude}{Numeric values for longitude in decimal degrees.}
@@ -173,35 +142,14 @@
 #' The Eurasian Modern Pollen Database (EMPD), version 2.
 #'
 #' @format A data frame (\code{tibble} object) with `r nrow(smpds::EMPDv2)` rows
-#' and `r ncol(smpds::EMPDv2)` variables:
-#' \describe{
-#'   \item{source}{\code{character} Source of the dataset}
-#'   \item{site_name}{\code{character} Site name}
-#'   \item{entity_name}{\code{character} Entity name}
-#'   \item{latitude}{\code{numeric} Latitude}
-#'   \item{longitude}{\code{numeric} Longitude}
-#'   \item{elevation}{\code{numeric} Elevation}
-#'   \item{basin_size}{\code{character} Basin size}
-#'   \item{site_type}{\code{character} Site type}
-#'   \item{entity_type}{\code{character} Entity type}
-#'   \item{age_BP}{\code{character} Age BP}
-#'   \item{publication}{\code{character} Publication}
-#'   \item{doi}{\code{character} DOI}
-#'   \item{ID_BIOME}{\code{numeric} Biome identifier}
-#'   \item{ID_SAMPLE}{\code{numeric} Sample identifier}
-#'   \item{mi}{\code{numeric} Moisture index}
-#'   \item{gdd0}{\code{numeric} Growing degree days with 0°C}
-#'   \item{mat}{\code{numeric} Mean annual temperature}
-#'   \item{mtco}{\code{numeric} Mean temperature of the coldest month}
-#'   \item{mtwa}{\code{numeric} Mean temperature of the warmest month}
-#'   \item{map}{\code{numeric} Mean annual precipitation}
-#'   \item{clean}{\code{data.frame} Clean pollen counts}
-#'   \item{intermediate}{\code{data.frame} Intermediate (grouped) pollen counts}
-#'   \item{amalgamated}{\code{data.frame} Amalgamated pollen counts}
-#' }
+#' and `r ncol(smpds::EMPDv2)` variables.
+#'
+#' @inheritSection AMSS Variables
 #'
 #' @references
 #' \insertRef{davis2020eurasian}{smpds}
+#'
+#' \insertAllCited{}
 #'
 #' @source
 #' https://doi.pangaea.de/10.1594/PANGAEA.909130
@@ -213,37 +161,16 @@
 #' reconstructions database.
 #'
 #' @format A data frame (\code{tibble} object) with `r nrow(smpds::EMBSeCBIO)`
-#' rows and `r ncol(smpds::EMBSeCBIO)` variables:
-#' \describe{
-#'   \item{source}{\code{character} Source of the dataset}
-#'   \item{site_name}{\code{character} Site name}
-#'   \item{entity_name}{\code{character} Entity name}
-#'   \item{latitude}{\code{numeric} Latitude}
-#'   \item{longitude}{\code{numeric} Longitude}
-#'   \item{elevation}{\code{numeric} Elevation}
-#'   \item{basin_size}{\code{character} Basin size}
-#'   \item{site_type}{\code{character} Site type}
-#'   \item{entity_type}{\code{character} Entity type}
-#'   \item{age_BP}{\code{character} Age BP}
-#'   \item{publication}{\code{character} Publication}
-#'   \item{doi}{\code{character} DOI}
-#'   \item{ID_BIOME}{\code{numeric} Biome identifier}
-#'   \item{ID_SAMPLE}{\code{numeric} Sample identifier}
-#'   \item{mi}{\code{numeric} Moisture index}
-#'   \item{gdd0}{\code{numeric} Growing degree days with 0°C}
-#'   \item{mat}{\code{numeric} Mean annual temperature}
-#'   \item{mtco}{\code{numeric} Mean temperature of the coldest month}
-#'   \item{mtwa}{\code{numeric} Mean temperature of the warmest month}
-#'   \item{map}{\code{numeric} Mean annual precipitation}
-#'   \item{clean}{\code{data.frame} Clean pollen counts}
-#'   \item{intermediate}{\code{data.frame} Intermediate (grouped) pollen counts}
-#'   \item{amalgamated}{\code{data.frame} Amalgamated pollen counts}
-#' }
+#' rows and `r ncol(smpds::EMBSeCBIO)` variables.
+#'
+#' @inheritSection AMSS Variables
 #'
 #' @references
 #' \insertRef{harrison2017embsecbio}{smpds}
 #'
 #' \insertRef{harrison2021embsecbio}{smpds}
+#'
+#' \insertAllCited{}
 #'
 #' @source
 #' 10.17864/1947.309
@@ -254,32 +181,9 @@
 #' Dataset provided by \insertCite{herzschuh2019position;textual}{smpds}.
 #'
 #' @format A data frame (\code{tibble} object) with `r nrow(smpds::Herzschuh)`
-#' rows and `r ncol(smpds::Herzschuh)` variables:
-#' \describe{
-#'   \item{source}{\code{character} Source of the dataset}
-#'   \item{site_name}{\code{character} Site name}
-#'   \item{entity_name}{\code{character} Entity name}
-#'   \item{longitude}{\code{numeric} Longitude}
-#'   \item{latitude}{\code{numeric} Latitude}
-#'   \item{elevation}{\code{numeric} Elevation}
-#'   \item{basin_size}{\code{character} Basin size}
-#'   \item{site_type}{\code{character} Site type}
-#'   \item{entity_type}{\code{character} Entity type}
-#'   \item{age_BP}{\code{character} Age BP}
-#'   \item{publication}{\code{character} Publication}
-#'   \item{doi}{\code{character} DOI}
-#'   \item{ID_BIOME}{\code{numeric} Biome identifier}
-#'   \item{ID_SAMPLE}{\code{numeric} Sample identifier}
-#'   \item{mi}{\code{numeric} Moisture index}
-#'   \item{gdd0}{\code{numeric} Growing degree days with 0°C}
-#'   \item{mat}{\code{numeric} Mean annual temperature}
-#'   \item{mtco}{\code{numeric} Mean temperature of the coldest month}
-#'   \item{mtwa}{\code{numeric} Mean temperature of the warmest month}
-#'   \item{map}{\code{numeric} Mean annual precipitation}
-#'   \item{clean}{\code{data.frame} Clean pollen counts}
-#'   \item{intermediate}{\code{data.frame} Intermediate (grouped) pollen counts}
-#'   \item{amalgamated}{\code{data.frame} Amalgamated pollen counts}
-#' }
+#' rows and `r ncol(smpds::Herzschuh)` variables.
+#'
+#' @inheritSection AMSS Variables
 #'
 #' @references
 #' \insertAllCited{}
@@ -293,34 +197,14 @@
 #' The Iberian Modern Pollen Dataset (IbMPD).
 #'
 #' @format A data frame (\code{tibble} object) with `r nrow(smpds::IbMPD)` rows
-#' and `r ncol(smpds::IbMPD)` variables:
-#' \describe{
-#'   \item{source}{\code{character} Source of the dataset}
-#'   \item{site_name}{\code{character} Site name}
-#'   \item{entity_name}{\code{character} Entity name}
-#'   \item{latitude}{\code{numeric} Latitude}
-#'   \item{longitude}{\code{numeric} Longitude}
-#'   \item{elevation}{\code{numeric} Elevation}
-#'   \item{basin_size}{\code{character} Basin size}
-#'   \item{site_type}{\code{character} Site type}
-#'   \item{entity_type}{\code{character} Entity type}
-#'   \item{age_BP}{\code{character} Age BP}
-#'   \item{publication}{\code{character} Publication}
-#'   \item{doi}{\code{character} DOI}
-#'   \item{ID_BIOME}{\code{numeric} Biome identifier}
-#'   \item{ID_SAMPLE}{\code{numeric} Sample identifier}
-#'   \item{mi}{\code{numeric} Moisture index}
-#'   \item{gdd0}{\code{numeric} Growing degree days with 0°C}
-#'   \item{mat}{\code{numeric} Mean annual temperature}
-#'   \item{mtco}{\code{numeric} Mean temperature of the coldest month}
-#'   \item{mtwa}{\code{numeric} Mean temperature of the warmest month}
-#'   \item{map}{\code{numeric} Mean annual precipitation}
-#'   \item{clean}{\code{data.frame} Clean pollen counts}
-#'   \item{intermediate}{\code{data.frame} Intermediate (grouped) pollen counts}
-#'   \item{amalgamated}{\code{data.frame} Amalgamated pollen counts}
-#' }
+#' and `r ncol(smpds::IbMPD)` variables.
+#'
+#' @inheritSection AMSS Variables
+#'
 #' @references
 #' \insertRef{rdgdr294}{smpds}
+#'
+#' \insertAllCited{}
 #'
 #' @source
 #' https://researchdata.reading.ac.uk/294
@@ -332,33 +216,12 @@
 #'
 #' @format A data frame (\code{tibble} object) with
 #' `r nrow(smpds::japanese_pollen)` rows and `r ncol(smpds::japanese_pollen)`
-#' variables:
-#' \describe{
-#'   \item{source}{\code{character} Source of the dataset}
-#'   \item{site_name}{\code{character} Site name}
-#'   \item{entity_name}{\code{character} Entity name}
-#'   \item{latitude}{\code{numeric} Latitude}
-#'   \item{longitude}{\code{numeric} Longitude}
-#'   \item{elevation}{\code{numeric} Elevation}
-#'   \item{basin_size}{\code{character} Basin size}
-#'   \item{site_type}{\code{character} Site type}
-#'   \item{entity_type}{\code{character} Entity type}
-#'   \item{age_BP}{\code{character} Age BP}
-#'   \item{publication}{\code{character} Publication}
-#'   \item{doi}{\code{character} DOI}
-#'   \item{ID_BIOME}{\code{numeric} Biome identifier}
-#'   \item{ID_SAMPLE}{\code{numeric} Sample identifier}
-#'   \item{mi}{\code{numeric} Moisture index}
-#'   \item{gdd0}{\code{numeric} Growing degree days with 0°C}
-#'   \item{mat}{\code{numeric} Mean annual temperature}
-#'   \item{mtco}{\code{numeric} Mean temperature of the coldest month}
-#'   \item{mtwa}{\code{numeric} Mean temperature of the warmest month}
-#'   \item{map}{\code{numeric} Mean annual precipitation}
-#'   \item{clean}{\code{data.frame} Clean pollen counts}
-#'   \item{intermediate}{\code{data.frame} Intermediate (grouped) pollen counts}
-#'   \item{amalgamated}{\code{data.frame} Amalgamated pollen counts}
-#' }
+#' variables.
 #'
+#' @inheritSection AMSS Variables
+#'
+#' @references
+#' \insertAllCited{}
 "japanese_pollen"
 
 #' \code{NEOTOMA} dataset
@@ -366,35 +229,14 @@
 #' The Neotoma Paleoecology Database subset (NEOTOMA).
 #'
 #' @format A data frame (\code{tibble} object) with `r nrow(smpds::NEOTOMA)`
-#' rows and `r ncol(smpds::NEOTOMA)` variables:
-#' \describe{
-#'   \item{source}{\code{character} Source of the dataset}
-#'   \item{site_name}{\code{character} Site name}
-#'   \item{entity_name}{\code{character} Entity name}
-#'   \item{latitude}{\code{numeric} Latitude}
-#'   \item{longitude}{\code{numeric} Longitude}
-#'   \item{elevation}{\code{numeric} Elevation}
-#'   \item{basin_size}{\code{character} Basin size}
-#'   \item{site_type}{\code{character} Site type}
-#'   \item{entity_type}{\code{character} Entity type}
-#'   \item{age_BP}{\code{character} Age BP}
-#'   \item{publication}{\code{character} Publication}
-#'   \item{doi}{\code{character} DOI}
-#'   \item{ID_BIOME}{\code{numeric} Biome identifier}
-#'   \item{ID_SAMPLE}{\code{numeric} Sample identifier}
-#'   \item{mi}{\code{numeric} Moisture index}
-#'   \item{gdd0}{\code{numeric} Growing degree days with 0°C}
-#'   \item{mat}{\code{numeric} Mean annual temperature}
-#'   \item{mtco}{\code{numeric} Mean temperature of the coldest month}
-#'   \item{mtwa}{\code{numeric} Mean temperature of the warmest month}
-#'   \item{map}{\code{numeric} Mean annual precipitation}
-#'   \item{clean}{\code{data.frame} Clean pollen counts}
-#'   \item{intermediate}{\code{data.frame} Intermediate (grouped) pollen counts}
-#'   \item{amalgamated}{\code{data.frame} Amalgamated pollen counts}
-#' }
+#' rows and `r ncol(smpds::NEOTOMA)` variables.
+#'
+#' @inheritSection AMSS Variables
 #'
 #' @references
 #' \insertRef{williams2018neotoma}{smpds}
+#'
+#' \insertAllCited{}
 #'
 #' @source
 #' https://www.neotomadb.org
@@ -405,32 +247,9 @@
 #' Dataset provided by \insertCite{phelps2020asymmetric;textual}{smpds}.
 #'
 #' @format A data frame (\code{tibble} object) with `r nrow(smpds::Phelps)`
-#' rows and `r ncol(smpds::Phelps)` variables:
-#' \describe{
-#'   \item{source}{\code{character} Source of the dataset}
-#'   \item{site_name}{\code{character} Site name}
-#'   \item{entity_name}{\code{character} Entity name}
-#'   \item{latitude}{\code{numeric} Latitude}
-#'   \item{longitude}{\code{numeric} Longitude}
-#'   \item{elevation}{\code{numeric} Elevation}
-#'   \item{basin_size}{\code{character} Basin size}
-#'   \item{site_type}{\code{character} Site type}
-#'   \item{entity_type}{\code{character} Entity type}
-#'   \item{age_BP}{\code{character} Age BP}
-#'   \item{publication}{\code{character} Publication}
-#'   \item{doi}{\code{character} DOI}
-#'   \item{ID_BIOME}{\code{numeric} Biome identifier}
-#'   \item{ID_SAMPLE}{\code{numeric} Sample identifier}
-#'   \item{mi}{\code{numeric} Moisture index}
-#'   \item{gdd0}{\code{numeric} Growing degree days with 0°C}
-#'   \item{mat}{\code{numeric} Mean annual temperature}
-#'   \item{mtco}{\code{numeric} Mean temperature of the coldest month}
-#'   \item{mtwa}{\code{numeric} Mean temperature of the warmest month}
-#'   \item{map}{\code{numeric} Mean annual precipitation}
-#'   \item{clean}{\code{data.frame} Clean pollen counts}
-#'   \item{intermediate}{\code{data.frame} Intermediate (grouped) pollen counts}
-#'   \item{amalgamated}{\code{data.frame} Amalgamated pollen counts}
-#' }
+#' rows and `r ncol(smpds::Phelps)` variables.
+#'
+#' @inheritSection AMSS Variables
 #'
 #' @references
 #' \insertAllCited{}
@@ -458,32 +277,12 @@
 #' SPECIAL Modern Pollen Data for climate reconstructionS, version 1.
 #'
 #' @format A data frame (\code{tibble} object) with `r nrow(smpds::SMPDSv1)`
-#' rows and `r ncol(smpds::SMPDSv1)` variables:
-#' \describe{
-#'   \item{source}{\code{character} Source of the dataset}
-#'   \item{site_name}{\code{character} Site name}
-#'   \item{entity_name}{\code{character} Entity name}
-#'   \item{latitude}{\code{numeric} Latitude}
-#'   \item{longitude}{\code{numeric} Longitude}
-#'   \item{elevation}{\code{numeric} Elevation}
-#'   \item{basin_size}{\code{character} Basin size}
-#'   \item{site_type}{\code{character} Site type}
-#'   \item{entity_type}{\code{character} Entity type}
-#'   \item{age_BP}{\code{character} Age BP}
-#'   \item{publication}{\code{character} Publication}
-#'   \item{doi}{\code{character} DOI}
-#'   \item{ID_BIOME}{\code{numeric} Biome identifier}
-#'   \item{ID_SAMPLE}{\code{numeric} Sample identifier}
-#'   \item{mi}{\code{numeric} Moisture index}
-#'   \item{gdd0}{\code{numeric} Growing degree days with 0°C}
-#'   \item{mat}{\code{numeric} Mean annual temperature}
-#'   \item{mtco}{\code{numeric} Mean temperature of the coldest month}
-#'   \item{mtwa}{\code{numeric} Mean temperature of the warmest month}
-#'   \item{map}{\code{numeric} Mean annual precipitation}
-#'   \item{clean}{\code{data.frame} Clean pollen counts}
-#'   \item{intermediate}{\code{data.frame} Intermediate (grouped) pollen counts}
-#'   \item{amalgamated}{\code{data.frame} Amalgamated pollen counts}
-#' }
+#' rows and `r ncol(smpds::SMPDSv1)` variables.
+#'
+#' @inheritSection AMSS Variables
+#'
+#' @references
+#' \insertAllCited{}
 #'
 #' @source
 #' \insertRef{rdgdr194}{smpds}
@@ -494,33 +293,9 @@
 #' SPECIAL Modern Pollen Data for climate reconstructionS, version 2.
 #'
 #' @format A data frame (\code{tibble} object) with `r nrow(smpds::SMPDSv2)`
-#' rows and `r ncol(smpds::SMPDSv2)` variables:
-#' \describe{
-#'   \item{source}{\code{character} Source of the dataset}
-#'   \item{site_name}{\code{character} Site name}
-#'   \item{entity_name}{\code{character} Entity name}
-#'   \item{latitude}{\code{numeric} Latitude}
-#'   \item{longitude}{\code{numeric} Longitude}
-#'   \item{elevation}{\code{numeric} Elevation}
-#'   \item{basin_size}{\code{character} Basin size}
-#'   \item{site_type}{\code{character} Site type}
-#'   \item{entity_type}{\code{character} Entity type}
-#'   \item{age_BP}{\code{character} Age BP}
-#'   \item{ID_BIOME}{\code{numeric} Biome identifier}
-#'   \item{PNV}{\code{character} Potential natural vegetation description}
-#'   \item{mi}{\code{numeric} Moisture index}
-#'   \item{gdd0}{\code{numeric} Growing degree days with 0°C}
-#'   \item{mat}{\code{numeric} Mean annual temperature}
-#'   \item{mtco}{\code{numeric} Mean temperature of the coldest month}
-#'   \item{mtwa}{\code{numeric} Mean temperature of the warmest month}
-#'   \item{map}{\code{numeric} Mean annual precipitation}
-#'   \item{ID_SAMPLE}{\code{numeric} Sample identifier}
-#'   \item{clean}{\code{data.frame} Clean pollen counts}
-#'   \item{intermediate}{\code{data.frame} Intermediate (grouped) pollen counts}
-#'   \item{amalgamated}{\code{data.frame} Amalgamated pollen counts}
-#'   \item{publication}{\code{character} Publication}
-#'   \item{doi}{\code{character} DOI}
-#' }
+#' rows and `r ncol(smpds::SMPDSv2)` variables.
+#'
+#' @inheritSection AMSS Variables
 #'
 #' @references
 #' \insertRef{davis2020eurasian}{smpds}
@@ -538,6 +313,8 @@
 #' \insertRef{vincens2007african}{smpds}
 #'
 #' \insertRef{williams2018neotoma}{smpds}
+#'
+#' \insertAllCited{}
 "SMPDSv2"
 
 #' \code{climate}
