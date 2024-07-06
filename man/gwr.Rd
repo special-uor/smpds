@@ -15,18 +15,20 @@ gwr(.ref, ...)
 
 \method{gwr}{character}(
   .ref,
+  ...,
   .tar,
-  varid = NULL,
   coordinates = smpds::CRU_coords,
   res = 0.5,
   xy_buffer = 1.5,
   z_buffer = NA,
   cpus = 1,
-  bandwidth = 1.06
+  bandwidth = 1.06,
+  varid = NULL
 )
 
 \method{gwr}{numeric}(
   .ref,
+  ...,
   .tar,
   coordinates = smpds::CRU_coords,
   res = 0.5,
@@ -44,9 +46,6 @@ details section).}
 
 \item{.tar}{Table with geographical target data, including: \code{latitude},
 \code{longitude} and \code{elevation}.}
-
-\item{varid}{String with the identifier of the main variable inside the
-NetCDF file pointed by \code{.ref} (if applicable).}
 
 \item{coordinates}{Reference data set with columns for \code{latitude},
 \code{longitude} and \code{elevation}. Default:
@@ -74,6 +73,9 @@ in the \code{z} axis:
 
 \item{bandwidth}{bandwidth used in the weighting function, possibly
   calculated by \code{gwr.sel}}
+
+\item{varid}{String with the identifier of the main variable inside the
+NetCDF file pointed by \code{.ref} (if applicable).}
 }
 \value{
 Table with interpolated values from the \code{.ref} data for each
