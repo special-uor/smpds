@@ -9,14 +9,15 @@
 ^docs$
 ^pkgdown$
 ^data-raw$
+^data-raw/*$
 ^tests$
 ^inst/images/*$
-^inst/extdata/*$
 ^extdata/*$
 ^extdocs/*\.Rmd$
 ^R\.ignore$
 ^man/figures$
 ^inst/extdata$
+^inst/extdata/*$
 ^inst/extdata/all_taxa\.csv$
 ^inst/extdata/apd_taxa\.csv$
 ^inst/extdata/cmpd_counts\.xlsx$

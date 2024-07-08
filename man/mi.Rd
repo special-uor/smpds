@@ -29,13 +29,13 @@ fraction and temperature.
 The input (\code{.data} object) data, should contain the following
 columns:
 \itemize{
-\item{\code{latitude}: }{ numeric values for latitude (decimal degrees).}
-\item{\code{elevation}: }{ numeric values for elevation (m A.S.L.)}
-\item{\code{pre}: }{ list of numeric values for daily precipitation
-(mm / day).}
-\item{\code{sf}: }{ list of numeric values for daily sunshine fraction (\%).}
-\item{\code{tmp}: }{ list of numeric values for daily temperature
-(degrees Celsius).}
+\item \code{latitude}: numeric values for latitude (decimal degrees).
+\item \code{elevation}: numeric values for elevation (m A.S.L.)
+\item \code{pre}: list of numeric values for daily precipitation
+(mm / day).
+\item \code{sf}: list of numeric values for daily sunshine fraction (\%).
+\item \code{tmp}: list of numeric values for daily temperature
+(degrees Celsius).
 }
 }
 \seealso{

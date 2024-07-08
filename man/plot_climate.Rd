@@ -38,7 +38,7 @@ plot_climate_countour(
   var = "mat",
   units = NA,
   fill_scale = ggplot2::scale_fill_gradientn(name = toupper(var), colours =
-    wesanderson::wes_palette("Zissou1", 100, type = "continuous")),
+    zissou1_palette()),
   size = 1,
   stroke = 0.5,
   legend.key.width = ggplot2::unit(2, "cm"),
@@ -61,7 +61,7 @@ plot_climate_tiles(
   var = "mat",
   units = NA,
   fill_scale = ggplot2::scale_fill_manual(name = toupper(var), values =
-    wesanderson::wes_palette("Zissou1", 9, type = "continuous")),
+    zissou1_palette(9)),
   size = 1,
   stroke = 0.1,
   legend.key.width = ggplot2::unit(1, "cm"),
@@ -165,8 +165,10 @@ fill the individual points for the climate variable. Default:
 
 \item{stroke}{Numeric value for the \code{stroke} aesthetic.}
 
-\item{legend.position}{the position of legends ("none", "left", "right",
-"bottom", "top", or two-element numeric vector)}
+\item{legend.key.width}{Width of legend key (\code{ggplot2::unit} object).}
+
+\item{legend.position}{the default position of legends ("none", "left",
+"right", "bottom", "top", "inside")}
 
 \item{xlim, ylim}{Limits for the x and y axes. These limits are specified
 in the units of the default CRS. By default, this means projected coordinates

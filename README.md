@@ -1,15 +1,16 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# SMPDS: The SPECIAL Modern Pollen Data for Climate Reconstructions
+# SMPDS: The SPECIAL Modern Pollen Data for Climate Reconstructions <img src="https://raw.githubusercontent.com/special-uor/smpds/master/inst/images/logo.png" alt="logo" align="right" height=200px />
 
 <!-- badges: start -->
 
-[![](https://img.shields.io/badge/devel%20version-2.0.0-yellow.svg)](https://github.com/special-uor/smpds)
+[![](https://img.shields.io/badge/devel%20version-2.0.1-yellow.svg)](https://github.com/special-uor/smpds)
 [![R build
 status](https://github.com/special-uor/smpds/workflows/R-CMD-check/badge.svg)](https://github.com/special-uor/smpds/actions)
 [![](https://www.r-pkg.org/badges/version/smpds?color=black)](https://cran.r-project.org/package=smpds)
 [![](https://img.shields.io/badge/doi-10.5281/zenodo.6598832-blue.svg)](https://doi.org/10.5281/zenodo.6598832)
+[![](https://codecov.io/gh/special-uor/smpds/branch/main/graph/badge.svg?token=UOX3PKOPVT)](https://app.codecov.io/gh/special-uor/smpds)
 <!-- badges: end -->
 
 The goal of `smpds` is to provide access to the SPECIAL Modern Pollen
@@ -49,19 +50,19 @@ on the first one, `x`, it returns a variety of snapshots.
 
 This function returns a list with 3 components:
 
--   `entity`: data frame (`tibble` object) with the metadata associated
-    to the entities.
--   `climate`: data frame (`tibble` object) with the climate and
-    vegetation reconstructions. This one can be linked to the `entity`
-    table using the column called `ID_SAMPLE`.
--   `pollen_count`: list of data frames (`tibble` objects) containing
-    the pollen counts for 3 levels of “amalgamation”:
-    -   `clean`
-    -   `intermediate`
-    -   `amalgamated`
+- `entity`: data frame (`tibble` object) with the metadata associated to
+  the entities.
+- `climate`: data frame (`tibble` object) with the climate and
+  vegetation reconstructions. This one can be linked to the `entity`
+  table using the column called `ID_SAMPLE`.
+- `pollen_count`: list of data frames (`tibble` objects) containing the
+  pollen counts for 3 levels of “amalgamation”:
+  - `clean`
+  - `intermediate`
+  - `amalgamated`
 
-    All these data frames can be linked to the `entity` table using the
-    column called `ID_SAMPLE`.
+  All these data frames can be linked to the `entity` table using the
+  column called `ID_SAMPLE`.
 
 :warning: **NOTE:** the output is returned “invisibly”, so you should
 assign the output of the function to a variable.
@@ -82,8 +83,8 @@ smpds::snapshot("juodonys_core")
 #> # A tibble: 1 × 6
 #>   ID_SITE ID_ENTITY ID_SAMPLE site_name entity_name   pollen_counts$clean
 #>     <int>     <int>     <int> <chr>     <chr>                       <int>
-#> 1    3890      7901         1 Juodonys  juodonys_core                   1
-#> # … with 2 more variables: pollen_counts$intermediate <int>, $amalgamated <int>
+#> 1    3890      7901         1 Juodonys  juodonys_core                   0
+#> # ℹ 2 more variables: pollen_counts$intermediate <int>, $amalgamated <int>
 ```
 
 ##### Using the `site_name`
@@ -93,8 +94,8 @@ smpds::snapshot("Petresiunai", use_site_name = TRUE)
 #> # A tibble: 1 × 6
 #>   ID_SITE ID_ENTITY ID_SAMPLE site_name   entity_name     pollen_counts$clean
 #>     <int>     <int>     <int> <chr>       <chr>                         <int>
-#> 1    6690     14229         2 Petresiunai petresiunai_121                   1
-#> # … with 2 more variables: pollen_counts$intermediate <int>, $amalgamated <int>
+#> 1    6690     14229         2 Petresiunai petresiunai_121                   0
+#> # ℹ 2 more variables: pollen_counts$intermediate <int>, $amalgamated <int>
 ```
 
 ##### Using the `ID_ENTITY`
@@ -104,8 +105,8 @@ smpds::snapshot(2)
 #> # A tibble: 1 × 6
 #>   ID_SITE ID_ENTITY ID_SAMPLE site_name entity_name pollen_counts$clean
 #>     <int>     <int>     <int> <chr>     <chr>                     <int>
-#> 1       1         2      9710 05-Mo     05-Mo-10                      1
-#> # … with 2 more variables: pollen_counts$intermediate <int>, $amalgamated <int>
+#> 1       1         2      9710 05-Mo     05-Mo-10                      0
+#> # ℹ 2 more variables: pollen_counts$intermediate <int>, $amalgamated <int>
 ```
 
 ##### Using the `ID_SITE`
@@ -115,8 +116,8 @@ smpds::snapshot(3, use_id_site = TRUE)
 #> # A tibble: 1 × 6
 #>   ID_SITE ID_ENTITY ID_SAMPLE site_name  entity_name pollen_counts$clean
 #>     <int>     <int>     <int> <chr>      <chr>                     <int>
-#> 1       3        37     15871 11 [HFL11] HFL11                         1
-#> # … with 2 more variables: pollen_counts$intermediate <int>, $amalgamated <int>
+#> 1       3        37     15871 11 [HFL11] HFL11                         0
+#> # ℹ 2 more variables: pollen_counts$intermediate <int>, $amalgamated <int>
 ```
 
 ##### Extracting multiple records at once
@@ -126,17 +127,17 @@ smpds::snapshot(1:10)
 #> # A tibble: 10 × 6
 #>    ID_SITE ID_ENTITY ID_SAMPLE site_name entity_name pollen_counts$clean
 #>      <int>     <int>     <int> <chr>     <chr>                     <int>
-#>  1       1         1      9709 05-Mo     05-Mo                        10
-#>  2       1         2      9710 05-Mo     05-Mo-10                     10
-#>  3       1         3      9711 05-Mo     05-Mo-11                     10
-#>  4       1         4      9712 05-Mo     05-Mo-12                     10
-#>  5       1         5      9713 05-Mo     05-Mo-13                     10
-#>  6       1         6      9714 05-Mo     05-Mo-14                     10
-#>  7       1         7      9715 05-Mo     05-Mo-15                     10
-#>  8       1         8      9716 05-Mo     05-Mo-16                     10
-#>  9       1         9      9717 05-Mo     05-Mo-17                     10
-#> 10       1        10      9718 05-Mo     05-Mo-18                     10
-#> # … with 2 more variables: pollen_counts$intermediate <int>, $amalgamated <int>
+#>  1       1         1      9709 05-Mo     05-Mo                         0
+#>  2       1         2      9710 05-Mo     05-Mo-10                      0
+#>  3       1         3      9711 05-Mo     05-Mo-11                      0
+#>  4       1         4      9712 05-Mo     05-Mo-12                      0
+#>  5       1         5      9713 05-Mo     05-Mo-13                      0
+#>  6       1         6      9714 05-Mo     05-Mo-14                      0
+#>  7       1         7      9715 05-Mo     05-Mo-15                      0
+#>  8       1         8      9716 05-Mo     05-Mo-16                      0
+#>  9       1         9      9717 05-Mo     05-Mo-17                      0
+#> 10       1        10      9718 05-Mo     05-Mo-18                      0
+#> # ℹ 2 more variables: pollen_counts$intermediate <int>, $amalgamated <int>
 ```
 
 ##### Extracting all the records at once
@@ -152,11 +153,11 @@ out <- smpds::snapshot()
 
 The function `smpds::write_csvs` takes to parameters:
 
--   `.data`: a list of class `snapshot`, this one can be generated using
-    the function `smpds::snapshot` (see previous section).
--   `prefix`: a prefix name to be included in each individual files,
-    this prefix can include a relative or absolute path to a directory
-    in the local machine.
+- `.data`: a list of class `snapshot`, this one can be generated using
+  the function `smpds::snapshot` (see previous section).
+- `prefix`: a prefix name to be included in each individual files, this
+  prefix can include a relative or absolute path to a directory in the
+  local machine.
 
 ##### Without a path
 
@@ -167,8 +168,8 @@ smpds::snapshot("juodonys_core") %>%
 #> # A tibble: 1 × 6
 #>   ID_SITE ID_ENTITY ID_SAMPLE site_name entity_name   pollen_counts$clean
 #>     <int>     <int>     <int> <chr>     <chr>                       <int>
-#> 1    3890      7901         1 Juodonys  juodonys_core                   1
-#> # … with 2 more variables: pollen_counts$intermediate <int>, $amalgamated <int>
+#> 1    3890      7901         1 Juodonys  juodonys_core                   0
+#> # ℹ 2 more variables: pollen_counts$intermediate <int>, $amalgamated <int>
 ```
 
 ###### Output

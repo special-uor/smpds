@@ -30,8 +30,12 @@ plot_biome(
 
 \item{stroke}{Numeric value for the \code{stroke} aesthetic.}
 
-\item{legend.position}{the position of legends ("none", "left", "right",
-"bottom", "top", or two-element numeric vector)}
+\item{legend.key.height}{Height of legend key (\code{ggplot2::unit} object).}
+
+\item{legend.key.width}{Width of legend key (\code{ggplot2::unit} object).}
+
+\item{legend.position}{the default position of legends ("none", "left",
+"right", "bottom", "top", "inside")}
 
 \item{xlim, ylim}{Limits for the x and y axes. These limits are specified
 in the units of the default CRS. By default, this means projected coordinates

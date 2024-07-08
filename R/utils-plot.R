@@ -2,6 +2,8 @@
 check_coords <- function(.data, var, skip = FALSE) {
   if (skip) # Avoid double checking data
     return(.data)
+  # Local bindings
+  idx <- var_names <- NULL
   lat_var_names <- c("latitude", "lat", "y")
   lon_var_names <- c("longitude", "long", "lon", "x")
   main_var_names <- var
@@ -73,7 +75,7 @@ climate_theme <- function(fill_sea,
                  legend.key = ggplot2::element_blank(),
                  panel.grid.major = ggplot2::element_line(colour = gray(.8),
                                                           linetype = "dashed",
-                                                          size = 0.4),
+                                                          linewidth = 0.4),
                  panel.border = ggplot2::element_rect(colour = "black",
                                                       fill = NA),
                  panel.background = ggplot2::element_rect(fill = fill_sea))
@@ -88,7 +90,7 @@ climate_theme <- function(fill_sea,
 #                legend.key = ggplot2::element_blank(),
 #                panel.grid.major = ggplot2::element_line(colour = gray(.8),
 #                                                         linetype = "dashed",
-#                                                         size = 0.4),
+#                                                         linewidth = 0.4),
 #                panel.border = ggplot2::element_rect(colour = "black",
 #                                                     fill = fill_sea),
 #                panel.background = ggplot2::element_rect(fill = NA))
@@ -97,6 +99,8 @@ climate_theme <- function(fill_sea,
 create_factor <- function(.data) {
   if (!is.factor(.data$var) |
       (!is.factor(.data$var) & !is.character(.data$var))) {
+    # Local bindings
+    . <- var <- NULL
     .data <- .data %>%
       dplyr::mutate(
         var = var %>%
@@ -140,6 +144,8 @@ create_factor <- function(.data) {
 #' @param .data Data frame with spatial data and biome classification.
 #' @param size Numeric value for the \code{size} aesthetic.
 #' @param stroke Numeric value for the \code{stroke} aesthetic.
+#' @param legend.key.height Height of legend key (`ggplot2::unit` object).
+#' @param legend.key.width Width of legend key (`ggplot2::unit` object).
 #' @param show_plot Boolean flag to indicate whether or not the graphic should
 #'     be displayed, if \code{FALSE}, it only returns the \code{ggplot2} object.
 #'     Default: \code{TRUE}.
@@ -188,7 +194,7 @@ plot_biome <- function(.data,
                        fill_sea = "#CFE2F3",
                        ...) {
   # Local bindings
-  description <- ID_BIOME <- n <- latitude <- longitude <- NULL
+  description <- ID_BIOME <- n <- latitude <- longitude <- var <- NULL
 
   # Check for latitude, longitude and var (one of each expected)
   .data <- .data %>%
@@ -419,8 +425,7 @@ plot_climate_countour <-
            fill_scale =
              ggplot2::scale_fill_gradientn(
                name = toupper(var),
-               colours =
-                 wesanderson::wes_palette("Zissou1", 100, type = "continuous")
+               colours = zissou1_palette()
              ),
            size = 1,
            stroke = 0.5,
@@ -453,8 +458,7 @@ plot_climate_countour <-
       fill_scale  <-
         ggplot2::scale_fill_gradientn(
           name = toupper(var),
-          colours =
-            wesanderson::wes_palette("Zissou1", 100, type = "continuous")
+          colours = zissou1_palette()
         )
     }
 
@@ -532,8 +536,7 @@ plot_climate_tiles <-
            fill_scale =
              ggplot2::scale_fill_manual(
                name = toupper(var),
-               values =
-                 wesanderson::wes_palette("Zissou1", 9, type = "continuous")
+               values = zissou1_palette(9)
              ),
            size = 1,
            stroke = 0.1,
@@ -554,7 +557,7 @@ plot_climate_tiles <-
            continuous = FALSE,
            ...) {
   # Local bindings
-  caption <- latitude <- longitude <- NULL
+  .is_tile <- caption <- latitude <- longitude <- NULL
 
   # Check for latitude, longitude and var (one of each expected)
   .data <- .data %>%
@@ -567,8 +570,7 @@ plot_climate_tiles <-
     fill_scale  <-
       ggplot2::scale_fill_gradientn(
         name = toupper(var),
-        colours =
-          wesanderson::wes_palette("Zissou1", 100, type = "continuous")
+        colours = zissou1_palette()
       )
   }
 
@@ -809,4 +811,40 @@ plot_mtwa <- function(.data,
                  ylim = ylim,
                  show_plot = show_plot,
                  ...)
+}
+
+#' Zissou1 colour palette
+#'
+#' This is a colour palette created with the following function:
+#' `wesanderson::wes_palette("Zissou1", 100, type = "continuous")`
+#' Wrapped as a standalone function to remove dependency of the `wesanderson`
+#' package.
+#' @keywords internal
+zissou1_palette <- function(n = 100) {
+  if (n != 100) {
+    return(
+      structure(c("#3A9AB2", "#77B3BE", "#9BBDAC", "#B7C689", "#DCCB4E",
+                  "#E3AF0D", "#E98905", "#EE5F03", "#F11B00"),
+                class = "palette", name = "Zissou1")
+    )
+  }
+  structure(c("#3A9AB2", "#3F9CB3", "#449EB5", "#4AA1B6", "#4FA3B8",
+              "#54A6B9", "#5AA8BB", "#5FAABC", "#64ADBE", "#6AAFBF", "#6FB2C0",
+              "#72B2BF", "#76B3BE", "#79B4BD", "#7DB5BC", "#80B6BB", "#83B6BA",
+              "#87B7B9", "#8AB8B8", "#8EB9B6", "#91BAB5", "#93BAB3", "#95BBB1",
+              "#97BCAF", "#99BDAD", "#9BBEAC", "#9DBFAA", "#9FBFA8", "#A1C0A6",
+              "#A3C1A4", "#A5C2A1", "#A8C29E", "#AAC39B", "#ADC397", "#AFC494",
+              "#B1C590", "#B4C58D", "#B6C689", "#B9C786", "#BBC783", "#BEC87E",
+              "#C1C879", "#C4C874", "#C7C96F", "#CAC96A", "#CDC965", "#D1C960",
+              "#D4CA5A", "#D7CA55", "#DACA50", "#DCC94A", "#DDC744", "#DDC53E",
+              "#DEC338", "#DFC131", "#DFBF2B", "#E0BD25", "#E1BB1F", "#E2B918",
+              "#E2B712", "#E3B50F", "#E3B10E", "#E4AE0D", "#E4AB0B", "#E4A80A",
+              "#E5A509", "#E5A208", "#E69F07", "#E69C06", "#E69805", "#E79505",
+              "#E79205", "#E88F05", "#E88C05", "#E98905", "#E98605", "#EA8305",
+              "#EA8005", "#EB7D05", "#EB7A05", "#EC7704", "#EC7304", "#EC7004",
+              "#ED6C04", "#ED6904", "#ED6503", "#EE6103", "#EE5E03", "#EE5A03",
+              "#EE5703", "#EF5102", "#EF4B02", "#EF4502", "#EF3F01", "#EF3901",
+              "#F03301", "#F02D00", "#F02700", "#F02100", "#F11B00"),
+            class = "palette",
+            name = "Zissou1")
 }

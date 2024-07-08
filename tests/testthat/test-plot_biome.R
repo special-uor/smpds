@@ -5,6 +5,8 @@ test_that("plot_biome works", {
     readr::read_rds()
   test_plot <- smpds::plot_biome(test_data, show_plot = FALSE)
   expected_data <- test_data %>%
+    dplyr::rename(var = ID_BIOME) %>%
+    dplyr::mutate(ID_BIOME = var) %>%
     dplyr::bind_cols(tibble::tribble(
       ~description,   ~colour, ~n,
       "temperate deciduous broadleaf forest", "#55EB49", 5L,
@@ -12,6 +14,9 @@ test_that("plot_biome works", {
       "temperate deciduous broadleaf forest", "#55EB49", 5L,
       "temperate deciduous broadleaf forest", "#55EB49", 5L,
       "temperate deciduous broadleaf forest", "#55EB49", 5L
-    ))
-  expect_equal(test_plot$layers[[2]]$data, expected_data)
+    )) |>
+    dplyr::mutate(
+      description = stringr::str_replace_all(description, " ", "\n")
+    )
+  expect_equal(test_plot$data, expected_data)
 })

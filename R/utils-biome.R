@@ -63,11 +63,11 @@ biome_name.numeric <- function(.data, ...) {
 #'
 #' @return Table with the original data and matched biome(s):
 #' \itemize{
-#'  \item{if \code{all = FALSE} (default) }{ Only returns the dominant biome:
-#'  \code{ID_BIOME}}
-#'  \item{if \code{all = TRUE} }{ Returns all the detected biomes:
+#'  \item if \code{all = FALSE} (default): Only returns the dominant biome:
+#'  \code{ID_BIOME}
+#'  \item if \code{all = TRUE}: Returns all the detected biome -
 #'  \code{ID_BIOME} and \code{px}, the number of pixels detected for each
-#'  biome.}
+#'  biome.
 #' }
 #'
 #' @rdname extract_biome
@@ -85,7 +85,7 @@ extract_biome <- function(.data, ...) {
   UseMethod("extract_biome", .data)
 }
 
-#' @param reference Reference map with biomes, default: \code{smpds::PNV}.
+#' @param reference Reference map with biomes, default: \code{smpds::PNV_1km}.
 #' @param all Boolean flag to indicate whether or not to return all the detected
 #'     biomes, default: \code{FALSE} (dominant biome only).
 #' @inherit raster::extract
@@ -94,7 +94,7 @@ extract_biome <- function(.data, ...) {
 #' @export
 extract_biome.tbl_df <- function(.data,
                                  ...,
-                                 reference = smpds::PNV,
+                                 reference = smpds::PNV_1km,
                                  buffer = 12000,
                                  all = FALSE) {
   # Local bindings
@@ -103,20 +103,19 @@ extract_biome.tbl_df <- function(.data,
     stop("The given data object does not contain a latitude and/or longitude.",
          call. = FALSE)
   .data %>%
-    dplyr::mutate(geometry = NA, .after = longitude) %>%
-    sf::st_as_sf(x = ., coords = c("longitude", "latitude")) %>%
+    sf::st_as_sf(x = ., coords = c("longitude", "latitude"), crs = 4326) %>%
     extract_biome(reference = reference, buffer = buffer, all = all, ...) %>%
-    dplyr::mutate(latitude = sf::st_coordinates(.)[, 2],
-                  longitude = sf::st_coordinates(.)[, 1],
+    dplyr::mutate(latitude = as.numeric(sf::st_coordinates(.)[, 2]),
+                  longitude = as.numeric(sf::st_coordinates(.)[, 1]),
                   .after = geometry) %>%
-    sf::st_set_geometry(NULL)
+    sf::st_drop_geometry()
 }
 
 #' @rdname extract_biome
 #' @export
 extract_biome.sf <- function(.data,
                              ...,
-                             reference = smpds::PNV,
+                             reference = smpds::PNV_1km,
                              buffer = 12000,
                              all = FALSE) {
   # Local bindings
@@ -145,12 +144,12 @@ extract_biome.sf <- function(.data,
 #'
 #' @export
 parallel_extract_biome <- function(.data,
-                                   reference = smpds::PNV,
+                                   reference = smpds::PNV_1km,
                                    buffer = 12000,
                                    cpus = 2,
                                    all = FALSE) {
   # Local bindings
-  . <- ID <- latitude <- longitude <- NULL
+  . <- .ID_PAR_BIO <- ID <- latitude <- longitude <- NULL
   # Create data subset to improve performance
   .data <- .data %>%
     dplyr::mutate(.ID_PAR_BIO = seq_along(latitude))

@@ -1,12 +1,5 @@
 #' Print Values
 #' @param x an object used to select a method.
-#' @param ... further arguments passed to or from other methods.
-#' @rdname print
-#' @export
-NULL
-
-#' Print Values
-#' @param x an object used to select a method.
 #' @param stats_only Boolean flag to indicate whether to show the summary
 #'     only (default).
 #' @param ... further arguments passed to or from other methods.
@@ -38,7 +31,8 @@ extract_element <- function(x, element_name, IDs, ID_ENTITY = TRUE) {
 #' @keywords internal
 print_stats <- function(x) {
   # Local bindings
-  ID_ENTITY <- ID_SITE <- entity_name <- site_name <- NULL
+  ID_ENTITY <- ID_SAMPLE <- ID_SITE <- entity_name <- NULL
+  samples <- site_name <- NULL
 
   tables <- names(x)
   id_entities <- unique(x$entity$ID_ENTITY)

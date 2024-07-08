@@ -1,15 +1,14 @@
 #' @keywords internal
 create_sq_grid <- function(.data,
                            resolution = 0.5,
-                           get_elevation =
-                             function(...) {
-                               return(tibble::tibble(elevation = 0))
-                               },
+                           get_elevation = get_elevation_zero,
                            cpus = 1,
                            land_borders = NULL,
                            z_ref = NULL,
                            xy_pad = c(xmin = 0, ymin = 0, xmax = 0, ymax = 0),
                            grid_boundary = NULL) {
+  # Local bindings
+  . <- longitude <- x <- y <- NULL
   crs_raster_format <-
     "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0 +no_defs"
   .data_interp <- .data %>%
@@ -67,7 +66,7 @@ create_sq_grid <- function(.data,
     sf::st_as_sf() %>%
     cbind(., sf::st_coordinates(.)) %>%
     sf::st_drop_geometry() %>%
-    dplyr:::mutate(Z = 0) %>%
+    dplyr::mutate(Z = 0) %>%
     magrittr::set_names(c("x", "y", "Z"))
 
   # If land_borders are provided, apply as a mask to the grid
@@ -105,9 +104,9 @@ create_sq_grid <- function(.data,
 #'
 #' @return Table with land-sea mask:
 #' \itemize{
-#'  \item{\code{land = TRUE} }{ Grid cell with data provided by the CRU TS.}
-#'  \item{\code{land = FALSE} }{ Grid cell where data is not provided by the
-#'  CRU TS.}
+#'  \item \code{land = TRUE}: Grid cell with data provided by the CRU TS.
+#'  \item \code{land = FALSE}: Grid cell where data is not provided by the
+#'  CRU TS.
 #' }
 #'
 #' @keywords internal
@@ -137,6 +136,8 @@ cru_mask <- function(res = 0.5,
 
 #' @keywords internal
 get_elevation <- function(.data, cpus = 1, missing = -999999) {
+  # Local bindings
+  latitude <- longitude <- NULL
   latlon_proj <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
   oplan <- future::plan(future::multisession, workers = cpus)
   on.exit(future::plan(oplan), add = TRUE)
@@ -167,6 +168,11 @@ get_elevation <- function(.data, cpus = 1, missing = -999999) {
   } %>%
     smpds::pb()
   return(output)
+}
+
+#' @keywords internal
+get_elevation_zero <- function(...) {
+  return(tibble::tibble(elevation = 0))
 }
 
 #' Geographically Weighted Regression
@@ -243,14 +249,15 @@ gwr <- function(.ref, ...) {
 #' @export
 #' @rdname gwr
 gwr.character <- function(.ref,
+                          ...,
                           .tar,
-                          varid = NULL,
                           coordinates = smpds::CRU_coords,
                           res = 0.5,
                           xy_buffer = 1.5,
                           z_buffer = NA,
                           cpus = 1,
-                          bandwidth = 1.06) {
+                          bandwidth = 1.06,
+                          varid = NULL) {
   if(is.null(varid))
     stop("When `.ref` is a string/path, `varid` cannot be NULL.",
          call. = FALSE)
@@ -273,6 +280,7 @@ gwr.character <- function(.ref,
 #' @export
 #' @rdname gwr
 gwr.numeric <- function(.ref,
+                        ...,
                         .tar,
                         coordinates = smpds::CRU_coords,
                         res = 0.5,
@@ -283,6 +291,8 @@ gwr.numeric <- function(.ref,
   if (length(dim(.ref)) != 3)
     stop("Invalid reference object, `.ref`, expecting a 3-dimensional array.",
          call. = FALSE)
+  # Local bindings
+  land <- sea <- NULL
   .ref_tbl <- .ref %>%
     mask_nc(mask = cru_mask(res = res, coordinates = coordinates)) %>%
     dplyr::filter(land) %>%
@@ -367,8 +377,8 @@ gwr.numeric <- function(.ref,
 #'     \code{longitude} and a third variable called \code{land} with logical
 #'     values to indicated whether a grid cell should be used or ignored.
 #'     \itemize{
-#'      \item{\code{land = TRUE} }{ use this value.}
-#'      \item{\code{land = FALSE} }{ ignore this value.}
+#'      \item \code{land = TRUE}: use this value.
+#'      \item \code{land = FALSE}: ignore this value.
 #'     }
 #'
 #' @return 2D version of \code{.data}, including \code{latitute},
@@ -540,6 +550,8 @@ tps <- function(.data,
                 xy_pad = c(xmin = 0, ymin = 0, xmax = 0, ymax = 0),
                 grid_boundary = NULL,
                 ...) {
+  # Local bindings
+  latitude <- longitude <- Z <- NULL
   # Check coordinates
   .data2 <- .data %>%
     check_coords(var = var, skip = !check_data)
@@ -607,7 +619,7 @@ tps <- function(.data,
       raster::nrow(sq_grid)
     pb <- progressr::progressor(steps = N_STEPS)
     pred_funct <- function(model, x, ...) {
-      predict(model, x[, 1:2], Z = x[, 3], ...)
+      raster::predict(model, x[, 1:2], Z = x[, 3], ...)
     }
     interp_tps <- seq_len(N_STEPS) %>%
       furrr::future_map_dfr(function(i) {

@@ -16,9 +16,9 @@ cru_mask(res = 0.5, coordinates = smpds::CRU_coords)
 \value{
 Table with land-sea mask:
 \itemize{
-\item{\code{land = TRUE} }{ Grid cell with data provided by the CRU TS.}
-\item{\code{land = FALSE} }{ Grid cell where data is not provided by the
-CRU TS.}
+\item \code{land = TRUE}: Grid cell with data provided by the CRU TS.
+\item \code{land = FALSE}: Grid cell where data is not provided by the
+CRU TS.
 }
 }
 \description{

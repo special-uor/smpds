@@ -69,7 +69,7 @@ gdd.numeric <- function(.data, baseline = 0, pb = NULL, ...) {
 #' @rdname gdd
 gdd.tbl_df <- function(.data, baseline = 0, cpus = 1, ...) {
   # Local bindings
-  . <- tmp <- NULL
+  . <- .ID_CLIM_VAR <- latitude <- tmp <- NULL
   # Create data subset to improve performance
   .data <- .data %>%
     dplyr::mutate(.ID_CLIM_VAR = seq_along(latitude))
@@ -142,8 +142,8 @@ mat.numeric <- function(.data, pb = NULL, ...) {
 #' @export
 #' @rdname mat
 mat.tbl_df <- function(.data, cpus = 1, ...) {
-  # Local binding
-  tmp <- NULL
+  # Local bindings
+  .ID_CLIM_VAR <- latitude <- tmp <- NULL
   # Create data subset to improve performance
   .data <- .data %>%
     dplyr::mutate(.ID_CLIM_VAR = seq_along(latitude))
@@ -172,13 +172,13 @@ mat.tbl_df <- function(.data, cpus = 1, ...) {
 #' @details The input (\code{.data} object) data, should contain the following
 #' columns:
 #' \itemize{
-#'  \item{\code{latitude}: }{ numeric values for latitude (decimal degrees).}
-#'  \item{\code{elevation}: }{ numeric values for elevation (m A.S.L.)}
-#'  \item{\code{pre}: }{ list of numeric values for daily precipitation
-#'  (mm / day).}
-#'  \item{\code{sf}: }{ list of numeric values for daily sunshine fraction (%).}
-#'  \item{\code{tmp}: }{ list of numeric values for daily temperature
-#'  (degrees Celsius).}
+#'  \item \code{latitude}: numeric values for latitude (decimal degrees).
+#'  \item \code{elevation}: numeric values for elevation (m A.S.L.)
+#'  \item \code{pre}: list of numeric values for daily precipitation
+#'  (mm / day).
+#'  \item \code{sf}: list of numeric values for daily sunshine fraction (%).
+#'  \item \code{tmp}: list of numeric values for daily temperature
+#'  (degrees Celsius).
 #' }
 #'
 #' @param .data Data frame (\code{tibble} object) (see the details section).
@@ -200,7 +200,7 @@ mi <- function(.data, ...) {
 #' @rdname mi
 mi.tbl_df <- function(.data, cpus = 1, ...) {
   # Local bindings
-  elevation <- latitude <- pet_mm <- sf <- tmp <- NULL
+  .ID_CLIM_VAR <- elevation <- latitude <- pet_mm <- sf <- tmp <- NULL
   # Create data subset to improve performance
   .data <- .data %>%
     dplyr::mutate(.ID_CLIM_VAR = seq_along(latitude))
@@ -304,8 +304,8 @@ mtco.numeric <- function(.data, pb = NULL, ...) {
 #' @export
 #' @rdname mtco
 mtco.tbl_df <- function(.data, cpus = 1, ...) {
-  # Local binding
-  tmp <- NULL
+  # Local bindings
+  .ID_CLIM_VAR <- latitude <- tmp <- NULL
   # Create data subset to improve performance
   .data <- .data %>%
     dplyr::mutate(.ID_CLIM_VAR = seq_along(latitude))
@@ -379,8 +379,8 @@ mtwa.numeric <- function(.data, pb = NULL, ...) {
 #' @export
 #' @rdname mtwa
 mtwa.tbl_df <- function(.data, cpus = 1, ...) {
-  # Local binding
-  tmp <- NULL
+  # Local bindings
+  .ID_CLIM_VAR <- latitude <- tmp <- NULL
   # Create data subset to improve performance
   .data <- .data %>%
     dplyr::mutate(.ID_CLIM_VAR = seq_along(latitude))
