@@ -1,6 +1,6 @@
 Package: smpds
 Title: The SPECIAL Modern Pollen Data Set for Climate Reconstructions
-Version: 2.0.0
+Version: 2.0.1
 Authors@R: c(
     person(given = "Roberto",
            family = "Villegas-Diaz",
@@ -60,8 +60,7 @@ Imports:
     splash,
     stringr,
     tibble,
-    tidyr,
-    wesanderson
+    tidyr
 Depends: 
     R (>= 2.10)
 RdMacros: Rdpack
