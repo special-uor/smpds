@@ -70,6 +70,8 @@ a different pollen taxon}
 }
 
 \references{
+\insertRef{Takahara2000}{smpds}
+
 \insertAllCited{}
 }
 \keyword{datasets}

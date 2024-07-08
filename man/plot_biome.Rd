@@ -30,6 +30,10 @@ plot_biome(
 
 \item{stroke}{Numeric value for the \code{stroke} aesthetic.}
 
+\item{legend.key.height}{Height of legend key (\code{ggplot2::unit} object).}
+
+\item{legend.key.width}{Width of legend key (\code{ggplot2::unit} object).}
+
 \item{legend.position}{the default position of legends ("none", "left",
 "right", "bottom", "top", "inside")}
 

@@ -75,6 +75,8 @@ a different pollen taxon}
 \references{
 \insertRef{rdgdr294}{smpds}
 
+\insertRef{harrison2022}{smpds}
+
 \insertAllCited{}
 }
 \keyword{datasets}
