@@ -22,6 +22,7 @@ options(knitr.kable.NA = "")
 `r badger::badge_github_actions("special-uor/smpds")`
 `r badger::badge_cran_release("smpds", "black")`
 `r badger::badge_doi("10.5281/zenodo.6598832", "blue")`
+`r badger::badge_codecov(token = 'UOX3PKOPVT')`
 <!-- badges: end -->
 
 The goal of `smpds` is to provide access to the SPECIAL Modern Pollen Data Set for Climate Reconstructions (SMPDS).

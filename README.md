@@ -10,6 +10,7 @@
 status](https://github.com/special-uor/smpds/workflows/R-CMD-check/badge.svg)](https://github.com/special-uor/smpds/actions)
 [![](https://www.r-pkg.org/badges/version/smpds?color=black)](https://cran.r-project.org/package=smpds)
 [![](https://img.shields.io/badge/doi-10.5281/zenodo.6598832-blue.svg)](https://doi.org/10.5281/zenodo.6598832)
+[![](https://codecov.io/gh/special-uor/smpds/branch/main/graph/badge.svg?token=UOX3PKOPVT)](https://app.codecov.io/gh/special-uor/smpds)
 <!-- badges: end -->
 
 The goal of `smpds` is to provide access to the SPECIAL Modern Pollen
