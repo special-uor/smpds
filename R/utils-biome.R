@@ -103,13 +103,12 @@ extract_biome.tbl_df <- function(.data,
     stop("The given data object does not contain a latitude and/or longitude.",
          call. = FALSE)
   .data %>%
-    dplyr::mutate(geometry = NA, .after = longitude) %>%
-    sf::st_as_sf(x = ., coords = c("longitude", "latitude")) %>%
+    sf::st_as_sf(x = ., coords = c("longitude", "latitude"), crs = 4326) %>%
     extract_biome(reference = reference, buffer = buffer, all = all, ...) %>%
-    dplyr::mutate(latitude = sf::st_coordinates(.)[, 2],
-                  longitude = sf::st_coordinates(.)[, 1],
+    dplyr::mutate(latitude = as.numeric(sf::st_coordinates(.)[, 2]),
+                  longitude = as.numeric(sf::st_coordinates(.)[, 1]),
                   .after = geometry) %>%
-    sf::st_set_geometry(NULL)
+    sf::st_drop_geometry()
 }
 
 #' @rdname extract_biome
