@@ -207,6 +207,8 @@
 #' @references
 #' \insertRef{rdgdr294}{smpds}
 #'
+#' \insertRef{harrison2022}{smpds}
+#'
 #' \insertAllCited{}
 #'
 #' @source
@@ -220,6 +222,8 @@
 #' @inheritSection AMSS Variables
 #'
 #' @references
+#' \insertRef{Takahara2000}{smpds}
+#'
 #' \insertAllCited{}
 "japanese_pollen"
 
@@ -269,6 +273,8 @@
 #' @inheritSection AMSS Variables
 #'
 #' @references
+#' \insertRef{harrison2019}{smpds}
+#'
 #' \insertAllCited{}
 #'
 #' @source
@@ -414,6 +420,38 @@
 #' @inheritSection AMSS Variables
 #'
 #' @references
+#' \insertRef{Black2007}{smpds}
+#'
+#' \insertRef{Dodson1978}{smpds}
+#'
+#' \insertRef{Dodson1999}{smpds}
+#'
+#' \insertRef{Haberle1996}{smpds}
+#'
+#' \insertRef{haberle1993late}{smpds}
+#'
+#' \insertRef{Hope2009}{smpds}
+#'
+#' \insertRef{Hope1988}{smpds}
+#'
+#' \insertRef{hope1999holocene}{smpds}
+#'
+#' \insertRef{Macphail1980}{smpds}
+#'
+#' \insertRef{Macphail1979}{smpds}
+#'
+#' \insertRef{Macphail1975}{smpds}
+#'
+#' \insertRef{macphail1983value}{smpds}
+#'
+#' \insertRef{MacphailMidenhall1980}{smpds}
+#'
+#' \insertRef{Norton1986}{smpds}
+#'
+#' \insertRef{Prebble2019}{smpds}
+#'
+#' \insertRef{Shulmeister2003}{smpds}
+#'
 #' \insertAllCited{}
 "southern_hemisphere_pollen"
 
