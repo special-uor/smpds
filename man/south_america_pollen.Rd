@@ -50,8 +50,8 @@ Vegetation based on the work by
 \item{ID_SAMPLE}{\code{numeric} Unique identifier for each sample}
 \item{sample_name (only \link{australia_pollen})}{\code{character}
 Sample name}
-\item{mi}{\code{numeric} Reconstructed Moisture Index \link{unitless} using the
-CRU TS 4.04 \insertCite{harris2020}{smpds} dataset}
+\item{mi}{\code{numeric} Reconstructed Moisture Index [unitless] using
+the CRU TS 4.04 \insertCite{harris2020}{smpds} dataset}
 \item{gdd0}{\code{numeric} Reconstructed Growing Degree Days above 0°C
 [°C day] using the CRU TS 4.04 \insertCite{harris2020}{smpds} dataset}
 \item{mat}{\code{numeric} Reconstructed Mean Annual Temperature [°C]
