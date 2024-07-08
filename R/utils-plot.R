@@ -144,6 +144,8 @@ create_factor <- function(.data) {
 #' @param .data Data frame with spatial data and biome classification.
 #' @param size Numeric value for the \code{size} aesthetic.
 #' @param stroke Numeric value for the \code{stroke} aesthetic.
+#' @param legend.key.height Height of legend key (`ggplot2::unit` object).
+#' @param legend.key.width Width of legend key (`ggplot2::unit` object).
 #' @param show_plot Boolean flag to indicate whether or not the graphic should
 #'     be displayed, if \code{FALSE}, it only returns the \code{ggplot2} object.
 #'     Default: \code{TRUE}.
