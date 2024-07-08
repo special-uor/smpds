@@ -112,16 +112,28 @@ compare_latlonelv <- function(x,
 #' @export
 normalise_taxa <- function(.data, cols = 1, scale = 100) {
   # Local bindings
-  value <- total <- NULL
-  .data %>%
-    tidyr::pivot_longer(-cols) %>%
-    dplyr::group_by(dplyr::across(cols)) %>%
+  . <- ID_ <- value <- total <- NULL
+  # Create temporal object with 'internal ID' (ID_) and pivot columns to rows
+  aux <- .data %>%
+    dplyr::mutate(ID_ = seq_len(nrow(.))) %>%
+    tidyr::pivot_longer(cols = -c("ID_", names(.)[cols]))
+
+  # Use the 'internal ID' (ID_) to normalise the taxa by group
+  aux2 <- aux %>%
+    dplyr::select(-names(.)[cols]) %>% # ignore ID columns
+    dplyr::group_by(ID_) %>% # group by 'internal ID'
     dplyr::mutate(total = dplyr::c_across(value) %>%
                     sum(na.rm = TRUE),
                   value = as.double(value) / total * scale) %>%
     dplyr::select(-total) %>%
     dplyr::ungroup() %>%
-    tidyr::pivot_wider(cols)
+    dplyr::select(-ID_) # drop 'internal ID'
+
+  # Combine initial input (long format) with standardised taxa and pivot data
+  aux %>%
+    dplyr::select(names(.)[cols]) %>%
+    dplyr::bind_cols(aux2) %>%
+    tidyr::pivot_wider(id_cols = names(.)[cols])
 }
 
 #' Remove missing taxa/columns
@@ -135,11 +147,11 @@ normalise_taxa <- function(.data, cols = 1, scale = 100) {
 #' @export
 rm_na_taxa <- function(.data, cols = 1) {
   # Local binding
-  value <- NULL
+  . <- value <- NULL
   .data %>%
-    tidyr::pivot_longer(-dplyr::all_of(cols)) %>%
+    tidyr::pivot_longer(cols = -names(.)[cols]) %>%
     dplyr::filter(!is.na(value)) %>%
-    tidyr::pivot_wider(dplyr::all_of(cols))
+    tidyr::pivot_wider(id_cols = names(.)[cols])
 }
 
 #' Remove taxa/columns with zeros
@@ -153,11 +165,11 @@ rm_na_taxa <- function(.data, cols = 1) {
 #' @export
 rm_zero_taxa <- function(.data, cols = 1) {
   # Local binding
-  value <- NULL
+  . <- value <- NULL
   .data %>%
-    tidyr::pivot_longer(-dplyr::all_of(cols)) %>%
+    tidyr::pivot_longer(cols = -names(.)[cols]) %>%
     dplyr::filter(value != 0) %>%
-    tidyr::pivot_wider(dplyr::all_of(cols))
+    tidyr::pivot_wider(id_cols = names(.)[cols])
 }
 
 #' Sort taxa/columns alphabetically
@@ -174,7 +186,7 @@ sort_taxa <- function(.data, cols = 1) {
   # Local binding
   . <- NULL
   .data %>%
-    dplyr::select(dplyr::all_of(cols, order(colnames(.)[-cols]) + length(cols)))
+    dplyr::select(names(.)[c(cols, order(colnames(.)[-cols]) + length(cols))])
 }
 
 #' @keywords internal
@@ -194,9 +206,11 @@ tolerance <- function(x, digits = 1) {
 #' @return Data frame including a new column, \code{total}, with taxa counts.
 #' @export
 total_taxa <- function(.data, cols = 1) {
+  # Local binding
+  . <- NULL
   .data %>%
     dplyr::rowwise() %>%
-    dplyr::mutate(total = dplyr::c_across(-cols) %>%
+    dplyr::mutate(total = dplyr::c_across(names(.)[-cols]) %>%
                     sum(na.rm = TRUE),
                   .after = max(cols)) %>%
     dplyr::ungroup()
