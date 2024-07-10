@@ -18,4 +18,7 @@ test_that("mtwa works", {
 
   # Invalid input, list
   expect_error(smpds::mtwa(test_data$tmp))
+
+  # NA input, expected output should be NA_real_
+  expect_true(is.na(smpds::mtwa(NA_real_)))
 })

@@ -18,4 +18,7 @@ test_that("mtco works", {
 
   # Invalid input, list
   expect_error(smpds::mtco(test_data$tmp))
+
+  # NA input, expected output should be NA_real_
+  expect_true(is.na(smpds::mtco(NA_real_)))
 })

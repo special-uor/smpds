@@ -19,6 +19,9 @@ test_that("gdd works", {
   # Invalid input, list
   expect_error(smpds::gdd(test_data$tmp))
 
+  # NA input, expected output should be NA_real_
+  expect_true(is.na(smpds::gdd(NA_real_)))
+
   # GDD for another baseline temperature, 10
   expected_t3 <- test_data %>%
     dplyr::mutate(gdd10 = c(657.598276898224,

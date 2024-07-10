@@ -14,4 +14,10 @@ test_that("mi works", {
 
   # Invalid input, list
   expect_error(smpds::mi(test_data$tmp))
+
+  # NA input (tmp = NA_real_), expected output should be NA_real_
+  t3_output <- test_data %>%
+    dplyr::mutate(tmp = NA_real_) %>%
+    smpds::mi()
+  expect_true(all(is.na(t3_output$tmp)))
 })

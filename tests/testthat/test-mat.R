@@ -18,4 +18,7 @@ test_that("mat works", {
 
   # Invalid input, list
   expect_error(smpds::mat(test_data$tmp))
+
+  # NA input, expected output should be NA_real_
+  expect_true(is.na(smpds::mat(NA_real_)))
 })
